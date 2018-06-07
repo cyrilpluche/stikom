@@ -2,7 +2,7 @@
   <div class="row row-first justify-content-center">
 
     <!-- Card -->
-    <div class="col-10 col-md-8 col-md-6 col-xl-4 card card-cascade" id="authentification">
+    <div class="col-10 col-md-8 col-md-6 col-xl-4 card card-cascade hoverable" id="authentification">
 
       <!-- Card content -->
       <div class="card-body card-body-cascade">
@@ -58,15 +58,46 @@
         </div>
 
         <!-- Second step of the form -->
-        <div [hidden]="step1">
-          <select class="form-control  mdb-select">
-            <option value="" disabled selected>Choose your country</option>
-            <option value="1">USA</option>
-            <option value="2">Germany</option>
-            <option value="3">France</option>
-            <option value="4">Poland</option>
-            <option value="5">Japan</option>
-          </select>
+        <div class="form-group" [hidden]="step1">
+
+          <!-- Organisation -->
+          <div class="md-form">
+            <select [(ngModel)]="organisationChoosen" name="organisation" class="form-control mdb-select" (change)="enableBranch()" >
+              <option value="" disabled selected>Choose organisation</option>
+              <option value="1">Stikom Bali</option>
+              <option value="2">Polytech Montpellier</option>
+            </select>
+          </div>
+
+          <!-- Branch -->
+          <div class="md-form">
+            <select [(ngModel)]="branchChoosen" name="branch" class="form-control" [disabled]="!branchEnabled" (change)="enableDepartment()" >
+              <option value="" disabled selected>Choose a branch</option>
+              <option value="blank">No branch</option>
+              <option value="1">International class</option>
+              <option value="2">Regular class</option>
+            </select>
+          </div>
+
+          <!-- Department -->
+          <div class="md-form">
+            <select [(ngModel)]="departmentChoosen" name="department" class="form-control mdb-select" [disabled]="!departmentEnabled" (change)="enableSubDepartment()" >
+              <option value="" disabled selected>Choose department</option>
+              <option value="blank">No department</option>
+              <option value="1">Administration</option>
+              <option value="2">Department 2</option>
+            </select>
+          </div>
+
+          <!-- SubDepartment -->
+          <div class="md-form">
+            <select [(ngModel)]="subDepartmentChoosen" name="subDepartment" class="form-control mdb-select" [disabled]="!subDepartmentEnabled" (change)="validSelectForm('4')" >
+              <option value="" disabled selected>Choose sub-department</option>
+              <option value="blank">No sub-department</option>
+              <option value="1">Sub1</option>
+              <option value="2">Sub2</option>
+            </select>
+          </div>
         </div>
 
         <div class="text-center mt-4">

@@ -19,6 +19,8 @@ import { ProjectComponent } from './component/project-list/project/project.compo
 import { AuthentificationComponent } from './component/authentification/authentification.component';
 import { FormsModule, ReactiveFormsModule, NgForm, Validators, FormBuilder } from '@angular/forms';
 import { SignUpComponent } from './component/authentification/sign-up/sign-up.component';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { MDBBootstrapModule } from 'angular-bootstrap-md';
 
 
 const routes: Routes = [
@@ -54,8 +56,10 @@ const routes: Routes = [
     BrowserModule,
     [RouterModule.forRoot(routes)],
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MDBBootstrapModule.forRoot()
   ],
+  schemas: [ NO_ERRORS_SCHEMA ],
   providers: [],
   bootstrap: [AppComponent]
 })
