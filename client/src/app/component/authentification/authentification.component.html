@@ -1,0 +1,52 @@
+<div class="container">
+  <div class="row row-first justify-content-center">
+
+    <!-- Card -->
+    <div class="col-10 col-md-8 col-md-6 col-xl-4 card card-cascade" id="authentification">
+
+      <!-- Card content -->
+      <div class="card-body card-body-cascade">
+
+        <!-- Material form login -->
+        <form>
+          <p class="h4 text-center mb-4">Sign in</p>
+
+          <!-- Material input email -->
+          <div class="md-form">
+            <i class="fa fa-envelope prefix grey-text"></i>
+            <input required ngModel name="mail" #mail="ngModel" (change)="log(mail)" type="email" id="materialFormLoginEmailEx" class="form-control" email>
+            <label for="materialFormLoginEmailEx">Your email</label>
+            <!-- Error alert -->
+            <div class="alert alert-danger" *ngIf="(mail.touched && mail.invalid)">Please input a valid email.</div>
+            <!--<div class="alert alert-danger" *ngIf="(mail.touched && !mail.valid)">Mail is required.</div>-->
+          </div>
+
+          <!-- Material input password -->
+          <div class="md-form">
+            <i class="fa fa-lock prefix grey-text"></i>
+            <input required ngModel name=password #password="ngModel" type="password" id="materialFormLoginPasswordEx" class="form-control">
+            <label for="materialFormLoginPasswordEx">Your password</label>
+          </div>
+
+          <div class="text-center mt-4">
+            <button class="btn btn-default" type="submit">Login</button>
+          </div>
+        </form>
+        <!-- Material form login -->
+
+        <hr>
+
+        <div class="text-center">
+          <!-- Forgotten password -->
+          <a class="text-link"><h6>Forgotten password</h6></a>
+          <!-- Email -->
+          <!--<a class="px-2 fa-lg email-ic"><i class="fa fa-envelope"> </i></a>-->
+        </div>
+
+      </div>
+
+    </div>
+    <!-- Card -->
+
+  </div>
+</div>
