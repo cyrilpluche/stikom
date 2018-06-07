@@ -17,12 +17,16 @@ import { WorkScheduleComponent } from './component/work-schedule/work-schedule.c
 import { ProjectListComponent } from './component/project-list/project-list.component';
 import { ProjectComponent } from './component/project-list/project/project.component';
 import { AuthentificationComponent } from './component/authentification/authentification.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule, NgForm, Validators, FormBuilder } from '@angular/forms';
+import { SignUpComponent } from './component/authentification/sign-up/sign-up.component';
+
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
   {path: 'home', component: HomeComponent},
   {path: 'account', component: AccountComponent},
+  {path: 'authentification', component: AuthentificationComponent},
+  {path: 'sign-up', component: SignUpComponent},
   {path: 'authentification', component: AuthentificationComponent},
   {path: 'sop-list', component: SopListComponent}
 ];
@@ -43,7 +47,8 @@ const routes: Routes = [
     WorkScheduleComponent,
     ProjectListComponent,
     ProjectComponent,
-    AuthentificationComponent
+    AuthentificationComponent,
+    SignUpComponent
   ],
   imports: [
     BrowserModule,

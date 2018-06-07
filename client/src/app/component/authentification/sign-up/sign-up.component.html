@@ -1,0 +1,97 @@
+<div class="container" xmlns="">
+  <div class="row row-first justify-content-center">
+
+    <!-- Card -->
+    <div class="col-10 col-md-8 col-md-6 col-xl-4 card card-cascade" id="authentification">
+
+      <!-- Card content -->
+      <div class="card-body card-body-cascade">
+
+      <!-- Material form register -->
+      <form (ngSubmit)="onSubmit()">
+        <p class="h4 text-center mb-4">Sign up</p>
+
+        <!-- First step of the form -->
+        <div [hidden]="!step1">
+
+          <!-- Material input text -->
+          <div class="md-form">
+            <i class="fa fa-user prefix grey-text"></i>
+            <input type="text" id="firstName" class="form-control">
+            <label for="firstName">First name</label>
+          </div>
+
+          <!-- Material input text -->
+          <div class="md-form">
+            <i class="fa fa-user prefix grey-text"></i>
+            <input type="text" id="lastName" class="form-control">
+            <label for="lastName">Last name</label>
+          </div>
+
+          <!-- Material input email -->
+          <div class="md-form">
+            <i class="fa fa-envelope prefix grey-text"></i>
+            <input type="email" id="email" class="form-control">
+            <label for="email">Your email</label>
+          </div>
+
+          <!-- Material input email -->
+          <div class="md-form">
+            <i class="fa fa-exclamation-triangle prefix grey-text"></i>
+            <input type="email" id="emailConfirm" class="form-control">
+            <label for="emailConfirm">Confirm your email</label>
+          </div>
+
+          <!-- Material input password -->
+          <div class="md-form">
+            <i class="fa fa-lock prefix grey-text"></i>
+            <input type="password" id="password" class="form-control">
+            <label for="password">Your password</label>
+          </div>
+
+          <!-- Material input email -->
+          <div class="md-form">
+            <i class="fa fa-exclamation-triangle prefix grey-text"></i>
+            <input type="email" id="passwordConfirm" class="form-control">
+            <label for="passwordConfirm">Confirm your password</label>
+          </div>
+        </div>
+
+        <!-- Second step of the form -->
+        <div [hidden]="step1">
+          <select class="form-control  mdb-select">
+            <option value="" disabled selected>Choose your country</option>
+            <option value="1">USA</option>
+            <option value="2">Germany</option>
+            <option value="3">France</option>
+            <option value="4">Poland</option>
+            <option value="5">Japan</option>
+          </select>
+        </div>
+
+        <div class="text-center mt-4">
+          <button class="btn btn-default" type="submit" (click)="changeStep()">Next</button>
+        </div>
+
+      </form>
+      <!-- Material form register -->
+
+      <hr>
+
+      <div class="row justify-content-center">
+        <!-- Forgotten password -->
+        <a class="text-link px-3" [routerLink]="['/authentification']" ><h6>Back</h6></a>
+        <!--<a class="px-2 fa-lg email-ic"><i class="fa fa-envelope"> </i></a>-->
+      </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  $(document).ready(function() {
+  $('.mdb-select').material_select();
+});
+</script>

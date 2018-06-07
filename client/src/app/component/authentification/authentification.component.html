@@ -8,24 +8,28 @@
       <div class="card-body card-body-cascade">
 
         <!-- Material form login -->
-        <form>
+        <form (ngSubmit)="onSubmit()">
           <p class="h4 text-center mb-4">Sign in</p>
 
           <!-- Material input email -->
           <div class="md-form">
             <i class="fa fa-envelope prefix grey-text"></i>
-            <input required ngModel name="mail" #mail="ngModel" (change)="log(mail)" type="email" id="materialFormLoginEmailEx" class="form-control" email>
+            <input required [(ngModel)]="email" name="mail" type="email" id="materialFormLoginEmailEx" class="form-control" email>
             <label for="materialFormLoginEmailEx">Your email</label>
-            <!-- Error alert -->
-            <div class="alert alert-danger" *ngIf="(mail.touched && mail.invalid)">Please input a valid email.</div>
-            <!--<div class="alert alert-danger" *ngIf="(mail.touched && !mail.valid)">Mail is required.</div>-->
           </div>
 
           <!-- Material input password -->
           <div class="md-form">
             <i class="fa fa-lock prefix grey-text"></i>
-            <input required ngModel name=password #password="ngModel" type="password" id="materialFormLoginPasswordEx" class="form-control">
+            <input required [(ngModel)]="password" name=password type="password" id="materialFormLoginPasswordEx" class="form-control">
             <label for="materialFormLoginPasswordEx">Your password</label>
+            <!-- Forgotten password -->
+            <p class="font-small blue-text d-flex justify-content-end text-link">Forgot <a class="blue-text ml-1 text-link"> Password ?</a></p>
+          </div>
+
+          <!-- Error alert -->
+          <div *ngIf="errorMessage" class="alert alert-danger" role="alert">
+            {{errorMessage}}
           </div>
 
           <div class="text-center mt-4">
@@ -36,11 +40,10 @@
 
         <hr>
 
-        <div class="text-center">
+        <div class="row justify-content-center">
+          <!-- Sign up -->
+          <p class="font-small grey-text d-flex justify-content-end mt-3">Don't have an account ? <a [routerLink]="['/sign-up']" class="dark-grey-text ml-1 font-weight-bold text-link"> Sign up</a></p>
           <!-- Forgotten password -->
-          <a class="text-link"><h6>Forgotten password</h6></a>
-          <!-- Email -->
-          <!--<a class="px-2 fa-lg email-ic"><i class="fa fa-envelope"> </i></a>-->
         </div>
 
       </div>
