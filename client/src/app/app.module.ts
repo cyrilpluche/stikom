@@ -23,7 +23,8 @@ const routes: Routes = [
   {path: '', component: HomeComponent},
   {path: 'home', component: HomeComponent},
   {path: 'account', component: AccountComponent},
-  {path: 'authentification', component: AuthentificationComponent}
+  {path: 'authentification', component: AuthentificationComponent},
+  {path: 'sop-list', component: SopListComponent}
 ];
 
 @NgModule({
