@@ -14,47 +14,52 @@
         <!-- First step of the form -->
         <div [hidden]="!step1">
 
-          <!-- Material input text -->
+          <!-- Input first name -->
           <div class="md-form">
             <i class="fa fa-user prefix grey-text"></i>
-            <input type="text" id="firstName" class="form-control">
+            <input [(ngModel)]="firstName" name="firstName" type="text" id="firstName" class="form-control">
             <label for="firstName">First name</label>
           </div>
 
-          <!-- Material input text -->
+          <!-- Input last name -->
           <div class="md-form">
             <i class="fa fa-user prefix grey-text"></i>
-            <input type="text" id="lastName" class="form-control">
+            <input [(ngModel)]="lastName" name="lastName" type="text" id="lastName" class="form-control">
             <label for="lastName">Last name</label>
           </div>
 
-          <!-- Material input email -->
+          <!-- Input email -->
           <div class="md-form">
             <i class="fa fa-envelope prefix grey-text"></i>
-            <input type="email" id="email" class="form-control">
+            <input [(ngModel)]="email" name="email" type="email" id="email" class="form-control">
             <label for="email">Your email</label>
           </div>
 
-          <!-- Material input email -->
+          <!-- Input email confirmation -->
           <div class="md-form">
             <i class="fa fa-exclamation-triangle prefix grey-text"></i>
-            <input type="email" id="emailConfirm" class="form-control">
+            <input [(ngModel)]="emailConfirmation" name="emailConfirmation" type="email" id="emailConfirm" class="form-control">
             <label for="emailConfirm">Confirm your email</label>
           </div>
 
-          <!-- Material input password -->
+          <!-- Input password -->
           <div class="md-form">
             <i class="fa fa-lock prefix grey-text"></i>
-            <input type="password" id="password" class="form-control">
+            <input [(ngModel)]="password" name="password" type="password" id="password" class="form-control">
             <label for="password">Your password</label>
           </div>
 
-          <!-- Material input email -->
+          <!-- Input password confirmation -->
           <div class="md-form">
             <i class="fa fa-exclamation-triangle prefix grey-text"></i>
-            <input type="email" id="passwordConfirm" class="form-control">
+            <input [(ngModel)]="passwordConfirmation" name="passwordConfirmation" type="password" id="passwordConfirm" class="form-control">
             <label for="passwordConfirm">Confirm your password</label>
           </div>
+        </div>
+
+        <!-- Error alert -->
+        <div *ngIf="errorMessage" class="alert alert-danger" role="alert">
+          {{errorMessage}}
         </div>
 
         <!-- Second step of the form -->
@@ -101,7 +106,9 @@
         </div>
 
         <div class="text-center mt-4">
-          <button class="btn btn-default" type="submit" (click)="changeStep()">Next</button>
+          <a class="btn btn-default" (click)="firstStepVerification()" [hidden]="!step1" >Next</a>
+          <a class="btn btn-default" (click)="changeStep()" [hidden]="step1" >Back</a>
+          <button class="btn btn-default" type="" [hidden]="step1" >Sign Up</button>
         </div>
 
       </form>
@@ -111,7 +118,7 @@
 
       <div class="row justify-content-center">
         <!-- Forgotten password -->
-        <a class="text-link px-3" [routerLink]="['/authentification']" ><h6>Back</h6></a>
+        <p class="font-small grey-text d-flex justify-content-end mt-3">Already have an account ? <a [routerLink]="['/authentification']" class="dark-grey-text ml-1 font-weight-bold text-link"> Sign in</a></p>
         <!--<a class="px-2 fa-lg email-ic"><i class="fa fa-envelope"> </i></a>-->
       </div>
 
