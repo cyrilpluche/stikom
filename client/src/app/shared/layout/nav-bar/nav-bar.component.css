@@ -1,0 +1,14 @@
+/* LIGHT BLACK #222222 */
+
+.navbar-brand {
+  max-width: 2%;
+  height: auto;
+}
+
+.navbar {
+  background-color: white !important;
+}
+
+.navbar a{
+  color: #222222 !important;
+}
