@@ -67,6 +67,7 @@ CREATE TABLE public.member(
 	member_mail         VARCHAR (255) NOT NULL ,
 	member_password     VARCHAR (255) NOT NULL ,
 	member_admin        INT   ,
+	member_valid        INT  NOT NULL ,
 	sub_department_id   INT  NOT NULL  ,
 	CONSTRAINT member_PK PRIMARY KEY (member_id)
 )WITHOUT OIDS;
