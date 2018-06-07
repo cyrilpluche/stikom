@@ -18,6 +18,18 @@ const policies = {
         // will check if the user has right to do what he aimed to do
         // TODO maybe split this function into differents function to handle different level of right
     },
+    checkParameters (expectedParameter) {
+        return function (req, res, next) {
+            let conform = true
+            for (let i = 0; i < expectedParameter.length; i++) {
+                if (req.body[expectedParameter[i]] === undefined) {
+                    conform = false
+                }
+            }
+            if (conform) next()
+            else next(ERROR_TYPE.MISSING_PARAMETER)
+        }
+    },
     test: function (test) { // just a test
         return function (req, res, next) {
             req.body.age = 10
