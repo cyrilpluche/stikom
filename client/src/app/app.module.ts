@@ -26,7 +26,7 @@ const routes: Routes = [
   {path: 'home', component: HomeComponent},
   {path: 'account', component: AccountComponent},
   {path: 'authentification', component: AuthentificationComponent},
-  {path: 'sign-up', component: SignUpComponent}
+  {path: 'sign-up', component: SignUpComponent},
   {path: 'authentification', component: AuthentificationComponent},
   {path: 'sop-list', component: SopListComponent}
 ];
