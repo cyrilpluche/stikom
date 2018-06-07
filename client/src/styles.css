@@ -1,1 +1,52 @@
 /* You can add global styles to this file, and also import other style files */
+
+/* BLUE #085193 */
+/* YELLOW #fcd004 */
+
+body {
+  background-color: #fafafa;
+}
+
+/* ---------- ROWS ---------- */
+.row-first {
+  margin-top: 5%;
+}
+/* ---------- /ROWS ---------- */
+
+/* ---------- COL ---------- */
+.col-padding-1 {
+  padding-left: 5%;
+  padding-right: 5%;
+}
+/* ---------- /COL ---------- */
+
+/* ---------- BUTTONS ---------- */
+.btn-default {
+  background-color: #085193 !important;
+}
+/* ---------- /BUTTONS ---------- */
+
+/* ---------- BUTTONS ---------- */
+input :hover {
+  background-color: #085193 !important;
+}
+/* ---------- /BUTTONS ---------- */
+
+/* ---------- FORM ---------- */
+form label.active {
+  color: #085193 !important;
+}
+
+input:focus {
+  box-shadow: 0 1px 0 0 #085193 !important;
+  border-color: #085193 !important;
+}
+/* ---------- /FORM ---------- */
+
+/* ---------- TEXT ---------- */
+.text-link {
+  color: #ffa701 !important;
+}
+/* ---------- /TEXT ---------- */
+
+
