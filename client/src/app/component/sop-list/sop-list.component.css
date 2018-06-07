@@ -1,0 +1,28 @@
+@media (min-width: 540px)
+{
+  .list-sop-pan
+  {
+    padding-top: 5px;
+  }
+}
+@media (min-width: 768px)
+{
+  .list-sop-pan
+  {
+    padding-top: 10px;
+  }
+}
+@media (min-width: 1200px){
+  .list-sop-pan
+  {
+    padding-top: 20px;
+  }
+}
+.md-form
+{
+  margin-bottom: 20px;
+  margin-top: 0;
+}
+
+
+

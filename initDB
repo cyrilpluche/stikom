@@ -1,0 +1,335 @@
+------------------------------------------------------------
+--        Script Postgre
+------------------------------------------------------------
+
+
+
+------------------------------------------------------------
+-- Table: role
+------------------------------------------------------------
+CREATE TABLE public.role(
+	role_id      SERIAL NOT NULL ,
+	role_title   VARCHAR (50) NOT NULL  ,
+	CONSTRAINT role_PK PRIMARY KEY (role_id)
+)WITHOUT OIDS;
+
+
+------------------------------------------------------------
+-- Table: organisation
+------------------------------------------------------------
+CREATE TABLE public.organisation(
+	organisation_id     SERIAL NOT NULL ,
+	organisation_name   VARCHAR (50) NOT NULL  ,
+	CONSTRAINT organisation_PK PRIMARY KEY (organisation_id)
+)WITHOUT OIDS;
+
+
+------------------------------------------------------------
+-- Table: branch
+------------------------------------------------------------
+CREATE TABLE public.branch(
+	branch_id         SERIAL NOT NULL ,
+	branch_name       VARCHAR (255) NOT NULL ,
+	organisation_id   INT  NOT NULL  ,
+	CONSTRAINT branch_PK PRIMARY KEY (branch_id)
+)WITHOUT OIDS;
+
+
+------------------------------------------------------------
+-- Table: department
+------------------------------------------------------------
+CREATE TABLE public.department(
+	department_id     SERIAL NOT NULL ,
+	department_name   VARCHAR (255) NOT NULL ,
+	branch_id         INT  NOT NULL  ,
+	CONSTRAINT department_PK PRIMARY KEY (department_id)
+)WITHOUT OIDS;
+
+
+------------------------------------------------------------
+-- Table: sub_department
+------------------------------------------------------------
+CREATE TABLE public.sub_department(
+	sub_department_id     SERIAL NOT NULL ,
+	sub_department_name   VARCHAR (255) NOT NULL ,
+	department_id         INT  NOT NULL  ,
+	CONSTRAINT sub_department_PK PRIMARY KEY (sub_department_id)
+)WITHOUT OIDS;
+
+
+------------------------------------------------------------
+-- Table: member
+------------------------------------------------------------
+CREATE TABLE public.member(
+	member_id           SERIAL NOT NULL ,
+	member_first_name   VARCHAR (255) NOT NULL ,
+	member_name         VARCHAR (255)  ,
+	member_mail         VARCHAR (255) NOT NULL ,
+	member_password     VARCHAR (255) NOT NULL ,
+	member_admin        INT   ,
+	sub_department_id   INT  NOT NULL  ,
+	CONSTRAINT member_PK PRIMARY KEY (member_id)
+)WITHOUT OIDS;
+
+
+------------------------------------------------------------
+-- Table: job
+------------------------------------------------------------
+CREATE TABLE public.job(
+	job_id     SERIAL NOT NULL ,
+	job_name   VARCHAR (255) NOT NULL  ,
+	CONSTRAINT job_PK PRIMARY KEY (job_id)
+)WITHOUT OIDS;
+
+
+------------------------------------------------------------
+-- Table: unit
+------------------------------------------------------------
+CREATE TABLE public.unit(
+	unit_id     SERIAL NOT NULL ,
+	unit_name   VARCHAR (255) NOT NULL  ,
+	CONSTRAINT unit_PK PRIMARY KEY (unit_id)
+)WITHOUT OIDS;
+
+
+------------------------------------------------------------
+-- Table: sop
+------------------------------------------------------------
+CREATE TABLE public.sop(
+	sop_id                    SERIAL NOT NULL ,
+	sop_title                 VARCHAR (255)  ,
+	sop_creation              DATE   ,
+	sop_revision              DATE   ,
+	sop_published             DATE   ,
+	sop_approvment            VARCHAR (255)  ,
+	sop_rules                 VARCHAR (2000)   ,
+	sop_warning               VARCHAR (2000)   ,
+	sop_staff_qualification   VARCHAR (2000)  NOT NULL ,
+	sop_tools                 VARCHAR (2000)  NOT NULL ,
+	sop_type_reports          VARCHAR (2000)  NOT NULL ,
+	sop_objectives            VARCHAR (2000)  NOT NULL  ,
+	CONSTRAINT sop_PK PRIMARY KEY (sop_id)
+)WITHOUT OIDS;
+
+
+------------------------------------------------------------
+-- Table: project
+------------------------------------------------------------
+CREATE TABLE public.project(
+	project_id          SERIAL NOT NULL ,
+	project_title       VARCHAR (255)  ,
+	project_code        VARCHAR (255)  ,
+	project_work_code   VARCHAR (255)  ,
+	sub_department_id   INT  NOT NULL ,
+	sop_id              INT  NOT NULL  ,
+	CONSTRAINT project_PK PRIMARY KEY (project_id)
+)WITHOUT OIDS;
+
+
+------------------------------------------------------------
+-- Table: has_role
+------------------------------------------------------------
+CREATE TABLE public.has_role(
+	member_id   INT  NOT NULL ,
+	role_id     INT  NOT NULL  ,
+	CONSTRAINT has_role_PK PRIMARY KEY (member_id,role_id)
+)WITHOUT OIDS;
+
+
+------------------------------------------------------------
+-- Table: member_unit_project
+------------------------------------------------------------
+CREATE TABLE public.member_unit_project(
+	unit_id      INT  NOT NULL ,
+	project_id   INT  NOT NULL ,
+	member_id    INT  NOT NULL  ,
+	CONSTRAINT member_unit_project_PK PRIMARY KEY (unit_id,project_id,member_id)
+)WITHOUT OIDS;
+
+
+------------------------------------------------------------
+-- Table: sop_needs_unit
+------------------------------------------------------------
+CREATE TABLE public.sop_needs_unit(
+	sop_id    INT  NOT NULL ,
+	unit_id   INT  NOT NULL  ,
+	CONSTRAINT sop_needs_unit_PK PRIMARY KEY (sop_id,unit_id)
+)WITHOUT OIDS;
+
+
+------------------------------------------------------------
+-- Table: activity
+------------------------------------------------------------
+CREATE TABLE public.activity(
+	activity_id              SERIAL NOT NULL ,
+	activity_type_duration   VARCHAR (255)  ,
+	activity_duration        INT   ,
+	activity_type            VARCHAR (255)  ,
+	activity_type_output     VARCHAR (255)  ,
+	activity_shape           VARCHAR (255) NOT NULL ,
+	activity_unit_id         INT  NOT NULL ,
+	job_id                   INT   ,
+	activity_id_is_next      INT  NOT NULL ,
+	sop_id                   INT  NOT NULL  ,
+	CONSTRAINT activity_PK PRIMARY KEY (activity_id)
+)WITHOUT OIDS;
+
+
+------------------------------------------------------------
+-- Table: transition
+------------------------------------------------------------
+CREATE TABLE public.transition(
+	transition_id     SERIAL NOT NULL ,
+	transition_name   VARCHAR (255) NOT NULL ,
+	unit_id           INT  NOT NULL ,
+	activity_id       INT    ,
+	CONSTRAINT transition_PK PRIMARY KEY (transition_id)
+)WITHOUT OIDS;
+
+
+------------------------------------------------------------
+-- Table: execute
+------------------------------------------------------------
+CREATE TABLE public.execute(
+	activity_id   INT  NOT NULL ,
+	unit_id       INT  NOT NULL  ,
+	CONSTRAINT execute_PK PRIMARY KEY (activity_id,unit_id)
+)WITHOUT OIDS;
+
+
+------------------------------------------------------------
+-- Table: member_activity_project
+------------------------------------------------------------
+CREATE TABLE public.member_activity_project(
+	project_id          INT  NOT NULL ,
+	member_id           INT  NOT NULL ,
+	activity_id         INT  NOT NULL ,
+	target_date         DATE   ,
+	date_begin          DATE   ,
+	evaluation          VARCHAR (2000)   ,
+	finished_date       DATE   ,
+	sign                VARCHAR (2000)   ,
+	note                VARCHAR (2000)   ,
+	target_quantity     INT  NOT NULL ,
+	finished_quantity   INT  NOT NULL ,
+	finished_duration   INT  NOT NULL  ,
+	CONSTRAINT member_activity_project_PK PRIMARY KEY (project_id,member_id,activity_id)
+)WITHOUT OIDS;
+
+
+
+
+ALTER TABLE public.branch
+	ADD CONSTRAINT branch_organisation0_FK
+	FOREIGN KEY (organisation_id)
+	REFERENCES public.organisation(organisation_id);
+
+ALTER TABLE public.department
+	ADD CONSTRAINT department_branch0_FK
+	FOREIGN KEY (branch_id)
+	REFERENCES public.branch(branch_id);
+
+ALTER TABLE public.sub_department
+	ADD CONSTRAINT sub_department_department0_FK
+	FOREIGN KEY (department_id)
+	REFERENCES public.department(department_id);
+
+ALTER TABLE public.member
+	ADD CONSTRAINT member_sub_department0_FK
+	FOREIGN KEY (sub_department_id)
+	REFERENCES public.sub_department(sub_department_id);
+
+ALTER TABLE public.project
+	ADD CONSTRAINT project_sub_department0_FK
+	FOREIGN KEY (sub_department_id)
+	REFERENCES public.sub_department(sub_department_id);
+
+ALTER TABLE public.project
+	ADD CONSTRAINT project_sop1_FK
+	FOREIGN KEY (sop_id)
+	REFERENCES public.sop(sop_id);
+
+ALTER TABLE public.has_role
+	ADD CONSTRAINT has_role_member0_FK
+	FOREIGN KEY (member_id)
+	REFERENCES public.member(member_id);
+
+ALTER TABLE public.has_role
+	ADD CONSTRAINT has_role_role1_FK
+	FOREIGN KEY (role_id)
+	REFERENCES public.role(role_id);
+
+ALTER TABLE public.member_unit_project
+	ADD CONSTRAINT member_unit_project_unit0_FK
+	FOREIGN KEY (unit_id)
+	REFERENCES public.unit(unit_id);
+
+ALTER TABLE public.member_unit_project
+	ADD CONSTRAINT member_unit_project_project1_FK
+	FOREIGN KEY (project_id)
+	REFERENCES public.project(project_id);
+
+ALTER TABLE public.member_unit_project
+	ADD CONSTRAINT member_unit_project_member2_FK
+	FOREIGN KEY (member_id)
+	REFERENCES public.member(member_id);
+
+ALTER TABLE public.sop_needs_unit
+	ADD CONSTRAINT sop_needs_unit_sop0_FK
+	FOREIGN KEY (sop_id)
+	REFERENCES public.sop(sop_id);
+
+ALTER TABLE public.sop_needs_unit
+	ADD CONSTRAINT sop_needs_unit_unit1_FK
+	FOREIGN KEY (unit_id)
+	REFERENCES public.unit(unit_id);
+
+ALTER TABLE public.activity
+	ADD CONSTRAINT activity_job0_FK
+	FOREIGN KEY (job_id)
+	REFERENCES public.job(job_id);
+
+ALTER TABLE public.activity
+	ADD CONSTRAINT activity_activity1_FK
+	FOREIGN KEY (activity_id_is_next)
+	REFERENCES public.activity(activity_id);
+
+ALTER TABLE public.activity
+	ADD CONSTRAINT activity_sop2_FK
+	FOREIGN KEY (sop_id)
+	REFERENCES public.sop(sop_id);
+
+ALTER TABLE public.transition
+	ADD CONSTRAINT transition_unit0_FK
+	FOREIGN KEY (unit_id)
+	REFERENCES public.unit(unit_id);
+
+ALTER TABLE public.transition
+	ADD CONSTRAINT transition_activity1_FK
+	FOREIGN KEY (activity_id)
+	REFERENCES public.activity(activity_id);
+
+ALTER TABLE public.execute
+	ADD CONSTRAINT execute_activity0_FK
+	FOREIGN KEY (activity_id)
+	REFERENCES public.activity(activity_id);
+
+ALTER TABLE public.execute
+	ADD CONSTRAINT execute_unit1_FK
+	FOREIGN KEY (unit_id)
+	REFERENCES public.unit(unit_id);
+
+ALTER TABLE public.member_activity_project
+	ADD CONSTRAINT member_activity_project_project0_FK
+	FOREIGN KEY (project_id)
+	REFERENCES public.project(project_id);
+
+ALTER TABLE public.member_activity_project
+	ADD CONSTRAINT member_activity_project_member1_FK
+	FOREIGN KEY (member_id)
+	REFERENCES public.member(member_id);
+
+ALTER TABLE public.member_activity_project
+	ADD CONSTRAINT member_activity_project_activity2_FK
+	FOREIGN KEY (activity_id)
+	REFERENCES public.activity(activity_id);
