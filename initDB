@@ -337,7 +337,7 @@ ALTER TABLE public.member_activity_project
 
 
 INSERT INTO role (role_id, role_title) VALUES (1,'Project Manager');
-INSERT INTO role (role_id, role_title) VALUES (1,'Performer');
+INSERT INTO role (role_id, role_title) VALUES (2,'Performer');
 
 INSERT INTO organisation (organisation_id, organisation_name) VALUES (1,'Polytech');
 INSERT INTO organisation (organisation_id, organisation_name) VALUES (2,'Stikom Bali');
