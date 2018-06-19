@@ -342,8 +342,8 @@ INSERT INTO role (role_id, role_title) VALUES (2,'Performer');
 INSERT INTO organisation (organisation_id, organisation_name) VALUES (1,'Polytech');
 INSERT INTO organisation (organisation_id, organisation_name) VALUES (2,'Stikom Bali');
 
-INSERT INTO organisation (branch_id, branch_name, organisation_id) VALUES (1,'IT',1);
-INSERT INTO organisation (branch_id, branch_name, organisation_id) VALUES (2,'Agronomy',1);
+INSERT INTO branch (branch_id, branch_name, organisation_id) VALUES (1,'IT',1);
+INSERT INTO branch (branch_id, branch_name, organisation_id) VALUES (2,'Agronomy',1);
 
 INSERT INTO department (department_id, department_name, branch_id) VALUES (1,'IT and managment',1);
 
