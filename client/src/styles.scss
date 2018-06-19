@@ -43,7 +43,17 @@ input:focus {
 }
 /* ---------- /FORM ---------- */
 
-/* ---------- TEXT ---------- */
+/* ---------- TABLE ---------- */
+table thead{
+  background-color: #085193 !important;
+}
+/* ---------- /TABLE ---------- */
+
+/* ---------- CARD ---------- */
+
+/* ---------- /CARD ---------- */
+
+  /* ---------- TEXT ---------- */
 .text-link {
   color: #ffa701 !important;
 }
