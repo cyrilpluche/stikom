@@ -351,3 +351,15 @@ INSERT INTO sub_department (sub_department_id, sub_department_name, department_i
 
 
 
+drop function member_role(integer);
+CREATE OR REPLACE FUNCTION member_role (_member_id public.member.member_id%TYPE) RETURNS varchar  array
+AS
+$func$
+BEGIN
+RETURN array(SELECT r.role_title FROM public.role r, public.has_role h
+	WHERE h.member_id = _member_id AND r.role_id = h.role_id);
+END
+$func$ LANGUAGE plpgsql;
+SELECT M.member_name, member_role(M.member_id) FROM public.member M group by M.member_name, M.member_id
+
+

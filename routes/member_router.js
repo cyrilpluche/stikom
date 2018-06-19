@@ -21,6 +21,7 @@ router.post('/register',
                 sub_department_id: req.body.sub_department_id
             }
             modelMember.insert(member).then(function (data) {
+                // TODO send mail
                 res.json(data)
             }).catch(function (e) {
                 return Promise.reject(e)
@@ -34,11 +35,12 @@ router.post('/register',
  * before accessing to this route we check if every parameter are there and if the mail is valid
  */
 router.post('/login', policy.checkParameters(['mail', 'password']), policy.emailValidator, function (req, res, next) {
-    if (jwtHelpers.checkToken(req)){ // the user is already logged in and try to login again
+    if (jwtHelpers.jwtCheckToken(req)){ // the user is already logged in and try to login again
         next(ERRORTYPE.NO_RIGHT)
     } else {
         modelMember.match(req.body.mail, req.body.password).then(function (member) {
             let token = jwtHelpers.jwtSignMember(member)
+            member.role = undefined // we don't the client see the member role
             res.json({
                 token: token,
                 data: member
@@ -47,6 +49,19 @@ router.post('/login', policy.checkParameters(['mail', 'password']), policy.email
             next(er)
         })
     }
-})
+});
+
+
+// validate a member, an admin is required to do this action
+router.put('/validate_member', policy.requireAdmin, policy.checkParameters(['member_id']), function (req, res, next) {
+    modelMember.validate(req.body.member_id).then(function (data) {
+        res.json({
+            data: data,
+            success: true
+        })
+    }).catch(function (err) {
+        next(err)
+    })
+});
 
 module.exports = router;

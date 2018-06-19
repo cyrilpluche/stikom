@@ -46,8 +46,14 @@ export class AuthentificationComponent implements OnInit {
       let resultat;
       //Connexion code
       this._memberService.auth(this.email,this.password).subscribe(
-        resultat => {resultat = resultat},
-        err => {auth=false},() =>
+        function (res) {
+          console.log(res)
+        }, function (err) {
+          console.log(err)
+        }
+        // resultat => {resultat = resultat},
+        /*
+          err => {auth=false},() =>
         {
           if (!auth) {
             this.errorMessage = "Wrong mail or password !";
@@ -61,6 +67,8 @@ export class AuthentificationComponent implements OnInit {
 
 
         }
+         */
+
       );
 
     }
