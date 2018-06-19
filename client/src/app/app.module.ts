@@ -26,6 +26,7 @@ import { MDBBootstrapModule } from 'angular-bootstrap-md';
 const routes: Routes = [
   {path: '', component: HomeComponent},
   {path: 'home', component: HomeComponent},
+  {path: 'personal-achievement', component: PerformanceProjectComponent},
   {path: 'account', component: AccountComponent},
   {path: 'authentification', component: AuthentificationComponent},
   {path: 'sign-up', component: SignUpComponent},
