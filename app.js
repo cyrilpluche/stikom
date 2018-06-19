@@ -36,10 +36,9 @@ app.use('/static', express.static(__dirname + '/public'));
 /*
 ========================================== UTILISATION ROUTES ============================================
  */
-app.use(require('./policy/policy').test('Yate'))
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+
+app.use('/api/member', require('./routes/member_router'));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
