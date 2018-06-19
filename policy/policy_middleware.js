@@ -18,17 +18,6 @@ const policies = {
     },
 
     /**
-     * We are expected this user to get this right before accessing to a ressource
-     * @param right
-     * @returns {Function}
-     */
-    checkRight: function check (right) {
-        return check[right] || (check[right] = function (req, res, next) {
-            // will check if the user has right to do what he aimed to do
-            // TODO maybe split this function into differents function to handle different level of right
-        })
-    },
-    /**
      * Check if the required parameters are existing
      * @param expectedParameter: a table of all expected parameters
      * @returns {Function}
@@ -45,8 +34,7 @@ const policies = {
             if (conform) next();
             else next(ERROR_TYPE.MISSING_PARAMETER)
         });
-    }
-    ,
+    },
 
     /**
      * Means that only a admin can access to ressources
@@ -63,6 +51,27 @@ const policies = {
             } else {
                 next()
             }
+        })
+    },
+
+    /**
+     * We are expected this user to get this right before accessing to a ressource
+     * @param right
+     * @returns {Function}
+     */
+    requireRight: function check (right) {
+        return check[right] || (check[right] = function (req, res, next) {
+            jwtHelper.jwtDecode(req, function (err, decode) {
+                if (err) {
+                    next(ERROR_TYPE.NO_RIGHT)
+                } else if (!decode.role.includes(right)){
+                    next(ERROR_TYPE.NO_RIGHT)
+                } else {
+                    next()
+                }
+            })
+            // will check if the user has right to do what he aimed to do
+            // TODO maybe split this function into differents function to handle different level of right
         })
     },
     test: function (test) { // just a test
