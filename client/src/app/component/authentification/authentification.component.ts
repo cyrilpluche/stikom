@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import {MemberService} from '../../objects/member/member.service';
+import {Observable} from 'rxjs';
+import { Router } from '@angular/router';
 
 
 
@@ -13,12 +16,14 @@ export class AuthentificationComponent implements OnInit {
   errorMessage: string = "";
   email: string = "";
   password: string = "";
+  user: string = "";
 
   //Norme RFC2822 email validation
   emailReg = new RegExp( /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
 
 
-  constructor() { }
+  constructor(private _memberService: MemberService,
+              private router: Router) { }
 
   ngOnInit() {
   }
@@ -36,9 +41,28 @@ export class AuthentificationComponent implements OnInit {
       this.errorMessage = "Password is required";
     }
     else {
+      let user;
+      let auth=true;
+      let resultat;
       //Connexion code
-      console.log("Ok boy");
-      this.errorMessage = "";
+      this._memberService.auth(this.email,this.password).subscribe(
+        resultat => {resultat = resultat},
+        err => {auth=false},() =>
+        {
+          if (!auth) {
+            this.errorMessage = "Wrong mail or password !";
+          } else {
+            this._memberService.storeUserData(resultat.token, resultat.utilisateur);
+            setTimeout(() => {
+              this.router.navigate(['/home']);
+            }, 2000);
+
+          }
+
+
+        }
+      );
+
     }
   }
 

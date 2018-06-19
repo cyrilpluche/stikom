@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
+import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './component/home/home.component';
 import { RouterModule, Routes } from "@angular/router";
@@ -54,6 +55,7 @@ const routes: Routes = [
     SignUpComponent
   ],
   imports: [
+    HttpClientModule,
     BrowserModule,
     [RouterModule.forRoot(routes)],
     FormsModule,
