@@ -2,18 +2,32 @@ const jwtHelpers  = require('../helpers/jwtHelpers');
 const express = require('express');
 const router = express.Router();
 const modelMember = require('../models/member_model');
-const policy = require('../policy/policy_middleware')
-const ERRORTYPE = require('../policy/errorType')
-const jwtHelper = require('../helpers/jwtHelpers')
-
+const policy = require('../policy/policy_middleware');
+const ERRORTYPE = require('../policy/errorType');
+const jwtHelper = require('../helpers/jwtHelpers');
+const bcrypt = require('bcrypt');
 
 router.post('/register',
-    policy.checkParameters(['mail', 'password', 'first_name', 'name', 'admin', 'sub_departement']),
+    policy.checkParameters(['mail', 'password', 'first_name', 'name', 'admin_id', 'sub_department_id']),
     function(req, res, next) {
-        let first_name = req.body.first_name
-        let name = req.body.name
-        let mail = req.body.mail
-        res.send('Salut')
+        bcrypt.hash(req.body.password, 10).then(function (hash) {
+            let member = {
+                first_name: req.body.first_name,
+                name: req.body.name,
+                mail: req.body.mail,
+                hash_pwd: hash,
+                admin_id: req.body.admin_id,
+                member_valid: 0, // means that the member isn't valid yet
+                sub_department_id: req.body.sub_department_id
+            }
+            modelMember.insert(member).then(function (data) {
+                res.json(data)
+            }).catch(function (e) {
+                return Promise.reject(e)
+            })
+        }).catch(function (er) {
+            next(er)
+        });
 });
 
 /*
