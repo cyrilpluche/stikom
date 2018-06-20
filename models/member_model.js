@@ -11,7 +11,7 @@ const member = {
     insert: function (member) {
         return db.any('INSERT INTO public.member(\n' +
             'member_first_name, member_name, member_mail, member_password, member_admin, member_valid, sub_department_id)\n' +
-            'VALUES (${first_name}, ${name}, ${mail}, ${hash_pwd}, ${admin_id}, ${member_valid}, ${sub_department_id}) returning member_id;',
+            'VALUES (${first_name}, ${name}, ${mail}, ${hash_pwd}, ${is_admin}, ${member_valid}, ${sub_department_id}) returning member_id;',
             member)
             .then(function (data) {
                 if (data.length === 0) {
@@ -49,7 +49,7 @@ const member = {
                 } else {
                     return bcrypt.compare(password, data[0].member_password).then(function (r) {
                         if (r) {
-                            data[0].member_password = undefined // we don't want to send the pwd to the client
+                            data[0].member_password = undefined; // we don't want to send the pwd to the client
                             return data[0]
                         } else {
                             return Promise.reject(ERRORTYPE.WRONG_IDENTIFIER)

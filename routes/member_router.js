@@ -8,7 +8,7 @@ const jwtHelper = require('../helpers/jwtHelpers');
 const bcrypt = require('bcrypt');
 
 router.post('/register',
-    policy.checkParameters(['mail', 'password', 'first_name', 'name', 'admin_id', 'sub_department_id']),
+    policy.checkParameters(['mail', 'password', 'first_name', 'name', 'is_admin', 'sub_department_id']),
     function(req, res, next) {
         bcrypt.hash(req.body.password, 10).then(function (hash) {
             let member = {
@@ -16,7 +16,7 @@ router.post('/register',
                 name: req.body.name,
                 mail: req.body.mail,
                 hash_pwd: hash,
-                admin_id: req.body.admin_id,
+                is_admin: req.body.is_admin,
                 member_valid: 0, // means that the member isn't valid yet
                 sub_department_id: req.body.sub_department_id
             }

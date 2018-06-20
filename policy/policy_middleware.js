@@ -27,7 +27,7 @@ const policies = {
         return check[expectedParameter] || (check[expectedParameter] = function (req, res, next) {
             let conform = true
             for (let i = 0; i < expectedParameter.length; i++) {
-                if (req.body[expectedParameter[i]] === undefined) {
+                if (req.body[expectedParameter[i]] === undefined) { // the parameter doesn't exist
                     conform = false
                 }
             }
@@ -55,16 +55,16 @@ const policies = {
     },
 
     /**
-     * We are expected this user to get this right before accessing to a ressource
+     * We are expecting this user to get this right before accessing to a ressource
      * @param right
      * @returns {Function}
      */
-    requireRight: function check (right) {
+    requireSpecificRight: function check (right) {
         return check[right] || (check[right] = function (req, res, next) {
             jwtHelper.jwtDecode(req, function (err, decode) {
                 if (err) {
-                    next(ERROR_TYPE.NO_RIGHT)
-                } else if (!decode.role.includes(right)){
+                    next(ERROR_TYPE.INTERNAL_ERROR)
+                } else if (!decode.role || decode.role == null || !decode.role.includes(right)){
                     next(ERROR_TYPE.NO_RIGHT)
                 } else {
                     next()
