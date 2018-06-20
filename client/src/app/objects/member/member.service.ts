@@ -25,8 +25,16 @@ export class MemberService {
     return this.http.post(this.domain + '/api/member/login',body);
   }
 
-  storeUserData(token, utilisateur) {
-    localStorage.setItem('token', token);
-    localStorage.setItem('utilisateur', utilisateur.email);
+  storeUserData(token) {
+    localStorage.setItem('Token', token);
+
   }
+
+  getToken() {
+    return localStorage.getItem("Token")
+  }
+  isLoggednIn() {
+    return this.getToken() !== null;
+  }
+
 }
