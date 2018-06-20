@@ -6,12 +6,20 @@ let basicMethods = {
      * @param element: can be an object or an array
      */
     arrayContains: function (array, element) {
-        if (0 === subset.length || superset.length < subset.length) {
-            return false;
+        if (Array.isArray(element)) {
+            if (element.length === 0 || array.length < element.length) {
+                return false;
+            }
+            for(let i = 0; i < element.length; i++) {
+                if(array.indexOf(element[i]) === -1) return false;
+            }
+            return true;
+        } else {
+            console.log(element)
+            return array.includes(element)
         }
-        for(var i = 0; i < subset.length; i++) {
-            if(superset.indexOf(subset[i]) === -1) return false;
-        }
-        return true;
+
     }
 }
+
+module.exports = basicMethods

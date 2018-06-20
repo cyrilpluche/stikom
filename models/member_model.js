@@ -1,4 +1,4 @@
-const db = require('../config/db_config')
+const db = require('../config/db_config');
 const bcrypt = require('bcrypt');
 const ERRORTYPE = require('../policy/errorType');
 
@@ -11,7 +11,7 @@ const member = {
     insert: function (member) {
         return db.any('INSERT INTO public.member(\n' +
             'member_first_name, member_name, member_mail, member_password, member_admin, member_valid, sub_department_id)\n' +
-            'VALUES (${first_name}, ${name}, ${mail}, ${hash_pwd}, ${is_admin}, ${member_valid}, ${sub_department_id}) returning member_id;',
+            'VALUES (${first_name}, ${name}, ${mail}, ${hash_pwd}, ${is_admin}, ${member_valid}, ${sub_department_id}, ${seed}) returning member_id;',
             member)
             .then(function (data) {
                 if (data.length === 0) {
@@ -28,6 +28,33 @@ const member = {
                 }
             })
     },
+
+    /**
+     * check if a member match all the champ given by the object given in parameter
+     * @param member
+     * @returns {*}
+     */
+    exists (member) {
+        return db.any('SELECT * FROM public.member \n' +
+            'WHERE member_id = ${member_id} AND member_first_name = ${member_first_name}\n ' +
+            'AND member_name = ${member_name} AND member_mail = ${member_mail}\n' +
+            'AND member_admin = ${member_admin} ' +
+            'AND member_valid = ${member_valid} AND sub_department_id = ${sub_department_id}', member)
+            .then(function (data) {
+                if (data.length === 0) {
+                    return Promise.reject(ERRORTYPE.NO_RIGHT);
+                } else {
+                    return true
+                }
+            })
+            .catch(function (err) {
+                if (err.type) { // means that it comes from a then
+                    return Promise.reject(err);
+                } else {
+                    return Promise.reject(ERRORTYPE.customError('The server has encountred an internal error\n ' + err.toString()))
+                }
+            })
+    },
     /**
      * Check if the member exists and if the password match
      * @param mail
@@ -36,16 +63,14 @@ const member = {
      */
     match: function (mail, password) {
         return db.any('SELECT M.member_id, M.member_first_name, M.member_name, M.member_password, M.member_mail,\n' +
-            'M.member_admin, M.member_valid, M.sub_department_id ,member_role(M.member_id)\n' +
+            'M.member_admin, M.member_valid, M.sub_department_id ,M.seed, member_role(M.member_id)\n' +
             'FROM public.member M\n' +
             'WHERE M.member_mail = $1\n' +
             ' group by M.member_id, M.member_first_name, M.member_name, M.member_password, M.member_mail,\n' +
-            'M.member_admin, M.member_valid, M.sub_department_id ', mail)
+            'M.member_admin, M.member_valid, M.sub_department_id, M.seed', mail)
             .then(function (data) {
                 if (data.length === 0) { // if no member are found
                     return Promise.reject(ERRORTYPE.WRONG_IDENTIFIER) // reject to catch
-                } else if (data[0].member_valid === 0) { // a member needs to be valid if he wants to login
-                    return Promise.reject(ERRORTYPE.VALIDATION_REQUIRED)
                 } else {
                     return bcrypt.compare(password, data[0].member_password).then(function (r) {
                         if (r) {
@@ -64,7 +89,7 @@ const member = {
                 }
             })
     },
-    validate: function (member_id) {
+    validate_login: function (member_id) {
         return db.any('Update public.member SET member_valid = 1 WHERE member_id = $1 returning member_id', [member_id])
             .then(function (data) {
                 if (data.length === 0) {
@@ -81,7 +106,7 @@ const member = {
                 }
             })
     },
-    findOne: function () {
+    findOne: function (member_id) {
 
     },
     getAll: function () {
