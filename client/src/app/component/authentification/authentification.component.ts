@@ -54,7 +54,7 @@ export class AuthentificationComponent {
             this.router.navigate(['/home']);
           },
           error => {
-            console.log("VALIDEE : ",error);
+            console.log("ERREUR : ",error);
 
             this.errorMessage = error.error.message;
 

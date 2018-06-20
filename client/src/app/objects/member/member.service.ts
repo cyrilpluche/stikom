@@ -4,17 +4,17 @@ import { environment } from '../../../environments/environment';
 import {Observable} from 'rxjs';
 
 
-const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-};
 @Injectable({
   providedIn: 'root'
 })
 export class MemberService {
 
   domain = environment.SERVEUR_URL;
-  constructor(private http:HttpClient) {}
+  authToken;
+  httpOptions;
+  constructor(private http:HttpClient) {
 
+  }
 
   auth(mail:string, password:string){
     let body = {
@@ -22,7 +22,18 @@ export class MemberService {
       password: password
     };
     console.log("ici");
-    return this.http.post(this.domain + '/api/member/login',body);
+    this.generateHeaders();
+    return this.http.post(this.domain + '/api/member/login',body,this.httpOptions);
+  }
+
+  generateHeaders()
+  {
+    this.httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': localStorage.getItem("Token")
+      })
+    };
   }
 
   storeUserData(token) {
@@ -33,8 +44,27 @@ export class MemberService {
   getToken() {
     return localStorage.getItem("Token")
   }
-  isLoggednIn() {
-    return this.getToken() !== null;
+  async isLoggednIn() {
+    if(this.getToken() !== null)
+    {
+      let body = {
+      };
+
+      this.generateHeaders();
+      await this.http.post(this.domain + '/api/member/loggedIn',body,this.httpOptions).subscribe( (res) => {
+        console.log(res);
+        return true;
+        },
+        error => {
+          return false;
+        });
+
+
+    }else{
+      return false;
+    }
+
+
   }
 
 }
