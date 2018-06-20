@@ -2,6 +2,7 @@
 
 /* BLUE #085193 */
 /* YELLOW #fcd004 */
+/* ORANGE #ffa701 */
 
 body {
   background-color: #fafafa;
@@ -24,13 +25,45 @@ body {
 .btn-default {
   background-color: #085193 !important;
 }
-/* ---------- /BUTTONS ---------- */
 
-/* ---------- BUTTONS ---------- */
-input :hover {
-  background-color: #085193 !important;
+.btn-primary {
+  background-color: #ffa701 !important;
+}
+
+.btn-outline-default {
+  background-color: white !important;
+  border-color: #085193 !important;
+  color: #085193 !important;
+}
+
+.btn-outline-default:hover {
+  border-color: #ffa701 !important;
+  background-color: white !important;
+  color: #ffa701 !important;
+}
+
+.btn-outline-default:not([disabled]):not(.disabled):active, .btn-outline-default:not([disabled]):not(.disabled).active, .show > .btn-outline-default.dropdown-toggle { //
+  border-color: #ffa701 !important;
+  background-color: white !important;
+  color: #ffa701 !important;
+}
+
+.btn-outline-default:focus {
+  border-color: #085193 !important;
+  background-color: white !important;
+  color: #085193 !important;
 }
 /* ---------- /BUTTONS ---------- */
+
+/* ---------- SPAN ---------- */
+.badge-default {
+  background-color: #085193 !important;
+}
+
+.badge-primary {
+  background-color: #ffa701 !important;
+}
+/* ---------- /SPAN ---------- */
 
 /* ---------- FORM ---------- */
 form label.active {
@@ -38,6 +71,11 @@ form label.active {
 }
 
 input:focus {
+  box-shadow: 0 1px 0 0 #085193 !important;
+  border-color: #085193 !important;
+}
+
+textarea:focus {
   box-shadow: 0 1px 0 0 #085193 !important;
   border-color: #085193 !important;
 }
@@ -49,9 +87,11 @@ table thead{
 }
 /* ---------- /TABLE ---------- */
 
-/* ---------- CARD ---------- */
-
-/* ---------- /CARD ---------- */
+/* ---------- PAGINATION ---------- */
+.page-item.active .page-link {
+  background-color: #085193 !important;
+}
+/* ---------- /PAGINATION ---------- */
 
   /* ---------- TEXT ---------- */
 .text-link {
@@ -59,4 +99,9 @@ table thead{
 }
 /* ---------- /TEXT ---------- */
 
+/* ---------- TITLE ---------- */
+.no-margin-bottom {
+  margin-bottom: 0px;
+}
+/* ---------- /TITLE ---------- */
 

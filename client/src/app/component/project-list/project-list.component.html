@@ -1,3 +1,71 @@
-<p>
-  project-list works!
-</p>
+<div class="container">
+
+  <div class="row row-first">
+    <div class="col">
+      <button type="button" class="btn btn-outline-default waves-effect"><h6 class="no-margin-bottom"><i class="fa fa-plus mr-3"></i>New Project</h6></button>
+    </div>
+  </div>
+
+  <div class="row row-first">
+    <!-- Search form -->
+    <div class="col-5 col-sm-5 col-lg-2 text-center">
+      <input type="checkbox" class="form-check-input" id="nameSort" checked="checked">
+      <label class="form-check-label" for="nameSort">Name</label>
+    </div>
+    <div class="col">
+      <input type="checkbox" class="form-check-input" id="dateSort" checked="checked">
+      <label class="form-check-label" for="dateSort">Date</label>
+    </div>
+    <div class="col-4 md-form" id="search-bar">
+      <input class="form-control" type="text" placeholder="Search" aria-label="Search">
+    </div>
+  </div>
+
+  <div class="row justify-content-center">
+
+    <div class="col-12 card card-cascade hoverable">
+      <!--Table-->
+      <div class="card-body card-body-cascade">
+        <table class="table">
+
+          <!--Table head-->
+          <thead class="">
+          <tr class="text-white">
+            <th>Number</th>
+            <th>Name</th>
+            <th>Creation Date</th>
+            <th>Approved By</th>
+          </tr>
+          </thead>
+          <!--Table head-->
+
+          <!--Table body-->
+          <tbody>
+          <tr>
+            <th scope="row">1</th>
+            <td>Cook a chicken</td>
+            <td>18/05/2018</td>
+            <td>AGUSTA Yudi</td>
+          </tr>
+          <tr>
+            <th scope="row">2</th>
+            <td>Travel by boat</td>
+            <td>20/06/2018</td>
+            <td>Aditya</td>
+          </tr>
+          <tr>
+            <th scope="row">3</th>
+            <td>Park a car</td>
+            <td>01/06/2017</td>
+            <td>Vony</td>
+          </tr>
+          </tbody>
+          <!--Table body-->
+
+        </table>
+        <!--Table-->
+      </div>
+    </div>
+
+  </div>
+</div>

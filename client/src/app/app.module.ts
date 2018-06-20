@@ -21,6 +21,7 @@ import { FormsModule, ReactiveFormsModule, NgForm, Validators, FormBuilder } fro
 import { SignUpComponent } from './component/authentification/sign-up/sign-up.component';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
+import { SopCreationComponent } from './component/sop-list/sop-creation/sop-creation.component';
 
 
 const routes: Routes = [
@@ -30,6 +31,8 @@ const routes: Routes = [
   {path: 'authentification', component: AuthentificationComponent},
   {path: 'sign-up', component: SignUpComponent},
   {path: 'authentification', component: AuthentificationComponent},
+  {path: 'project-list', component: ProjectListComponent},
+  {path: 'sop-creation', component: SopCreationComponent},
   {path: 'sop-list', component: SopListComponent}
 ];
 
@@ -50,7 +53,8 @@ const routes: Routes = [
     ProjectListComponent,
     ProjectComponent,
     AuthentificationComponent,
-    SignUpComponent
+    SignUpComponent,
+    SopCreationComponent
   ],
   imports: [
     BrowserModule,
