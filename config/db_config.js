@@ -31,12 +31,10 @@ let dataBaseCredential = {
     password: process.env.DB_PWD,
     port: process.env.DB_PORT,
 }
-console.log(dataBaseCredential)
 let connectionString = 'postgres://' + dataBaseCredential.user +':' + dataBaseCredential.password
     + '@' + dataBaseCredential.host + ':' + dataBaseCredential.port + '/' + dataBaseCredential.name;
    /* dataBaseCredential.user + '://' + dataBaseCredential.host + ':'
     + dataBaseCredential.port+ '/' + dataBaseCredential.name */
-console.log(connectionString)
 
 // module.exports = client;
 module.exports = pgp(connectionString);

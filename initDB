@@ -63,12 +63,12 @@ CREATE TABLE public.sub_department(
 CREATE TABLE public.member(
 	member_id           SERIAL NOT NULL ,
 	member_first_name   VARCHAR (255) NOT NULL ,
-	member_name         VARCHAR (255)  ,
+	member_name         VARCHAR (255) ,
 	member_mail         VARCHAR (255) NOT NULL ,
 	member_password     VARCHAR (255) NOT NULL ,
 	member_admin        INT   ,
 	member_valid        INT  NOT NULL ,
-	sub_department_id   INT  NOT NULL  ,
+	sub_department_id   INT  NOT NULL ,
 	CONSTRAINT member_PK PRIMARY KEY (member_id)
 )WITHOUT OIDS;
 
@@ -334,3 +334,32 @@ ALTER TABLE public.member_activity_project
 	ADD CONSTRAINT member_activity_project_activity2_FK
 	FOREIGN KEY (activity_id)
 	REFERENCES public.activity(activity_id);
+
+
+INSERT INTO role (role_id, role_title) VALUES (1,'Project Manager');
+INSERT INTO role (role_id, role_title) VALUES (2,'Performer');
+
+INSERT INTO organisation (organisation_id, organisation_name) VALUES (1,'Polytech');
+INSERT INTO organisation (organisation_id, organisation_name) VALUES (2,'Stikom Bali');
+
+INSERT INTO branch (branch_id, branch_name, organisation_id) VALUES (1,'IT',1);
+INSERT INTO branch (branch_id, branch_name, organisation_id) VALUES (2,'Agronomy',1);
+
+INSERT INTO department (department_id, department_name, branch_id) VALUES (1,'IT and managment',1);
+
+INSERT INTO sub_department (sub_department_id, sub_department_name, department_id) VALUES (1,'3rd year',1);
+
+
+
+drop function member_role(integer);
+CREATE OR REPLACE FUNCTION member_role (_member_id public.member.member_id%TYPE) RETURNS varchar  array
+AS
+$func$
+BEGIN
+RETURN array(SELECT r.role_title FROM public.role r, public.has_role h
+	WHERE h.member_id = _member_id AND r.role_id = h.role_id);
+END
+$func$ LANGUAGE plpgsql;
+SELECT M.member_name, member_role(M.member_id) FROM public.member M group by M.member_name, M.member_id
+
+

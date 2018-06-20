@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
+import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './component/home/home.component';
 import { RouterModule, Routes } from "@angular/router";
@@ -27,6 +28,7 @@ import { SopCreationComponent } from './component/sop-list/sop-creation/sop-crea
 const routes: Routes = [
   {path: '', component: HomeComponent},
   {path: 'home', component: HomeComponent},
+  {path: 'personal-achievement', component: PerformanceProjectComponent},
   {path: 'account', component: AccountComponent},
   {path: 'authentification', component: AuthentificationComponent},
   {path: 'sign-up', component: SignUpComponent},
@@ -57,6 +59,7 @@ const routes: Routes = [
     SopCreationComponent
   ],
   imports: [
+    HttpClientModule,
     BrowserModule,
     [RouterModule.forRoot(routes)],
     FormsModule,
