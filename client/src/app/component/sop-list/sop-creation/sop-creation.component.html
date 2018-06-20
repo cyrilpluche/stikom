@@ -1,0 +1,158 @@
+<div class="container">
+
+  <!-- SOP Form -->
+  <div class="row row-first justify-content-center">
+
+    <!-- Card -->
+    <div class="col card card-cascade hoverable">
+
+      <!-- Card content -->
+      <div class="card-body card-body-cascade">
+
+        <p class="h4 text-center mb-4">SOP Creation</p>
+
+        <!--Pagination -->
+        <nav>
+          <ul class="pagination pg-blue justify-content-center" (click)="numberNavigation($event)" >
+
+            <!--Numbers-->
+            <li class="page-item active"><a class="page-link" (click)="changeCaption(0)">1</a></li>
+            <li class="page-item"><a class="page-link" (click)="changeCaption(1)">2</a></li>
+            <li class="page-item"><a class="page-link" (click)="changeCaption(2)">3</a></li>
+            <li class="page-item"><a class="page-link" (click)="changeCaption(3)">4</a></li>
+            <li class="page-item"><a class="page-link" (click)="changeCaption(4)">5</a></li>
+            <li class="page-item"><a class="page-link" (click)="changeCaption(5)">6</a></li>
+            <li class="page-item"><a class="page-link" (click)="changeCaption(6)">7</a></li>
+
+          </ul>
+        </nav>
+
+        <!--Title of the step-->
+        <div class="row justify-content-center">
+          <h4><span class="badge badge-pill badge-default">{{captionSelected}}</span></h4>
+        </div>
+
+        <!-- Material form login -->
+        <form (ngSubmit)="onSubmit()">
+
+          <!-- Rules -->
+          <div class="row md-form" [hidden]="stepSelected != 0">
+            <div class="col">
+              <i class="fa fa-pencil prefix grey-text"></i>
+              <textarea [(ngModel)]="newRule" name="newRule" type="text" id="rule" class="form-control md-textarea" rows="1" ></textarea>
+              <label for="rule">Rule indication</label>
+            </div>
+            <div>
+              <button class="btn btn-primary" type="button" onclick="newRule.value=''" (click)="addNewRule()">Add</button>
+            </div>
+          </div>
+
+          <!-- Unit -->
+          <div class="row md-form" [hidden]="stepSelected != 1">
+            <div class="col">
+              <i class="fa fa-pencil prefix grey-text"></i>
+              <input [(ngModel)]="newUnit" name="newUnit" type="text" id="newUnit" class="form-control">
+              <label for="newUnit">Unit name</label>
+            </div>
+            <div>
+              <button class="btn btn-primary" type="button" onclick="newUnit.value=''"  (click)="addNewUnit()">Add</button>
+            </div>
+          </div>
+
+          <!-- Warning -->
+          <div class="row md-form" [hidden]="stepSelected != 2">
+            <div class="col">
+              <i class="fa fa-pencil prefix grey-text"></i>
+              <textarea [(ngModel)]="newWarning" name="newWarning" type="text" id="warning" class="form-control md-textarea" rows="1" ></textarea>
+              <label for="warning">Warning indication</label>
+            </div>
+            <div>
+              <button class="btn btn-primary" type="button" onclick="newWarning.value=''" (click)="addNewWarning()">Add</button>
+            </div>
+          </div>
+
+          <!-- Staff Quaification -->
+          <div class="row md-form" [hidden]="stepSelected != 3">
+            <div class="col">
+              <i class="fa fa-pencil prefix grey-text"></i>
+              <textarea [(ngModel)]="newStaffQualification" name="newStaffQualification" type="text" id="newStaffQualification" class="form-control md-textarea" rows="1" ></textarea>
+              <label for="newStaffQualification">Staff qualification indication</label>
+            </div>
+            <div>
+              <button class="btn btn-primary" type="button" onclick="newStaffQualification.value=''" (click)="addNewStaffQualification()">Add</button>
+            </div>
+          </div>
+
+          <!-- Supporting tool -->
+          <div class="row md-form" [hidden]="stepSelected != 4">
+            <div class="col">
+              <i class="fa fa-pencil prefix grey-text"></i>
+              <input [(ngModel)]="newSupportingTool" name="newSupportingTool" type="text" id="newSupportingTool" class="form-control">
+              <label for="newSupportingTool">Supporting tool name</label>
+            </div>
+            <div>
+              <button class="btn btn-primary" type="button" onclick="newSupportingTool.value=''"  (click)="addNewSupportingTool()">Add</button>
+            </div>
+          </div>
+
+          <!-- Type Form Report -->
+          <div class="row md-form" [hidden]="stepSelected != 5">
+            <div class="col">
+              <i class="fa fa-pencil prefix grey-text"></i>
+              <input [(ngModel)]="newTypeFormReport" name="newTypeFormReport" type="text" id="newTypeFormReport" class="form-control">
+              <label for="newTypeFormReport">Type of form and report name</label>
+            </div>
+            <div>
+              <button class="btn btn-primary" type="button" onclick="newTypeFormReport.value=''"  (click)="addNewTypeFormReport()">Add</button>
+            </div>
+          </div>
+
+          <!-- Objective -->
+          <div class="row md-form" [hidden]="stepSelected != 6">
+            <div class="col">
+              <i class="fa fa-pencil prefix grey-text"></i>
+              <input [(ngModel)]="newObjective" name="newObjective" type="text" id="newObjective" class="form-control">
+              <label for="newObjective">Objectif indication</label>
+            </div>
+            <div>
+              <button class="btn btn-success" type="submit">Save SOP</button>
+            </div>
+          </div>
+
+        </form>
+
+      </div>
+      <!-- Card content -->
+
+    </div>
+    <!-- Card -->
+
+  </div>
+  <!-- SOP Form -->
+
+  <!--Title of the step-->
+  <div class="row row-first" [hidden]="stepSelected == 6">
+    <h4><span class="badge badge-pill badge-primary">{{captionSelected}} List</span></h4>
+  </div>
+
+  <!-- SOP Display -->
+  <div class="row justify-content-center" [hidden]="stepSelected == 6">
+
+    <!-- Card -->
+    <div class="col card card-cascade hoverable">
+
+      <!-- Card content -->
+      <div class="card-body card-body-cascade">
+
+        <ul class="list-group list-group-flush">
+          <li *ngFor="let element of elementsArray" class="list-group-item">{{element}}</li>
+        </ul>
+
+      </div>
+      <!-- Card content -->
+    </div>
+    <!-- Card -->
+
+  </div>
+  <!-- SOP Display -->
+</div>
