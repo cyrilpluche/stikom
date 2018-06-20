@@ -1,14 +1,20 @@
-const jwtHelpers  = require('../helpers/jwtHelpers');
 const express = require('express');
 const router = express.Router();
+const bcrypt = require('bcrypt');
+const tokenGenerator = new (require('uuid-token-generator'))(256); // Default is a 128-bit token encoded in base58
+
 const modelMember = require('../models/member_model');
 const policy = require('../policy/policy_middleware');
 const ERRORTYPE = require('../policy/errorType');
-const bcrypt = require('bcrypt');
+const mailSender = require('../helpers/mailSender');
+const jwtHelpers  = require('../helpers/jwtHelpers');
+
 
 router.post('/register',
     policy.checkParameters(['mail', 'password', 'first_name', 'name', 'is_admin', 'sub_department_id']),
     function(req, res, next) {
+        let seed = tokenGenerator.generate();
+        let generateLink = `${process.env.SERVER_URL}:${process.env.PORT}/api/member/validate_member/${seed}`;
         bcrypt.hash(req.body.password, 10).then(function (hash) {
             let member = {
                 first_name: req.body.first_name,
@@ -18,13 +24,23 @@ router.post('/register',
                 is_admin: req.body.is_admin,
                 member_valid: 0, // means that the member isn't valid yet
                 sub_department_id: req.body.sub_department_id,
-                seed: 'seed' // value
+                seed: seed
             }
             modelMember.insert(member).then(function (data) {
-                // TODO send mail
-                res.json(data)
+                mailSender.send(req.body.mail, 'Account created',
+                    `<h3 style="color: blue">Your account has been created with success !</h3><br><br>Click on the following link to valid your account.
+                       Yet can't connect unless an administrateur valid again your account.<br><br>
+                        <h4><a href="${generateLink}">valid my acount</a></h4>`,
+                    [], function (error, response) {
+                        if (error) {
+                            console.log(error)
+                            next(ERRORTYPE.customError(error))
+                        } else {
+                            res.json(data)
+                        }
+                    });
             }).catch(function (e) {
-                return Promise.reject(e)
+                next(e)
             })
         }).catch(function (er) {
             next(er)
@@ -58,7 +74,6 @@ router.post('/login', policy.checkParameters(['mail', 'password']),
         })
     }
 });
-
 
 // verify the token before
 router.post('/loggedIn', function (req, res, next) {
