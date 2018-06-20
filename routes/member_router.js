@@ -4,7 +4,6 @@ const router = express.Router();
 const modelMember = require('../models/member_model');
 const policy = require('../policy/policy_middleware');
 const ERRORTYPE = require('../policy/errorType');
-const jwtHelper = require('../helpers/jwtHelpers');
 const bcrypt = require('bcrypt');
 
 router.post('/register',
