@@ -77,7 +77,6 @@
           <div class="md-form">
             <select [(ngModel)]="branchChoosen" name="branch" class="form-control" [disabled]="!branchEnabled" (change)="enableDepartment()" >
               <option value="" disabled selected>Choose a branch</option>
-              <option value="blank">No branch</option>
               <option *ngFor="let branch of branchs" [ngValue]=branch.branch_id>{{branch.branch_name}}</option>
             </select>
           </div>
@@ -86,7 +85,6 @@
           <div class="md-form">
             <select [(ngModel)]="departmentChoosen" name="department" class="form-control mdb-select" [disabled]="!departmentEnabled" (change)="enableSubDepartment()" >
               <option value="" disabled selected>Choose department</option>
-              <option value="blank">No department</option>
               <option *ngFor="let department of departments" [ngValue]=department.department_id>{{department.department_name}}</option>
 
             </select>
@@ -96,7 +94,6 @@
           <div class="md-form">
             <select [(ngModel)]="subDepartmentChoosen" name="subDepartment" class="form-control mdb-select" [disabled]="!subDepartmentEnabled" >
               <option value="" disabled selected>Choose sub-department</option>
-              <option value="blank">No sub-department</option>
               <option *ngFor="let subDepartment of subDepartments" [ngValue]=subDepartment.sub_department_id>{{subDepartment.sub_department_name}}</option>
             </select>
           </div>
