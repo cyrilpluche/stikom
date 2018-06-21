@@ -44,7 +44,7 @@ const member = {
                 if (data.length === 0) {
                     return Promise.reject(ERRORTYPE.NO_RIGHT);
                 } else {
-                    return true
+                    return data[0]
                 }
             })
             .catch(function (err) {
