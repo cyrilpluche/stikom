@@ -7,7 +7,7 @@ let department = {
             .then(function (data) {
                 if (data.length === 0) {
                     throw ERRORTYPE.customError('Error: The branch you are searching doesn\'t exist or \n there aren\'t' +
-                        'any department in it', 'NOT EXISTS', 404)
+                        ' any department in it', 'NOT EXISTS', 404)
                 } else {
                     return data
                 }
