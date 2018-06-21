@@ -92,15 +92,14 @@ const member = {
     /**
      * valid a member
      * @param member_id
-     * @param valid: state in which we valid the user:
      *  - 1 the user can connect
      *  - 0 the user hasn't validate his mail yet
      *  - 2 the user has validate his mail
      * @returns {*}
      */
-    validate_login: function (member_id, valid) {
-        return db.any('Update public.member SET member_valid = $2, seed = NULL WHERE member_id = $1 returning member_id',
-            [member_id, valid])
+    validate_login: function (member_id) {
+        return db.any('Update public.member SET member_valid = 1 WHERE member_id = $1 returning member_id',
+            [member_id])
             .then(function (data) {
                 if (data.length === 0) {
                     throw ERRORTYPE.MEMBER_NOT_FOUND
@@ -117,6 +116,32 @@ const member = {
             })
     },
 
+    /**
+     *
+     * @param seed
+     */
+    validate_seed (seed) {
+        return db.any('Update public.member SET member_valid = 2, seed = NULL WHERE seed = $1 returning member_id',
+            [seed]).then(function (data) {
+            if (data.length === 0) {
+                throw ERRORTYPE.MEMBER_NOT_FOUND
+            } else {
+                return data[0]
+            }
+        }).catch(function (err) {
+            if (err.type) { // means that it comes from a then
+                throw err
+            } else {
+                throw ERRORTYPE.customError('The server has encountred an internal error\n ' + err.toString())
+            }
+        })
+    },
+
+    /**
+     * check if an user exists according to the mail
+     * @param mail
+     * @returns {*}
+     */
     existByMail (mail) {
         return db.any('SELECT member_id FROM public.member WHERE member_mail = $1', mail)
             .then(function (data) {
@@ -125,8 +150,28 @@ const member = {
                 throw ERRORTYPE.customError('The server has encountred an internal error\n ' + err.toString())
             })
     },
+    existsBySeed (seed) {
+        return db.any('SELECT member_id FROM public.member WHERE seed = $1', seed).then(function (data) {
+            return data.length !== 0
+        }).catch(function (err) {
+            throw ERRORTYPE.customError('The server has encountred an internal error\n ' + err.toString())
+        })
+    },
     findOne: function (member_id) {
-
+        return db.any('SELECT * FROM public.member WHERE member_id = $1', [member_id])
+            .then(function (data) {
+                if (data.length === 0) {
+                    throw ERRORTYPE.MEMBER_NOT_FOUND
+                } else {
+                    return data[0]
+                }
+            }).catch(function (err) {
+                if (err.type) { // means that it comes from a then
+                    throw (err)
+                } else {
+                    throw (ERRORTYPE.customError('The server has encountred an internal error\n ' + err.toString()))
+                }
+            })
     },
     selectAll: function () {
         

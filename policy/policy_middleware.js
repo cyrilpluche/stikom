@@ -48,9 +48,9 @@ const policies = {
     requireAdmin: function (req, res, next) {
         jwtHelper.jwtDecode(req, function (err, decode) {
             if (err) {
-                next(ERROR_TYPE.NO_RIGHT)
+                next(ERROR_TYPE.FORBIDDEN)
             } else if (decode.member_admin === 0){
-                next(ERROR_TYPE.NO_RIGHT)
+                next(ERROR_TYPE.FORBIDDEN)
             } else {
                 next()
             }
@@ -65,12 +65,11 @@ const policies = {
     requireSpecificRight: function check (right) {
         return check[right] || (check[right] = function (req, res, next) {
             jwtHelper.jwtDecode(req, function (err, decode) {
-                console.log(decode)
                 if (err) {
-                    next(ERROR_TYPE.INTERNAL_ERROR)
+                    next(ERROR_TYPE.FORBIDDEN)
                 } else if (decode.member_role === undefined || decode.member_role == null
                     || !basicMethods.arrayContains(decode.member_role, right)){
-                    next(ERROR_TYPE.NO_RIGHT)
+                    next(ERROR_TYPE.FORBIDDEN)
                 } else {
                     next()
                 }

@@ -337,8 +337,7 @@ ALTER TABLE public.member_activity_project
 	REFERENCES public.activity(activity_id);
 
 
-INSERT INTO role (role_title) VALUES ('Project Manager');
-INSERT INTO role (role_title) VALUES ('Performer');
+INSERT INTO role ( role_title) VALUES ('Project Manager'),('Performer'),('Planner');
 
 INSERT INTO organisation ( organisation_name) VALUES ('Polytech');
 INSERT INTO organisation ( organisation_name) VALUES ('Stikom Bali');
