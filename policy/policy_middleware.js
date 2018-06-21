@@ -1,7 +1,8 @@
 // contains middleware that will check some condition before giving acces to other
 const validator = require("email-validator");
 const ERROR_TYPE = require('./errorType');
-const jwtHelper = require('../helpers/jwtHelpers')
+const jwtHelper = require('../helpers/jwtHelpers');
+const basicMethods = require('../helpers/basicMethodsHelper');
 
 
 const policies = {
@@ -56,15 +57,17 @@ const policies = {
 
     /**
      * We are expecting this user to get this right before accessing to a ressource
-     * @param right
+     * @param right: an  array of String or a simple String
      * @returns {Function}
      */
     requireSpecificRight: function check (right) {
         return check[right] || (check[right] = function (req, res, next) {
             jwtHelper.jwtDecode(req, function (err, decode) {
+                console.log(decode)
                 if (err) {
                     next(ERROR_TYPE.INTERNAL_ERROR)
-                } else if (!decode.role || decode.role == null || !decode.role.includes(right)){
+                } else if (decode.member_role === undefined || decode.member_role == null
+                    || !basicMethods.arrayContains(decode.member_role, right)){
                     next(ERROR_TYPE.NO_RIGHT)
                 } else {
                     next()
@@ -74,6 +77,7 @@ const policies = {
             // TODO maybe split this function into differents function to handle different level of right
         })
     },
+
     test: function (test) { // just a test
         return function (req, res, next) {
             req.body.age = 10

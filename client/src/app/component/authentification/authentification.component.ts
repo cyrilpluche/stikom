@@ -5,12 +5,13 @@ import { Router } from '@angular/router';
 
 
 
+
 @Component({
   selector: 'app-authentification',
   templateUrl: './authentification.component.html',
   styleUrls: ['./authentification.component.css']
 })
-export class AuthentificationComponent implements OnInit {
+export class AuthentificationComponent {
 
   /* ----- Data ----- */
   errorMessage: string = "";
@@ -31,6 +32,7 @@ export class AuthentificationComponent implements OnInit {
 
 
   onSubmit() {
+    this.errorMessage ="";
     if (this.email == null || this.email == "") {
       this.errorMessage = "Email is required.";
     }
@@ -44,44 +46,23 @@ export class AuthentificationComponent implements OnInit {
       let user;
       let auth=true;
       let resultat;
-      //Connexion code
-      this._memberService.auth(this.email,this.password).subscribe(
-        function (res) {
-          console.log(res)
-        }, function (err) {
-          console.log(err)
-        }
-        // resultat => {resultat = resultat},
-        /*
-          err => {auth=false},() =>
-        {
-          if (!auth) {
-            this.errorMessage = "Wrong mail or password !";
-          } else {
-            this._memberService.storeUserData(resultat.token, resultat.utilisateur);
-            setTimeout(() => {
-              this.router.navigate(['/home']);
-            }, 2000);
 
-          }
+      this._memberService.auth(this.email,this.password)
+        .subscribe( (res) => {
+            this.errorMessage = "";
+            this._memberService.storeUserData(res['token']);
+            this.router.navigate(['/home']);
+          },
+          error => {
+            console.log("ERREUR : ",error);
+
+            this.errorMessage = error.error.message;
 
 
-        }
-         */
 
-      );
+          });
 
     }
   }
-
-  /*
-  private connexion(){
-    if(localStorage.getItem('Token')){
-      this.route.navigate(['/accueil']);
-    }else{
-      this.reset();
-      this.errorMessage = "Erreur de connexion";
-    }
-  }*/
 
 }
