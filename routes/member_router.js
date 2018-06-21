@@ -94,7 +94,10 @@ router.post('/loggedIn', function (req, res, next) {
             seed: decode.seed
         }
         modelMember.exists(member).then(function (data) {
-            res.send(data);
+            data.member_password = undefined
+            data.member_admin = undefined
+            data.seed = undefined
+            res.send({data: data});
         }).catch(function (e) {
             next(e);
         });
