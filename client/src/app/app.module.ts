@@ -26,6 +26,8 @@ import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { SopCreationComponent } from './component/sop-list/sop-creation/sop-creation.component';
 import { ConfirmationComponent } from './shared/modals/confirmation/confirmation.component';
 import { SummaryComponent } from './shared/summary/summary.component';
+import { SopComponent} from "./component/sop-list/sop/sop.component";
+import { ProjectCreationComponent } from './component/project-list/project-creation/project-creation.component';
 
 
 const routes: Routes = [
@@ -38,7 +40,8 @@ const routes: Routes = [
   {path: 'authentification', component: AuthentificationComponent},
   {path: 'project-list', component: ProjectListComponent},
   {path: 'sop-creation', component: SopCreationComponent},
-  {path: 'sop-list', component: SopListComponent}
+  {path: 'sop-list', component: SopListComponent},
+  {path: 'project-creation', component: ProjectCreationComponent}
 ];
 
 @NgModule({
@@ -61,8 +64,9 @@ const routes: Routes = [
     SignUpComponent,
     SopCreationComponent,
     SummaryComponent,
-    SopCreationComponent,
-    ConfirmationComponent
+    ConfirmationComponent,
+    SopComponent,
+    ProjectCreationComponent
   ],
   imports: [
     HttpClientModule,

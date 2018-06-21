@@ -83,6 +83,10 @@ export class SopCreationComponent implements OnInit {
     else if (this.stepSelected==6) {
       this.elementsArray = this.typesFormsReports;
     }
+    else if (this.stepSelected==7){
+      this.fieldVerification();
+    }
+
     this.numberNavigation($event, stepNumber);
   }
 
@@ -147,6 +151,16 @@ export class SopCreationComponent implements OnInit {
 
   // ---------------- FORM VALIDATION ---------------- //
   // ---------------- FORM VALIDATION ---------------- //
+  fakeNext() {
+    if (this.newTitle != "") {
+      document.getElementById('nextArrow').click();
+    }
+    else {
+      this.fieldVerification();
+    }
+  }
+
+
   fieldVerification () {
     if (this.newTitle == ""){
       this.errorMessage = "SOP title name is required.";
@@ -178,13 +192,18 @@ export class SopCreationComponent implements OnInit {
     console.log("Form ok.");
   }
 
+  addSop(add) {
+    if (add) {
+      console.log("Form added");
+    }
+  }
+
   // Active management of the number navigation background
   numberNavigation($event, stepName){
     let clickedElement = $event.target || $event.srcElement;
 
     if (clickedElement.className == "page-link" || (clickedElement.className == "page-link no-hover fa fa-arrow-right" && this.stepSelected < 8) || (clickedElement.className == "page-link no-hover fa fa-arrow-left" && this.stepSelected > -1)){
       let currentNumberActive = clickedElement.parentElement.parentElement.querySelector(".active");
-
       if (currentNumberActive) {
         currentNumberActive.classList.remove("active");
       }
@@ -201,7 +220,6 @@ export class SopCreationComponent implements OnInit {
         let id = "#" + stepName.split(" ")[0];
         document.querySelector(id).className += " active";
       }
-
     }
 
 
