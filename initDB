@@ -69,6 +69,7 @@ CREATE TABLE public.member(
 	member_admin        INT   ,
 	member_valid        INT  NOT NULL ,
 	sub_department_id   INT  NOT NULL ,
+	seed                 VARCHAR (255) ,
 	CONSTRAINT member_PK PRIMARY KEY (member_id)
 )WITHOUT OIDS;
 
@@ -342,12 +343,17 @@ INSERT INTO role (role_id, role_title) VALUES (2,'Performer');
 INSERT INTO organisation (organisation_id, organisation_name) VALUES (1,'Polytech');
 INSERT INTO organisation (organisation_id, organisation_name) VALUES (2,'Stikom Bali');
 
-INSERT INTO branch (branch_id, branch_name, organisation_id) VALUES (1,'IT',1);
-INSERT INTO branch (branch_id, branch_name, organisation_id) VALUES (2,'Agronomy',1);
+INSERT INTO branch (branch_id, branch_name, organisation_id) VALUES (1,'default',1);
+INSERT INTO branch (branch_id, branch_name, organisation_id) VALUES (2,'IT',1);
+INSERT INTO branch (branch_id, branch_name, organisation_id) VALUES (3,'Agronomy',1);
+INSERT INTO branch (branch_id, branch_name, organisation_id) VALUES (4,'default',2);
+INSERT INTO branch (branch_id, branch_name, organisation_id) VALUES (5,'Robotic',2);
 
-INSERT INTO department (department_id, department_name, branch_id) VALUES (1,'IT and managment',1);
+INSERT INTO department (department_id, department_name, branch_id) VALUES (1,'default',1);
+INSERT INTO department (department_id, department_name, branch_id) VALUES (2,'IT and managment',1);
 
-INSERT INTO sub_department (sub_department_id, sub_department_name, department_id) VALUES (1,'3rd year',1);
+INSERT INTO sub_department (sub_department_id, sub_department_name, department_id) VALUES (1,'default',1);
+INSERT INTO sub_department (sub_department_id, sub_department_name, department_id) VALUES (2,'3rd year',1);
 
 INSERT INTO sop(sop_id, sop_title, sop_creation, sop_revision, sop_published, sop_approvment, sop_rules, sop_staff_qualification, sop_tools, sop_type_reports, sop_objectives)
 VALUES (1, 'Prepare the summer', DATE(now()), DATE(now()), DATE(now()), 'AGUSTA Yudi', 'Clean rooms.<br>Set up computers.<br> Smile.', 'Teacher.<br> Security.<br>', 'Computer', 'Poster', 'Everybody say cheese !');
