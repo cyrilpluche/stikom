@@ -10,7 +10,6 @@ import {Observable} from 'rxjs';
 export class MemberService {
 
   domain = environment.SERVEUR_URL;
-  authToken;
   httpOptions;
   constructor(private http:HttpClient) {
 
@@ -21,9 +20,21 @@ export class MemberService {
       mail: mail,
       password: password
     };
-    console.log("ici");
     this.generateHeaders();
     return this.http.post(this.domain + '/api/member/login',body,this.httpOptions);
+  }
+
+  register(mail:string, password:string,first_name:string, name:string, is_admin:string,sub_department_id:string ){
+    let body = {
+      mail: mail,
+      password: password,
+      first_name:first_name,
+      name:name,
+      is_admin:is_admin,
+      sub_department_id:sub_department_id
+    };
+    this.generateHeaders();
+    return this.http.post(this.domain + '/api/member/register',body,this.httpOptions);
   }
 
   generateHeaders()

@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import {MemberService} from '../../../objects/member/member.service';
+import { Router } from '@angular/router';
+import {OrganisationService} from "../../../objects/organisation/organisation.service";
+import {Organisation} from "../../../objects/organisation/organisation";
 
 @Component({
   selector: 'app-sign-up',
@@ -9,6 +13,7 @@ export class SignUpComponent implements OnInit {
 
   /* ----- Data ----- */
   step1: boolean = true;
+  step2: boolean = false;
   branchEnabled: boolean = false;
   departmentEnabled: boolean = false;
   subDepartmentEnabled: boolean = false;
@@ -20,34 +25,60 @@ export class SignUpComponent implements OnInit {
   password: string = "";
   passwordConfirmation: string = "";
 
+  organisation: [Organisation];
   organisationChoosen: string = "";
   branchChoosen: string = "";
   departmentChoosen: string = "";
   subDepartmentChoosen: string = "";
 
   errorMessage: string = "";
+  displayEnd : boolean = false;
 
   //Norme RFC2822 email validation
   emailReg = new RegExp( /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
 
 
-  constructor() { }
+  constructor(private _memberService: MemberService,
+              private _organisationService: OrganisationService,
+              private router: Router) { }
 
   ngOnInit() {
+
   }
 
-  onSubmit() {
+  onSubmitRegistration() {
     if (this.organisationChoosen == "") {
       this.errorMessage = "Organisation name required.";
     }
     else {
-      console.log("Sign up ok.");
-      this.errorMessage = "";
+
+      //this._memberService.register(this.email,this.password,this.firstName, this.lastName, "0",this.subDepartmentChoosen)
+      this._memberService.register(this.email,this.password,this.firstName, this.lastName, "0","1")
+        .subscribe( (res) => {
+            this.errorMessage = "";
+            this.step1 = false;
+            this.step2 = false;
+            this.displayEnd = true;
+            this.errorMessage = "";
+
+          },
+          error => {
+            console.log("ERREUR : ",error);
+
+            this.errorMessage = error.error.message;
+
+
+
+          });
+
     }
   }
 
+
+
   changeStep() {
-    this.step1 = true;
+    this.step1 = !this.step1;
+    this.step2 = !this.step2;
     this.errorMessage = "";
   }
 
@@ -78,6 +109,7 @@ export class SignUpComponent implements OnInit {
     else {
       //Connexion code
       this.step1 = false;
+      this.step2 = true;
       console.log("Next");
       this.errorMessage = "";
     }
@@ -115,5 +147,6 @@ export class SignUpComponent implements OnInit {
       }
     }
   }
+
 
 }

@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" [hidden]="displayEnd">
   <div class="row row-first justify-content-center">
 
     <!-- Card -->
@@ -8,8 +8,9 @@
       <div class="card-body card-body-cascade">
 
       <!-- Material form register -->
-      <form (ngSubmit)="onSubmit()">
-        <p class="h4 text-center mb-4">Sign up</p>
+      <form (ngSubmit)="onSubmitRegistration()">
+        <p class="h4 text-center mb-4" [hidden]="displayEnd">Sign up</p>
+        <p class="h4 text-center mb-4" [hidden]="!displayEnd">Welcome</p>
 
         <!-- First step of the form -->
         <div [hidden]="!step1">
@@ -63,7 +64,7 @@
         </div>
 
         <!-- Second step of the form -->
-        <div class="form-group" [hidden]="step1">
+        <div class="form-group" [hidden]="step2">
 
           <!-- Organisation -->
           <div class="md-form">
@@ -105,10 +106,12 @@
           </div>
         </div>
 
+
+
         <div class="text-center mt-4">
           <a class="btn btn-default" (click)="firstStepVerification()" [hidden]="!step1" >Next</a>
-          <a class="btn btn-default" (click)="changeStep()" [hidden]="step1" >Back</a>
-          <button class="btn btn-default" type="" [hidden]="step1" >Sign Up</button>
+          <a class="btn btn-default" (click)="changeStep()" [hidden]="!step2" >Back</a>
+          <button class="btn btn-default" (click)="register()" type="" [hidden]="!step2" >Sign Up</button>
         </div>
 
       </form>
@@ -125,8 +128,22 @@
       </div>
     </div>
 
+
+
   </div>
 </div>
+
+<app-summary [hidden]="!displayEnd"
+             title="Your account was created"
+             text="To complete your registration please follow the instruction on the mail you received and wait for the admin validation"
+             buttonTitle="Home" link="home">
+
+</app-summary>
+
+<!--
+
+
+-->
 
 <script>
   $(document).ready(function() {

@@ -25,6 +25,7 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { SopCreationComponent } from './component/sop-list/sop-creation/sop-creation.component';
 import { ConfirmationComponent } from './shared/modals/confirmation/confirmation.component';
+import { SummaryComponent } from './shared/summary/summary.component';
 
 
 const routes: Routes = [
@@ -58,6 +59,8 @@ const routes: Routes = [
     ProjectComponent,
     AuthentificationComponent,
     SignUpComponent,
+    SopCreationComponent,
+    SummaryComponent,
     SopCreationComponent,
     ConfirmationComponent
   ],
