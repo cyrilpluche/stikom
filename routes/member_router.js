@@ -13,7 +13,7 @@ const jwtHelpers  = require('../helpers/jwtHelpers');
 /*
 ==========================================  ROUTER GET ============================================
  */
-// TODO peut etre accessible sans
+// TODO can be accessible by anyone
 router.get('/validate_member/:seed', requireSeed, function (req, res, next) {
     modelMember.validate_seed(req.params.seed).then(function (data) {
         res.json({data: data});
@@ -131,9 +131,7 @@ router.put('/validate_member',
             data: data,
             success: true
         })
-    }).catch(function (err) {
-        next(err)
-    })
+    }).catch(next)
 });
 
 

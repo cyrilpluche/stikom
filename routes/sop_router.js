@@ -29,7 +29,7 @@ router.post('/create',
     })
 });
 
-router.get('/getall',
+router.get('/all',
     policy.requireSpecificRight(['Planner']),
     function (req, res, next) {
     modelSoap.selectAll().then(function (data) {
