@@ -1,4 +1,4 @@
-<div class="container" xmlns="">
+<div class="container">
 
   <!-- SOP List back button -->
   <div class="row row-first">
@@ -48,7 +48,7 @@
               <label for="newTitle">SOP Name</label>
             </div>
             <div>
-              <button class="btn btn-primary waves-effect" type="button" onclick="document.getElementById('nextArrow').click();">Next</button>
+              <button class="btn btn-primary waves-effect" type="button" (click)="fakeNext()">Next</button>
             </div>
           </div>
 
@@ -125,7 +125,7 @@
           </div>
 
           <!-- Objective -->
-          <div class="row md-form" [hidden]="stepSelected != 7">
+          <div class="row md-form"  [hidden]="stepSelected != 7">
             <div class="col">
               <i class="fa fa-pencil prefix grey-text"></i>
               <input (change)="fieldVerification()" [(ngModel)]="newObjective" name="newObjective" type="text" id="newObjective" class="form-control">
@@ -179,7 +179,11 @@
 </div>
 
 <!-- Modal confirmation -->
-<app-confirmation title="Confirmation SOP creation" message={{summary}} ></app-confirmation>
+<app-confirmation title="Confirmation SOP creation"
+                  text={{summary}}
+                  (success)="addSop($event)"
+                  link="sop-list">
+</app-confirmation>
 
 <script>
   // Tooltips Initialization

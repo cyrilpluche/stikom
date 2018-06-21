@@ -1,4 +1,4 @@
-<div class="container" [hidden]="displayEnd">
+<div class="container">
   <div class="row row-first justify-content-center">
 
     <!-- Card -->
@@ -102,12 +102,10 @@
           </div>
         </div>
 
-
-
         <div class="text-center mt-4">
           <a class="btn btn-default" (click)="firstStepVerification()" [hidden]="!step1" >Next</a>
           <a class="btn btn-default" (click)="changeStep()" [hidden]="!step2" >Back</a>
-          <button class="btn btn-default" (click)="register()" type="" [hidden]="!step2" >Sign Up</button>
+          <button class="btn btn-default" type="" [hidden]="!step2" >Sign Up</button>
         </div>
 
       </form>
@@ -124,8 +122,6 @@
       </div>
     </div>
 
-
-
   </div>
 </div>
 
@@ -133,7 +129,6 @@
              title="Your account was created"
              text="To complete your registration please follow the instruction on the mail you received and wait for the admin validation"
              buttonTitle="Home" link="home">
-
 </app-summary>
 
 <!--

@@ -1,4 +1,5 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, Output, OnInit} from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-confirmation',
@@ -7,14 +8,22 @@ import {Component, Input, OnInit} from '@angular/core';
 })
 export class ConfirmationComponent implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   /* ----- Data ----- */
   @Input() title: string = "";
-  @Input() message: string = "";
+  @Input() text: string = "";
+  @Input() link: string = "";
+
+  @Output() success = new EventEmitter<boolean>();
 
 
   ngOnInit() {
+  }
+
+  goDestination(){
+    this.success.emit(true);
+    this.router.navigate(['/',this.link]);
   }
 
 }

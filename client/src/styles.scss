@@ -56,6 +56,28 @@ body {
   color: #085193 !important;
 }
 
+//BUTTON OUTLINE 2
+.btn-outline-secondary {
+  background-color: white !important;
+  border-color: #ffa701 !important;
+  color: #ffa701 !important;
+}
+.btn-outline-secondary:hover {
+  border-color: #e5242c !important;
+  background-color: white !important;
+  color: #e5242c !important;
+}
+.btn-outline-secondary:not([disabled]):not(.disabled):active, .btn-outline-secondary:not([disabled]):not(.disabled).active, .show > .btn-outline-secondary.dropdown-toggle { //
+  border-color: #e5242c !important;
+  background-color: white !important;
+  color: #e5242c !important;
+}
+.btn-outline-secondary:focus {
+  border-color: #ffa701 !important;
+  background-color: white !important;
+  color: #ffa701 !important;
+}
+
 //BUTTON OUTLINE 3
 .btn-outline-danger {
   background-color: white !important;
