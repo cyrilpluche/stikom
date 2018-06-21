@@ -10,11 +10,23 @@ const mailSender = require('../helpers/mailSender');
 const jwtHelpers  = require('../helpers/jwtHelpers');
 
 
+/*
+==========================================  ROUTER GET ============================================
+ */
+
+router.get('/:seed', checkSeedExist, function (req, res, next) {
+    res.send('salut')
+});
+
+/*
+========================================== ROUTER POST ============================================
+ */
+
 router.post('/register',
     policy.checkParameters(['mail', 'password', 'first_name', 'name', 'is_admin', 'sub_department_id']),
+    checkMailExist,
     function(req, res, next) {
         let seed = tokenGenerator.generate();
-        let generateLink = `${process.env.SERVER_URL}:${process.env.PORT}/api/member/validate_member/${seed}`;
         bcrypt.hash(req.body.password, 10).then(function (hash) {
             let member = {
                 first_name: req.body.first_name,
@@ -27,6 +39,7 @@ router.post('/register',
                 seed: seed
             }
             modelMember.insert(member).then(function (data) {
+                let generateLink = `${process.env.SERVER_URL}:${process.env.PORT}/api/member/validate_member/${seed}`;
                 mailSender.send(req.body.mail, 'Account created',
                     `<h3 style="color: blue">Your account has been created with success !</h3><br><br>Click on the following link to valid your account.
                        Yet can't connect unless an administrateur valid again your account.<br><br>
@@ -45,41 +58,43 @@ router.post('/register',
         }).catch(function (er) {
             next(er)
         });
-});
+    });
 
 /*
  * before accessing to this route we check if every parameter are there and if the mail is valid
  */
 router.post('/login', policy.checkParameters(['mail', 'password']),
     policy.emailValidator, function (req, res, next) {
-    if (jwtHelpers.jwtCheckToken(req)){ // the user is already logged in and try to login again
-        next(ERRORTYPE.NO_RIGHT)
-    } else {
-        modelMember.match(req.body.mail, req.body.password).then(function (member) {
-            console.log(member)
-            if (member.valid !== 1 && member.seed != null) { // the member needs to validate hist account
-                return Promise.reject(ERRORTYPE.VALIDATION_REQUIRED)
-            } else {
-                let token = jwtHelpers.jwtSignMember(member)
-                member.role = undefined // we don't want the client to see the member role
-                member.seed = undefined
-                res.json({
-                    token: token,
-                    data: member
-                })
-            }
-
-        }).catch(function (er) {
-            next(er)
-        })
-    }
-});
+        if (jwtHelpers.jwtCheckToken(req)){ // the user is already logged in and try to login again
+            next(ERRORTYPE.NO_RIGHT)
+        } else {
+            modelMember.match(req.body.mail, req.body.password).then(function (member) {
+                if (!member) {
+                    throw ERRORTYPE.WRONG_IDENTIFIER
+                } else {
+                    if (member.valid !== 1 && member.seed != null) { // the member needs to validate hist account
+                        return Promise.reject(ERRORTYPE.VALIDATION_REQUIRED)
+                    } else {
+                        member.member_password = undefined; // we don't want to send the pwd to the client
+                        let token = jwtHelpers.jwtSignMember(member)
+                        member.role = undefined // we don't want the client to see the member role
+                        member.seed = undefined
+                        res.json({
+                            token: token,
+                            data: member
+                        })
+                    }
+                }
+            }).catch(function (er) {
+                next(er)
+            })
+        }
+    });
 
 // verify the token before
 router.post('/loggedIn', function (req, res, next) {
     jwtHelpers.jwtDecode(req, function (err, decode) {
         if (err) {
-            console.log(err)
             next(ERRORTYPE.NO_RIGHT)
         }
         console.log(decode)
@@ -94,9 +109,13 @@ router.post('/loggedIn', function (req, res, next) {
             seed: decode.seed
         }
         modelMember.exists(member).then(function (data) {
-            data.member_password = undefined
-            data.member_admin = undefined
-            data.seed = undefined
+            if (!data) {
+                throw (ERRORTYPE.NO_RIGHT);
+            } else {
+                data.member_password = undefined;
+                data.member_admin = undefined;
+                data.seed = undefined
+            }
             res.send({data: data});
         }).catch(function (e) {
             next(e);
@@ -105,9 +124,14 @@ router.post('/loggedIn', function (req, res, next) {
 
 });
 
+
+/*
+========================================== ROUTER PUT ============================================
+ */
+
 // validate_login a member, an admin is required to do this action
 router.put('/validate_member', policy.requireAdmin, policy.checkParameters(['member_id']), function (req, res, next) {
-    modelMember.validate_login(req.body.member_id).then(function (data) {
+    modelMember.validate_login(req.body.member_id, 0).then(function (data) {
         res.json({
             data: data,
             success: true
@@ -117,4 +141,38 @@ router.put('/validate_member', policy.requireAdmin, policy.checkParameters(['mem
     })
 });
 
+
+/*
+========================================== FUNCTIONS ============================================
+ */
+
+/**
+ * check if the mail exist before trying to connect
+ * @param req
+ * @param res
+ * @param next
+ */
+function checkMailExist (req, res, next) {
+    let mail = req.body.mail
+    modelMember.existByMail(mail).then(function (data) {
+        if (data) { // the mail exists the users cannot connect
+            throw ERRORTYPE.customError('This email arealdy exists please find another one',
+                'MAIL ALREADY USED', 403);
+        } else {
+            next()
+        }
+    }).catch(function (e) {
+        next(e)
+    })
+}
+
+/**
+ * Check a user exists according to the seed
+ * @param req
+ * @param res
+ * @param next
+ */
+function checkSeedExist (req, res, next) {
+
+}
 module.exports = router;

@@ -7,7 +7,7 @@ const modelBranch = require('../models/branch_model');
 router.get('/all', policy.checkParameters(['organisation']) ,function (req, res, next) {
     let organisation_id = req.query.organisation
     modelBranch.selectAllByOrganisationId(organisation_id).then(function (data) {
-        res.send({data: data})
+        res.json({data: data})
     }).catch(function (er) {
         next(er)
     });

@@ -42,16 +42,16 @@ const member = {
             'AND member_valid = ${member_valid} AND sub_department_id = ${sub_department_id}', member)
             .then(function (data) {
                 if (data.length === 0) {
-                    return Promise.reject(ERRORTYPE.NO_RIGHT);
+                    return false
                 } else {
                     return data[0]
                 }
             })
             .catch(function (err) {
                 if (err.type) { // means that it comes from a then
-                    return Promise.reject(err);
+                    throw err;
                 } else {
-                    return Promise.reject(ERRORTYPE.customError('The server has encountred an internal error\n ' + err.toString()))
+                    throw ERRORTYPE.customError('The server has encountred an internal error\n ' + err.toString());
                 }
             })
     },
@@ -70,14 +70,13 @@ const member = {
             'M.member_admin, M.member_valid, M.sub_department_id, M.seed', mail)
             .then(function (data) {
                 if (data.length === 0) { // if no member are found
-                    return Promise.reject(ERRORTYPE.WRONG_IDENTIFIER) // reject to catch
+                    return false
                 } else {
                     return bcrypt.compare(password, data[0].member_password).then(function (r) {
                         if (r) {
-                            data[0].member_password = undefined; // we don't want to send the pwd to the client
                             return data[0]
                         } else {
-                            return Promise.reject(ERRORTYPE.WRONG_IDENTIFIER)
+                            throw ERRORTYPE.WRONG_IDENTIFIER
                         }
                     })
                 }
@@ -89,27 +88,47 @@ const member = {
                 }
             })
     },
-    validate_login: function (member_id) {
-        return db.any('Update public.member SET member_valid = 1 WHERE member_id = $1 returning member_id', [member_id])
+
+    /**
+     * valid a member
+     * @param member_id
+     * @param valid: state in which we valid the user:
+     *  - 1 the user can connect
+     *  - 0 the user hasn't validate his mail yet
+     *  - 2 the user has validate his mail
+     * @returns {*}
+     */
+    validate_login: function (member_id, valid) {
+        return db.any('Update public.member SET member_valid = $2, seed = NULL WHERE member_id = $1 returning member_id',
+            [member_id, valid])
             .then(function (data) {
                 if (data.length === 0) {
-                    return Promise.reject(ERRORTYPE.MEMBER_NOT_FOUND)
+                    throw ERRORTYPE.MEMBER_NOT_FOUND
                 } else {
                     return data[0]
                 }
             })
             .catch(function (err) {
                 if (err.type) { // means that it comes from a then
-                    return Promise.reject(err)
+                    throw err
                 } else {
-                    return Promise.reject(ERRORTYPE.customError('The server has encountred an internal error\n ' + err.toString()))
+                    throw ERRORTYPE.customError('The server has encountred an internal error\n ' + err.toString())
                 }
+            })
+    },
+
+    existByMail (mail) {
+        return db.any('SELECT member_id FROM public.member WHERE member_mail = $1', mail)
+            .then(function (data) {
+                return data.length !== 0
+            }).catch(function (err) {
+                throw ERRORTYPE.customError('The server has encountred an internal error\n ' + err.toString())
             })
     },
     findOne: function (member_id) {
 
     },
-    getAll: function () {
+    selectAll: function () {
         
     }
 };
