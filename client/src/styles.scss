@@ -23,36 +23,60 @@ body {
 /* ---------- /COL ---------- */
 
 /* ---------- BUTTONS ---------- */
+
+//BUTTON 1
 .btn-default {
   background-color: #085193 !important;
 }
 
+//BUTTON 2
 .btn-primary {
   background-color: #ffa701 !important;
 }
 
+//BUTTON OUTLINE 1
 .btn-outline-default {
   background-color: white !important;
   border-color: #085193 !important;
   color: #085193 !important;
 }
-
 .btn-outline-default:hover {
   border-color: #ffa701 !important;
   background-color: white !important;
   color: #ffa701 !important;
 }
-
 .btn-outline-default:not([disabled]):not(.disabled):active, .btn-outline-default:not([disabled]):not(.disabled).active, .show > .btn-outline-default.dropdown-toggle { //
   border-color: #ffa701 !important;
   background-color: white !important;
   color: #ffa701 !important;
 }
-
 .btn-outline-default:focus {
   border-color: #085193 !important;
   background-color: white !important;
   color: #085193 !important;
+}
+
+//BUTTON OUTLINE 3
+.btn-outline-danger {
+  background-color: white !important;
+  border-color: #e5242c !important;
+  color: #e5242c !important;
+}
+.btn-outline-danger:hover {
+  border-color: #ffa701 !important;
+  background-color: white !important;
+  color: #ffa701 !important;
+}
+
+.btn-outline-danger:hover, .btn-outline-danger:focus, .btn-outline-danger:active, .btn-outline-danger:active:focus, .btn-outline-danger.active { //
+  border-color: #ffa701 !important;
+  background-color: white !important;
+  color: #ffa701 !important;
+}
+.btn-outline-danger:focus {
+  border-color: #e5242c !important;
+  background-color: white !important;
+  color: #e5242c !important;
 }
 /* ---------- /BUTTONS ---------- */
 
