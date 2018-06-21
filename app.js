@@ -40,6 +40,11 @@ app.use('/static', express.static(__dirname + '/public'));
 
 app.use('/api/member', require('./routes/member_router'));
 app.use('/api/sop', require('./routes/sop_router'));
+app.use('/api/organisation', require('./routes/organisation_router'));
+app.use('/api/branch', require('./routes/branch_router'));
+app.use('/api/department', require('./routes/department_router'));
+app.use('/api/sub_department', require('./routes/sub_department_router'));
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
