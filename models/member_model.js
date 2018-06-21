@@ -10,21 +10,21 @@ const member = {
      */
     insert: function (member) {
         return db.any('INSERT INTO public.member(\n' +
-            'member_first_name, member_name, member_mail, member_password, member_admin, member_valid, sub_department_id)\n' +
+            'member_first_name, member_name, member_mail, member_password, member_admin, member_valid, sub_department_id, seed)\n' +
             'VALUES (${first_name}, ${name}, ${mail}, ${hash_pwd}, ${is_admin}, ${member_valid}, ${sub_department_id}, ${seed}) returning member_id;',
             member)
             .then(function (data) {
                 if (data.length === 0) {
-                    return Promise.reject(ERRORTYPE.INTERNAL_ERROR)
+                    throw (ERRORTYPE.INTERNAL_ERROR)
                 } else {
                     return data[0]
                 }
             })
             .catch(function (err) {
                 if (err.type) { // means that it comes from a then
-                    return Promise.reject(err)
+                    throw (err)
                 } else {
-                    return Promise.reject(ERRORTYPE.customError('The server has encountred an internal error\n ' + err.toString()))
+                    throw (ERRORTYPE.customError('The server has encountred an internal error\n ' + err.toString()))
                 }
             })
     },
