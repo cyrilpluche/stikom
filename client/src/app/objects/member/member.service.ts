@@ -10,7 +10,6 @@ import {Observable} from 'rxjs';
 export class MemberService {
 
   domain = environment.SERVEUR_URL;
-  authToken;
   httpOptions;
   constructor(private http:HttpClient) {
 

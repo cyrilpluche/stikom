@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {MemberService} from '../../../objects/member/member.service';
 import { Router } from '@angular/router';
+import {OrganisationService} from "../../../objects/organisation/organisation.service";
+import {Organisation} from "../../../objects/organisation/organisation";
 
 @Component({
   selector: 'app-sign-up',
@@ -23,6 +25,7 @@ export class SignUpComponent implements OnInit {
   password: string = "";
   passwordConfirmation: string = "";
 
+  organisation: [Organisation];
   organisationChoosen: string = "";
   branchChoosen: string = "";
   departmentChoosen: string = "";
@@ -36,9 +39,11 @@ export class SignUpComponent implements OnInit {
 
 
   constructor(private _memberService: MemberService,
+              private _organisationService: OrganisationService,
               private router: Router) { }
 
   ngOnInit() {
+
   }
 
   onSubmitRegistration() {
