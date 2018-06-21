@@ -3,6 +3,7 @@
 /* BLUE #085193 */
 /* YELLOW #fcd004 */
 /* ORANGE #ffa701 */
+/* RED #e5242c */
 
 body {
   background-color: #fafafa;
@@ -91,11 +92,23 @@ table thead{
 .page-item.active .page-link {
   background-color: #085193 !important;
 }
+
+.no-hover {
+  background-color: transparent !important;
+}
+.no-hover:hover {
+  color: #FFA701 !important;
+}
 /* ---------- /PAGINATION ---------- */
 
   /* ---------- TEXT ---------- */
 .text-link {
   color: #ffa701 !important;
+}
+
+.error-text {
+  color: #e5242c;
+  font-weight: bold;
 }
 /* ---------- /TEXT ---------- */
 

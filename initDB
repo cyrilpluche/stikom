@@ -349,9 +349,11 @@ INSERT INTO department (department_id, department_name, branch_id) VALUES (1,'IT
 
 INSERT INTO sub_department (sub_department_id, sub_department_name, department_id) VALUES (1,'3rd year',1);
 
+INSERT INTO sop(sop_id, sop_title, sop_creation, sop_revision, sop_published, sop_approvment, sop_rules, sop_staff_qualification, sop_tools, sop_type_reports, sop_objectives)
+VALUES (1, 'Prepare the summer', DATE(now()), DATE(now()), DATE(now()), 'AGUSTA Yudi', 'Clean rooms.<br>Set up computers.<br> Smile.', 'Teacher.<br> Security.<br>', 'Computer', 'Poster', 'Everybody say cheese !');
 
 
-drop function member_role(integer);
+DROP FUNCTION IF EXISTS member_role(integer);
 CREATE OR REPLACE FUNCTION member_role (_member_id public.member.member_id%TYPE) RETURNS varchar  array
 AS
 $func$

@@ -37,7 +37,6 @@ export class SignUpComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log("I'm here");
     if (this.organisationChoosen == "") {
       this.errorMessage = "Organisation name required.";
     }
