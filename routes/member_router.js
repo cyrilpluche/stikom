@@ -11,22 +11,34 @@ const jwtHelpers  = require('../helpers/jwtHelpers');
 
 
 /*
-==========================================  ROUTER GET ============================================
+===========================================  ROUTER GET ============================================
  */
 // TODO can be accessible by anyone
-router.get('/validate_member/:seed', requireSeed, function (req, res, next) {
+router.get('/validate_member/:seed', policy.requiresNoAuthenticateUser,requireSeed, function (req, res, next) {
     modelMember.validate_seed(req.params.seed).then(function (data) {
-        res.json({data: data});
+        return modelMember.selectAllAdmin().then(function (admins) {
+            admins.forEach(function (admin) {
+                mailSender.send(admin.member_mail, `A new member requires your validation
+                <p><b>mail: ${data.member_mail}</b></p>`, '', function () {
+                    console.log(admin)
+                })
+            });
+            res.json({data: data});
+        }).catch(function (e) {
+            throw e
+        })
     }).catch(next)
 });
 
 /*
-========================================== ROUTER POST ============================================
+=========================================== ROUTER POST =============================================
  */
 
 router.post('/register',
     policy.checkParameters(['mail', 'password', 'first_name', 'name', 'is_admin', 'sub_department_id']),
-    requireNoneExistingMail, function(req, res, next) {
+    policy.requiresNoAuthenticateUser,
+    requireNoneExistingMail,
+    function(req, res, next) {
         let seed = tokenGenerator.generate();
         bcrypt.hash(req.body.password, 10).then(function (hash) {
             let member = {
@@ -60,7 +72,9 @@ router.post('/register',
  * before accessing to this route we check if every parameter are there and if the mail is valid
  */
 router.post('/login', policy.checkParameters(['mail', 'password']),
-    policy.emailValidator, function (req, res, next) {
+    policy.requiresNoAuthenticateUser,
+    policy.emailValidator,
+    function (req, res, next) {
         if (jwtHelpers.jwtCheckToken(req)){ // the user is already logged in and try to login again
             next(ERRORTYPE.FORBIDDEN)
         } else {
@@ -190,4 +204,5 @@ function requireNullSeeder (req, res, next) {
         }
     }).catch(next)
 }
+
 module.exports = router;

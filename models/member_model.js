@@ -121,7 +121,7 @@ const member = {
      * @param seed
      */
     validate_seed (seed) {
-        return db.any('Update public.member SET member_valid = 2, seed = NULL WHERE seed = $1 returning member_id',
+        return db.any('Update public.member SET member_valid = 2, seed = NULL WHERE seed = $1 returning member_id, member_mail',
             [seed]).then(function (data) {
             if (data.length === 0) {
                 throw ERRORTYPE.MEMBER_NOT_FOUND
@@ -175,6 +175,13 @@ const member = {
     },
     selectAll: function () {
         
+    },
+    selectAllAdmin () {
+        return db.any('SELECT * FROM public.member WHERE member_admin = 1').then(function (data) {
+            return data
+        }).catch(function (err) {
+            throw ERRORTYPE.customError('The server has encountred an internal error\n ' + err.toString())
+        })
     }
 };
 module.exports = member;
