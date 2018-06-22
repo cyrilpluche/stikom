@@ -9,6 +9,23 @@ const smtpTransport = nodemailer.createTransport({
 });
 // St1K0mB4l1
 
+/**
+ * create the html structure and inject the html we want to send in it
+ * @param html
+ * @returns {string}
+ */
+function encapsulateHTML (html) {
+    return `<!DOCTYPE html>
+        <html>
+<head>
+<title>Master of Work</title>
+</head>
+<body>
+${html}
+</body>
+</html>`
+}
+
 let mailSender = {
     /**
      *
@@ -25,7 +42,7 @@ let mailSender = {
             to: recipient,
             subject: subject,
             text: '',
-            html: `<div style="margin: auto; text-align: center;"><img src="cid:unique@kreata.ee" width="10%"/><p>${body}</p></div>`,
+            html: encapsulateHTML(`<div style="margin: auto; text-align: center;"><img src="cid:unique@kreata.ee" width="10%"/><p>${body}</p></div>`),
             attachments: [{
                 filename: 'logo.png',
                 path: 'public/images/logo-stikom.png',
