@@ -83,8 +83,8 @@ router.post('/login', policy.checkParameters(['mail', 'password']),
                 if (!member) {
                     throw ERRORTYPE.WRONG_IDENTIFIER
                 } else {
-                    if (member.valid !== 1 && member.seed != null) { // the member needs to validate hist account
-                        return Promise.reject(ERRORTYPE.VALIDATION_REQUIRED)
+                    if (member.member_valid !== 1 && member.seed != null) { // the member needs to validate hist account
+                        throw ERRORTYPE.VALIDATION_REQUIRED
                     } else {
                         member.member_password = undefined; // we don't want to send the pwd to the client
                         let token = jwtHelpers.jwtSignMember(member)

@@ -4,6 +4,7 @@ const policy = require('../policy/policy_middleware');
 const ERRORTYPE = require('../policy/errorType');
 const modelSoap = require('../models/sop_model');
 
+// TODO see for right
 router.post('/create',
     policy.checkParameters(['sop_title', 'sop_creation', 'sop_revision', 'sop_published', 'sop_approvment',
         'sop_rules', 'sop_warning', 'sop_staff_qualification', 'sop_tools', 'sop_type_reports', 'sop_objectives']),
@@ -35,5 +36,12 @@ router.get('/all',
         res.json({data: data})
     }).catch(next)
 });
+
+router.get('/findOne/:sopId',
+    function (req, res, next) {
+        modelSoap.selectById(req.params.sopId).then(function (data) {
+            res.json({data: data})
+        }).catch(next)
+    });
 
 module.exports = router;

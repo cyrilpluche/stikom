@@ -27,12 +27,25 @@ let sop = {
         return db.any('SELECT * FROM public.sop').then(function (data) {
             return data
         }).catch(function (err) {
-            return Promise.reject(ERRORTYPE.customError('The server has encountred an internal error\n ' + err.toString()))
+            throw ERRORTYPE.customError('The server has encountred an internal error\n ' + err.toString())
         })
     },
 
-    selectOne (soap_id) {
-
+    selectById (soap_id) {
+        return db.any('SELECT * FROM public.sop where sop_id = $1', soap_id)
+            .then(function (data) {
+                if (data.length === 0) {
+                    throw ERRORTYPE.NOT_FOUND
+                } else {
+                    return data[0]
+                }
+            }).catch(function (err) {
+                if (err.type) { // means that it comes from a then
+                    throw err
+                } else {
+                    throw ERRORTYPE.customError('The server has encountred an internal error\n ' + err.toString());
+                }
+            })
     }
 };
 module.exports = sop
