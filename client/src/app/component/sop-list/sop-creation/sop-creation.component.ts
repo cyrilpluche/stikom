@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { SopService } from "../../../objects/sop/sop.service";
 import {current} from "codelyzer/util/syntaxKind";
+import {MemberService} from "../../../objects/member/member.service";
 
 @Component({
   selector: 'app-sop-creation',
@@ -37,7 +39,7 @@ export class SopCreationComponent implements OnInit {
   newTypeFormReport: string = "";
   newObjective: string = "";
 
-  constructor() { }
+  constructor(private _sopService: SopService) { }
 
   ngOnInit() {
     this.captionSelected = this.captions[0];
@@ -188,12 +190,58 @@ export class SopCreationComponent implements OnInit {
     //Need to fix the ligne jump
     this.summary += "Are you sure all informations provided for this SOP are given ? \n\n"
     this.summary += "Title : " + this.newTitle + '\n';
-    this.summary += "Objective : "+ this.newTitle + '\n';
+    this.summary += "Objective : "+ this.newObjective + '\n';
     console.log("Form ok.");
   }
 
+  //Final function that add the SOP into the database
   addSop(add) {
     if (add) {
+
+      let date_creation = new Date(Date.now());
+      let date_revision = new Date(Date.now());
+      let date_published = new Date(Date.now());
+      let date_approvment = new Date(Date.now());
+
+      let sop_rules = "";
+      for (let r of this.rules) {
+        sop_rules += r;
+      }
+      let sop_warning = "";
+      for (let w of this.warnings) {
+        sop_rules += w;
+      }
+      let sop_staff_qualification = "";
+      for (let s of this.staffQualifications) {
+        sop_staff_qualification += s;
+      }
+      let sop_tools = "";
+      for (let t of this.supportingTools) {
+        sop_tools += t;
+      }
+      let sop_type_reports = "";
+      for (let t of this.typesFormsReports) {
+        sop_type_reports += t;
+      }
+
+      this._sopService.createSop(
+        this.newTitle,
+        date_creation,
+        date_revision,
+        date_published,
+        date_approvment,
+        sop_rules,
+        sop_warning,
+        sop_staff_qualification,
+        sop_tools,
+        sop_type_reports,
+        this.newObjective
+      ).subscribe((res) => {
+        this.errorMessage = "";
+      },
+        error => {
+          //this.errorMessage = error.error.message;
+        });
       console.log("Form added");
     }
   }

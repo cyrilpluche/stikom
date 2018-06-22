@@ -53,6 +53,7 @@ router.post('/register',
             }
             modelMember.insert(member).then(function (data) {
                 let generateLink = `${process.env.SERVER_URL}:${process.env.PORT}/api/member/validate_member/${seed}`;
+                console.log(generateLink);
                 mailSender.send(req.body.mail, 'Account created',
                     `<h3 style="color: blue">Your account has been created with success !</h3><br><br>Click on the following link to valid your account.
                        Yet can't connect unless an administrateur valid again your account.<br><br>

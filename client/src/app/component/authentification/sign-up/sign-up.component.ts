@@ -90,9 +90,6 @@ export class SignUpComponent implements OnInit {
           },
           error => {
             this.errorMessage = error.error.message;
-
-
-
           });
 
     }

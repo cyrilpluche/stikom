@@ -15,7 +15,6 @@ export class ProjectCreationComponent implements OnInit {
   newSop: Sop;
   newTitle: string = "";
 
-
   constructor() { }
 
   ngOnInit() {

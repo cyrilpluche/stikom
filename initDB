@@ -2,6 +2,23 @@
 --        Script Postgre
 ------------------------------------------------------------
 
+DROP TABLE IF EXISTS role CASCADE;
+DROP TABLE IF EXISTS branch CASCADE;
+DROP TABLE IF EXISTS organisation CASCADE;
+DROP TABLE IF EXISTS department CASCADE;
+DROP TABLE IF EXISTS sub_department CASCADE;
+DROP TABLE IF EXISTS member CASCADE;
+DROP TABLE IF EXISTS job CASCADE;
+DROP TABLE IF EXISTS unit CASCADE;
+DROP TABLE IF EXISTS sop CASCADE;
+DROP TABLE IF EXISTS project CASCADE;
+DROP TABLE IF EXISTS has_role CASCADE;
+DROP TABLE IF EXISTS member_unit_project CASCADE;
+DROP TABLE IF EXISTS sop_needs_unit CASCADE;
+DROP TABLE IF EXISTS activity CASCADE;
+DROP TABLE IF EXISTS transition CASCADE;
+DROP TABLE IF EXISTS execute CASCADE;
+DROP TABLE IF EXISTS member_activity_project CASCADE;
 
 
 ------------------------------------------------------------

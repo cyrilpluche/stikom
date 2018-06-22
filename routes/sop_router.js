@@ -8,7 +8,7 @@ router.post('/create',
     policy.checkParameters(['sop_title', 'sop_creation', 'sop_revision', 'sop_published', 'sop_approvment',
         'sop_rules', 'sop_warning', 'sop_staff_qualification', 'sop_tools', 'sop_type_reports', 'sop_objectives']),
     function (req, res, next) {
-    let sop = {
+        let sop = {
         sop_title: req.body.sop_title,
         sop_creation: req.body.sop_creation,
         sop_revision: req.body.sop_revision,
