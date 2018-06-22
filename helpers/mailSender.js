@@ -37,7 +37,6 @@ let mailSender = {
      */
     send (recipient, subject, body, files, callback) {
         //TODO manage files
-        console.log("body", body);
         let mail = {
             from: `Master Of Work<from@${process.env.USER_MAIL_SERVICE}.com>`,
             to: recipient,

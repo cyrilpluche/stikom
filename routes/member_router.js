@@ -73,32 +73,28 @@ router.post('/register',
  * before accessing to this route we check if every parameter are there and if the mail is valid
  */
 router.post('/login', policy.checkParameters(['mail', 'password']),
-    policy.requiresNoAuthenticateUser,
+    policy.requiresNoAuthenticateUser,// the user is already logged in and try to login again
     policy.emailValidator,
     function (req, res, next) {
-        if (jwtHelpers.jwtCheckToken(req)){ // the user is already logged in and try to login again
-            next(ERRORTYPE.FORBIDDEN)
-        } else {
-            modelMember.match(req.body.mail, req.body.password).then(function (member) {
-                if (!member) {
-                    throw ERRORTYPE.WRONG_IDENTIFIER
+        modelMember.match(req.body.mail, req.body.password).then(function (member) {
+            if (!member) {
+                throw ERRORTYPE.WRONG_IDENTIFIER
+            } else {
+                if (member.member_valid !== 1 &&
+                    (member.seed !== undefined || member.seed != null || member.seed != '')) { // the member needs to validate hist account
+                    throw ERRORTYPE.VALIDATION_REQUIRED
                 } else {
-                    if (member.member_valid !== 1 &&
-                        (member.seed !== undefined || member.seed != null || member.seed != '')) { // the member needs to validate hist account
-                        throw ERRORTYPE.VALIDATION_REQUIRED
-                    } else {
-                        member.member_password = undefined; // we don't want to send the pwd to the client
-                        let token = jwtHelpers.jwtSignMember(member)
-                        member.member_role = undefined // we don't want the client to see the member role
-                        member.seed = undefined
-                        res.json({
-                            token: token,
-                            data: member
-                        })
-                    }
+                    member.member_password = undefined; // we don't want to send the pwd to the client
+                    let token = jwtHelpers.jwtSignMember(member)
+                    member.member_role = undefined // we don't want the client to see the member role
+                    member.seed = undefined
+                    res.json({
+                        token: token,
+                        data: member
+                    })
                 }
-            }).catch(next)
-        }
+            }
+        }).catch(next)
     });
 
 // verify the token before
