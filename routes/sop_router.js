@@ -29,8 +29,12 @@ router.post('/create',
     })
 });
 
-router.post('/getall', function (req, res, next) {
-    
-})
+router.get('/all',
+    policy.requireSpecificRight(['Planner']),
+    function (req, res, next) {
+    modelSoap.selectAll().then(function (data) {
+        res.json({data: data})
+    }).catch(next)
+});
 
 module.exports = router;

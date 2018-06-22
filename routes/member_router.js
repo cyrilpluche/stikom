@@ -13,9 +13,11 @@ const jwtHelpers  = require('../helpers/jwtHelpers');
 /*
 ==========================================  ROUTER GET ============================================
  */
-
-router.get('/:seed', checkSeedExist, function (req, res, next) {
-    res.send('salut')
+// TODO can be accessible by anyone
+router.get('/validate_member/:seed', requireSeed, function (req, res, next) {
+    modelMember.validate_seed(req.params.seed).then(function (data) {
+        res.json({data: data});
+    }).catch(next)
 });
 
 /*
@@ -24,8 +26,7 @@ router.get('/:seed', checkSeedExist, function (req, res, next) {
 
 router.post('/register',
     policy.checkParameters(['mail', 'password', 'first_name', 'name', 'is_admin', 'sub_department_id']),
-    checkMailExist,
-    function(req, res, next) {
+    requireNoneExistingMail, function(req, res, next) {
         let seed = tokenGenerator.generate();
         bcrypt.hash(req.body.password, 10).then(function (hash) {
             let member = {
@@ -46,18 +47,13 @@ router.post('/register',
                         <h4><a href="${generateLink}">valid my acount</a></h4>`,
                     [], function (error, response) {
                         if (error) {
-                            console.log(error)
                             next(ERRORTYPE.customError(error))
                         } else {
                             res.json(data)
                         }
                     });
-            }).catch(function (e) {
-                next(e)
-            })
-        }).catch(function (er) {
-            next(er)
-        });
+            }).catch(next)
+        }).catch(next);
     });
 
 /*
@@ -66,7 +62,7 @@ router.post('/register',
 router.post('/login', policy.checkParameters(['mail', 'password']),
     policy.emailValidator, function (req, res, next) {
         if (jwtHelpers.jwtCheckToken(req)){ // the user is already logged in and try to login again
-            next(ERRORTYPE.NO_RIGHT)
+            next(ERRORTYPE.FORBIDDEN)
         } else {
             modelMember.match(req.body.mail, req.body.password).then(function (member) {
                 if (!member) {
@@ -85,9 +81,7 @@ router.post('/login', policy.checkParameters(['mail', 'password']),
                         })
                     }
                 }
-            }).catch(function (er) {
-                next(er)
-            })
+            }).catch(next)
         }
     });
 
@@ -95,7 +89,7 @@ router.post('/login', policy.checkParameters(['mail', 'password']),
 router.post('/loggedIn', function (req, res, next) {
     jwtHelpers.jwtDecode(req, function (err, decode) {
         if (err) {
-            next(ERRORTYPE.NO_RIGHT)
+            next(ERRORTYPE.FORBIDDEN)
         }
         console.log(decode)
         let member = {
@@ -110,16 +104,14 @@ router.post('/loggedIn', function (req, res, next) {
         }
         modelMember.exists(member).then(function (data) {
             if (!data) {
-                throw (ERRORTYPE.NO_RIGHT);
+                throw (ERRORTYPE.FORBIDDEN);
             } else {
                 data.member_password = undefined;
                 data.member_admin = undefined;
                 data.seed = undefined
             }
             res.send({data: data});
-        }).catch(function (e) {
-            next(e);
-        });
+        }).catch(next);
     })
 
 });
@@ -130,15 +122,16 @@ router.post('/loggedIn', function (req, res, next) {
  */
 
 // validate_login a member, an admin is required to do this action
-router.put('/validate_member', policy.requireAdmin, policy.checkParameters(['member_id']), function (req, res, next) {
-    modelMember.validate_login(req.body.member_id, 0).then(function (data) {
+router.put('/validate_member',
+    policy.requireAdmin, policy.checkParameters(['member_id']),
+    requireNullSeeder,
+    function (req, res, next) {
+    modelMember.validate_login(req.body.member_id).then(function (data) {
         res.json({
             data: data,
             success: true
         })
-    }).catch(function (err) {
-        next(err)
-    })
+    }).catch(next)
 });
 
 
@@ -152,7 +145,7 @@ router.put('/validate_member', policy.requireAdmin, policy.checkParameters(['mem
  * @param res
  * @param next
  */
-function checkMailExist (req, res, next) {
+function requireNoneExistingMail (req, res, next) {
     let mail = req.body.mail
     modelMember.existByMail(mail).then(function (data) {
         if (data) { // the mail exists the users cannot connect
@@ -172,7 +165,29 @@ function checkMailExist (req, res, next) {
  * @param res
  * @param next
  */
-function checkSeedExist (req, res, next) {
+function requireSeed (req, res, next) {
+    modelMember.existsBySeed(req.params.seed).then(function (data) {
+        if (data) {
+            next ()
+        } else {
+            throw ERRORTYPE.customError('Coudn\'t find this member, you link has maybe expired', 'SEED NOT FOUND', 404);
+        }
+    }).catch(next)
+}
 
+/**
+ * @param req
+ * @param res
+ * @param next
+ */
+function requireNullSeeder (req, res, next) {
+    modelMember.findOne(req.body.member_id).then(function (data) {
+        if (data.seed != null || data.member_valid === 0) {
+            throw ERRORTYPE.customError('Error this user hasn\'t activated his link yet you cannot activate now',
+                'ACCOUNT NOT ACTIVATED', 403)
+        } else {
+            next()
+        }
+    }).catch(next)
 }
 module.exports = router;

@@ -6,7 +6,8 @@ let branch = {
         return db.query('SELECT * FROM public.branch WHERE organisation_id = $1', organisation_id)
             .then(function (data) {
                 if (data.length === 0) {
-                    throw ERRORTYPE.customError('This organisation doesn\'t exist', 'NOT EXISTS', 404)
+                    throw ERRORTYPE.customError('Error: This organisation doesn\'t exist \n' +
+                        'or there aren\'t any branch in it', 'NOT EXISTS', 404)
                 } else {
                     return data
                 }

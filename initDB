@@ -337,26 +337,27 @@ ALTER TABLE public.member_activity_project
 	REFERENCES public.activity(activity_id);
 
 
-INSERT INTO role (role_id, role_title) VALUES (1,'Project Manager');
-INSERT INTO role (role_id, role_title) VALUES (2,'Performer');
+INSERT INTO role ( role_title) VALUES ('Project Manager'),('Performer'),('Planner');
 
-INSERT INTO organisation (organisation_id, organisation_name) VALUES (1,'Polytech');
-INSERT INTO organisation (organisation_id, organisation_name) VALUES (2,'Stikom Bali');
+INSERT INTO organisation ( organisation_name) VALUES ('Polytech');
+INSERT INTO organisation ( organisation_name) VALUES ('Stikom Bali');
 
-INSERT INTO branch (branch_id, branch_name, organisation_id) VALUES (1,'default',1);
-INSERT INTO branch (branch_id, branch_name, organisation_id) VALUES (2,'IT',1);
-INSERT INTO branch (branch_id, branch_name, organisation_id) VALUES (3,'Agronomy',1);
-INSERT INTO branch (branch_id, branch_name, organisation_id) VALUES (4,'default',2);
-INSERT INTO branch (branch_id, branch_name, organisation_id) VALUES (5,'Robotic',2);
+INSERT INTO branch ( branch_name, organisation_id) VALUES ('No branch',1);
+INSERT INTO branch ( branch_name, organisation_id) VALUES ('IT',1);
+INSERT INTO branch ( branch_name, organisation_id) VALUES ('Agronomy',1);
+INSERT INTO branch ( branch_name, organisation_id) VALUES ('No branch',2);
+INSERT INTO branch ( branch_name, organisation_id) VALUES ('Robotic',2);
 
-INSERT INTO department (department_id, department_name, branch_id) VALUES (1,'default',1);
-INSERT INTO department (department_id, department_name, branch_id) VALUES (2,'IT and managment',1);
+INSERT INTO department ( department_name, branch_id) VALUES ('No department',1);
+INSERT INTO department ( department_name, branch_id) VALUES ('No department',2);
+INSERT INTO department ( department_name, branch_id) VALUES ('IT and managment',2);
 
-INSERT INTO sub_department (sub_department_id, sub_department_name, department_id) VALUES (1,'default',1);
-INSERT INTO sub_department (sub_department_id, sub_department_name, department_id) VALUES (2,'3rd year',1);
+INSERT INTO sub_department ( sub_department_name, department_id) VALUES ('No sub-department',1);
+INSERT INTO sub_department ( sub_department_name, department_id) VALUES ('No sub-department',3);
+INSERT INTO sub_department ( sub_department_name, department_id) VALUES ('3rd year',3);
 
-INSERT INTO sop(sop_id, sop_title, sop_creation, sop_revision, sop_published, sop_approvment, sop_rules, sop_staff_qualification, sop_tools, sop_type_reports, sop_objectives)
-VALUES (1, 'Prepare the summer', DATE(now()), DATE(now()), DATE(now()), 'AGUSTA Yudi', 'Clean rooms.<br>Set up computers.<br> Smile.', 'Teacher.<br> Security.<br>', 'Computer', 'Poster', 'Everybody say cheese !');
+INSERT INTO sop(sop_title, sop_creation, sop_revision, sop_published, sop_approvment, sop_rules, sop_staff_qualification, sop_tools, sop_type_reports, sop_objectives)
+VALUES ( 'Prepare the summer', DATE(now()), DATE(now()), DATE(now()), 'AGUSTA Yudi', 'Clean rooms.<br>Set up computers.<br> Smile.', 'Teacher.<br> Security.<br>', 'Computer', 'Poster', 'Everybody say cheese !');
 
 
 DROP FUNCTION IF EXISTS member_role(integer);

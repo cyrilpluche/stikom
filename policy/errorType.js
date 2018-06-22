@@ -1,7 +1,7 @@
 // define type of erreur
 
 const errors = {
-    NO_RIGHT: {type: 'FORBIDDEN', message: 'User try to do something he isn\'t granted do', status: 403},
+    FORBIDDEN: {type: 'FORBIDDEN', message: 'User try to do something he isn\'t granted do', status: 403},
     MISSING_PARAMETER: {type: 'MISSING_PARAMETER', message: 'One or several parameters are missing', status: 400},
     INVALID_FORM_MAIL: {type: 'INVALID_FORM_MAIL', message: 'The email address is not valid', status: 400},
     VALIDATION_REQUIRED: {type: 'VALIDATION_REQUIRED', message: 'This account hasn\'t been activated yet', status: 403},

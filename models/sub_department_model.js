@@ -6,7 +6,8 @@ let department = {
         return db.any('SELECT * FROM public.sub_department WHERE department_id = $1', department_id)
             .then(function (data) {
                 if (data.length === 0) {
-                    throw ERRORTYPE.customError('This department doesn\'t exist', 'NOT EXISTS', 404)
+                    throw ERRORTYPE.customError('Error: This department doesn\'t exist \n' +
+                        'there aren\'t any sub_department in it', 'NOT EXISTS', 404)
                 } else {
                     return data
                 }

@@ -6,7 +6,8 @@ let department = {
         return db.any('SELECT * FROM public.department WHERE branch_id = $1', branch_id)
             .then(function (data) {
                 if (data.length === 0) {
-                    throw ERRORTYPE.customError('This branch doesn\'t exist', 'NOT EXISTS', 404)
+                    throw ERRORTYPE.customError('Error: The branch you are searching doesn\'t exist or \n there aren\'t' +
+                        ' any department in it', 'NOT EXISTS', 404)
                 } else {
                     return data
                 }

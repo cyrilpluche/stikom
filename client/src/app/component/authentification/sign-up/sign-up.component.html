@@ -9,8 +9,7 @@
 
       <!-- Material form register -->
       <form (ngSubmit)="onSubmitRegistration()">
-        <p class="h4 text-center mb-4" [hidden]="displayEnd">Sign up</p>
-        <p class="h4 text-center mb-4" [hidden]="!displayEnd">Welcome</p>
+        <p class="h4 text-center mb-4">Sign up</p>
 
         <!-- First step of the form -->
         <div [hidden]="!step1">
@@ -64,14 +63,13 @@
         </div>
 
         <!-- Second step of the form -->
-        <div class="form-group" [hidden]="step2">
+        <div class="form-group" [hidden]="!step2">
 
           <!-- Organisation -->
           <div class="md-form">
             <select [(ngModel)]="organisationChoosen" name="organisation" class="form-control mdb-select" (change)="enableBranch()" >
               <option value="" disabled selected>Choose organisation</option>
-              <option value="1">Stikom Bali</option>
-              <option value="2">Polytech Montpellier</option>
+              <option *ngFor="let orga of organisations" [ngValue]=orga.organisation_id>{{orga.organisation_name}}</option>
             </select>
           </div>
 
@@ -79,9 +77,7 @@
           <div class="md-form">
             <select [(ngModel)]="branchChoosen" name="branch" class="form-control" [disabled]="!branchEnabled" (change)="enableDepartment()" >
               <option value="" disabled selected>Choose a branch</option>
-              <option value="blank">No branch</option>
-              <option value="1">International class</option>
-              <option value="2">Regular class</option>
+              <option *ngFor="let branch of branchs" [ngValue]=branch.branch_id>{{branch.branch_name}}</option>
             </select>
           </div>
 
@@ -89,9 +85,8 @@
           <div class="md-form">
             <select [(ngModel)]="departmentChoosen" name="department" class="form-control mdb-select" [disabled]="!departmentEnabled" (change)="enableSubDepartment()" >
               <option value="" disabled selected>Choose department</option>
-              <option value="blank">No department</option>
-              <option value="1">Administration</option>
-              <option value="2">Department 2</option>
+              <option *ngFor="let department of departments" [ngValue]=department.department_id>{{department.department_name}}</option>
+
             </select>
           </div>
 
@@ -99,9 +94,7 @@
           <div class="md-form">
             <select [(ngModel)]="subDepartmentChoosen" name="subDepartment" class="form-control mdb-select" [disabled]="!subDepartmentEnabled" >
               <option value="" disabled selected>Choose sub-department</option>
-              <option value="blank">No sub-department</option>
-              <option value="1">Sub1</option>
-              <option value="2">Sub2</option>
+              <option *ngFor="let subDepartment of subDepartments" [ngValue]=subDepartment.sub_department_id>{{subDepartment.sub_department_name}}</option>
             </select>
           </div>
         </div>
@@ -129,7 +122,7 @@
   </div>
 </div>
 
-<app-summary [hidden]="!displayEnd"
+<app-summary *ngIf="displayEnd"
              title="Your account was created"
              text="To complete your registration please follow the instruction on the mail you received and wait for the admin validation"
              buttonTitle="Home" link="home">

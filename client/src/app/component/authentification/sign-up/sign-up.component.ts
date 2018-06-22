@@ -3,6 +3,12 @@ import {MemberService} from '../../../objects/member/member.service';
 import { Router } from '@angular/router';
 import {OrganisationService} from "../../../objects/organisation/organisation.service";
 import {Organisation} from "../../../objects/organisation/organisation";
+import {BranchService} from "../../../objects/branch/branch.service";
+import {Branch} from "../../../objects/branch/branch";
+import {DepartmentService} from "../../../objects/department/department.service";
+import {SubDepartmentService} from "../../../objects/sub_department/sub-department.service";
+import {Department} from "../../../objects/department/department";
+import {SubDepartment} from "../../../objects/sub_department/sub-department";
 
 @Component({
   selector: 'app-sign-up',
@@ -25,7 +31,11 @@ export class SignUpComponent implements OnInit {
   password: string = "";
   passwordConfirmation: string = "";
 
-  organisation: [Organisation];
+  organisations: [Organisation];
+  branchs: [Branch];
+  departments: [Department];
+  subDepartments: [SubDepartment];
+
   organisationChoosen: string = "";
   branchChoosen: string = "";
   departmentChoosen: string = "";
@@ -40,15 +50,31 @@ export class SignUpComponent implements OnInit {
 
   constructor(private _memberService: MemberService,
               private _organisationService: OrganisationService,
+              private _branchService: BranchService,
+              private _departmentService: DepartmentService,
+              private _subDepartmentService: SubDepartmentService,
               private router: Router) { }
 
   ngOnInit() {
+    this.getOrganisation();
+  }
 
+  getOrganisation(){
+    this._organisationService.selectAll()
+      .subscribe( (res) => {
+         console.log(res['data']);
+         this.organisations=res['data'];
+
+        },
+        error => {
+          console.log("ERREUR : ",error);
+
+        });
   }
 
   onSubmitRegistration() {
-    if (this.organisationChoosen == "") {
-      this.errorMessage = "Organisation name required.";
+    if (this.subDepartmentChoosen == "") {
+      this.errorMessage = "Sub-Department name required. If not select default.";
     }
     else {
 
@@ -63,8 +89,6 @@ export class SignUpComponent implements OnInit {
 
           },
           error => {
-            console.log("ERREUR : ",error);
-
             this.errorMessage = error.error.message;
 
 
@@ -118,14 +142,39 @@ export class SignUpComponent implements OnInit {
   // Select fields authorizations
   enableBranch() {
     if (this.organisationChoosen != "") {
-      this.branchEnabled = true;
+      this._branchService.selectAllFromOrganisation(this.organisationChoosen)
+        .subscribe( (res) => {
+            this.branchs=res['data'];
+            this.branchEnabled = true;
+          },
+          error => {
+            this.errorMessage=error.error.message;
+
+          });
+
+
     }
   }
 
   enableDepartment() {
     if (this.branchChoosen != ""){
       if (this.branchChoosen != 'blank') {
-        this.departmentEnabled = true;
+        this._departmentService.selectAllFromBranch(this.branchChoosen)
+          .subscribe( (res) => {
+              console.log(res['data']);
+              this.departments=res['data'];
+              this.departmentEnabled = true;
+            },
+            error => {
+              this.errorMessage=error.error.message;
+
+              this.departmentEnabled = false;
+              this.subDepartmentEnabled = false;
+              this.departmentChoosen = "blank";
+              this.subDepartmentChoosen = "blank";
+
+            });
+
       }
       else{
         this.departmentEnabled = false;
@@ -139,7 +188,19 @@ export class SignUpComponent implements OnInit {
   enableSubDepartment() {
     if (this.departmentChoosen != "") {
       if (this.departmentChoosen != "blank") {
-        this.subDepartmentEnabled = true;
+        this._subDepartmentService.selectAllFromDepartment(this.departmentChoosen)
+          .subscribe( (res) => {
+              console.log(res['data']);
+              this.subDepartments=res['data'];
+              this.subDepartmentEnabled = true;
+            },
+            error => {
+              this.errorMessage=error.error.message;
+              this.subDepartmentEnabled = false;
+              this.subDepartmentChoosen = "blank";
+
+            });
+
       }
       else{
         this.subDepartmentEnabled = false;
