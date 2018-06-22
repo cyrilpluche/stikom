@@ -83,12 +83,13 @@ router.post('/login', policy.checkParameters(['mail', 'password']),
                 if (!member) {
                     throw ERRORTYPE.WRONG_IDENTIFIER
                 } else {
-                    if (member.member_valid !== 1 && member.seed != null) { // the member needs to validate hist account
+                    if (member.member_valid !== 1 &&
+                        (member.seed !== undefined || member.seed != null || member.seed != '')) { // the member needs to validate hist account
                         throw ERRORTYPE.VALIDATION_REQUIRED
                     } else {
                         member.member_password = undefined; // we don't want to send the pwd to the client
                         let token = jwtHelpers.jwtSignMember(member)
-                        member.role = undefined // we don't want the client to see the member role
+                        member.member_role = undefined // we don't want the client to see the member role
                         member.seed = undefined
                         res.json({
                             token: token,
