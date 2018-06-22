@@ -79,6 +79,12 @@ const policies = {
         })
     },
 
+    requiresNoAuthenticateUser (req, res, next) {
+        if (jwtHelper.jwtCheckToken(req)) {
+            next(ERROR_TYPE.customError('Error: you are already connected you cannot do this', 'ALREADY CONNECTED', 403))
+        } else next();
+    },
+
     test: function (test) { // just a test
         return function (req, res, next) {
             req.body.age = 10

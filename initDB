@@ -356,8 +356,10 @@ INSERT INTO sub_department ( sub_department_name, department_id) VALUES ('No sub
 INSERT INTO sub_department ( sub_department_name, department_id) VALUES ('No sub-department',3);
 INSERT INTO sub_department ( sub_department_name, department_id) VALUES ('3rd year',3);
 
-INSERT INTO sop(sop_title, sop_creation, sop_revision, sop_published, sop_approvment, sop_rules, sop_staff_qualification, sop_tools, sop_type_reports, sop_objectives)
-VALUES ( 'Prepare the summer', DATE(now()), DATE(now()), DATE(now()), 'AGUSTA Yudi', 'Clean rooms.<br>Set up computers.<br> Smile.', 'Teacher.<br> Security.<br>', 'Computer', 'Poster', 'Everybody say cheese !');
+INSERT INTO sop(sop_title, sop_creation, sop_revision, sop_published, sop_approvment, sop_rules, sop_staff_qualification,
+sop_tools, sop_type_reports, sop_objectives)
+VALUES ( 'Prepare the summer', DATE(now()), DATE(now()), DATE(now()), 'AGUSTA Yudi', 'Clean rooms.<br>Set up computers.<br> Smile.',
+ 'Teacher.<br> Security.<br>', 'Computer', 'Poster', 'Everybody say cheese !');
 
 
 DROP FUNCTION IF EXISTS member_role(integer);
