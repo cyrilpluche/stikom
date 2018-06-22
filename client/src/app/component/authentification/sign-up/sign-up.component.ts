@@ -72,14 +72,14 @@ export class SignUpComponent implements OnInit {
         });
   }
 
-  onSubmitRegistration() {
+  async onSubmitRegistration() {
     if (this.subDepartmentChoosen == "") {
       this.errorMessage = "Sub-Department name required. If not select default.";
     }
     else {
 
       //this._memberService.register(this.email,this.password,this.firstName, this.lastName, "0",this.subDepartmentChoosen)
-      this._memberService.register(this.email,this.password,this.firstName, this.lastName, "0","1")
+      await this._memberService.register(this.email,this.password,this.firstName, this.lastName, "0","1")
         .subscribe( (res) => {
             this.errorMessage = "";
             this.step1 = false;

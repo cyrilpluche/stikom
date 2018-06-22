@@ -15,12 +15,22 @@ export class BranchService {
 
   generateHeaders()
   {
-    this.httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Authorization': localStorage.getItem("Token")
-      })
-    };
+    if(localStorage.getItem("Token") === null)
+    {
+      this.httpOptions = {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json'
+        })
+      };
+    }else{
+      this.httpOptions = {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+          'Authorization': localStorage.getItem("Token")
+        })
+      };
+    }
+
   }
 
   selectAllFromOrganisation(organisation:string){

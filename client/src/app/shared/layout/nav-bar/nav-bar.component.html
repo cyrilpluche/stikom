@@ -21,24 +21,28 @@
         </a>
       </li>
       <li class="nav-item active">
-        <a class="nav-link" [routerLink]="['/personal-achievement']" >Personal achievement
+        <a class="nav-link" *ngIf="isLoggedIn" [routerLink]="['/personal-achievement']" >Personal achievement
         </a>
       </li>
 
       <li class="nav-item">
-        <a class="nav-link" [routerLink]="['/project-list']" >Projects</a>
+        <a class="nav-link" *ngIf="isLoggedIn" [routerLink]="['/project-list']" >Projects</a>
       </li>
 
       <li class="nav-item">
-        <a class="nav-link" [routerLink]="['/sop-list']" >SOP</a>
+        <a class="nav-link" *ngIf="isLoggedIn" [routerLink]="['/sop-list']" >SOP</a>
       </li>
 
       <li class="nav-item">
-        <a class="nav-link" [routerLink]="['/account']" >My Account</a>
+        <a class="nav-link" *ngIf="isLoggedIn" [routerLink]="['/account']" >My Account</a>
       </li>
 
       <li class="nav-item">
-        <a class="nav-link" [routerLink]="['/authentification']" >Log In</a>
+        <a class="nav-link" *ngIf="!isLoggedIn" [routerLink]="['/authentification']" >Log In</a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" *ngIf="isLoggedIn" (click)="onLogoutClick()" >Log Out</a>
       </li>
 
     </ul>

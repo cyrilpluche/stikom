@@ -39,12 +39,22 @@ export class MemberService {
 
   generateHeaders()
   {
-    this.httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Authorization': localStorage.getItem("Token")
-      })
-    };
+    if(localStorage.getItem("Token") === null)
+    {
+      this.httpOptions = {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json'
+        })
+      };
+    }else{
+      this.httpOptions = {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+          'Authorization': localStorage.getItem("Token")
+        })
+      };
+    }
+
   }
 
   storeUserData(token) {
@@ -52,10 +62,48 @@ export class MemberService {
 
   }
 
+  storeUserDataFull(user:any) {
+    localStorage.setItem('FirstName', user['member_first_name']);
+    localStorage.setItem('Name', user['member_name']);
+    localStorage.setItem('Mail', user['member_mail']);
+
+  }
+
+  getUserDataFull()
+  {
+    if(localStorage.getItem("Mail") === null)
+    {
+      return {
+        mail: "Erreur",
+        first_name:"Erreur",
+        name:"Erreur"
+      };
+    }else{
+      return {
+        mail: localStorage.getItem("Mail"),
+        first_name:localStorage.getItem("FirstName"),
+        name:localStorage.getItem("Name")
+      };
+    }
+
+
+  }
+
+  logout() {
+    localStorage.clear();
+  }
+
   getToken() {
+
     return localStorage.getItem("Token")
   }
-  async isLoggednIn() {
+
+  isLoggedIn(){
+    return this.getToken() !== null;
+  }
+
+  /*
+  async isLoggedIn()  {
     if(this.getToken() !== null)
     {
       let body = {
@@ -63,19 +111,25 @@ export class MemberService {
 
       this.generateHeaders();
       await this.http.post(this.domain + '/api/member/loggedIn',body,this.httpOptions).subscribe( (res) => {
-        console.log(res);
-        return true;
+          console.log("ici");
+        if(res['data']=== null)
+          {
+            return false;
+          }else{
+            this.storeUserDataFull(res['data']);
+            return true;
+          }
+
         },
         error => {
           return false;
         });
-
 
     }else{
       return false;
     }
 
 
-  }
+  }*/
 
 }
