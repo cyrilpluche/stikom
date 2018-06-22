@@ -76,16 +76,12 @@ const member = {
                         if (r) {
                             return data[0]
                         } else {
-                            throw ERRORTYPE.WRONG_IDENTIFIER
+                            return false
                         }
                     })
                 }
             }).catch(function (err) {
-                if(err.type){ // if the error is an object and has a type
-                    return Promise.reject(err)
-                } else {
-                    return Promise.reject(ERRORTYPE.customError('The server has encountred an internal error: ' + err.toString()))
-                }
+                throw ERRORTYPE.customError('The server has encountred an internal error: ' + err.toString())
             })
     },
 
