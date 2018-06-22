@@ -12,7 +12,7 @@ export class SopService {
 
   constructor(private http:HttpClient) { }
 
-  createSop (sop_title: string, sop_creation: Date, sop_revision: Date, sop_published: Date,sop_approvement: Date, sop_rules: string, sop_warning: string, sop_staff_qualification: string, sop_tools: string, sop_type_reports, sop_objectives: string) {
+  createSop(sop_title: string, sop_creation: Date, sop_revision: Date, sop_published: Date,sop_approvement: Date, sop_rules: string, sop_warning: string, sop_staff_qualification: string, sop_tools: string, sop_type_reports, sop_objectives: string) {
     let body = {
       sop_title: sop_title,
       sop_creation: sop_creation,
