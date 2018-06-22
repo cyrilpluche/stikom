@@ -28,6 +28,7 @@ import { ConfirmationComponent } from './shared/modals/confirmation/confirmation
 import { SummaryComponent } from './shared/summary/summary.component';
 import { SopComponent} from "./component/sop-list/sop/sop.component";
 import { ProjectCreationComponent } from './component/project-list/project-creation/project-creation.component';
+import { WarningComponent } from './shared/modals/warning/warning.component';
 
 
 const routes: Routes = [
@@ -66,7 +67,8 @@ const routes: Routes = [
     SummaryComponent,
     ConfirmationComponent,
     SopComponent,
-    ProjectCreationComponent
+    ProjectCreationComponent,
+    WarningComponent
   ],
   imports: [
     HttpClientModule,

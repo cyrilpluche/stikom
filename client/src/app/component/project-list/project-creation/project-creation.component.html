@@ -3,7 +3,7 @@
   <!-- SOP List back button -->
   <div class="row row-first">
     <div class="col">
-      <button type="button" class="btn btn-outline-danger waves-effect" [routerLink]="['/project-list']"><h6 class="no-margin-bottom"><i class="fa fa-times mr-3"></i>Back</h6></button>
+      <button type="button" class="btn btn-outline-danger waves-effect" data-toggle="modal" data-target="#confirmationModal"><h6 class="no-margin-bottom"><i class="fa fa-times mr-3"></i>Back</h6></button>
     </div>
   </div>
 
@@ -16,12 +16,67 @@
       <!-- Card content -->
       <div class="card-body card-body-cascade">
 
-        <p class="h4 text-center mb-4">Project Creation</p>
+        <p class="card-title h4 text-center mb-4">Project Creation</p>
+
+        <!-- Form -->
+        <form (ngSubmit)="onSubmit()">
+
+          <!-- SOP model -->
+          <div [hidden]="stepSelected != 0">
+            <div class="row md-form">
+
+              <div class="offset-2 col-8">
+                <p class="text-center mb-4 text-description"> Please select a SOP model to begin your project </p>
+                <select [(ngModel)]="newSop" name="newSop" class="form-control" multiple>
+                  <option value="" disabled selected>Choose your model</option>
+                  <option value="1">Option 1</option>
+                  <option value="2">Option 2</option>
+                  <option value="3">Option 3</option>
+                </select>
+              </div>
+            </div>
+            <div class="row justify-content-center">
+              <div>
+                <button [disabled]="newSop == null" class="btn btn-primary waves-effect" type="button" (click)="changeStep(true)">Next</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- SOP title -->
+          <div [hidden]="stepSelected != 1">
+            <div class="row md-form">
+              <p class="col-12 text-center mb-4 text-description"> Please choose a project name </p>
+              <div class="offset-2 col-8">
+                <input [(ngModel)]="newTitle" name="newTitle" type="text" id="newTitle" class="form-control">
+                <label for="newTitle">Project name</label>
+              </div>
+            </div>
+            <div class="row justify-content-center">
+              <div>
+                <button [disabled]="newTitle == ''" class="btn btn-primary waves-effect" type="button" (click)="changeStep(true)">Next</button>
+              </div>
+              <div>
+                <button class="btn btn-danger waves-effect" type="button" (click)="changeStep(false)">Back</button>
+              </div>
+            </div>
+          </div>
+
+        </form>
+        <!-- Form -->
 
       </div>
+      <!-- Card content -->
 
     </div>
+    <!-- Card -->
 
   </div>
+  <!-- SOP Form -->
 
 </div>
+
+<!-- Modal confirmation -->
+<app-warning title="Exit"
+                  text="Are you sure you want to exit ? All your work will be lost."
+                  link="project-list">
+</app-warning>

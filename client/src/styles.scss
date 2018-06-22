@@ -4,6 +4,7 @@
 /* YELLOW #fcd004 */
 /* ORANGE #ffa701 */
 /* RED #e5242c */
+/* GREY #818384 */
 
 body {
   background-color: #fafafa;
@@ -32,6 +33,11 @@ body {
 //BUTTON 2
 .btn-primary {
   background-color: #ffa701 !important;
+}
+
+//BUTTON 3
+.btn-danger {
+  background-color: #e5242c !important;
 }
 
 //BUTTON OUTLINE 1
@@ -156,6 +162,10 @@ table thead{
   color: #e5242c;
   font-weight: bold;
 }
+
+.text-description {
+  color: #818384;
+}
 /* ---------- /TEXT ---------- */
 
 /* ---------- TITLE ---------- */
@@ -164,3 +174,8 @@ table thead{
 }
 /* ---------- /TITLE ---------- */
 
+/* ---------- CARD ---------- */
+.card-title {
+  margin-bottom: 6% !important;
+}
+/* ---------- /CARD ---------- */
