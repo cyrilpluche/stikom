@@ -3,7 +3,7 @@
   <!-- SOP List back button -->
   <div class="row row-first">
     <div class="col">
-      <button type="button" class="btn btn-outline-danger waves-effect" [routerLink]="['/sop-list']"><h6 class="no-margin-bottom"><i class="fa fa-times mr-3"></i>Back</h6></button>
+      <button type="button" class="btn btn-outline-danger waves-effect" data-toggle="modal" data-target="#warningModal"><h6 class="no-margin-bottom"><i class="fa fa-times mr-3"></i>Back</h6></button>
     </div>
   </div>
 
@@ -182,8 +182,15 @@
 <app-confirmation title="Confirmation SOP creation"
                   text={{summary}}
                   (success)="addSop($event)"
-                  link="sop-list">
+                  isLinkActive="false"
+                  link="activity-creation">
 </app-confirmation>
+
+<!-- Modal warning -->
+<app-warning title="Exit"
+             text="Are you sure you want to go back to the SOP list ? All your work not saved will be lost."
+             link="sop-list">
+</app-warning>
 
 <script>
   // Tooltips Initialization

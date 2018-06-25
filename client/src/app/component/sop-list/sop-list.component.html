@@ -41,23 +41,11 @@
 
           <!--Table body-->
           <tbody>
-            <tr>
-              <th scope="row">1</th>
-              <td>Cook a chicken</td>
-              <td>18/05/2018</td>
-              <td>AGUSTA Yudi</td>
-            </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td>Travel by boat</td>
-              <td>20/06/2018</td>
-              <td>Aditya</td>
-            </tr>
-            <tr>
-              <th scope="row">3</th>
-              <td>Park a car</td>
-              <td>01/06/2017</td>
-              <td>Vony</td>
+            <tr *ngFor="let sop of sopList">
+              <th scope="row">{{sop.sop_id}}</th>
+              <td>{{sop.sop_title}}</td>
+              <td>{{sop.sop_creation | date:"MM/dd/yyyy"}}</td>
+              <td>{{sop.sop_approvment}}</td>
             </tr>
           </tbody>
           <!--Table body-->
