@@ -29,6 +29,8 @@ import { SummaryComponent } from './shared/summary/summary.component';
 import { SopComponent} from "./component/sop-list/sop/sop.component";
 import { ProjectCreationComponent } from './component/project-list/project-creation/project-creation.component';
 import { WarningComponent } from './shared/modals/warning/warning.component';
+import { ActivityListComponent } from './component/activity-list/activity-list.component';
+import { ActivityCreationComponent } from './component/activity-list/activity-creation/activity-creation.component';
 
 
 const routes: Routes = [
@@ -42,6 +44,7 @@ const routes: Routes = [
   {path: 'project-list', component: ProjectListComponent},
   {path: 'sop-creation', component: SopCreationComponent},
   {path: 'sop-list', component: SopListComponent},
+  {path: 'activity-creation', component: ActivityCreationComponent},
   {path: 'project-creation', component: ProjectCreationComponent}
 ];
 
@@ -68,7 +71,9 @@ const routes: Routes = [
     ConfirmationComponent,
     SopComponent,
     ProjectCreationComponent,
-    WarningComponent
+    WarningComponent,
+    ActivityListComponent,
+    ActivityCreationComponent
   ],
   imports: [
     HttpClientModule,

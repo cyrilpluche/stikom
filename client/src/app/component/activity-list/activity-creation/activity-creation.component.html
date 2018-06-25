@@ -1,0 +1,141 @@
+<div class="container">
+
+  <!-- SOP List back button -->
+  <div class="row row-first">
+    <div class="col">
+      <button type="button" class="btn btn-outline-danger waves-effect" data-toggle="modal" data-target="#warningModal"><h6 class="no-margin-bottom"><i class="fa fa-times mr-3"></i>Back</h6></button>
+    </div>
+  </div>
+
+  <!-- SOP Form -->
+  <div class="row row-first justify-content-center" [hidden]="!step1">
+
+    <!-- Card -->
+    <div class="col card card-cascade hoverable">
+
+      <!-- Card content -->
+      <div class="card-body card-body-cascade">
+
+        <p class="h4 text-center mb-4">Activities Creation</p>
+
+        <!-- Material form login -->
+        <form (ngSubmit)="onSubmit()">
+
+          <!-- Title -->
+          <div class="row md-form">
+            <div class="offset-1 col-10">
+              <input [(ngModel)]="newActivityTitle" name="newActivityTitle" type="text" id="newActivityTitle" class="form-control">
+              <label for="newActivityTitle">SOP Name</label>
+            </div>
+          </div>
+
+          <!-- Description -->
+          <div class="row md-form">
+            <div class="offset-1 col-10">
+              <textarea [(ngModel)]="newActivityDescription" name="newActivityDescription" type="text" id="newActivityDescription" class="form-control md-textarea" rows="1" ></textarea>
+              <label for="newActivityDescription">Activity description</label>
+            </div>
+          </div>
+
+          <!-- Type Duration -->
+          <div class="row md-form">
+            <div class="offset-1 col-10">
+              <p class="text-center mb-4 text-description"> Please select a duration type </p>
+              <select [(ngModel)]="newActivityTypeDuration" name="newActivityTypeDuration" class="form-control">
+                <option value="" disabled selected>Choose your duration type</option>
+                <option value="minute">Minute</option>
+                <option value="hour">Hour</option>
+                <option value="day">Day</option>
+                <option value="week">Week</option>
+                <option value="month">Month</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Duration -->
+          <div class="row md-form">
+            <div class="offset-1 col-10">
+              <input [(ngModel)]="newActivityDuration" name="newActivityDuration" type="number" id="newActivityDuration" class="form-control">
+              <label for="newActivityDuration">Duration</label>
+            </div>
+          </div>
+
+          <!-- Type output -->
+          <div class="row md-form">
+            <div class="offset-1 col-10">
+              <input [(ngModel)]="newActivityTypeOutput" name="newActivityTypeOutput" type="text" id="newActivityTypeOutput" class="form-control">
+              <label for="newActivityTypeOutput">Type of output</label>
+            </div>
+          </div>
+
+          <div class="row md-form">
+            <div class="offset-1 col-5">
+              <button class="btn btn-primary waves-effect" type="button" (click)="addNewActivity()">Add</button>
+            </div>
+            <div class="col-5 row justify-content-end">
+              <div class="">
+                <button [disabled]="activityArray.length == 0" class="btn btn-success waves-effect" type="button" (click)="changeStep(false)">Next</button>
+              </div>
+            </div>
+          </div>
+
+        </form>
+
+      </div>
+      <!-- Card content -->
+
+    </div>
+    <!-- Card -->
+
+  </div>
+  <!-- SOP Form -->
+
+  <!--Title of the step-->
+  <div class="row row-first" [hidden]="!step1">
+    <h4><span class="badge badge-pill badge-primary">Activity List</span></h4>
+    <!-- Error alert -->
+    <div *ngIf="errorMessage" class="col offset-2 row justify-content-end error-text">
+      <i>{{errorMessage}}</i>
+    </div>
+  </div>
+
+  <!-- SOP Display -->
+  <div class="row row-last justify-content-center" [hidden]="!step1">
+
+    <!-- Card -->
+    <div class="col card card-cascade hoverable">
+
+      <!-- Card content -->
+      <div class="card-body card-body-cascade">
+
+        <table class="table">
+          <tbody>
+          <tr *ngFor="let element of activityArray">
+            <td>{{element.activity_title}}</td>
+            <td>{{element.activity_duration}} {{element.activity_type_duration}}</td>
+            <td>{{element.activity_type_output}}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- Card content -->
+    </div>
+    <!-- Card -->
+
+  </div>
+  <!-- SOP Display -->
+</div>
+
+<!-- Modal warning -->
+<app-warning title="Exit"
+             text="Are you sure you want to go back to the SOP list ? All your work not saved will be lost."
+             link="sop-list">
+</app-warning>
+
+
+<script>
+  // Tooltips Initialization
+  $(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+  })
+</script>

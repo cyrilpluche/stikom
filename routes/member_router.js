@@ -18,7 +18,8 @@ router.get('/validate_member/:seed', policy.requiresNoAuthenticateUser,requireSe
     modelMember.validate_seed(req.params.seed).then(function (data) {
         return modelMember.selectAllAdmin().then(function (admins) {
             admins.forEach(function (admin) {
-                mailSender.send(admin.member_mail, `A new member requires your validation
+                mailSender.send(admin.member_mail,'New member created',`A new member has validate his accound and 
+                requires your validation
                 <p><b>mail: ${data.member_mail}</b></p>`, '', function () {
                     console.log(admin)
                 })
@@ -30,6 +31,11 @@ router.get('/validate_member/:seed', policy.requiresNoAuthenticateUser,requireSe
     }).catch(next)
 });
 
+router.get('/all', function (req, res, next) {
+    modelMember.selectAll().then(function (data) {
+        res.send({data: data})
+    }).catch(next)
+});
 /*
 =========================================== ROUTER POST =============================================
  */
@@ -66,7 +72,9 @@ router.post('/register',
                         }
                     });
             }).catch(next)
-        }).catch(next);
+        }).catch(function (e) {
+            next(ERRORTYPE.customError(e));
+        });
     });
 
 /*
@@ -146,6 +154,23 @@ router.put('/validate_member',
     }).catch(next)
 });
 
+router.put('/update_password',
+    policy.checkParameters(['member_id, old_password, new_password1, new_password2']),
+    checkPwdUpdate,
+    function (req, res, next) {
+        bcrypt.hash(req.body.new_password1, 10).then(function (hash) {
+            return modelMember.updatePassword(req.body.member_id, req.body.new_password1)
+                .then(function (data) {
+                    res.json({data: data});
+                }).catch(function (e) {
+                    throw e
+                })
+        }).catch(function (e) {
+            if (!e.type) next(ERRORTYPE.customError(e));
+            else next(e)
+        });
+    });
+
 
 /*
 ========================================== FUNCTIONS ============================================
@@ -201,6 +226,26 @@ function requireNullSeeder (req, res, next) {
             next()
         }
     }).catch(next)
+}
+
+/**
+ *
+ * @param req
+ * @param res
+ * @param next
+ */
+function checkPwdUpdate (req, res, next) {
+    if (req.body.new_password1 !== req.body.new_password2) {
+        next(ERRORTYPE.customError('Error: the two passwords are different', 'DIFFERENT PASSWORD' , 412));
+    } else {
+        modelMember.match(req.body.member_id, req.old_password).then(function (data) {
+            if (!data) {
+                next(ERRORTYPE.customError('Error: wrong password', 'WRONG PASSWORD', 403));
+            } else {
+                next();
+            }
+        }).catch(next);
+    }
 }
 
 module.exports = router;

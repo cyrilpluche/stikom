@@ -57,9 +57,6 @@ export class AuthentificationComponent {
             console.log("ERREUR : ",error);
 
             this.errorMessage = error.error.message;
-
-
-
           });
 
     }
