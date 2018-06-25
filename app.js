@@ -37,6 +37,7 @@ app.use('/api/organisation', require('./routes/organisation_router'));
 app.use('/api/branch', require('./routes/branch_router'));
 app.use('/api/department', require('./routes/department_router'));
 app.use('/api/sub_department', require('./routes/sub_department_router'));
+app.use('/api/role', require('./routes/role_router'));
 
 
 /*

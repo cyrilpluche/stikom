@@ -35,8 +35,8 @@ router.get('/validate_member/:seed', policy.requiresNoAuthenticateUser,requireSe
  */
 
 router.post('/register',
-    policy.checkParameters(['mail', 'password', 'first_name', 'name', 'is_admin', 'sub_department_id']),
     policy.requiresNoAuthenticateUser,
+    policy.checkParameters(['mail', 'password', 'first_name', 'name', 'is_admin', 'sub_department_id']),
     requireNoneExistingMail,
     function(req, res, next) {
         let seed = tokenGenerator.generate();
@@ -72,8 +72,8 @@ router.post('/register',
 /*
  * before accessing to this route we check if every parameter are there and if the mail is valid
  */
-router.post('/login', policy.checkParameters(['mail', 'password']),
-    policy.requiresNoAuthenticateUser,// the user is already logged in and try to login again
+router.post('/login', policy.requiresNoAuthenticateUser,// the user is already logged in and try to login again
+    policy.checkParameters(['mail', 'password']),
     policy.emailValidator,
     function (req, res, next) {
         modelMember.match(req.body.mail, req.body.password).then(function (member) {

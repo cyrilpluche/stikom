@@ -3,6 +3,7 @@ const validator = require("email-validator");
 const ERROR_TYPE = require('./errorType');
 const jwtHelper = require('../helpers/jwtHelpers');
 const basicMethods = require('../helpers/basicMethodsHelper');
+const modelRole = require('../models/role_model');
 
 
 const policies = {
@@ -67,11 +68,18 @@ const policies = {
             jwtHelper.jwtDecode(req, function (err, decode) {
                 if (err) {
                     next(ERROR_TYPE.FORBIDDEN)
-                } else if (decode.member_role === undefined || decode.member_role == null
-                    || !basicMethods.arrayContains(decode.member_role, right)){
-                    next(ERROR_TYPE.FORBIDDEN)
                 } else {
-                    next()
+                    modelRole.selectRoleFromMember(decode.member_id)
+                        .then(function (data) {
+                            console.log(data)
+                        if (data.member_role === undefined || data.member_role == null
+                                || !basicMethods.arrayContains(data.member_role, right)){
+                                next(ERROR_TYPE.FORBIDDEN)
+                            } else {
+                                next()
+                            }
+                        })
+                        .catch(next)
                 }
             })
             // will check if the user has right to do what he aimed to do
