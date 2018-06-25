@@ -102,6 +102,14 @@ export class MemberService {
     return this.getToken() !== null;
   }
 
+  setUserDetails(){
+    let body = {
+    };
+
+    this.generateHeaders();
+    return this.http.post(this.domain + '/api/member/loggedIn',body,this.httpOptions);
+  }
+
   /*
   async isLoggedIn()  {
     if(this.getToken() !== null)
