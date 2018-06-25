@@ -3,7 +3,6 @@ const router = express.Router();
 const modelRole = require('../models/role_model');
 const policy = require('../policy/policy_middleware');
 
-
 // TODO precise rights
 router.get('/all', function (req, res, next) {
     modelRole.selectAll().then(function (data) {

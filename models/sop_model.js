@@ -6,7 +6,7 @@ let sop = {
         return db.any('INSERT INTO public.sop(\n' +
             'sop_title, sop_creation, sop_revision, sop_published, sop_approvment,\n' +
             'sop_rules, sop_warning, sop_staff_qualification, sop_tools, sop_type_reports, sop_objectives)\n' +
-            'VALUES (${sop_title}, ${sop_creation}, ${sop_revision}, ${sop_published}, ${sop_approvment}, ${sop_rules}, \n' +
+            'VALUES (${sop_title}, DATE(NOW()), DATE(NOW()), DATE(NOW()), ${sop_approvment}, ${sop_rules}, \n' +
             '${sop_warning}, ${sop_staff_qualification}, ${sop_tools}, ${sop_type_reports}, ${sop_objectives}) returning sop_id;', sop)
             .then(function (data) {
                 if (data.length === 0) {
@@ -31,8 +31,8 @@ let sop = {
         })
     },
 
-    selectById (soap_id) {
-        return db.any('SELECT * FROM public.sop where sop_id = $1', soap_id)
+    selectById (sop_id) {
+        return db.any('SELECT * FROM public.sop where sop_id = $1', sop_id)
             .then(function (data) {
                 if (data.length === 0) {
                     throw ERRORTYPE.NOT_FOUND
@@ -46,6 +46,28 @@ let sop = {
                     throw ERRORTYPE.customError('The server has encountred an internal error\n ' + err.toString());
                 }
             })
+    },
+
+    /**
+     * Require an object that contains all champ even those who doesn't change
+     * @param sop
+     */
+    update (sop) {
+        return db.any('UPDATE public.sop SET sop_title = ${sop_title}, sop_approvment = ${sop_approvment},\n' +
+            'sop_rules = ${sop_rules}, sop_warning = ${sop_warning}, sop_staff_qualification = ${sop_staff_qualification},\n' +
+            'sop_tools = ${sop_tools}, sop_type_reports = ${sop_type_reports}, sop_objectives = ${sop_objectives}\n' +
+            'sop_revision = DATE (NOW ())\n' +
+            'WHERE sop_id = ${sop_id} returning sop_id', sop).then(function (data) {
+            if (data.length === 0) {
+                throw ERRORTYPE.INTERNAL_ERROR
+            }
+        }).catch(function (err) {
+            if (err.type) { // means that it comes from a then
+                throw err
+            } else {
+                throw ERRORTYPE.customError('The server has encountred an internal error\n ' + err.toString());
+            }
+        });
     }
 };
-module.exports = sop
+module.exports = sop;
