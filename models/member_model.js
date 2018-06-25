@@ -169,15 +169,48 @@ const member = {
                 }
             })
     },
+
+    /**
+     * select all member except admin
+     * @returns {*}
+     */
     selectAll: function () {
-        
+        return db.any('SELECT * FROM public.member WHERE member_admin = 0').then(function (data) {
+            for (let i = 0; i < data.length; i++) {
+                data[i].member_password = undefined
+            }
+            return data
+        }).catch(function (err) {
+            throw ERRORTYPE.customError('The server has encountred an internal error\n ' + err.toString())
+        })
     },
+
     selectAllAdmin () {
         return db.any('SELECT * FROM public.member WHERE member_admin = 1').then(function (data) {
             return data
         }).catch(function (err) {
             throw ERRORTYPE.customError('The server has encountred an internal error\n ' + err.toString())
         })
+    },
+
+    /**
+     *
+     * @param member_id
+     * @param password: already hash password
+     * @returns {*}
+     */
+    updatePassword (member_id, password) {
+        return db.any('UPDATE public.member SET member_password = ${pwd} WHERE member_id = ${member} return member_id',
+            {member: member_id, pwd: password})
+            .then(function (data) {
+                if (data.length === 0) {
+                    return false
+                } else {
+                    return data[0]
+                }
+            }).catch(function (err) {
+                throw ERRORTYPE.customError('The server has encountred an internal error\n ' + err.toString())
+            })
     }
 };
 module.exports = member;

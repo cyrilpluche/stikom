@@ -55,11 +55,13 @@ let sop = {
     update (sop) {
         return db.any('UPDATE public.sop SET sop_title = ${sop_title}, sop_approvment = ${sop_approvment},\n' +
             'sop_rules = ${sop_rules}, sop_warning = ${sop_warning}, sop_staff_qualification = ${sop_staff_qualification},\n' +
-            'sop_tools = ${sop_tools}, sop_type_reports = ${sop_type_reports}, sop_objectives = ${sop_objectives}\n' +
+            'sop_tools = ${sop_tools}, sop_type_reports = ${sop_type_reports}, sop_objectives = ${sop_objectives},\n' +
             'sop_revision = DATE (NOW ())\n' +
             'WHERE sop_id = ${sop_id} returning sop_id', sop).then(function (data) {
             if (data.length === 0) {
                 throw ERRORTYPE.INTERNAL_ERROR
+            } else {
+                return data[0]
             }
         }).catch(function (err) {
             if (err.type) { // means that it comes from a then

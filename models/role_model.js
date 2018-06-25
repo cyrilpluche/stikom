@@ -18,7 +18,7 @@ let role = {
         })
     },
     insertHasRole (member, role) {
-        return db.any('INSERT INTO public.has_role (member_id, role_id) VALUES (${member}, {role}',
+        return db.any('INSERT INTO public.has_role (member_id, role_id) VALUES (${member}, ${role})',
             {member: member, role: role})
             .then(function (data) {
                 return true
