@@ -44,7 +44,7 @@ router.get('/findOne/:sopId',
     });
 
 router.put('/verification',
-    //policy.requireSpecificRight(ROLE.Planner),
+    policy.requireSpecificRight(ROLE.Planner),
     policy.checkParameters(['sop_title', 'sop_approvment', 'sop_rules', 'sop_warning', 'sop_staff_qualification',
     'sop_tools', 'sop_type_reports', 'sop_objectives']),
     function (req, res, next) {
