@@ -101,7 +101,7 @@ export class ActivityCreationComponent implements OnInit {
       newActivity.activity_duration = this.newActivityDuration;
       newActivity.activity_type_output = this.newActivityTypeOutput;
       newActivity.activity_id_is_father = null;
-      newActivity.activity_shape = null;
+      newActivity.activity_shape = 'shape of you';
       newActivity.activity_type = null;
 
       //We check for all activity added, if the new one already exist
@@ -155,7 +155,7 @@ export class ActivityCreationComponent implements OnInit {
       newSubActivity.activity_type_duration = this.newSubActivityTypeDuration;
       newSubActivity.activity_duration = this.newSubActivityDuration;
       newSubActivity.activity_type_output = this.newSubActivityTypeOutput;
-      newSubActivity.activity_shape = null;
+      newSubActivity.activity_shape = 'body';
       newSubActivity.activity_type = null;
 
       //We check for all activity added, if the new one already exist

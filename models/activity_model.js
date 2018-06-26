@@ -3,6 +3,7 @@ const ERRORTYPE = require('../policy/errorType');
 
 let activity = {
     insert  (activity) {
+        console.log(activity)
         return db.any('INSERT INTO public.activity(\n' +
             'activity_title, activity_type_duration, activity_duration, activity_type, activity_type_output, activity_description,\n' +
             'activity_shape, activity_id_is_father, sop_id)\n' +
