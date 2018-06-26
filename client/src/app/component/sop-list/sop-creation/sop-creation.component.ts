@@ -198,7 +198,7 @@ export class SopCreationComponent implements OnInit {
   }
 
   //Final function that add the SOP into the database
-  addSop(add) {
+  async addSop(add) {
     if (add) {
 
       let date_creation = new Date(Date.now());
@@ -227,7 +227,7 @@ export class SopCreationComponent implements OnInit {
         sop_type_reports += t;
       }
 
-      this._sopService.createSop(
+      await this._sopService.createSop(
         this.newTitle,
         date_creation,
         date_revision,
@@ -249,9 +249,7 @@ export class SopCreationComponent implements OnInit {
 
         //We store this id in the local storage to re-use it for the activities creation
         localStorage.setItem('Sop_id', this.sopId);
-        window.setTimeout(function(){
-          this.router.navigate(['/','activity-creation']);
-          }, 4000);
+        this.router.navigate(['/','activity-creation']);
 
       },
         error => {

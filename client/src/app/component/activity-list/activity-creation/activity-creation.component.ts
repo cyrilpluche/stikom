@@ -100,6 +100,9 @@ export class ActivityCreationComponent implements OnInit {
       newActivity.activity_type_duration = this.newActivityTypeDuration;
       newActivity.activity_duration = this.newActivityDuration;
       newActivity.activity_type_output = this.newActivityTypeOutput;
+      newActivity.activity_id_is_father = null;
+      newActivity.activity_shape = null;
+      newActivity.activity_type = null;
 
       //We check for all activity added, if the new one already exist
       let activityExist: boolean = false;
@@ -118,11 +121,20 @@ export class ActivityCreationComponent implements OnInit {
         this.errorMessage = "";
 
         //Database insert
-        newActivity.activity_id = this._activityService.createActivity(newActivity.activity_type_duration, newActivity.activity_duration, newActivity.activity_type,
-          newActivity.activity_type_output, newActivity.activity_shape, newActivity.job_id, newActivity.activity_id_is_father, newActivity.sop_id);
+        this._activityService.createActivity(newActivity.activity_title, newActivity.activity_description, newActivity.activity_type_duration, newActivity.activity_duration, newActivity.activity_type,
+          newActivity.activity_type_output, newActivity.activity_shape, newActivity.activity_id_is_father, newActivity.sop_id).subscribe((res) => {
+            this.errorMessage = "";
 
-        //View insert
-        this.activityArray.push(newActivity);
+            //We get the id of the new activity
+            newActivity.activity_id = res['data'];
+            newActivity.activity_id = newActivity.activity_id['activity_id'];
+            console.log("activity_id : "+newActivity.activity_id);
+            //View insert
+            this.activityArray.push(newActivity);
+          },
+          error => {
+            this.errorMessage = error.error.message;
+          });
       }
     }
   }
@@ -143,6 +155,8 @@ export class ActivityCreationComponent implements OnInit {
       newSubActivity.activity_type_duration = this.newSubActivityTypeDuration;
       newSubActivity.activity_duration = this.newSubActivityDuration;
       newSubActivity.activity_type_output = this.newSubActivityTypeOutput;
+      newSubActivity.activity_shape = null;
+      newSubActivity.activity_type = null;
 
       //We check for all activity added, if the new one already exist
       let activityExist: boolean = false;
@@ -161,8 +175,20 @@ export class ActivityCreationComponent implements OnInit {
         this.errorMessage = "";
 
         //Database insert
-        newSubActivity.activity_id = this._activityService.createActivity(newSubActivity.activity_type_duration, newSubActivity.activity_duration, newSubActivity.activity_type,
-          newSubActivity.activity_type_output, newSubActivity.activity_shape, newSubActivity.job_id, newSubActivity.activity_id_is_father, newSubActivity.sop_id);
+        this._activityService.createActivity(newSubActivity.activity_title, newSubActivity.activity_description, newSubActivity.activity_type_duration, newSubActivity.activity_duration, newSubActivity.activity_type,
+          newSubActivity.activity_type_output, newSubActivity.activity_shape, newSubActivity.activity_id_is_father, newSubActivity.sop_id).subscribe((res) => {
+            this.errorMessage = "";
+
+            //We get the id of the new activity
+            newSubActivity.activity_id = res['data'];
+            newSubActivity.activity_id = newSubActivity.activity_id['activity_id'];
+            console.log("activity_id : "+newSubActivity.activity_id);
+            //View insert
+            this.activityArray.push(newSubActivity);
+          },
+          error => {
+            this.errorMessage = error.error.message;
+          });
 
         //View insert
         this.subActivityArray.push(newSubActivity);

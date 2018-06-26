@@ -200,6 +200,7 @@ CREATE TABLE public.project_has_job(
 ------------------------------------------------------------
 CREATE TABLE public.activity(
 	activity_id              SERIAL NOT NULL ,
+	activity_title           VARCHAR (255)  ,
 	activity_type_duration   VARCHAR (255)  ,
 	activity_duration        INT   ,
 	activity_type            VARCHAR (255)  ,

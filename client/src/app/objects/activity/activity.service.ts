@@ -14,21 +14,22 @@ export class ActivityService {
   constructor(private http:HttpClient,
               private router: Router) { }
 
-
-  createActivity(activity_type_duration:string, activity_duration:number, activity_type:string, activity_type_output:string, activity_shape:string, job_id:string,
+  createActivity(activity_title:string, activity_description:string, activity_type_duration:string, activity_duration:number, activity_type:string, activity_type_output:string, activity_shape:string,
   activity_id_is_father:string, sop_id:string){
     let body = {
+      activity_description: activity_description,
+      activity_shape: activity_shape,
+      activity_title: activity_title,
+      activity_id_is_father: activity_id_is_father,
+      sop_id: sop_id,
       activity_type_duration: activity_type_duration,
       activity_duration: activity_duration,
       activity_type: activity_type,
-      activity_type_output: activity_type_output,
-      activity_shape: activity_shape,
-      job_id: job_id,
-      activity_id_is_father: activity_id_is_father,
-      sop_id: sop_id
+      activity_type_output: activity_type_output
     };
+    console.log(body);
     this.generateHeaders();
-    return "1";
+    return this.http.post(this.domain + '/api/activity/create',body,this.httpOptions);
   }
 
   generateHeaders()
