@@ -178,7 +178,7 @@ const member = {
      */
     selectAll: function () {
         return db.any('SELECT member_first_name, member_name, member_admin, member_mail, member_valid, sub_department_id, member_role(member_id) \n' +
-            'FROM public.member WHERE member_valid != 0\n' +
+            'FROM public.member\n' +
             'GROUP BY member_first_name, member_name, member_admin, member_mail, member_valid, sub_department_id, member_id').then(function (data) {
             return data
         }).catch(function (err) {
