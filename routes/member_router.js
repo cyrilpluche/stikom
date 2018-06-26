@@ -126,7 +126,8 @@ router.post('/loggedIn', function (req, res, next) {
 
 // validate_login a member, an admin is required to do this action
 router.put('/validate_member',
-    policy.requireAdmin, policy.checkParameters(['member_id']),
+    policy.requireAdmin,
+    policy.checkParameters(['member_id']),
     requireNullSeeder,
     function (req, res, next) {
     modelMember.validate_login(req.body.member_id).then(function (data) {
@@ -208,7 +209,7 @@ function requireNoneExistingMail (req, res, next) {
  * @param next
  */
 function requireSeed (req, res, next) {
-    modelMember.existsBySeed(req.params.seed).then(function (data) {
+    modelMember.existsBySeed(req.body.seed).then(function (data) {
         if (data) {
             next ()
         } else {
