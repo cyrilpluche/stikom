@@ -69,6 +69,7 @@ const policies = {
                 if (err) {
                     next(ERROR_TYPE.FORBIDDEN)
                 } else {
+                    console.log(decode)
                     modelRole.selectRoleFromMember(decode.member_id)
                         .then(function (data) {
                                 if (decode.member_admin !== 1 &&

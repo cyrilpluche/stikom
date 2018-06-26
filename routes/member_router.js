@@ -143,7 +143,6 @@ router.post('/loggedIn', function (req, res, next) {
         if (err) {
             next(ERRORTYPE.FORBIDDEN)
         }
-        console.log(decode)
         let member = {
             member_id: decode.member_id,
             member_first_name: decode.member_first_name,
