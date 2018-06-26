@@ -127,6 +127,16 @@ export class MemberService {
     return this.http.get(this.domain + '/api/member/waiting_member',this.httpOptions);
   }
 
+
+  validateUser(idUser:string){
+    let body = {
+      member_id: idUser
+    };
+    console.log(idUser);
+    this.generateHeaders();
+    return this.http.put(this.domain + '/api/member/validate_member',body,this.httpOptions);
+  }
+
   /*
   async isLoggedIn()  {
     if(this.getToken() !== null)
