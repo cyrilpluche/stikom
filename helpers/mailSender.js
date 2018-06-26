@@ -31,22 +31,30 @@ ${html}
  * @param recipient: to whom the mail is intended to
  * @param subject: the subect the mail deals with
  * @param body: message
- * @param files: files
+ * @param files: array of files, gives an unique cid, a filename and a path for each file in the array
  * @param callback
  */
 function send (recipient, subject, body, files, callback) {
     //TODO manage files
+    let attchments = [
+        {
+            filename: 'logo.png',
+            path: 'public/images/logo-stikom.png',
+            cid: 'unique@kreata.ee' //same cid value as in the html img src
+        }
+    ];
+
+    files.forEach(function (file) {
+        attchments.push(file)
+    });
+
     let mail = {
         from: `Master Of Work<from@${process.env.USER_MAIL_SERVICE}.com>`,
         to: recipient,
         subject: subject,
         text: '',
         html: encapsulateHTML(`<div style="margin: auto; text-align: center;"><img src="cid:unique@kreata.ee" width="10%"/><p>${body}</p></div>`),
-        attachments: [{
-            filename: 'logo.png',
-            path: 'public/images/logo-stikom.png',
-            cid: 'unique@kreata.ee' //same cid value as in the html img src
-        }]
+        attachments: attchments
     }
     smtpTransport.sendMail(mail, function(error, response){
         callback(error, response);

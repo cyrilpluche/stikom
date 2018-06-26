@@ -94,7 +94,7 @@ const member = {
      * @returns {*}
      */
     validate_login: function (member_id) {
-        return db.any('Update public.member SET member_valid = 1 WHERE member_id = $1 returning member_id',
+        return db.any('Update public.member SET member_valid = 1 WHERE member_id = $1 returning member_id, member_mail',
             [member_id])
             .then(function (data) {
                 if (data.length === 0) {
@@ -146,6 +146,7 @@ const member = {
                 throw ERRORTYPE.customError('The server has encountred an internal error\n ' + err.toString())
             })
     },
+
     existsBySeed (seed) {
         return db.any('SELECT member_id FROM public.member WHERE seed = $1', seed).then(function (data) {
             return data.length !== 0
@@ -153,6 +154,7 @@ const member = {
             throw ERRORTYPE.customError('The server has encountred an internal error\n ' + err.toString())
         })
     },
+
     findOne: function (member_id) {
         return db.any('SELECT * FROM public.member WHERE member_id = $1', [member_id])
             .then(function (data) {
@@ -175,10 +177,7 @@ const member = {
      * @returns {*}
      */
     selectAll: function () {
-        return db.any('SELECT * FROM public.member WHERE member_admin = 0').then(function (data) {
-            for (let i = 0; i < data.length; i++) {
-                data[i].member_password = undefined
-            }
+        return db.any('SELECT * FROM public.member WHERE member_valid != 0').then(function (data) {
             return data
         }).catch(function (err) {
             throw ERRORTYPE.customError('The server has encountred an internal error\n ' + err.toString())
@@ -191,6 +190,14 @@ const member = {
         }).catch(function (err) {
             throw ERRORTYPE.customError('The server has encountred an internal error\n ' + err.toString())
         })
+    },
+
+    selectUnvalidateAccount () {
+      return db.any('SELECT * FROM public.member WHERE member_admin = 0 AND member_valid = 2').then(function (data) {
+          return data
+      }).catch(function (err) {
+          throw ERRORTYPE.customError('The server has encountred an internal error\n ' + err.toString())
+      })
     },
 
     /**

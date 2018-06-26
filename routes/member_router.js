@@ -16,16 +16,31 @@ const jwtHelpers  = require('../helpers/jwtHelpers');
 
 router.get('/all', function (req, res, next) {
     modelMember.selectAll().then(function (data) {
+        for (let i = 0; i < data.length; i++) {
+            data[i].member_password = undefined
+        }
         res.send({data: data})
     }).catch(next)
 });
+
+router.get('/waiting_member',
+    policy.requireAdmin,
+    function (req, res, next) {
+        modelMember.selectUnvalidateAccount().then(function (data) {
+            for (let i = 0; i < data.length; i++) {
+                data[i].member_password = undefined
+            }
+            res.send({data: data})
+        }).catch(next)
+    }
+);
 /*
 =========================================== ROUTER POST =============================================
  */
 
 router.post('/register',
     policy.requiresNoAuthenticateUser,
-    policy.checkParameters(['mail', 'password', 'first_name', 'name', 'is_admin', 'sub_department_id']),
+    policy.checkParameters(['mail', 'password', 'first_name', 'name', 'sub_department_id']),
     requireNoneExistingMail,
     function(req, res, next) {
         let seed = tokenGenerator.generate();
@@ -35,13 +50,13 @@ router.post('/register',
                 name: req.body.name,
                 mail: req.body.mail,
                 hash_pwd: hash,
-                is_admin: req.body.is_admin,
+                is_admin: 0,
                 member_valid: 0, // means that the member isn't valid yet
-                sub_department_id: req.body.sub_department_id,
-                seed: seed
+                seed: seed,
+                sub_department_id: req.body.sub_department_id
             }
             modelMember.insert(member).then(function (data) {
-                let generateLink = `${process.env.SERVER_URL}:${process.env.PORT}/api/member/validate_member/${seed}`;
+                let generateLink = `${process.env.SERVER_URL}:${process.env.CLIENT_PORT}/account-validation/${seed}`;
                 console.log(generateLink);
                 mailSender.send(req.body.mail, 'Account created',
                     `<h3 style="color: blue">Your account has been created with success !</h3><br><br>Click on the following link to valid your account.
@@ -59,6 +74,40 @@ router.post('/register',
             next(ERRORTYPE.customError(e));
         });
     });
+
+router.post('/create_admin',
+    policy.requireAdmin,
+    policy.checkParameters(['mail', 'password', 'first_name', 'name', 'sub_department_id']),
+    requireNoneExistingMail,
+    function (req, res, next) {
+        bcrypt.hash(req.body.password, 10).then(function (hash) {
+            let member = {
+                first_name: req.body.first_name,
+                name: req.body.name,
+                mail: req.body.mail,
+                hash_pwd: hash,
+                is_admin: 1,
+                member_valid: 1,
+                seed: null,
+                sub_department_id: req.body.sub_department_id
+            };
+            modelMember.insert(member).then(function (data) {
+                mailSender.send(req.body.mail, 'Account created',
+                    `<h3 style="color: blue">Your admin account has been created !</h3>
+                        <br><br>As admin you account is already validate.`,
+                    [], function (error, response) {
+                        if (error) {
+                            next(ERRORTYPE.customError(error))
+                        } else {
+                            res.json(data)
+                        }
+                    });
+            }).catch(next)
+        }).catch(function (e) {
+            next(ERRORTYPE.customError(e));
+        });
+    }
+);
 
 /*
  * before accessing to this route we check if every parameter are there and if the mail is valid
@@ -131,10 +180,17 @@ router.put('/validate_member',
     requireNullSeeder,
     function (req, res, next) {
     modelMember.validate_login(req.body.member_id).then(function (data) {
-        res.json({
-            data: data,
-            success: true
-        })
+        let loginUrl = `${process.env.SERVER_URL}:${process.env.CLIENT_PORT}/authentification`
+        mailSender.send(data.member_mail, 'Account available',
+            `<h3 style="color: blue">An admin has validate your account !</h3>
+               <br> You can now connect on the website <br>
+                <a href="${loginUrl}">login on the website</a>`,
+            [], function (err, resultat) {
+                res.json({
+                    data: data,
+                    success: true
+                })
+            });
     }).catch(next)
 });
 
@@ -165,9 +221,13 @@ router.put('/validate_registration',
         return modelMember.selectAllAdmin().then(function (admins) {
             admins.forEach(function (admin) {
                 mailSender.send(admin.member_mail,'New member created',`A new member has validate his account and 
-                requires your validation
-                <p><b>mail: ${data.member_mail}</b></p>`, '', function () {
-                    console.log(admin)
+                requires your validation <br>
+                <img src="cid:aaa@aa.eee" width="8%"/>
+                <p><b>mail: ${data.member_mail}</b></p>`,
+                    [{filename: 'account.png', path: 'public/images/account.png', cid: 'aaa@aa.eee'}],
+                    function (err, resultat) {
+                    if (err) console.log(err)
+                        else console.log(resultat)
                 })
             });
             res.json({data: data});

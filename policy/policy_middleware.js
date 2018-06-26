@@ -71,14 +71,15 @@ const policies = {
                 } else {
                     modelRole.selectRoleFromMember(decode.member_id)
                         .then(function (data) {
-                            console.log(data)
-                        if (data.member_role === undefined || data.member_role == null
-                                || !basicMethods.arrayContains(data.member_role, right)){
-                                next(ERROR_TYPE.FORBIDDEN)
-                            } else {
-                                next()
-                            }
-                        })
+                                if (decode.member_admin !== 1 &&
+                                    (data.member_role === undefined || data.member_role == null
+                                        || !basicMethods.arrayContains(data.member_role, right)))
+                                {
+                                    next(ERROR_TYPE.FORBIDDEN)
+                                } else {
+                                    next()
+                                }
+                            })
                         .catch(next)
                 }
             })
