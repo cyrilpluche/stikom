@@ -3,29 +3,29 @@
   <!-- SOP List back button -->
   <div class="row row-first">
     <div class="col">
-      <button type="button" class="btn btn-outline-danger waves-effect" data-toggle="modal" data-target="#warningModal"><h6 class="no-margin-bottom"><i class="fa fa-times mr-3"></i>Back</h6></button>
+      <button type="button" class="btn btn-outline-danger waves-effect" data-toggle="modal" data-target="#warningModal"><h6 class="no-margin-bottom"><i class="fa fa-times mr-3"></i>Exit</h6></button>
     </div>
   </div>
 
-  <!-- SOP Form -->
-  <div class="row row-first justify-content-center" [hidden]="!step1">
+  <!-- Activity Form -->
+  <div class="row row-first justify-content-center">
 
     <!-- Card -->
     <div class="col card card-cascade hoverable">
 
       <!-- Card content -->
-      <div class="card-body card-body-cascade">
+      <div class="card-body card-body-cascade" [hidden]="!step1">
 
         <p class="h4 text-center mb-4">Activities Creation</p>
 
-        <!-- Material form login -->
+        <!-- Activity Form -->
         <form (ngSubmit)="onSubmit()">
 
           <!-- Title -->
           <div class="row md-form">
             <div class="offset-1 col-10">
               <input [(ngModel)]="newActivityTitle" name="newActivityTitle" type="text" id="newActivityTitle" class="form-control">
-              <label for="newActivityTitle">SOP Name</label>
+              <label for="newActivityTitle">Activity Name</label>
             </div>
           </div>
 
@@ -74,7 +74,7 @@
             </div>
             <div class="col-5 row justify-content-end">
               <div class="">
-                <button [disabled]="activityArray.length == 0" class="btn btn-success waves-effect" type="button" (click)="changeStep(false)">Next</button>
+                <button [disabled]="activityArray.length == 0" class="btn btn-success waves-effect" type="button">Submit</button>
               </div>
             </div>
           </div>
@@ -84,15 +84,90 @@
       </div>
       <!-- Card content -->
 
+      <!-- Card content -->
+      <div class="card-body card-body-cascade" [hidden]="!step2">
+
+        <p class="h4 text-center mb-4">Sub Activity Creation</p>
+
+        <!-- Activity Form -->
+        <form (ngSubmit)="onSubmit()">
+
+          <!-- Title -->
+          <div class="row md-form">
+            <div class="offset-1 col-10">
+              <input [(ngModel)]="newSubActivityTitle" name="newActivityTitle" type="text" id="newSubActivityTitle" class="form-control">
+              <label for="newSubActivityTitle">Sub Activity Name</label>
+            </div>
+          </div>
+
+          <!-- Description -->
+          <div class="row md-form">
+            <div class="offset-1 col-10">
+              <textarea [(ngModel)]="newSubActivityDescription" name="newActivityDescription" type="text" id="newSubActivityDescription" class="form-control md-textarea" rows="1" ></textarea>
+              <label for="newSubActivityDescription">Sub Activity description</label>
+            </div>
+          </div>
+
+          <!-- Type Duration -->
+          <div class="row md-form">
+            <div class="offset-1 col-10">
+              <p class="text-center mb-4 text-description"> Please select a duration type </p>
+              <select [(ngModel)]="newSubActivityTypeDuration" name="newSubActivityTypeDuration" class="form-control">
+                <option value="" disabled selected>Choose your duration type</option>
+                <option value="minute">Minute</option>
+                <option value="hour">Hour</option>
+                <option value="day">Day</option>
+                <option value="week">Week</option>
+                <option value="month">Month</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Duration -->
+          <div class="row md-form">
+            <div class="offset-1 col-10">
+              <input [(ngModel)]="newSubActivityDuration" name="newActivityDuration" type="number" id="newSubActivityDuration" class="form-control">
+              <label for="newSubActivityDuration">Duration</label>
+            </div>
+          </div>
+
+          <!-- Type output -->
+          <div class="row md-form">
+            <div class="offset-1 col-10">
+              <input [(ngModel)]="newSubActivityTypeOutput" name="newActivityTypeOutput" type="text" id="newSubActivityTypeOutput" class="form-control">
+              <label for="newSubActivityTypeOutput">Type of output</label>
+            </div>
+          </div>
+
+          <div class="row md-form">
+            <div class="offset-1 col-5">
+              <button class="btn btn-primary waves-effect" type="button" (click)="addNewSubActivity()">Add</button>
+            </div>
+            <div class="col-5 row justify-content-end">
+              <div class="">
+                <button class="btn btn-primary waves-effect" type="button" (click)="changeStep(true)">Back</button>
+              </div>
+            </div>
+          </div>
+
+        </form>
+
+
+      </div>
+      <!-- Card content -->
+
     </div>
     <!-- Card -->
 
   </div>
-  <!-- SOP Form -->
+  <!-- Activity Form -->
 
   <!--Title of the step-->
-  <div class="row row-first" [hidden]="!step1">
-    <h4><span class="badge badge-pill badge-primary">Activity List</span></h4>
+  <div class="row row-first">
+    <h4>
+      <span class="badge badge-pill badge-primary" [hidden]="!step1">Activity List</span>
+      <span class="badge badge-pill badge-primary" [hidden]="!step2">Activity List</span>
+    </h4>
     <!-- Error alert -->
     <div *ngIf="errorMessage" class="col offset-2 row justify-content-end error-text">
       <i>{{errorMessage}}</i>
@@ -100,7 +175,7 @@
   </div>
 
   <!-- SOP Display -->
-  <div class="row row-last justify-content-center" [hidden]="!step1">
+  <div class="row row-last justify-content-center">
 
     <!-- Card -->
     <div class="col card card-cascade hoverable">
@@ -110,7 +185,20 @@
 
         <table class="table">
           <tbody>
-          <tr *ngFor="let element of activityArray">
+          <tr *ngFor="let element of activityArray" (change)="isCheckboxActive()" [hidden]="!step1">
+            <td>{{element.activity_title}}</td>
+            <td>{{element.activity_duration}} {{element.activity_type_duration}}</td>
+            <td>{{element.activity_type_output}}</td>
+            <td>
+                <!--WARNING : need to change the title by the id
+                    WARNING : need to change the title by the id-->
+                <input type="checkbox" class="form-check-input" (click)="checkActivity(element)" [checked]="checkboxActive(element)" autocomplete="off">
+            </td>
+          </tr>
+
+          <button [disabled]="!isCheckboxChecked" class="btn btn-primary waves-effect text-end" type="button" (click)="changeStep(false)" [hidden]="!step1">Add Sub Activities</button>
+
+          <tr *ngFor="let element of subActivityArray" [hidden]="!step2">
             <td>{{element.activity_title}}</td>
             <td>{{element.activity_duration}} {{element.activity_type_duration}}</td>
             <td>{{element.activity_type_output}}</td>
@@ -123,8 +211,26 @@
     <!-- Card -->
 
   </div>
-  <!-- SOP Display -->
+  <!-- Activity Display -->
+
+  <!-- Activity link display -->
+  <div class="row row-first justify-content-center" [hidden]="step1">
+
+    <!-- Card -->
+    <div class="col card card-cascade hoverable">
+
+
+
+    </div>
+    <!-- Card -->
+
+  </div>
+  <!-- Activity link display -->
+
 </div>
+
+
+
 
 <!-- Modal warning -->
 <app-warning title="Exit"

@@ -166,7 +166,6 @@ export class SopCreationComponent implements OnInit {
     }
   }
 
-
   fieldVerification () {
     if (this.newTitle == ""){
       this.errorMessage = "SOP title name is required.";

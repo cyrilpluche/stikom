@@ -1,5 +1,5 @@
 export interface Activity {
-  activity_id:number;
+  activity_id:string;
   activity_title: string;
   activity_description: string;
   activity_type_duration:string;
@@ -7,14 +7,13 @@ export interface Activity {
   activity_type:string;
   activity_type_output:string;
   activity_shape:string;
-  activity_unit_id:number;
-  job_id:number;
-  activity_id_is_next:number;
-  sop_id:number;
+  job_id:string;
+  activity_id_is_father:string;
+  sop_id:string;
 }
 
 export class Activity {
-  activity_id:number;
+  activity_id:string;
   activity_title:string;
   activity_description: string;
   activity_type_duration:string;
@@ -22,10 +21,9 @@ export class Activity {
   activity_type:string;
   activity_type_output:string;
   activity_shape:string;
-  activity_unit_id:number;
-  job_id:number;
-  activity_id_is_next:number;
-  sop_id:number;
+  job_id:string;
+  activity_id_is_father:string;
+  sop_id:string;
 
   constructor()
   {
