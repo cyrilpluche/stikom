@@ -10,6 +10,7 @@ import {Router} from "@angular/router";
 export class NavBarComponent implements OnInit {
 
   isLoggedIn=false;
+  reg:RegExp;
 
   constructor(private _memberService: MemberService,
               private router:Router) { }
@@ -32,6 +33,11 @@ export class NavBarComponent implements OnInit {
       this.router.navigate(['/home']);
     }, 500)
 
+  }
+
+  isActive(page:string):boolean{
+    this.reg = new RegExp("^/" + page);
+    return this.reg.test(this.router.url);
   }
 
 }
