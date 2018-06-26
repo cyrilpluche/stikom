@@ -177,7 +177,9 @@ const member = {
      * @returns {*}
      */
     selectAll: function () {
-        return db.any('SELECT * FROM public.member WHERE member_valid != 0').then(function (data) {
+        return db.any('SELECT member_first_name, member_name, member_admin, member_mail, sub_department_id, member_role(member_id) \n' +
+            'FROM public.member WHERE member_valid != 0\n' +
+            'GROUP BY member_first_name, member_name, member_admin, member_mail, sub_department_id, member_id').then(function (data) {
             return data
         }).catch(function (err) {
             throw ERRORTYPE.customError('The server has encountred an internal error\n ' + err.toString())
