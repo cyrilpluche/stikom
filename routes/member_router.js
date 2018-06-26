@@ -155,8 +155,12 @@ router.put('/update_password',
     });
 
 // TODO can be accessible by anyone
-router.put('/validate_member/:seed', policy.requiresNoAuthenticateUser,requireSeed, function (req, res, next) {
-    modelMember.validate_seed(req.params.seed).then(function (data) {
+router.put('/validate_member/',
+    policy.requiresNoAuthenticateUser,
+    policy.checkParameters(['seed']),
+    requireSeed,
+    function (req, res, next) {
+    modelMember.validate_seed(req.body.seed).then(function (data) {
         return modelMember.selectAllAdmin().then(function (admins) {
             admins.forEach(function (admin) {
                 mailSender.send(admin.member_mail,'New member created',`A new member has validate his accound and 
