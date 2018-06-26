@@ -35,7 +35,10 @@
             <td scope="row">{{user.member_name}}</td>
             <td>{{user.member_mail}}</td>
             <td *ngIf="user.member_admin == 1">admin</td>
-            <td *ngIf="user.member_admin !== 1">no role</td>
+            <td *ngIf="user.member_admin !== 1 && user.member_role === null">no role</td>
+            <td *ngIf="user.member_admin !== 1 && user.member_role !== null">
+              <span  *ngFor="let role of user.member_role">{{role}}<br></span>
+            </td>
             <td *ngIf="user.member_valid == 0"> <button>approve account</button></td>
             <td *ngIf="user.member_valid == 1"> <button>Delete account</button></td>
           </tr>

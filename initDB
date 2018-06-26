@@ -94,7 +94,7 @@ CREATE TABLE public.member(
 	member_password     VARCHAR (255) NOT NULL ,
 	member_admin        INT   ,
 	member_valid        INT  NOT NULL ,
-	seed                VARCHAR (255) ,
+	seed                VARCHAR (255)  ,
 	sub_department_id   INT  NOT NULL  ,
 	CONSTRAINT member_PK PRIMARY KEY (member_id)
 )WITHOUT OIDS;
@@ -206,7 +206,7 @@ CREATE TABLE public.activity(
 	activity_type_output     VARCHAR (255)  ,
 	activity_description     VARCHAR (2000)  NOT NULL ,
 	activity_shape           VARCHAR (255) NOT NULL ,
-	activity_id_is_next      INT   ,
+	activity_id_is_father    INT   ,
 	sop_id                   INT  NOT NULL  ,
 	CONSTRAINT activity_PK PRIMARY KEY (activity_id)
 )WITHOUT OIDS;
@@ -343,7 +343,7 @@ ALTER TABLE public.project_has_job
 
 ALTER TABLE public.activity
 	ADD CONSTRAINT activity_activity0_FK
-	FOREIGN KEY (activity_id_is_next)
+	FOREIGN KEY (activity_id_is_father)
 	REFERENCES public.activity(activity_id);
 
 ALTER TABLE public.activity
@@ -395,7 +395,6 @@ ALTER TABLE public.member_activity_project
 	ADD CONSTRAINT member_activity_project_activity2_FK
 	FOREIGN KEY (activity_id)
 	REFERENCES public.activity(activity_id);
-
 
 
 INSERT INTO role ( role_title) VALUES ('Project Manager'),('Performer'),('Planner');
