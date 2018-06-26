@@ -1,5 +1,7 @@
 import { Component,Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import {Location} from '@angular/common';
+
 
 @Component({
   selector: 'app-summary',
@@ -14,13 +16,20 @@ export class SummaryComponent implements OnInit {
   @Input() text:string;
 
 
-  constructor(private router: Router) { }
+  constructor(private router: Router,
+              private _location: Location) { }
 
   ngOnInit() {
   }
 
   goDestination(){
-    this.router.navigate(['/',this.link]);
+    if(this.link=="back")
+    {
+      this._location.back();
+    }else{
+      this.router.navigate(['/',this.link]);
+    }
+
   }
 
 }

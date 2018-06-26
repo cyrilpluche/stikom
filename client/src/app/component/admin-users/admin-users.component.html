@@ -1,4 +1,4 @@
-<div class="container">
+<div *ngIf="!actionFinished" class="container">
 
   <div class="row row-first">
     <div class="col-12 card card-cascade hoverable">
@@ -39,7 +39,8 @@
             <td *ngIf="user.member_admin !== 1 && user.member_role !== null">
               <span  *ngFor="let role of user.member_role">{{role}}<br></span>
             </td>
-            <td *ngIf="user.member_valid == 0"> <button>approve account</button></td>
+            <td *ngIf="user.member_valid == 0"> mail not validated</td>
+            <td *ngIf="user.member_valid == 2"> <button (click)="validateUser(user.member_id)">approve account</button></td>
             <td *ngIf="user.member_valid == 1"> <button>Delete account</button></td>
           </tr>
 
@@ -54,4 +55,32 @@
   </div>
 
 
+</div>
+
+<div *ngIf="actionFinished" class="container">
+  <div class="row row-first justify-content-center">
+
+    <!-- Card -->
+    <div class="col-10 col-sm-8 col-md-6 col-xl-4 card card-cascade hoverable">
+
+      <!-- Card content -->
+      <div class="card-body card-body-cascade">
+
+        <p class="h4 text-center mb-4" >{{title}}</p>
+
+
+        <p class="text-center mb-4">
+          {{text}}
+        </p>
+
+        <div class="text-center mt-4">
+          <a class="btn btn-default" (click)="goBack()" >go Back</a>
+        </div>
+
+      </div>
+    </div>
+
+
+
+  </div>
 </div>
