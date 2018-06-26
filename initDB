@@ -19,6 +19,15 @@ DROP TABLE IF EXISTS activity CASCADE;
 DROP TABLE IF EXISTS transition CASCADE;
 DROP TABLE IF EXISTS execute CASCADE;
 DROP TABLE IF EXISTS member_activity_project CASCADE;
+DROP TABLE IF EXISTS job_is_sop CASCADE;
+DROP TABLE IF EXISTS project_has_job CASCADE;
+DROP TABLE IF EXISTS activity_is_job CASCADE;
+
+
+------------------------------------------------------------
+--        Script Postgre
+------------------------------------------------------------
+
 
 
 ------------------------------------------------------------
@@ -80,24 +89,27 @@ CREATE TABLE public.sub_department(
 CREATE TABLE public.member(
 	member_id           SERIAL NOT NULL ,
 	member_first_name   VARCHAR (255) NOT NULL ,
-	member_name         VARCHAR (255) ,
+	member_name         VARCHAR (255)  ,
 	member_mail         VARCHAR (255) NOT NULL ,
 	member_password     VARCHAR (255) NOT NULL ,
 	member_admin        INT   ,
 	member_valid        INT  NOT NULL ,
-	sub_department_id   INT  NOT NULL ,
-	seed                 VARCHAR (255) ,
+	seed                VARCHAR (255) NOT NULL ,
+	sub_department_id   INT  NOT NULL  ,
 	CONSTRAINT member_PK PRIMARY KEY (member_id)
 )WITHOUT OIDS;
 
 
 ------------------------------------------------------------
--- Table: job
+-- Table: project
 ------------------------------------------------------------
-CREATE TABLE public.job(
-	job_id     SERIAL NOT NULL ,
-	job_name   VARCHAR (255) NOT NULL  ,
-	CONSTRAINT job_PK PRIMARY KEY (job_id)
+CREATE TABLE public.project(
+	project_id          SERIAL NOT NULL ,
+	project_title       VARCHAR (255)  ,
+	project_code        VARCHAR (255)  ,
+	project_work_code   VARCHAR (255)  ,
+	sub_department_id   INT  NOT NULL  ,
+	CONSTRAINT project_PK PRIMARY KEY (project_id)
 )WITHOUT OIDS;
 
 
@@ -132,16 +144,13 @@ CREATE TABLE public.sop(
 
 
 ------------------------------------------------------------
--- Table: project
+-- Table: job
 ------------------------------------------------------------
-CREATE TABLE public.project(
-	project_id          SERIAL NOT NULL ,
-	project_title       VARCHAR (255)  ,
-	project_code        VARCHAR (255)  ,
-	project_work_code   VARCHAR (255)  ,
-	sub_department_id   INT  NOT NULL ,
-	sop_id              INT  NOT NULL  ,
-	CONSTRAINT project_PK PRIMARY KEY (project_id)
+CREATE TABLE public.job(
+	job_id     SERIAL NOT NULL ,
+	job_name   VARCHAR (255) NOT NULL ,
+	sop_id     INT  NOT NULL  ,
+	CONSTRAINT job_PK PRIMARY KEY (job_id)
 )WITHOUT OIDS;
 
 
@@ -177,6 +186,16 @@ CREATE TABLE public.sop_needs_unit(
 
 
 ------------------------------------------------------------
+-- Table: project_has_job
+------------------------------------------------------------
+CREATE TABLE public.project_has_job(
+	job_id       INT  NOT NULL ,
+	project_id   INT  NOT NULL  ,
+	CONSTRAINT project_has_job_PK PRIMARY KEY (job_id,project_id)
+)WITHOUT OIDS;
+
+
+------------------------------------------------------------
 -- Table: activity
 ------------------------------------------------------------
 CREATE TABLE public.activity(
@@ -185,10 +204,9 @@ CREATE TABLE public.activity(
 	activity_duration        INT   ,
 	activity_type            VARCHAR (255)  ,
 	activity_type_output     VARCHAR (255)  ,
+	activity_description     VARCHAR (2000)  NOT NULL ,
 	activity_shape           VARCHAR (255) NOT NULL ,
-	activity_unit_id         INT  NOT NULL ,
-	job_id                   INT   ,
-	activity_id_is_next      INT  NOT NULL ,
+	activity_id_is_next      INT   ,
 	sop_id                   INT  NOT NULL  ,
 	CONSTRAINT activity_PK PRIMARY KEY (activity_id)
 )WITHOUT OIDS;
@@ -203,6 +221,16 @@ CREATE TABLE public.transition(
 	unit_id           INT  NOT NULL ,
 	activity_id       INT    ,
 	CONSTRAINT transition_PK PRIMARY KEY (transition_id)
+)WITHOUT OIDS;
+
+
+------------------------------------------------------------
+-- Table: activity_is_job
+------------------------------------------------------------
+CREATE TABLE public.activity_is_job(
+	job_id        INT  NOT NULL ,
+	activity_id   INT  NOT NULL  ,
+	CONSTRAINT activity_is_job_PK PRIMARY KEY (job_id,activity_id)
 )WITHOUT OIDS;
 
 
@@ -263,8 +291,8 @@ ALTER TABLE public.project
 	FOREIGN KEY (sub_department_id)
 	REFERENCES public.sub_department(sub_department_id);
 
-ALTER TABLE public.project
-	ADD CONSTRAINT project_sop1_FK
+ALTER TABLE public.job
+	ADD CONSTRAINT job_sop0_FK
 	FOREIGN KEY (sop_id)
 	REFERENCES public.sop(sop_id);
 
@@ -303,18 +331,23 @@ ALTER TABLE public.sop_needs_unit
 	FOREIGN KEY (unit_id)
 	REFERENCES public.unit(unit_id);
 
-ALTER TABLE public.activity
-	ADD CONSTRAINT activity_job0_FK
+ALTER TABLE public.project_has_job
+	ADD CONSTRAINT project_has_job_job0_FK
 	FOREIGN KEY (job_id)
 	REFERENCES public.job(job_id);
 
+ALTER TABLE public.project_has_job
+	ADD CONSTRAINT project_has_job_project1_FK
+	FOREIGN KEY (project_id)
+	REFERENCES public.project(project_id);
+
 ALTER TABLE public.activity
-	ADD CONSTRAINT activity_activity1_FK
+	ADD CONSTRAINT activity_activity0_FK
 	FOREIGN KEY (activity_id_is_next)
 	REFERENCES public.activity(activity_id);
 
 ALTER TABLE public.activity
-	ADD CONSTRAINT activity_sop2_FK
+	ADD CONSTRAINT activity_sop1_FK
 	FOREIGN KEY (sop_id)
 	REFERENCES public.sop(sop_id);
 
@@ -325,6 +358,16 @@ ALTER TABLE public.transition
 
 ALTER TABLE public.transition
 	ADD CONSTRAINT transition_activity1_FK
+	FOREIGN KEY (activity_id)
+	REFERENCES public.activity(activity_id);
+
+ALTER TABLE public.activity_is_job
+	ADD CONSTRAINT activity_is_job_job0_FK
+	FOREIGN KEY (job_id)
+	REFERENCES public.job(job_id);
+
+ALTER TABLE public.activity_is_job
+	ADD CONSTRAINT activity_is_job_activity1_FK
 	FOREIGN KEY (activity_id)
 	REFERENCES public.activity(activity_id);
 
@@ -352,6 +395,7 @@ ALTER TABLE public.member_activity_project
 	ADD CONSTRAINT member_activity_project_activity2_FK
 	FOREIGN KEY (activity_id)
 	REFERENCES public.activity(activity_id);
+
 
 
 INSERT INTO role ( role_title) VALUES ('Project Manager'),('Performer'),('Planner');
