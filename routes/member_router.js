@@ -13,23 +13,6 @@ const jwtHelpers  = require('../helpers/jwtHelpers');
 /*
 ===========================================  ROUTER GET ============================================
  */
-// TODO can be accessible by anyone
-router.get('/validate_member/:seed', policy.requiresNoAuthenticateUser,requireSeed, function (req, res, next) {
-    modelMember.validate_seed(req.params.seed).then(function (data) {
-        return modelMember.selectAllAdmin().then(function (admins) {
-            admins.forEach(function (admin) {
-                mailSender.send(admin.member_mail,'New member created',`A new member has validate his accound and 
-                requires your validation
-                <p><b>mail: ${data.member_mail}</b></p>`, '', function () {
-                    console.log(admin)
-                })
-            });
-            res.json({data: data});
-        }).catch(function (e) {
-            throw e
-        })
-    }).catch(next)
-});
 
 router.get('/all', function (req, res, next) {
     modelMember.selectAll().then(function (data) {
@@ -171,7 +154,25 @@ router.put('/update_password',
         });
     });
 
+// TODO can be accessible by anyone
+router.put('/validate_member/:seed', policy.requiresNoAuthenticateUser,requireSeed, function (req, res, next) {
+    modelMember.validate_seed(req.params.seed).then(function (data) {
+        return modelMember.selectAllAdmin().then(function (admins) {
+            admins.forEach(function (admin) {
+                mailSender.send(admin.member_mail,'New member created',`A new member has validate his accound and 
+                requires your validation
+                <p><b>mail: ${data.member_mail}</b></p>`, '', function () {
+                    console.log(admin)
+                })
+            });
+            res.json({data: data});
+        }).catch(function (e) {
+            throw e
+        })
+    }).catch(next)
+});
 
+router.put('/reset_password');
 /*
 ========================================== FUNCTIONS ============================================
  */
