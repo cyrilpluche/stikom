@@ -18,9 +18,12 @@ export class NavBarComponent implements OnInit {
     let result = this._memberService.isLoggedIn();
     if(result){
       this.isLoggedIn = true;
+
     }else{
       this.isLoggedIn =  false;
     }
+
+
   }
 
   onLogoutClick() {

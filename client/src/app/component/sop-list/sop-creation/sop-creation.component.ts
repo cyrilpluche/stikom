@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SopService } from "../../../objects/sop/sop.service";
 import {current} from "codelyzer/util/syntaxKind";
 import {MemberService} from "../../../objects/member/member.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-sop-creation',
@@ -16,6 +17,7 @@ export class SopCreationComponent implements OnInit {
   summary: string = "";
   formValid: boolean = false;
 
+  sopId: string = "";
 
   rules: string[] = [];
   units: string[] = [];
@@ -39,7 +41,9 @@ export class SopCreationComponent implements OnInit {
   newTypeFormReport: string = "";
   newObjective: string = "";
 
-  constructor(private _sopService: SopService) { }
+  constructor(private _sopService: SopService,
+              private _memberService: MemberService,
+              private router: Router) { }
 
   ngOnInit() {
     this.captionSelected = this.captions[0];
@@ -201,7 +205,7 @@ export class SopCreationComponent implements OnInit {
       let date_creation = new Date(Date.now());
       let date_revision = new Date(Date.now());
       let date_published = new Date(Date.now());
-      let date_approvment = new Date(Date.now());
+      let sop_approvment = "Unknow";
 
       let sop_rules = "";
       for (let r of this.rules) {
@@ -229,7 +233,7 @@ export class SopCreationComponent implements OnInit {
         date_creation,
         date_revision,
         date_published,
-        date_approvment,
+        sop_approvment,
         sop_rules,
         sop_warning,
         sop_staff_qualification,
@@ -238,11 +242,22 @@ export class SopCreationComponent implements OnInit {
         this.newObjective
       ).subscribe((res) => {
         this.errorMessage = "";
+        console.log("Form added");
+
+        //We get the id of the new SOP
+        this.sopId = res['data'];
+        this.sopId = this.sopId['sop_id'];
+
+        //We store this id in the local storage to re-use it for the activities creation
+        localStorage.setItem('Sop_id', this.sopId);
+        window.setTimeout(function(){
+          this.router.navigate(['/','activity-creation']);
+          }, 4000);
+
       },
         error => {
-          //this.errorMessage = error.error.message;
+          this.errorMessage = error.error.message;
         });
-      console.log("Form added");
     }
   }
 

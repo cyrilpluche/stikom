@@ -14,6 +14,7 @@ export class ConfirmationComponent implements OnInit {
   @Input() title: string = "";
   @Input() text: string = "";
   @Input() link: string = "";
+  @Input() isLinkActive: boolean = true;
 
   @Output() success = new EventEmitter<boolean>();
 
@@ -22,8 +23,10 @@ export class ConfirmationComponent implements OnInit {
   }
 
   goDestination(){
-    this.success.emit(true);
-    this.router.navigate(['/',this.link]);
+    if (this.isLinkActive) {
+      this.success.emit(true);
+      this.router.navigate(['/',this.link]);
+    }
   }
 
 }

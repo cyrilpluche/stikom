@@ -59,7 +59,6 @@ export class MemberService {
 
   storeUserData(token) {
     localStorage.setItem('Token', token);
-
   }
 
   storeUserDataFull(user:any) {
@@ -100,6 +99,14 @@ export class MemberService {
 
   isLoggedIn(){
     return this.getToken() !== null;
+  }
+
+  setUserDetails(){
+    let body = {
+    };
+
+    this.generateHeaders();
+    return this.http.post(this.domain + '/api/member/loggedIn',body,this.httpOptions);
   }
 
   /*
