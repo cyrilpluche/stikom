@@ -16,7 +16,7 @@ router.post('/create',
     policy.checkParameters(['activity_title, activity_type_duration', 'activity_duration', 'activity_type', 'activity_type_output',
     'activity_description', 'activity_shape', 'activity_id_is_father', 'sop_id']),
     function (req, res, next) {
-    let isFather = req.body.activity_id_is_father
+    let isFather = req.body.activity_id_is_father;
     if (req.body.activity_id_is_father === 'NULL') {
         isFather = null
     }
