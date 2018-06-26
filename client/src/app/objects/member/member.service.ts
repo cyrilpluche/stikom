@@ -24,6 +24,14 @@ export class MemberService {
     return this.http.post(this.domain + '/api/member/login',body,this.httpOptions);
   }
 
+  seedCheck(seed:string){
+    let body = {
+      seed: seed
+    };
+    this.generateHeaders();
+    return this.http.put(this.domain + '/api/member/validate_registration',body,this.httpOptions);
+  }
+
   register(mail:string, password:string,first_name:string, name:string, is_admin:string,sub_department_id:string ){
     let body = {
       mail: mail,

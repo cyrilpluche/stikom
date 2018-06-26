@@ -31,11 +31,13 @@ import { ProjectCreationComponent } from './component/project-list/project-creat
 import { WarningComponent } from './shared/modals/warning/warning.component';
 import { ActivityListComponent } from './component/activity-list/activity-list.component';
 import { ActivityCreationComponent } from './component/activity-list/activity-creation/activity-creation.component';
+import { AccountValidationComponent } from './component/account-validation/account-validation.component';
 
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
   {path: 'home', component: HomeComponent},
+  {path: 'account-validation/:seed', component: AccountValidationComponent},
   {path: 'personal-achievement', component: PerformanceProjectComponent},
   {path: 'account', component: AccountComponent, canActivate: [AuthGuard]},
   {path: 'authentification', component: AuthentificationComponent},
@@ -73,7 +75,8 @@ const routes: Routes = [
     ProjectCreationComponent,
     WarningComponent,
     ActivityListComponent,
-    ActivityCreationComponent
+    ActivityCreationComponent,
+    AccountValidationComponent
   ],
   imports: [
     HttpClientModule,
