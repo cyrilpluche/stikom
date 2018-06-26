@@ -117,6 +117,16 @@ export class MemberService {
     return this.http.post(this.domain + '/api/member/loggedIn',body,this.httpOptions);
   }
 
+  selectAll(){
+    this.generateHeaders();
+    return this.http.get(this.domain + '/api/member/all',this.httpOptions);
+  }
+
+  selectAllWaiting(){
+    this.generateHeaders();
+    return this.http.get(this.domain + '/api/member/waiting_member',this.httpOptions);
+  }
+
   /*
   async isLoggedIn()  {
     if(this.getToken() !== null)
