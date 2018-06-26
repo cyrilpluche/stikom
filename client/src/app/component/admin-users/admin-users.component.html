@@ -1,0 +1,54 @@
+<div class="container">
+
+  <div class="row row-first">
+    <div class="col-12 card card-cascade hoverable">
+      <!--Table-->
+      <div class="card-body card-body-cascade">
+        Manage Users
+      </div>
+    </div>
+  </div>
+
+  <div class="row justify-content-center" style="margin-top: 20px">
+
+    <div class="col-12 card card-cascade hoverable">
+      <!--Table-->
+      <div class="card-body card-body-cascade">
+        <table class="table">
+
+          <!--Table head-->
+          <thead class="">
+          <tr class="text-white">
+            <th>First Name</th>
+            <th>Name</th>
+            <th>Mail</th>
+            <th>Role</th>
+            <th>Actions</th>
+          </tr>
+          </thead>
+          <!--Table head-->
+
+          <!--Table body-->
+          <tbody>
+          <tr *ngFor="let user of users">
+            <th scope="row">{{user.member_first_name}}</th>
+            <td scope="row">{{user.member_name}}</td>
+            <td>{{user.member_mail}}</td>
+            <td *ngIf="user.member_admin == 1">admin</td>
+            <td *ngIf="user.member_admin !== 1">no role</td>
+            <td *ngIf="user.member_valid == 0"> <button>approve account</button></td>
+            <td *ngIf="user.member_valid == 1"> <button>Delete account</button></td>
+          </tr>
+
+          </tbody>
+          <!--Table body-->
+
+        </table>
+        <!--Table-->
+      </div>
+    </div>
+
+  </div>
+
+
+</div>

@@ -32,6 +32,7 @@ import { WarningComponent } from './shared/modals/warning/warning.component';
 import { ActivityListComponent } from './component/activity-list/activity-list.component';
 import { ActivityCreationComponent } from './component/activity-list/activity-creation/activity-creation.component';
 import { AccountValidationComponent } from './component/account-validation/account-validation.component';
+import { AdminUsersComponent } from './component/admin-users/admin-users.component';
 
 
 const routes: Routes = [
@@ -47,7 +48,8 @@ const routes: Routes = [
   {path: 'sop-creation', component: SopCreationComponent},
   {path: 'sop-list', component: SopListComponent},
   {path: 'activity-creation', component: ActivityCreationComponent},
-  {path: 'project-creation', component: ProjectCreationComponent}
+  {path: 'project-creation', component: ProjectCreationComponent},
+  {path: 'admin-users', component: AdminUsersComponent}
 ];
 
 @NgModule({
@@ -76,7 +78,8 @@ const routes: Routes = [
     WarningComponent,
     ActivityListComponent,
     ActivityCreationComponent,
-    AccountValidationComponent
+    AccountValidationComponent,
+    AdminUsersComponent
   ],
   imports: [
     HttpClientModule,
