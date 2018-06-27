@@ -29,6 +29,7 @@ const policies = {
         return check[expectedParameter] || (check[expectedParameter] = function (req, res, next) {
             let conform = true
             for (let i = 0; i < expectedParameter.length; i++) {
+                console.log(expectedParameter[i])
                 if (req.body[expectedParameter[i]] === undefined &&
                     req.query[expectedParameter[i]] === undefined
                     && req.params[expectedParameter[i]] === undefined) { // the parameter doesn't exist
