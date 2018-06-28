@@ -13,8 +13,8 @@ router.get('/all_from_sop/:sop',
 });
 
 router.post('/create',
-    policy.checkParameters(['activity_title', 'activity_type_duration', 'activity_duration', 'activity_type', 'activity_type_output',
-    'activity_description', 'activity_shape', 'activity_id_is_father', 'sop_id']),
+    policy.checkParameters(['activity_title', 'activity_type_duration', 'activity_duration', 'activity_type',
+        'activity_type_output', 'activity_description', 'activity_shape', 'activity_id_is_father', 'sop_id']),
     function (req, res, next) {
     let isFather = req.body.activity_id_is_father;
     if (req.body.activity_id_is_father === 'NULL') {
@@ -40,7 +40,31 @@ router.post('/create',
     }).catch(next)
 });
 
-
+router.put('/update',
+    policy.checkParameters(['activity_title', 'activity_type_duration', 'activity_duration', 'activity_type',
+        'activity_type_output', 'activity_description', 'activity_shape', 'activity_id_is_father', 'sop_id',
+        'activity_id']),
+    function (req, res, next) {
+        let activity = {
+            activity_id: req.body.activity_id,
+            activity_title: req.body.activity_title,
+            activity_type_duration : req.body.activity_type_duration,
+            activity_duration: req.body.activity_duration,
+            activity_type: req.body.activity_type,
+            activity_type_output: req.body.activity_type_output,
+            activity_description: req.body.activity_description,
+            activity_shape: req.body.activity_shape,
+            activity_id_is_father: req.body.activity_id_is_father,
+            sop_id: req.body.sop_id
+        };
+        modelActivity.update(activity).then(function (data) {
+            if (!data) {
+                throw ERRORTYPE.NOT_FOUND
+            } else {
+                res.json({data: data});
+            }
+        }).catch(next)
+    });
 
 module.exports = router;
 

@@ -27,6 +27,24 @@ let activity = {
             }).catch(function (err) {
                 throw ERRORTYPE.customError('The server has encountred an internal error\n ' + err.toString())
             })
+    },
+
+    update (activity) {
+        return db.any('UPDATE public.activity\n' +
+            'SET activity_title=${activity_title}, activity_type_duration=${activity_type_duration}, \n ' +
+            'activity_duration=${activity_duration}, activity_type=${activity_type}, \n ' +
+            'activity_type_output=${activity_type_output}, activity_description=${activity_description},\n' +
+            'activity_shape=${activity_shape}, activity_id_is_father=${activity_id_is_father}, sop_id=${sop_id}\n' +
+            'WHERE activity_id = ${activity_id} returning activity_id', activity)
+            .then(function (data) {
+                if (data.length === 0) {
+                    return false
+                } else {
+                    return data[0]
+                }
+            }).catch(function (err) {
+                throw ERRORTYPE.customError('The server has encountred an internal error\n ' + err.toString())
+            })
     }
 };
 

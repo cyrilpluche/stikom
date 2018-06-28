@@ -65,4 +65,16 @@ router.put('/verification',
     }
 );
 
+router.delete('/delete/:sop',
+    policy.requireSpecificRight(ROLE.Planner),
+    function (req, res, next) {
+    modelSop.delete(req.params.sop_id).then(function (data) {
+        if (!data) {
+            next(ERRORTYPE.NOT_FOUND)
+        } else {
+            res.json({data: data})
+        }
+    }).catch(next)
+});
+
 module.exports = router;

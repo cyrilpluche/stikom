@@ -70,6 +70,15 @@ let sop = {
                 throw ERRORTYPE.customError('The server has encountred an internal error\n ' + err.toString());
             }
         });
+    },
+
+    delete (sop_id) {
+        return db.any('DELETE from public.sop WHERE sop_id = $1 returning sop_id', sop_id)
+            .then(function (data) {
+                return data.length !== 0
+            }).catch(function (err) {
+                throw ERRORTYPE.customError('The server has encountred an internal error\n ' + err.toString())
+            })
     }
 };
 module.exports = sop;
