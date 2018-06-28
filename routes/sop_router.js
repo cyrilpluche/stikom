@@ -68,7 +68,7 @@ router.put('/verification',
 router.delete('/delete/:sop',
     policy.requireSpecificRight(ROLE.Planner),
     function (req, res, next) {
-    modelSop.delete(req.params.sop_id).then(function (data) {
+    modelSop.delete(req.params.sop).then(function (data) {
         if (!data) {
             next(ERRORTYPE.NOT_FOUND)
         } else {

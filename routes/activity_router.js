@@ -66,5 +66,13 @@ router.put('/update',
         }).catch(next)
     });
 
+router.delete('/delete/:activity', function (req, res, next) {
+    modelActivity.delete(req.params.activity)
+        .then(function (data) {
+        if (!data) throw ERRORTYPE.NOT_FOUND;
+        else res.json({data: data})
+    }).catch(next)
+});
+
 module.exports = router;
 

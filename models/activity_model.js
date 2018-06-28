@@ -45,6 +45,14 @@ let activity = {
             }).catch(function (err) {
                 throw ERRORTYPE.customError('The server has encountred an internal error\n ' + err.toString())
             })
+    },
+    delete (activity_id) {
+        return db.any('DELETE from public.activity WHERE activity_id = $1 returning activity_id', activity_id)
+            .then(function (data) {
+                return data.length !== 0
+            }).catch(function (err) {
+                throw ERRORTYPE.customError('The server has encountred an internal error\n ' + err.toString())
+            })
     }
 };
 
