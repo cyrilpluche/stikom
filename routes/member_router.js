@@ -40,7 +40,7 @@ router.get('/waiting_member',
 
 router.post('/register',
     policy.requiresNoAuthenticateUser,
-    policy.checkParameters(['mail', 'password', 'first_name', 'name', 'sub_department_id']),
+    policy.checkParameters(['mail', 'password', 'first_name', 'name', 'sub_department_id', 'managment_level_id']),
     requireNoneExistingMail,
     function(req, res, next) {
         let seed = tokenGenerator.generate();
@@ -53,7 +53,8 @@ router.post('/register',
                 is_admin: 0,
                 member_valid: 0, // means that the member isn't valid yet
                 seed: seed,
-                sub_department_id: req.body.sub_department_id
+                sub_department_id: req.body.sub_department_id,
+                managment_level_id: req.body.managment_level_id
             }
             modelMember.insert(member).then(function (data) {
                 let generateLink = `${process.env.SERVER_URL}:${process.env.CLIENT_PORT}/account-validation/${seed}`;
@@ -151,6 +152,7 @@ router.post('/loggedIn', function (req, res, next) {
             member_admin: decode.member_admin,
             member_valid: decode.member_valid,
             sub_department_id: decode.sub_department_id,
+            managment_level_id: decode.managment_level_id,
             seed: decode.seed
         }
         modelMember.exists(member).then(function (data) {
