@@ -22,6 +22,7 @@ DROP TABLE IF EXISTS member_activity_project CASCADE;
 DROP TABLE IF EXISTS job_is_sop CASCADE;
 DROP TABLE IF EXISTS project_has_job CASCADE;
 DROP TABLE IF EXISTS activity_is_job CASCADE;
+DROP TABLE IF EXISTS managment_level CASCADE;
 
 
 ------------------------------------------------------------
@@ -84,23 +85,6 @@ CREATE TABLE public.sub_department(
 
 
 ------------------------------------------------------------
--- Table: member
-------------------------------------------------------------
-CREATE TABLE public.member(
-	member_id           SERIAL NOT NULL ,
-	member_first_name   VARCHAR (255) NOT NULL ,
-	member_name         VARCHAR (255)  ,
-	member_mail         VARCHAR (255) NOT NULL ,
-	member_password     VARCHAR (255) NOT NULL ,
-	member_admin        INT   ,
-	member_valid        INT  NOT NULL ,
-	seed                VARCHAR (255)  ,
-	sub_department_id   INT  NOT NULL  ,
-	CONSTRAINT member_PK PRIMARY KEY (member_id)
-)WITHOUT OIDS;
-
-
-------------------------------------------------------------
 -- Table: project
 ------------------------------------------------------------
 CREATE TABLE public.project(
@@ -149,8 +133,37 @@ CREATE TABLE public.sop(
 CREATE TABLE public.job(
 	job_id     SERIAL NOT NULL ,
 	job_name   VARCHAR (255) NOT NULL ,
+	job_code   VARCHAR (255) NOT NULL ,
 	sop_id     INT  NOT NULL  ,
 	CONSTRAINT job_PK PRIMARY KEY (job_id)
+)WITHOUT OIDS;
+
+
+------------------------------------------------------------
+-- Table: managment_level
+------------------------------------------------------------
+CREATE TABLE public.managment_level(
+	managment_level_id      SERIAL NOT NULL ,
+	managment_level_label   VARCHAR (255) NOT NULL  ,
+	CONSTRAINT managment_level_PK PRIMARY KEY (managment_level_id)
+)WITHOUT OIDS;
+
+
+------------------------------------------------------------
+-- Table: member
+------------------------------------------------------------
+CREATE TABLE public.member(
+	member_id            SERIAL NOT NULL ,
+	member_first_name    VARCHAR (255) NOT NULL ,
+	member_name          VARCHAR (255)  ,
+	member_mail          VARCHAR (255) NOT NULL ,
+	member_password      VARCHAR (255) NOT NULL ,
+	member_admin         INT   ,
+	member_valid         INT  NOT NULL ,
+	seed                 VARCHAR (255)  ,
+	sub_department_id    INT  NOT NULL ,
+	managment_level_id   INT    ,
+	CONSTRAINT member_PK PRIMARY KEY (member_id)
 )WITHOUT OIDS;
 
 
@@ -200,15 +213,16 @@ CREATE TABLE public.project_has_job(
 ------------------------------------------------------------
 CREATE TABLE public.activity(
 	activity_id              SERIAL NOT NULL ,
-	activity_title           VARCHAR (255)  ,
+	activity_title           VARCHAR (255) NOT NULL ,
 	activity_type_duration   VARCHAR (255)  ,
 	activity_duration        INT   ,
 	activity_type            VARCHAR (255)  ,
 	activity_type_output     VARCHAR (255)  ,
 	activity_description     VARCHAR (2000)  NOT NULL ,
-	activity_shape           VARCHAR (255) NOT NULL ,
-	activity_id_is_father    INT   ,
-	sop_id                   INT  NOT NULL  ,
+	activity_shape           VARCHAR (255)  ,
+	sop_id                   INT  NOT NULL ,
+	managment_level_id       INT   ,
+	activity_id_is_father    INT    ,
 	CONSTRAINT activity_PK PRIMARY KEY (activity_id)
 )WITHOUT OIDS;
 
@@ -282,11 +296,6 @@ ALTER TABLE public.sub_department
 	FOREIGN KEY (department_id)
 	REFERENCES public.department(department_id);
 
-ALTER TABLE public.member
-	ADD CONSTRAINT member_sub_department0_FK
-	FOREIGN KEY (sub_department_id)
-	REFERENCES public.sub_department(sub_department_id);
-
 ALTER TABLE public.project
 	ADD CONSTRAINT project_sub_department0_FK
 	FOREIGN KEY (sub_department_id)
@@ -296,6 +305,16 @@ ALTER TABLE public.job
 	ADD CONSTRAINT job_sop0_FK
 	FOREIGN KEY (sop_id)
 	REFERENCES public.sop(sop_id);
+
+ALTER TABLE public.member
+	ADD CONSTRAINT member_sub_department0_FK
+	FOREIGN KEY (sub_department_id)
+	REFERENCES public.sub_department(sub_department_id);
+
+ALTER TABLE public.member
+	ADD CONSTRAINT member_managment_level1_FK
+	FOREIGN KEY (managment_level_id)
+	REFERENCES public.managment_level(managment_level_id);
 
 ALTER TABLE public.has_role
 	ADD CONSTRAINT has_role_member0_FK
@@ -343,14 +362,19 @@ ALTER TABLE public.project_has_job
 	REFERENCES public.project(project_id);
 
 ALTER TABLE public.activity
-	ADD CONSTRAINT activity_activity0_FK
-	FOREIGN KEY (activity_id_is_father)
-	REFERENCES public.activity(activity_id);
-
-ALTER TABLE public.activity
-	ADD CONSTRAINT activity_sop1_FK
+	ADD CONSTRAINT activity_sop0_FK
 	FOREIGN KEY (sop_id)
 	REFERENCES public.sop(sop_id);
+
+ALTER TABLE public.activity
+	ADD CONSTRAINT activity_managment_level1_FK
+	FOREIGN KEY (managment_level_id)
+	REFERENCES public.managment_level(managment_level_id);
+
+ALTER TABLE public.activity
+	ADD CONSTRAINT activity_activity2_FK
+	FOREIGN KEY (activity_id_is_father)
+	REFERENCES public.activity(activity_id);
 
 ALTER TABLE public.transition
 	ADD CONSTRAINT transition_unit0_FK
@@ -396,7 +420,6 @@ ALTER TABLE public.member_activity_project
 	ADD CONSTRAINT member_activity_project_activity2_FK
 	FOREIGN KEY (activity_id)
 	REFERENCES public.activity(activity_id);
-
 
 INSERT INTO role ( role_title) VALUES ('Project Manager'),('Performer'),('Planner');
 
