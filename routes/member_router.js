@@ -216,13 +216,15 @@ router.put('/validate_registration',
     policy.checkParameters(['seed']),
     requireSeed,
     function (req, res, next) {
+        let validationLink = `${process.env.SERVER_URL}:${process.env.CLIENT_PORT}/admin/users`
     modelMember.validate_seed(req.body.seed).then(function (data) {
         return modelMember.selectAllAdmin().then(function (admins) {
             admins.forEach(function (admin) {
                 mailSender.send(admin.member_mail,'New member created',`A new member has validate his account and 
                 requires your validation <br>
                 <img src="cid:aaa@aa.eee" width="8%"/>
-                <p><b>mail: ${data.member_mail}</b></p>`,
+                <p><b>mail: ${data.member_mail}</b></p><br>
+                Go on the <a href="${validationLink}">validation page </a> to validate this member`,
                     [{filename: 'account.png', path: 'public/images/account.png', cid: 'aaa@aa.eee'}],
                     function (err, resultat) {
                     if (err) console.log(err)

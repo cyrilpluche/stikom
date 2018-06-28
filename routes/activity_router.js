@@ -7,7 +7,7 @@ const ERRORTYPE = require('../policy/errorType');
 
 router.get('/all_from_sop/:sop',
     function (req, res, next) {
-    modelActivity.selectAllBySopId(req.params.sop_id).then(function (data) {
+    modelActivity.selectAllBySopId(req.params.sop).then(function (data) {
         res.json({data: data});
     }).catch(next)
 });
