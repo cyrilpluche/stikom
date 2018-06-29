@@ -32,6 +32,14 @@ export class OrganisationService {
 
   }
 
+  add(organisationName:string){
+    let body = {
+      organisation_name: organisationName
+    };
+    this.generateHeaders();
+    return this.http.post(this.domain + '/api/organisation/create',body,this.httpOptions);
+  }
+
   selectAll(){
     this.generateHeaders();
     return this.http.get(this.domain + '/api/organisation/all',this.httpOptions);

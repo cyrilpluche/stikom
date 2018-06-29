@@ -33,6 +33,7 @@ import { ActivityListComponent } from './component/activity-list/activity-list.c
 import { ActivityCreationComponent } from './component/activity-list/activity-creation/activity-creation.component';
 import { AccountValidationComponent } from './component/account-validation/account-validation.component';
 import { AdminUsersComponent } from './component/admin-users/admin-users.component';
+import { OrganizationManagementComponent } from './component/organization-management/organization-management.component';
 import { ActionComponent } from './shared/modals/action/action.component';
 
 
@@ -50,7 +51,8 @@ const routes: Routes = [
   {path: 'sop-list', component: SopListComponent},
   {path: 'activity-creation', component: ActivityCreationComponent},
   {path: 'project-creation', component: ProjectCreationComponent},
-  {path: 'admin-users', component: AdminUsersComponent}
+  {path: 'admin-users', component: AdminUsersComponent},
+  {path: 'admin-organization-management', component: OrganizationManagementComponent}
 ];
 
 @NgModule({
@@ -80,6 +82,8 @@ const routes: Routes = [
     ActivityListComponent,
     ActivityCreationComponent,
     AccountValidationComponent,
+    AdminUsersComponent,
+    OrganizationManagementComponent,
     AdminUsersComponent,
     ActionComponent
   ],

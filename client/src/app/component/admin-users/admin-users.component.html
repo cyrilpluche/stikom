@@ -39,9 +39,9 @@
             <td *ngIf="user.member_admin !== 1 && user.member_role !== null">
               <span  *ngFor="let role of user.member_role">{{role}}<br></span>
             </td>
-            <td *ngIf="user.member_valid == 0"> mail not validated</td>
-            <td *ngIf="user.member_valid == 2"> <button (click)="validateUser(user.member_id)">approve account</button></td>
-            <td *ngIf="user.member_valid == 1"> <button>No action</button></td>
+            <td *ngIf="user.member_valid == 0"><span style="color: red;">mail not validated</span> </td>
+            <td *ngIf="user.member_valid == 2"> <button (click)="validateUser(user.member_id)" class="btn btn-warning btn-sm">approve account</button></td>
+            <td *ngIf="user.member_valid == 1"> <button class="btn btn-default btn-sm">No action</button></td>
           </tr>
 
           </tbody>

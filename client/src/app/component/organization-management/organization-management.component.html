@@ -1,0 +1,122 @@
+<div class="container" *ngIf="!displayEnd">
+  <div class="row row-first justify-content-center">
+
+    <!-- Card -->
+    <div class="col-10 col-sm-8 col-md-6 col-xl-4 card" style="padding-top: 10px;">
+      <p class="h4 text-center mb-4">Organization management</p>
+    </div>
+  </div>
+  <div class="row justify-content-center" style="margin-top: 10px;">
+
+    <!-- Card -->
+    <div class="col-10 col-sm-8 col-md-6 col-xl-4 card card-cascade hoverable">
+
+      <!-- Card content -->
+      <div class="card-body card-body-cascade">
+
+        <!-- Material form register -->
+        <form>
+
+          <!-- First step of the form -->
+
+          <!-- Error alert -->
+          <div *ngIf="errorMessage" class="alert alert-danger" role="alert">
+            {{errorMessage}}
+          </div>
+
+          <!-- Second step of the form -->
+          <div class="form-group">
+
+            <!-- Organisation -->
+            <div class="md-form">
+              <select [(ngModel)]="organisationChoosen" name="organisation" class="form-control mdb-select" (change)="enableBranch()" >
+                <option value="" disabled selected>Choose organisation</option>
+                <option *ngFor="let orga of organisations" [ngValue]=orga.organisation_id>{{orga.organisation_name}}</option>
+              </select>
+            </div>
+
+            <!-- Branch -->
+            <div class="md-form" *ngIf="organisationChoosen">
+              <select [(ngModel)]="branchChoosen" name="branch" class="form-control" [disabled]="!branchEnabled" (change)="enableDepartment()" >
+                <option value="" disabled selected>Choose a branch</option>
+                <option *ngFor="let branch of branchs" [ngValue]=branch.branch_id>{{branch.branch_name}}</option>
+              </select>
+            </div>
+
+            <!-- Department -->
+            <div class="md-form" *ngIf="branchChoosen">
+              <select [(ngModel)]="departmentChoosen" name="department" class="form-control mdb-select" [disabled]="!departmentEnabled" (change)="enableSubDepartment()" >
+                <option value="" disabled selected>Choose department</option>
+                <option *ngFor="let department of departments" [ngValue]=department.department_id>{{department.department_name}}</option>
+
+              </select>
+            </div>
+
+            <!-- SubDepartment -->
+            <div class="md-form" *ngIf="departmentChoosen">
+              <select [(ngModel)]="subDepartmentChoosen" name="subDepartment" class="form-control mdb-select" [disabled]="!subDepartmentEnabled" >
+                <option value="" disabled selected>Choose sub-department</option>
+                <option *ngFor="let subDepartment of subDepartments" [ngValue]=subDepartment.sub_department_id>{{subDepartment.sub_department_name}}</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="text-center mt-4">
+            <div class="md-form">
+              <a class="btn btn-danger" (click)="deleteOrganization()" *ngIf="organisationChoosen && !branchChoosen">Delete this organization</a>
+              <a class="btn btn-danger" (click)="deleteBranch()" *ngIf="branchChoosen && !departmentChoosen">Delete this branch</a>
+              <a class="btn btn-danger" (click)="deletedepartment()" *ngIf="departmentChoosen && !subDepartmentChoosen">Delete this department</a>
+              <a class="btn btn-danger" (click)="deleteSubDepartment()" *ngIf="subDepartmentChoosen">Delete this sub department</a>
+            </div>
+            <div class="md-form">
+              <input [(ngModel)]="addInput" name="addInput" type="text" id="addInput" class="form-control">
+              <label *ngIf="!organisationChoosen" for="addInput">Organization name</label>
+              <label *ngIf="organisationChoosen && !branchChoosen" for="addInput">Branch name</label>
+              <label *ngIf="branchChoosen && !departmentChoosen" for="addInput">Department name</label>
+              <label *ngIf="departmentChoosen && !subDepartmentChoosen" for="addInput">Sub department name</label>
+            </div>
+            <div class="md-form">
+              <a class="btn btn-success" (click)="addOrganization()" *ngIf="!organisationChoosen">Add a new organization</a>
+              <a class="btn btn-success" (click)="addBranch()" *ngIf="organisationChoosen && !branchChoosen">Add a new branch</a>
+              <a class="btn btn-success" (click)="addDepartment()" *ngIf="branchChoosen && !departmentChoosen">Add a new department</a>
+              <a class="btn btn-success" (click)="addSubDepartment()" *ngIf="departmentChoosen && !subDepartmentChoosen">Add a new sub department</a>
+            </div>
+          </div>
+
+        </form>
+        <!-- Material form register -->
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<div *ngIf="displayEnd" class="container">
+  <div class="row row-first justify-content-center">
+
+    <!-- Card -->
+    <div class="col-10 col-sm-8 col-md-6 col-xl-4 card card-cascade hoverable">
+
+      <!-- Card content -->
+      <div class="card-body card-body-cascade">
+
+        <p class="h4 text-center mb-4" >{{title}}</p>
+
+
+        <p class="text-center mb-4">
+          {{text}}
+        </p>
+
+        <div class="text-center mt-4">
+          <a class="btn btn-default" (click)="goBack()" >go Back</a>
+        </div>
+
+      </div>
+    </div>
+
+
+
+  </div>
+</div>
