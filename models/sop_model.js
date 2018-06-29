@@ -7,7 +7,8 @@ let sop = {
             'sop_title, sop_creation, sop_revision, sop_published, sop_approvment,\n' +
             'sop_rules, sop_warning, sop_staff_qualification, sop_tools, sop_type_reports, sop_objectives)\n' +
             'VALUES (${sop_title}, DATE(NOW()), DATE(NOW()), DATE(NOW()), ${sop_approvment}, ${sop_rules}, \n' +
-            '${sop_warning}, ${sop_staff_qualification}, ${sop_tools}, ${sop_type_reports}, ${sop_objectives}) returning sop_id;', sop)
+            '${sop_warning}, ${sop_staff_qualification}, ${sop_tools}, ${sop_type_reports}, ${sop_objectives},\n' +
+            ' ${sop_valid}) returning sop_id;', sop)
             .then(function (data) {
                 if (data.length === 0) {
                     throw ERRORTYPE.INTERNAL_ERROR

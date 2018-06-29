@@ -19,7 +19,8 @@ router.post('/create',
             sop_staff_qualification: req.body.sop_staff_qualification,
             sop_tools: req.body.sop_tools,
             sop_type_reports: req.body.sop_type_reports,
-            sop_objectives: req.body.sop_objectives
+            sop_objectives: req.body.sop_objectives,
+            sop_valid: 1
         }
         modelSop.insert(sop).then(function (data) {
             res.json({data: data})
