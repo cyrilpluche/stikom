@@ -24,8 +24,11 @@ export class WarningComponent implements OnInit {
 
   goDestination(){
     if (this.isLink) {
-      this.success.emit(true);
       this.router.navigate(['/',this.link]);
+    }
+    else {
+      console.log("Get out");
+      this.success.emit(true);
     }
   }
 

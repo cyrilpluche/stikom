@@ -67,7 +67,7 @@
 
 <!-- Modal warning -->
 <app-warning title="Delete SOP {{sopSelected.sop_id}}"
-             text="Are you sure you want to delete the SOP : {{sopSelected.sop_title}} from the SOP list ? All activities, linked ."
+             text="Are you sure you want to delete the SOP : {{sopSelected.sop_title}} from the SOP list ? All activities linked will be destroyed."
              link="sop-list"
              (success)="deleteSop(sopSelected.sop_id)"
              isLink=false>

@@ -35,6 +35,8 @@ import { AccountValidationComponent } from './component/account-validation/accou
 import { AdminUsersComponent } from './component/admin-users/admin-users.component';
 import { OrganizationManagementComponent } from './component/organization-management/organization-management.component';
 import { ActionComponent } from './shared/modals/action/action.component';
+import { JobListComponent } from './component/job-list/job-list.component';
+import { JobComponent } from './component/job-list/job/job.component';
 
 
 const routes: Routes = [
@@ -85,7 +87,9 @@ const routes: Routes = [
     AdminUsersComponent,
     OrganizationManagementComponent,
     AdminUsersComponent,
-    ActionComponent
+    ActionComponent,
+    JobListComponent,
+    JobComponent
   ],
   imports: [
     HttpClientModule,

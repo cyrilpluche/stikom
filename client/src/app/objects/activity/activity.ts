@@ -7,9 +7,9 @@ export interface Activity {
   activity_type:string;
   activity_type_output:string;
   activity_shape:string;
-  job_id:string;
   activity_id_is_father:string;
   sop_id:string;
+  managment_level_id:string;
 }
 
 export class Activity {
@@ -21,9 +21,9 @@ export class Activity {
   activity_type:string;
   activity_type_output:string;
   activity_shape:string;
-  job_id:string;
   activity_id_is_father:string;
   sop_id:string;
+  managment_level_id:string;
 
   constructor()
   {

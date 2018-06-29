@@ -1,6 +1,6 @@
 <div class="container">
 
-  <!-- SOP List back button -->
+  <!-- Back button -> Sop List -->
   <div class="row row-first">
     <div class="col">
       <button type="button" class="btn btn-outline-danger waves-effect" data-toggle="modal" data-target="#warningModal"><h6 class="no-margin-bottom"><i class="fa fa-times mr-3"></i>Exit</h6></button>
@@ -8,6 +8,7 @@
   </div>
 
   <!-- Activity Form -->
+
   <div class="row row-first justify-content-center">
 
     <!-- Card -->
@@ -37,17 +38,28 @@
             </div>
           </div>
 
+          <!-- Management Level -->
+          <div class="row md-form">
+            <div class="offset-1 col-10">
+              <p class="text-center mb-4 text-description"> Please select a management level </p>
+              <select [(ngModel)]="newActivityLevelId" name="newActivityLevelId" class="form-control">
+                <option value="" disabled selected>Choose your management level</option>
+                <option *ngFor="let m of managmentLevelsArray" value="{{m.managment_level_id}}">{{m.managment_level_label}}</option>
+              </select>
+            </div>
+          </div>
+
           <!-- Type Duration -->
           <div class="row md-form">
             <div class="offset-1 col-10">
               <p class="text-center mb-4 text-description"> Please select a duration type </p>
               <select [(ngModel)]="newActivityTypeDuration" name="newActivityTypeDuration" class="form-control">
                 <option value="" disabled selected>Choose your duration type</option>
-                <option value="m">Minute</option>
-                <option value="h">Hour</option>
-                <option value="d">Day</option>
-                <option value="w">Week</option>
-                <option value="m">Month</option>
+                <option value="minutes">Minute</option>
+                <option value="hours">Hour</option>
+                <option value="days">Day</option>
+                <option value="weeks">Week</option>
+                <option value="months">Month</option>
               </select>
             </div>
           </div>
@@ -74,7 +86,7 @@
             </div>
             <div class="col-5 row justify-content-end">
               <div class="">
-                <button [disabled]="activityArray.length == 0" class="btn btn-success waves-effect" type="button">Submit</button>
+                <button [disabled]="activityArray.length == 0" class="btn btn-success waves-effect" data-toggle="modal" data-target="#confirmationModal" type="button">Finish</button>
               </div>
             </div>
           </div>
@@ -108,17 +120,28 @@
             </div>
           </div>
 
+          <!-- Management Level -->
+          <div class="row md-form">
+            <div class="offset-1 col-10">
+              <p class="text-center mb-4 text-description"> Please select a management level </p>
+              <select [(ngModel)]="newSubActivityLevelId" name="newSubActivityLevelId" class="form-control">
+                <option value="" disabled selected>Choose your management level</option>
+                <option *ngFor="let m of managmentLevelsArray" value="{{m.managment_level_id}}">{{m.managment_level_label}}</option>
+              </select>
+            </div>
+          </div>
+
           <!-- Type Duration -->
           <div class="row md-form">
             <div class="offset-1 col-10">
               <p class="text-center mb-4 text-description"> Please select a duration type </p>
               <select [(ngModel)]="newSubActivityTypeDuration" name="newSubActivityTypeDuration" class="form-control">
                 <option value="" disabled selected>Choose your duration type</option>
-                <option value="m">Minute</option>
-                <option value="h">Hour</option>
-                <option value="d">Day</option>
-                <option value="w">Week</option>
-                <option value="m">Month</option>
+                <option value="minutes">Minute</option>
+                <option value="hours">Hour</option>
+                <option value="days">Day</option>
+                <option value="weeks">Week</option>
+                <option value="months">Month</option>
               </select>
             </div>
           </div>
@@ -160,6 +183,7 @@
     <!-- Card -->
 
   </div>
+
   <!-- Activity Form -->
 
   <!--Title of the step-->
@@ -183,25 +207,43 @@
       <!-- Card content -->
       <div class="card-body card-body-cascade">
 
-        <table class="table">
+        <table class="table table-borderless table-hover table-fixed" id="activiy-table">
+
+          <!--Table head-->
+          <thead class="">
+          <tr class="text-white">
+            <th style="width:1%;"></th>
+            <th style="width:40%;"  (click)="sortTable(1)"><a>Title</a></th>
+            <th style="width:10%;" (click)="sortTable(2)"><a>Duration</a></th>
+            <th style="width:40%;" (click)="sortTable(3)"><a>Type of output</a></th>
+            <th style="width:5%;"></th>
+          </tr>
+          </thead>
+
           <tbody>
+
           <tr *ngFor="let element of activityArray" (change)="isCheckboxActive()" [hidden]="!step1">
+            <td>
+              <input type="checkbox" class="form-check-input" (click)="checkActivity(element)" [checked]="checkboxActive(element)" autocomplete="off">
+            </td>
             <td>{{element.activity_title}}</td>
             <td>{{element.activity_duration}} {{element.activity_type_duration}}</td>
             <td>{{element.activity_type_output}}</td>
             <td>
-                <!--WARNING : need to change the title by the id
-                    WARNING : need to change the title by the id-->
-                <input type="checkbox" class="form-check-input" (click)="checkActivity(element)" [checked]="checkboxActive(element)" autocomplete="off">
+              <a (click)="deleteActivity(element.activity_id)"><i class="fa fa-close text-red"></i></a>
             </td>
           </tr>
 
           <button [disabled]="!isCheckboxChecked" class="btn btn-primary waves-effect text-end" type="button" (click)="changeStep(false)" [hidden]="!step1">Add Sub Activities</button>
 
           <tr *ngFor="let element of subActivityArray[activityArray.indexOf(activitySelected)]" [hidden]="!step2">
+            <td></td>
             <td>{{element.activity_title}}</td>
             <td>{{element.activity_duration}} {{element.activity_type_duration}}</td>
             <td>{{element.activity_type_output}}</td>
+            <td>
+              <a (click)="deleteActivity(element.activity_id)"><i class="fa fa-close text-red"></i></a>
+            </td>
           </tr>
           </tbody>
         </table>
@@ -229,13 +271,18 @@
 
 </div>
 
-
-
+<!-- Modal confirmation -->
+<app-confirmation title="Confirmation activities creation"
+                  text="Are you sure all informations provided are correct ?"
+                  [isLinkActive]=true
+                  link="sop-list"
+                  >
+</app-confirmation>
 
 <!-- Modal warning -->
 <app-warning title="Exit"
-             text="Are you sure you want to go back to the SOP list ? All your work not saved will be lost."
-             isLink=true
+             text="Are you sure you want to go back to the SOP list ?"
+             [isLink]=true
              link="sop-list">
 </app-warning>
 

@@ -13,7 +13,7 @@ export class SopListComponent implements OnInit {
   errorMessage: string = "";
   sopList: [Sop];
   sopSelected: Sop = new Sop();
-  buttonsTitles: string [] = ['Modify SOP informations', 'Create or modify activites'];
+  buttonsTitles: string [] = ['Modify SOP informations', 'Create or modify activites', 'Create or modify jobs'];
   buttonsLinks: string [] = ['', 'activity-creation'];
 
   constructor(private _sopService: SopService) { }
@@ -22,6 +22,7 @@ export class SopListComponent implements OnInit {
 
   ngOnInit() {
     this.getAllSop();
+    this._sopService.removeSopIdLocal();
     console.log(this.buttonsTitles)
   }
 
