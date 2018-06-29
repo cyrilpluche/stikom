@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const policy = require('../policy/policy_middleware');
 const modelBranch = require('../models/branch_model');
+const ERRORTYPE = require('../policy/errorType');
 
 // TODO everybody can acces this route
 router.get('/all', policy.checkParameters(['organisation']) ,function (req, res, next) {
@@ -12,5 +13,22 @@ router.get('/all', policy.checkParameters(['organisation']) ,function (req, res,
         next(er)
     });
 });
+
+router.post('/create',
+    policy.requireAdmin,
+    policy.checkParameters(['branch_name', 'organisation_id']),
+    function (req, res, next) {
+        let branch = {
+            branch_name: req.body.branch_name,
+            organisation_id: req.body.organisation_id
+        }
+        modelBranch.insert(branch).then(function (data) {
+            if (!data) {
+                throw ERRORTYPE.INTERNAL_ERROR
+            } else {
+                res.json ({data: data})
+            }
+        }).catch(next)
+    });
 
 module.exports = router;

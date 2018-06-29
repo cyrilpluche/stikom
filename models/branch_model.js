@@ -2,6 +2,18 @@ const db = require('../config/db_config');
 const ERRORTYPE = require('../policy/errorType');
 
 let branch = {
+    insert (branch) {
+        return db.any('INSERT INTO public.branch ( branch_name, organisation_id)\n' +
+            'VALUES (${branch_name}, ${organisation_id}) returning branch_id', branch).then(function (data) {
+            if (!data) {
+                return false
+            } else {
+                return data[0]
+            }
+        }).catch(function (err) {
+            throw (ERRORTYPE.customError('The server has encountred an internal error\n ' + err.toString()))
+        })
+    },
     selectAllByOrganisationId (organisation_id) {
         return db.query('SELECT * FROM public.branch WHERE organisation_id = $1', organisation_id)
             .then(function (data) {
