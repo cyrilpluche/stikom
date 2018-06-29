@@ -27,4 +27,14 @@ router.post('/create', policy.requireAdmin,
             }
         }).catch(next)
     });
+
+router.delete('/delete/:organisation',
+    policy.requireAdmin,
+    function (req, res, next) {
+    modelOrganisation.delete(req.params.organisation)
+        .then(function (data) {
+            if (!data) throw ERRORTYPE.NOT_FOUND;
+            else res.json({data: data})
+        }).catch(next)
+});
 module.exports = router;

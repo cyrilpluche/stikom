@@ -30,6 +30,15 @@ let branch = {
                     throw (ERRORTYPE.customError('The server has encountred an internal error\n ' + err.toString()))
                 }
             })
+    },
+
+    delete (branch_id) {
+        return db.any('DELETE FROM public.branch CASCADE WHERE branch_id = $1 \n' +
+            'returning branch_id', branch_id).then(function (data) {
+            return data.length !== 0
+        }).catch(function (err) {
+            throw ERRORTYPE.customError('The server has encountred an internal error\n ' + err.toString())
+        })
     }
 };
 

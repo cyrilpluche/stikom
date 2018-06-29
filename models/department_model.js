@@ -31,7 +31,16 @@ let department = {
                     throw (ERRORTYPE.customError('The server has encountred an internal error\n ' + err.toString()))
                 }
             })
+    },
+
+    delete (department_id) {
+        return db.any('Delete FROM public.department CASCADE WHERE department_id = $1\n' +
+            'returning department_id', department_id).then(function (data) {
+            return data.length !== 0
+        }).catch(function (err) {
+            throw ERRORTYPE.customError('The server has encountred an internal error\n ' + err.toString())
+        })
     }
-}
+};
 
 module.exports = department;

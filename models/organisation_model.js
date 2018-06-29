@@ -21,6 +21,15 @@ let organisation = {
         }).catch(function (err) {
             throw (ERRORTYPE.customError('The server has encountred an internal error\n ' + err.toString()))
         })
+    },
+
+    delete (organisation_id) {
+        return db.any('DELETE FROM public.organisation CASCADE WHERE organisation_id = $1 \n' +
+            'returning organisation_id', organisation_id).then(function (data) {
+            return data.length !== 0
+        }).catch(function (err) {
+            throw ERRORTYPE.customError('The server has encountred an internal error\n ' + err.toString())
+        })
     }
 };
 module.exports = organisation

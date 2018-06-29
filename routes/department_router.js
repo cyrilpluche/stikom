@@ -33,4 +33,14 @@ router.post('/create',
     }
     );
 
+router.delete('/delete/:department',
+    policy.requireAdmin,
+    function (req, res, next) {
+    modelDepartment.delete(req.params.department)
+        .then(function (data) {
+            if (!data) throw ERRORTYPE.NOT_FOUND;
+            else res.json({data: data})
+        }).catch(next)
+});
+
 module.exports = router;

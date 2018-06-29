@@ -31,4 +31,14 @@ router.post('/create',
         }).catch(next)
     });
 
+router.delete('/delete/:branch',
+    policy.requireAdmin,
+    function (req, res, next) {
+    modelBranch.delete(req.params.branch)
+        .then(function (data) {
+            if (!data) throw ERRORTYPE.NOT_FOUND;
+            else res.json({data: data})
+        }).catch(next)
+});
+
 module.exports = router;
