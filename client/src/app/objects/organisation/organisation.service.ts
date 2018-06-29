@@ -44,4 +44,9 @@ export class OrganisationService {
     this.generateHeaders();
     return this.http.get(this.domain + '/api/organisation/all',this.httpOptions);
   }
+
+  delete(organisation:string){
+    this.generateHeaders();
+    return this.http.delete(this.domain + '/api/organisation/delete/'+organisation,this.httpOptions);
+  }
 }

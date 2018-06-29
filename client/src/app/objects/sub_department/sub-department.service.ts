@@ -46,4 +46,10 @@ export class SubDepartmentService {
     this.generateHeaders();
     return this.http.get(this.domain + '/api/sub_department/all?department='+department,this.httpOptions);
   }
+
+  delete(sub_department:string){
+    this.generateHeaders();
+    return this.http.delete(this.domain + '/api/sub_department/delete/'+sub_department,this.httpOptions);
+  }
+
 }
