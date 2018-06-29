@@ -14,7 +14,8 @@ router.get('/all_from_sop/:sop',
 
 router.post('/create',
     policy.checkParameters(['activity_title', 'activity_type_duration', 'activity_duration', 'activity_type',
-        'activity_type_output', 'activity_description', 'activity_shape', 'activity_id_is_father', 'sop_id']),
+        'activity_type_output', 'activity_description', 'activity_shape', 'activity_id_is_father', 'sop_id',
+        'managment_level_id']),
     function (req, res, next) {
     let isFather = req.body.activity_id_is_father;
     if (req.body.activity_id_is_father === 'NULL') {
@@ -29,7 +30,8 @@ router.post('/create',
         activity_description: req.body.activity_description,
         activity_shape: req.body.activity_shape,
         activity_id_is_father: isFather,
-        sop_id: req.body.sop_id
+        sop_id: req.body.sop_id,
+        managment_level_id: req.body.managment_level_id
     };
     modelActivity.insert(activity).then(function (data) {
         if (!data) {

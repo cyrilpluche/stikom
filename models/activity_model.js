@@ -3,12 +3,12 @@ const ERRORTYPE = require('../policy/errorType');
 
 let activity = {
     insert  (activity) {
-        console.log(activity)
         return db.any('INSERT INTO public.activity(\n' +
             'activity_title, activity_type_duration, activity_duration, activity_type, activity_type_output, activity_description,\n' +
-            'activity_shape, activity_id_is_father, sop_id)\n' +
+            'activity_shape, activity_id_is_father, sop_id, managment_level_id)\n' +
             'VALUES (${activity_title}, ${activity_type_duration}, ${activity_duration}, ${activity_type}, ${activity_type_output},\n' +
-            '${activity_description}, ${activity_shape}, ${activity_id_is_father}, ${sop_id}) returning activity_id;',
+            '${activity_description}, ${activity_shape}, ${activity_id_is_father}, ${sop_id}, ${managment_level_id})\n' +
+            'returning activity_id;',
             activity).then(function (data) {
             if (data.length === 0) {
                 return false
