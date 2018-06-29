@@ -33,6 +33,15 @@ export class SubDepartmentService {
 
   }
 
+  add(subDepartmentName:string, departmentId: string){
+    let body = {
+      sub_department_name: subDepartmentName,
+      department_id: departmentId
+    };
+    this.generateHeaders();
+    return this.http.post(this.domain + '/api/sub_department/create',body,this.httpOptions);
+  }
+
   selectAllFromDepartment(department:string){
     this.generateHeaders();
     return this.http.get(this.domain + '/api/sub_department/all?department='+department,this.httpOptions);

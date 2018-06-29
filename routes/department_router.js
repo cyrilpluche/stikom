@@ -17,7 +17,7 @@ router.get('/all', policy.checkParameters(['branch']), function (req, res, next)
 
 router.post('/create', 
     policy.requireAdmin,
-    policy.checkParameters([' department_name','branch_id']),
+    policy.checkParameters(['department_name','branch_id']),
     function (req, res, next) {
         let department = {
             department_name: req.body.department_name,

@@ -33,6 +33,15 @@ export class BranchService {
 
   }
 
+  add(branchName:string,organisationId:string){
+    let body = {
+      branch_name: branchName,
+      organisation_id: organisationId
+    };
+    this.generateHeaders();
+    return this.http.post(this.domain + '/api/branch/create',body,this.httpOptions);
+  }
+
   selectAllFromOrganisation(organisation:string){
     this.generateHeaders();
     return this.http.get(this.domain + '/api/branch/all?organisation='+organisation,this.httpOptions);

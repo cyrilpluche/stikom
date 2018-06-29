@@ -33,6 +33,15 @@ export class DepartmentService {
 
   }
 
+  add(departmentName:string,branchId){
+    let body = {
+      department_name: departmentName,
+      branch_id: branchId
+    };
+    this.generateHeaders();
+    return this.http.post(this.domain + '/api/department/create',body,this.httpOptions);
+  }
+
   selectAllFromBranch(branch:string){
     this.generateHeaders();
     return this.http.get(this.domain + '/api/department/all?branch='+branch,this.httpOptions);

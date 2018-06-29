@@ -173,10 +173,9 @@ export class OrganizationManagementComponent implements OnInit {
 
   async newOrganization() {
 
-
-      //this._memberService.register(this.email,this.password,this.firstName, this.lastName, "0",this.subDepartmentChoosen)
       await this._organisationService.add(this.addInput)
         .subscribe( (res) => {
+            this.newBranch(res['data']['organisation_id'],"No branch");
             this.title="Succes";
             this.text="The organization has been added";
             this.errorMessage = "";
@@ -189,6 +188,123 @@ export class OrganizationManagementComponent implements OnInit {
             this.errorMessage = "";
             this.displayEnd = true;
           });
+
+
+  }
+
+  addBranch()
+  {
+    if(this.addInput=="")
+    {
+      this.errorMessage="Branch label invalid."
+    }else if(this.organisationChoosen==""){
+      this.errorMessage="Choose a organisation to add a new branch";
+    }else{
+      //adding organisation
+      this.newBranch(this.organisationChoosen,this.addInput);
+      this.reloadForm();
+
+    }
+
+  }
+
+
+  async newBranch(organizationId:string,input:string) {
+
+    await this._branchService.add(input,organizationId)
+      .subscribe( (res) => {
+          this.newDepartment(res['data']['branch_id'],"No department");
+          this.title="Succes";
+          this.text="The branch has been added";
+          this.errorMessage = "";
+          this.displayEnd = true;
+
+
+        },
+        error => {
+          this.title="ERROR";
+          this.text=error.error.message;
+          this.errorMessage = "";
+          this.displayEnd = true;
+        });
+
+
+  }
+
+  async addDepartment()
+  {
+    if(this.addInput=="")
+    {
+      this.errorMessage="Department label invalid."
+    }else if(this.branchChoosen==""){
+      this.errorMessage="Choose a branch to add a new department";
+    }else{
+      //adding organisation
+      await this.newDepartment(this.branchChoosen,this.addInput);
+      this.reloadForm();
+    }
+
+
+  }
+
+
+
+  async newDepartment(branchId: string,input:string) {
+
+    await this._departmentService.add(input,branchId)
+      .subscribe( (res) => {
+          this.newSubDepartment(res['data']['department_id'],"No sub department");
+          this.title="Succes";
+          this.text="The department has been added";
+          this.errorMessage = "";
+          this.displayEnd = true;
+
+        },
+        error => {
+          this.title="ERROR";
+          this.text=error.error.message;
+          this.errorMessage = "";
+          this.displayEnd = true;
+        });
+
+
+  }
+
+
+  async addSubDepartment()
+  {
+    if(this.addInput=="")
+    {
+      this.errorMessage="Sub department label invalid."
+    }else if(this.departmentChoosen==""){
+      this.errorMessage="Choose a department to add a new sub department";
+    }else{
+      //adding organisation
+      await this.newSubDepartment(this.departmentChoosen,this.addInput);
+      this.reloadForm();
+    }
+
+
+  }
+
+
+
+  async newSubDepartment(departmentId:string,input:string) {
+
+    await this._subDepartmentService.add(input,departmentId)
+      .subscribe( (res) => {
+          this.title="Succes";
+          this.text="The sub department has been added";
+          this.errorMessage = "";
+          this.displayEnd = true;
+
+        },
+        error => {
+          this.title="ERROR";
+          this.text=error.error.message;
+          this.errorMessage = "";
+          this.displayEnd = true;
+        });
 
 
   }
