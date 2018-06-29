@@ -32,6 +32,11 @@ export class ActivityService {
     return this.http.post(this.domain + '/api/activity/create',body,this.httpOptions);
   }
 
+  selectAllFromSop(sop_id) {
+    this.generateHeaders();
+    return this.http.get(this.domain + '/api/activity/all_from_sop/'+sop_id,this.httpOptions);
+  }
+
   generateHeaders()
   {
     if(localStorage.getItem("Token") === null)

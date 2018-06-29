@@ -6,18 +6,9 @@
     </div>
   </div>
 
-  <div class="row row-first">
-    <!-- Search form -->
-    <div class="col-5 col-sm-5 col-lg-2 text-center">
-      <input type="checkbox" class="form-check-input" id="nameSort" checked="checked">
-      <label class="form-check-label" for="nameSort">Name</label>
-    </div>
-    <div class="col">
-      <input type="checkbox" class="form-check-input" id="dateSort" checked="checked">
-      <label class="form-check-label" for="dateSort">Date</label>
-    </div>
-    <div class="col-4 md-form" id="search-bar">
-      <input class="form-control" type="text" placeholder="Search" aria-label="Search">
+  <div class="row row-first justify-content-end">
+    <div class=" md-form" id="search-bar">
+      <input id="search" (keyup)="search()" class="form-control" type="text" placeholder="Search" aria-label="Search">
     </div>
   </div>
 
@@ -26,15 +17,17 @@
     <div class="col-12 card card-cascade hoverable">
       <!--Table-->
       <div class="card-body card-body-cascade">
-        <table class="table">
+        <table class="table table-borderless table-hover table-fixed" id="sop-table">
 
           <!--Table head-->
           <thead class="">
             <tr class="text-white">
-              <th>Number</th>
-              <th>Name</th>
-              <th>Creation Date</th>
-              <th>Approved By</th>
+              <th style="width:5%;"></th>
+              <th style="width:10%;"  (click)="sortTable(1)"><a>Number</a></th>
+              <th style="width:40%;" (click)="sortTable(2)"><a>Name</a></th>
+              <th style="width:20%;" (click)="sortTable(3)"><a>Creation Date</a></th>
+              <th style="width:20%;" (click)="sortTable(4)"><a>Approved By</a></th>
+              <th style="width:5%;"></th>
             </tr>
           </thead>
           <!--Table head-->
@@ -42,10 +35,16 @@
           <!--Table body-->
           <tbody>
             <tr *ngFor="let sop of sopList">
-              <th scope="row">{{sop.sop_id}}</th>
-              <td>{{sop.sop_title}}</td>
+              <td scope="row">
+                <a data-toggle="modal" data-target="#actionModal"><i class="fa fa-cog text-blue" (click)="selectSop(sop)"></i></a>
+              </td>
+              <td>{{sop.sop_id}}</td>
+              <td>{{sop.sop_title.substr(0,50)}}</td>
               <td>{{sop.sop_creation | date:"MM/dd/yyyy"}}</td>
               <td>{{sop.sop_approvment}}</td>
+              <td>
+                <a data-toggle="modal" data-target="#warningModal" (click)="selectSop(sop)"><i class="fa fa-close text-red"></i></a>
+              </td>
             </tr>
           </tbody>
           <!--Table body-->
@@ -53,51 +52,23 @@
         </table>
         <!--Table-->
       </div>
-  </div>
+    </div>
 
+  </div>
 </div>
 
-<!--<div class="container list-sop-pan">
-  <div class="row justify-content-center">
-    <div class="col-12 col-md-6 col-xl-8">
-      <h4>SOP List</h4>
-    </div>
-    <div class="col-12 col-md-6 col-xl-4">
-      <div class="md-form">
-        <i class="fa fa-search prefix"></i>
-        <input type="text" id="inputIconEx1" class="form-control">
-        <label for="inputIconEx1">by SOP name</label>
-      </div>
-    </div>
-    <div class="col-12">
-      <div class="list-group">
-        <a href="#" class="list-group-item list-group-item-action flex-column align-items-start active">
-          <div class="d-flex w-100 justify-content-between">
-            <h5 class="mb-1">List group item heading</h5>
-            <small>3 days ago</small>
-          </div>
-          <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-          <small>Donec id elit non mi porta.</small>
-        </a>
-        <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-          <div class="d-flex w-100 justify-content-between">
-            <h5 class="mb-1">List group item heading</h5>
-            <small class="text-muted">3 days ago</small>
-          </div>
-          <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-          <small class="text-muted">Donec id elit non mi porta.</small>
-        </a>
-        <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-          <div class="d-flex w-100 justify-content-between">
-            <h5 class="mb-1">List group item heading</h5>
-            <small class="text-muted">3 days ago</small>
-          </div>
-          <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-          <small class="text-muted">Donec id elit non mi porta.</small>
-        </a>
-      </div>
-    </div>
-  </div>
+<app-action title={{sopSelected.sop_title}}
+            text=""
+            buttons={{buttonsTitles}}
+            links={{buttonsLinks}}
+            isLinkActive="false"
+>
+</app-action>
 
-
-</div>-->
+<!-- Modal warning -->
+<app-warning title="Delete SOP {{sopSelected.sop_id}}"
+             text="Are you sure you want to delete the SOP : {{sopSelected.sop_title}} from the SOP list ? All activities, linked ."
+             link="sop-list"
+             (success)="deleteSop(sopSelected.sop_id)"
+             isLink=false>
+</app-warning>

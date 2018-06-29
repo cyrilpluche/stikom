@@ -198,7 +198,7 @@
 
           <button [disabled]="!isCheckboxChecked" class="btn btn-primary waves-effect text-end" type="button" (click)="changeStep(false)" [hidden]="!step1">Add Sub Activities</button>
 
-          <tr *ngFor="let element of subActivityArray" [hidden]="!step2">
+          <tr *ngFor="let element of subActivityArray[activityArray.indexOf(activitySelected)]" [hidden]="!step2">
             <td>{{element.activity_title}}</td>
             <td>{{element.activity_duration}} {{element.activity_type_duration}}</td>
             <td>{{element.activity_type_output}}</td>
@@ -235,6 +235,7 @@
 <!-- Modal warning -->
 <app-warning title="Exit"
              text="Are you sure you want to go back to the SOP list ? All your work not saved will be lost."
+             isLink=true
              link="sop-list">
 </app-warning>
 

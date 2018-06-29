@@ -33,6 +33,7 @@ import { ActivityListComponent } from './component/activity-list/activity-list.c
 import { ActivityCreationComponent } from './component/activity-list/activity-creation/activity-creation.component';
 import { AccountValidationComponent } from './component/account-validation/account-validation.component';
 import { AdminUsersComponent } from './component/admin-users/admin-users.component';
+import { ActionComponent } from './shared/modals/action/action.component';
 
 
 const routes: Routes = [
@@ -79,7 +80,8 @@ const routes: Routes = [
     ActivityListComponent,
     ActivityCreationComponent,
     AccountValidationComponent,
-    AdminUsersComponent
+    AdminUsersComponent,
+    ActionComponent
   ],
   imports: [
     HttpClientModule,

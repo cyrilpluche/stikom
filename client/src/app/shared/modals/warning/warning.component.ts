@@ -14,6 +14,7 @@ export class WarningComponent implements OnInit {
   @Input() title: string = "";
   @Input() text: string = "";
   @Input() link: string = "";
+  @Input() isLink: boolean;
 
   @Output() success = new EventEmitter<boolean>();
 
@@ -22,8 +23,10 @@ export class WarningComponent implements OnInit {
   }
 
   goDestination(){
-    this.success.emit(true);
-    this.router.navigate(['/',this.link]);
+    if (this.isLink) {
+      this.success.emit(true);
+      this.router.navigate(['/',this.link]);
+    }
   }
 
 }
