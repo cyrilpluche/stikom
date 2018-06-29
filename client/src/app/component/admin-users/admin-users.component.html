@@ -41,7 +41,7 @@
             </td>
             <td *ngIf="user.member_valid == 0"> mail not validated</td>
             <td *ngIf="user.member_valid == 2"> <button (click)="validateUser(user.member_id)">approve account</button></td>
-            <td *ngIf="user.member_valid == 1"> <button>Delete account</button></td>
+            <td *ngIf="user.member_valid == 1"> <button>No action</button></td>
           </tr>
 
           </tbody>
