@@ -47,4 +47,9 @@ export class BranchService {
     return this.http.get(this.domain + '/api/branch/all?organisation='+organisation,this.httpOptions);
   }
 
+  delete(branch:string){
+    this.generateHeaders();
+    return this.http.delete(this.domain + '/api/branch/delete/'+branch,this.httpOptions);
+  }
+
 }

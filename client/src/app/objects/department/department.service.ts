@@ -46,4 +46,9 @@ export class DepartmentService {
     this.generateHeaders();
     return this.http.get(this.domain + '/api/department/all?branch='+branch,this.httpOptions);
   }
+
+  delete(department:string){
+    this.generateHeaders();
+    return this.http.delete(this.domain + '/api/department/delete/'+department,this.httpOptions);
+  }
 }

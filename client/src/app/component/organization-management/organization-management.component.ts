@@ -309,4 +309,89 @@ export class OrganizationManagementComponent implements OnInit {
 
   }
 
+
+  async deleteOrganization() {
+
+    await this._organisationService.delete(this.organisationChoosen)
+      .subscribe( (res) => {
+          this.title="Succes";
+          this.text="The organization has been deleted";
+          this.errorMessage = "";
+          this.displayEnd = true;
+          this.reloadForm();
+
+        },
+        error => {
+          this.title="ERROR";
+          this.text=error.error.message;
+          this.errorMessage = "";
+          this.displayEnd = true;
+        });
+
+
+  }
+
+  async deleteBranch() {
+
+    await this._branchService.delete(this.branchChoosen)
+      .subscribe( (res) => {
+          this.title="Succes";
+          this.text="The branch has been deleted";
+          this.errorMessage = "";
+          this.displayEnd = true;
+          this.reloadForm();
+
+        },
+        error => {
+          this.title="ERROR";
+          this.text=error.error.message;
+          this.errorMessage = "";
+          this.displayEnd = true;
+        });
+
+
+  }
+
+  async deleteDepartment() {
+
+    await this._departmentService.delete(this.departmentChoosen)
+      .subscribe( (res) => {
+          this.title="Succes";
+          this.text="The department has been deleted";
+          this.errorMessage = "";
+          this.displayEnd = true;
+          this.reloadForm();
+
+        },
+        error => {
+          this.title="ERROR";
+          this.text=error.error.message;
+          this.errorMessage = "";
+          this.displayEnd = true;
+        });
+
+
+  }
+
+  async deleteSubDepartment() {
+
+    await this._subDepartmentService.delete(this.subDepartmentChoosen)
+      .subscribe( (res) => {
+          this.title="Succes";
+          this.text="The sub department has been deleted";
+          this.errorMessage = "";
+          this.displayEnd = true;
+          this.reloadForm();
+
+        },
+        error => {
+          this.title="ERROR";
+          this.text=error.error.message;
+          this.errorMessage = "";
+          this.displayEnd = true;
+        });
+
+
+  }
+
 }
