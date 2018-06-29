@@ -423,6 +423,10 @@ ALTER TABLE public.member_activity_project
 	REFERENCES public.activity(activity_id);
 
 
+
+
+INSERT INTO managment_level ( managment_level_label) VALUES ('Worker'),('Managment Level 1'),('Managment Level 2');
+
 INSERT INTO role ( role_title) VALUES ('Project Manager'),('Performer'),('Planner');
 
 INSERT INTO organisation ( organisation_name) VALUES ('Polytech');
