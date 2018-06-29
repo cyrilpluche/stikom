@@ -32,14 +32,15 @@ export class MemberService {
     return this.http.put(this.domain + '/api/member/validate_registration',body,this.httpOptions);
   }
 
-  register(mail:string, password:string,first_name:string, name:string, is_admin:string,sub_department_id:string ){
+  register(mail:string, password:string,first_name:string, name:string, is_admin:string,sub_department_id:string,managment_level:string ){
     let body = {
       mail: mail,
       password: password,
       first_name:first_name,
       name:name,
       is_admin:is_admin,
-      sub_department_id:sub_department_id
+      sub_department_id:sub_department_id,
+      managment_level_id:managment_level
     };
     this.generateHeaders();
     return this.http.post(this.domain + '/api/member/register',body,this.httpOptions);

@@ -55,6 +55,13 @@
             <input [(ngModel)]="passwordConfirmation" name="passwordConfirmation" type="password" id="passwordConfirm" class="form-control">
             <label for="passwordConfirm">Confirm your password</label>
           </div>
+
+          <div class="md-form">
+            <select [(ngModel)]="managmentLevelChoosen" name="managmentLevel" class="form-control mdb-select" >
+              <option value="" disabled selected>Choose managment level</option>
+              <option *ngFor="let manage of managmentLevels" [ngValue]=manage.managment_level_id>{{manage.managment_level_label}}</option>
+            </select>
+          </div>
         </div>
 
         <!-- Error alert -->
