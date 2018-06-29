@@ -16,10 +16,11 @@ export class ActivityCreationComponent implements OnInit {
   step2: boolean;
 
   activityArray: Activity[] = [];
-  subActivityArray: Activity[] = [];
+  subActivityArray: Activity[][] = [[]];
 
   activitySelected: Activity;
   isCheckboxChecked: boolean = false;
+  activity_index: number;
 
   newActivityTitle: string = "";
   newActivityDescription: string = "";
@@ -31,7 +32,7 @@ export class ActivityCreationComponent implements OnInit {
   newSubActivityTitle: string = "";
   newSubActivityDescription: string = "";
   newSubActivityTypeDuration: string = "";
-  newSubActivityDuration: number = 0;
+  newSubActivityDuration: number;
   newSubActivityType: string = "";
   newSubActivityTypeOutput: string = "";
 
@@ -47,10 +48,42 @@ export class ActivityCreationComponent implements OnInit {
     this.sopId = this._sopService.getSopIdLocal();
     this.step1 = true;
     this.step2 = false;
+    this.loadActivity();
   }
 
   onSubmit() {
 
+  }
+
+  loadActivity() {
+    this._activityService.selectAllFromSop(this.sopId).subscribe((res) => {
+        this.errorMessage = "";
+        console.log(res['data']);
+        for (let element of res['data']) {
+          let activity = element as Activity;
+          if (activity.activity_id_is_father == null || activity.activity_id_is_father == ""){
+            this.activityArray.push(activity);
+          }
+        }
+        for (let element of res['data']) {
+          let activity = element as Activity;
+          if (activity.activity_id_is_father != null || activity.activity_id_is_father != ""){
+            let i = 0;
+            console.log(activity, " + ", this.activityArray[i])
+            while (i<this.activityArray.length && this.activityArray[i].activity_id != element.activity_id_is_father ) {
+              console.log(i)
+              i++;
+            }
+            if(i<this.activityArray.length){
+              this.subActivityArray[i].push(activity);
+            }
+          }
+        }
+
+      },
+      error => {
+        this.errorMessage = error.error.message;
+      });
   }
 
   changeStep(step1) {
@@ -61,11 +94,12 @@ export class ActivityCreationComponent implements OnInit {
   //Give the activity checked to the activitySelected attribut
   checkActivity(activity) {
     this.activitySelected = activity;
+    this.activity_index = this.activityArray.indexOf(activity);
   }
 
   checkboxActive(activity) {
     if (this.activitySelected != null){
-      return this.activitySelected.activity_title==activity.activity_title
+      return this.activitySelected.activity_id==activity.activity_id
     }
     else {
       return false;
@@ -141,9 +175,8 @@ export class ActivityCreationComponent implements OnInit {
 
   addNewSubActivity() {
     let newSubActivity: Activity;
-
     //We check if all fields are filled
-    let verificationTrue = this.fieldsVerification();
+    let verificationTrue = this.subFieldsVerification();
 
     if (verificationTrue) {
       //We create the activity that may will be added
@@ -160,7 +193,9 @@ export class ActivityCreationComponent implements OnInit {
 
       //We check for all activity added, if the new one already exist
       let activityExist: boolean = false;
-      for (let a of this.subActivityArray) {
+      console.log("The Index is : ", this.activity_index);
+      console.log("The sub array index give : ", this.subActivityArray[this.activity_index]);
+      for (let a of this.subActivityArray[this.activity_index]) {
         activityExist = (a.activity_title == newSubActivity.activity_title &&
           a.activity_description == newSubActivity.activity_description &&
           a.activity_type_duration == newSubActivity.activity_type_duration &&
@@ -184,14 +219,13 @@ export class ActivityCreationComponent implements OnInit {
             newSubActivity.activity_id = newSubActivity.activity_id['activity_id'];
             console.log("activity_id : "+newSubActivity.activity_id);
             //View insert
-            this.activityArray.push(newSubActivity);
+            this.subActivityArray[this.activity_index].push(newSubActivity);
           },
           error => {
             this.errorMessage = error.error.message;
           });
 
-        //View insert
-        this.subActivityArray.push(newSubActivity);
+
       }
     }
   }
@@ -215,6 +249,31 @@ export class ActivityCreationComponent implements OnInit {
       this.errorMessage = "Duration time is required.";
     }
     else if (this.newActivityTypeOutput == "") {
+      console.log("Output");
+      this.errorMessage = "Output type is required.";
+    }
+    return this.errorMessage == "";
+  }
+
+  subFieldsVerification() {
+    this.errorMessage = "";
+    if (this.newSubActivityTitle == "") {
+      console.log("Title");
+      this.errorMessage = "Title is required.";
+    }
+    else if (this.newSubActivityDescription == "") {
+      console.log("Description");
+      this.errorMessage = "Description is required.";
+    }
+    else if (this.newSubActivityTypeDuration == "") {
+      console.log("Type duration");
+      this.errorMessage = "Type duration is required.";
+    }
+    else if (this.newSubActivityDuration == 0) {
+      console.log("Duration");
+      this.errorMessage = "Duration time is required.";
+    }
+    else if (this.newSubActivityTypeOutput == "") {
       console.log("Output");
       this.errorMessage = "Output type is required.";
     }

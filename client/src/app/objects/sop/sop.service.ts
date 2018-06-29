@@ -38,6 +38,11 @@ export class SopService {
     return this.http.get(this.domain + '/api/sop/all',this.httpOptions);
   }
 
+  delete(sop_id) {
+    this.generateHeaders();
+    return this.http.delete(this.domain + '/api/sop/delete/'+sop_id,this.httpOptions);
+  }
+
   generateHeaders()
   {
     if(localStorage.getItem("Token") === null)
