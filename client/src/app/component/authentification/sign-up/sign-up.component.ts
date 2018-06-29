@@ -9,6 +9,8 @@ import {DepartmentService} from "../../../objects/department/department.service"
 import {SubDepartmentService} from "../../../objects/sub_department/sub-department.service";
 import {Department} from "../../../objects/department/department";
 import {SubDepartment} from "../../../objects/sub_department/sub-department";
+import {ManagmentLevel} from "../../../objects/managment_level/managment_level";
+import {ManagmentLevelService} from "../../../objects/managment_level/managment-level.service";
 
 @Component({
   selector: 'app-sign-up',
@@ -41,6 +43,9 @@ export class SignUpComponent implements OnInit {
   departmentChoosen: string = "";
   subDepartmentChoosen: string = "";
 
+  managmentLevels:[ManagmentLevel];
+  managmentLevelChoosen: string = "";
+
   errorMessage: string = "";
   displayEnd : boolean = false;
 
@@ -50,20 +55,35 @@ export class SignUpComponent implements OnInit {
 
   constructor(private _memberService: MemberService,
               private _organisationService: OrganisationService,
+              private _managmentLevelService: ManagmentLevelService,
               private _branchService: BranchService,
               private _departmentService: DepartmentService,
               private _subDepartmentService: SubDepartmentService,
               private router: Router) { }
 
   ngOnInit() {
-    this.getOrganisation();
+    this.getOrganisations();
+    this.getManagmentLevels();
   }
 
-  getOrganisation(){
+  getOrganisations(){
     this._organisationService.selectAll()
       .subscribe( (res) => {
          console.log(res['data']);
          this.organisations=res['data'];
+
+        },
+        error => {
+          console.log("ERREUR : ",error);
+
+        });
+  }
+
+  getManagmentLevels(){
+    this._managmentLevelService.selectAll()
+      .subscribe( (res) => {
+          console.log(res['data']);
+          this.managmentLevels=res['data'];
 
         },
         error => {
@@ -79,7 +99,7 @@ export class SignUpComponent implements OnInit {
     else {
 
       //this._memberService.register(this.email,this.password,this.firstName, this.lastName, "0",this.subDepartmentChoosen)
-      await this._memberService.register(this.email,this.password,this.firstName, this.lastName, "0","1")
+      await this._memberService.register(this.email,this.password,this.firstName, this.lastName, "0",this.subDepartmentChoosen,this.managmentLevelChoosen)
         .subscribe( (res) => {
             this.errorMessage = "";
             this.step1 = false;
@@ -126,6 +146,9 @@ export class SignUpComponent implements OnInit {
     }
     else if (this.passwordConfirmation != this.password) {
       this.errorMessage = "Password confirmation is wrong.";
+    }
+    else if (this.managmentLevelChoosen == "") {
+      this.errorMessage = "You need to choose a managment level.";
     }
     else {
       //Connexion code

@@ -10,8 +10,10 @@ const member = {
      */
     insert: function (member) {
         return db.any('INSERT INTO public.member(\n' +
-            'member_first_name, member_name, member_mail, member_password, member_admin, member_valid, sub_department_id, seed)\n' +
-            'VALUES (${first_name}, ${name}, ${mail}, ${hash_pwd}, ${is_admin}, ${member_valid}, ${sub_department_id}, ${seed}) returning member_id;',
+            'member_first_name, member_name, member_mail, member_password, member_admin, member_valid, sub_department_id,\n' +
+            ' seed, managment_level_id)\n' +
+            'VALUES (${first_name}, ${name}, ${mail}, ${hash_pwd}, ${is_admin}, ${member_valid}, ${sub_department_id},\n' +
+            ' ${seed}, ${managment_level_id}) returning member_id;',
             member)
             .then(function (data) {
                 if (data.length === 0) {
@@ -178,9 +180,10 @@ const member = {
      */
     selectAll: function () {
         return db.any('SELECT member_id, member_first_name, member_name, member_admin, member_mail, member_valid, \n' +
-            'sub_department_id, member_role(member_id) \n' +
+            'sub_department_id, managment_level_id, member_role(member_id) \n' +
             'FROM public.member\n' +
-            'GROUP BY member_first_name, member_name, member_admin, member_mail, member_valid, sub_department_id, member_id').then(function (data) {
+            'GROUP BY member_first_name, member_name, member_admin, member_mail, member_valid, sub_department_id, member_id, \n' +
+            'managment_level_id').then(function (data) {
             return data
         }).catch(function (err) {
             throw ERRORTYPE.customError('The server has encountred an internal error\n ' + err.toString())

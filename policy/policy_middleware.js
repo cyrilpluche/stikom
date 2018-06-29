@@ -73,7 +73,7 @@ const policies = {
                     console.log(decode)
                     modelRole.selectRoleFromMember(decode.member_id)
                         .then(function (data) {
-                                if (decode.member_admin !== 1 &&
+                                if (data.member_admin !== 1 &&
                                     (data.member_role === undefined || data.member_role == null
                                         || !basicMethods.arrayContains(data.member_role, right)))
                                 {

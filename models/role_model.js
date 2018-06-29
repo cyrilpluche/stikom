@@ -11,7 +11,8 @@ let role = {
     },
 
     selectRoleFromMember (member_id) {
-        return db.any('SELECT * FROM member_role($1)', member_id).then(function (data) {
+        return db.any('SELECT member_role($1), member_admin FROM public.member \n' +
+            'WHERE member_id = $1 GROUP BY member_id, member_admin', member_id).then(function (data) {
             return data[0]
         }).catch(function (err) {
             throw (ERRORTYPE.customError('The server has encountred an internal error\n ' + err.toString()))
