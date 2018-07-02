@@ -196,7 +196,7 @@ router.put('/validate_member',
 });
 
 router.put('/update_password',
-    policy.checkParameters(['member_id', 'old_password', 'new_password1', 'new_password2']),
+    policy.checkParameters(['member_mail', 'old_password', 'new_password1', 'new_password2']),
     checkPwdUpdate,
     function (req, res, next) {
         bcrypt.hash(req.body.new_password1, 10).then(function (hash) {
@@ -307,7 +307,7 @@ function checkPwdUpdate (req, res, next) {
     if (req.body.new_password1 !== req.body.new_password2) {
         next(ERRORTYPE.customError('Error: the two passwords are different', 'DIFFERENT PASSWORD' , 412));
     } else {
-        modelMember.match(req.body.member_id, req.body.old_password).then(function (data) {
+        modelMember.match(req.body.member_mail, req.body.old_password).then(function (data) {
             if (!data) {
                 next(ERRORTYPE.customError('Error: wrong password', 'WRONG PASSWORD', 403));
             } else {
