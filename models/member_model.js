@@ -208,7 +208,7 @@ const member = {
 
     /**
      *
-     * @param member_id
+     * @param member_mail
      * @param password: already hash password
      * @returns {*}
      */

@@ -200,7 +200,7 @@ router.put('/update_password',
     checkPwdUpdate,
     function (req, res, next) {
         bcrypt.hash(req.body.new_password1, 10).then(function (hash) {
-            return modelMember.updatePassword(req.body.member_id, hash)
+            return modelMember.updatePassword(req.body.member_mail, hash)
                 .then(function (data) {
                     res.json({data: data});
                 }).catch(function (e) {
