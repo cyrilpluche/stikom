@@ -21,10 +21,10 @@ router.post('/create',
             }).catch(next)
     });
 
-router.post('/bind_job_activity/',
+router.post('/bind_job_activity',
     policy.checkParameters(['activity', 'job']),
     function (req, res, next) {
-        modelJob.insertActivityIsJob(req.query.activity, req.query.job)
+        modelJob.insertActivityIsJob(req.body.activity, req.body.job)
             .then(function (data) {
                 if (!data) {
                     throw ERRORTYPE.INTERNAL_ERROR
