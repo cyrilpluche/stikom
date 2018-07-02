@@ -212,10 +212,10 @@ const member = {
      * @param password: already hash password
      * @returns {*}
      */
-    updatePassword (member_id, password) {
-        return db.any('UPDATE public.member SET member_password = ${pwd} WHERE member_id = ${member} \n' +
+    updatePassword (member_mail, password) {
+        return db.any('UPDATE public.member SET member_password = ${pwd} WHERE member_mail = ${member} \n' +
             'returning member_id',
-            {member: member_id, pwd: password})
+            {member: member_mail, pwd: password})
             .then(function (data) {
                 if (data.length === 0) {
                     return false
