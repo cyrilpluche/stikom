@@ -7,9 +7,16 @@ const ERRORTYPE = require('../policy/errorType');
 
 router.get('/all_from_sop/:sop',
     function (req, res, next) {
-    modelActivity.selectAllBySopId(req.params.sop).then(function (data) {
-        res.json({data: data});
-    }).catch(next)
+        modelActivity.selectAllBySopId(req.params.sop).then(function (data) {
+            res.json({data: data});
+        }).catch(next)
+});
+
+router.get('/all_from_job/:job',
+    function (req, res, next) {
+        modelActivity.selectAllByJobId(req.params.job).then(function (data) {
+            res.json({data: data});
+        }).catch(next)
 });
 
 router.post('/create',

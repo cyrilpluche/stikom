@@ -29,6 +29,32 @@ let activity = {
             })
     },
 
+    /**
+     * All the activity for one job
+     * @param job_id
+     * @returns {*}
+     */
+    selectAllByJobId (job_id) {
+        return db.any('SELECT A.activity_id, A.activity_title, A.activity_type_duration, A.activity_duration,\n' +
+            'A.activity_type, A.activity_type_output, A.activity_description, A.activity_shape, A.sop_id,\n' +
+            'A.managment_level_id, A.activity_id_is_father \n' +
+            'FROM public_activity A, public.activity_is_job ASJ\n' +
+            'WHERE A.activity_id = ASJ.activity_id AND ASJ.job_id = $1', job_id)
+            .then(function (data) {
+                if (data.length === 0) {
+                    throw ERRORTYPE.NOT_FOUND
+                } else {
+                    return data[0]
+                }
+            }).catch(function (err) {
+                if (err.type) { // means that it comes from a then
+                    throw err;
+                } else {
+                    throw ERRORTYPE.customError('The server has encountred an internal error\n ' + err.toString());
+                }
+            })
+    },
+
     update (activity) {
         return db.any('UPDATE public.activity\n' +
             'SET activity_title=${activity_title}, activity_type_duration=${activity_type_duration}, \n ' +

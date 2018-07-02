@@ -21,7 +21,27 @@ router.post('/create',
             }).catch(next)
     });
 
-router.get('/:job', function (req, res, next) {
+router.post('/bind_job_activity/',
+    policy.checkParameters(['activity', 'job']),
+    function (req, res, next) {
+        modelJob.insertActivityIsJob(req.query.activity, req.query.job)
+            .then(function (data) {
+                if (!data) {
+                    throw ERRORTYPE.INTERNAL_ERROR
+                } else {
+                    res.json ({data: data})
+                }
+            }).catch(next)
+});
+
+router.get('/all_from_sop/:sop', function (req, res, next) {
+    modelJob.selectAllBySopId(req.params.sop)
+        .then(function (data) {
+            res.json({data: data})
+        }).catch(next)
+});
+
+router.get('/find_one/:job', function (req, res, next) {
     modelJob.selectById(req.params.job).then(function (data) {
         res.json({data})
     }).catch(next)
