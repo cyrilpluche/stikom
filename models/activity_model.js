@@ -38,7 +38,7 @@ let activity = {
         return db.any('SELECT A.activity_id, A.activity_title, A.activity_type_duration, A.activity_duration,\n' +
             'A.activity_type, A.activity_type_output, A.activity_description, A.activity_shape, A.sop_id,\n' +
             'A.managment_level_id, A.activity_id_is_father \n' +
-            'FROM public_activity A, public.activity_is_job ASJ\n' +
+            'FROM public.activity A, public.activity_is_job ASJ\n' +
             'WHERE A.activity_id = ASJ.activity_id AND ASJ.job_id = $1', job_id)
             .then(function (data) {
                 if (data.length === 0) {
