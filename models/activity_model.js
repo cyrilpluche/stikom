@@ -44,7 +44,7 @@ let activity = {
                 if (data.length === 0) {
                     throw ERRORTYPE.NOT_FOUND
                 } else {
-                    return data[0]
+                    return data
                 }
             }).catch(function (err) {
                 if (err.type) { // means that it comes from a then
