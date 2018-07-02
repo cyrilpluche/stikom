@@ -213,7 +213,8 @@ const member = {
      * @returns {*}
      */
     updatePassword (member_id, password) {
-        return db.any('UPDATE public.member SET member_password = ${pwd} WHERE member_id = ${member} return member_id',
+        return db.any('UPDATE public.member SET member_password = ${pwd} WHERE member_id = ${member} \n' +
+            'returning member_id',
             {member: member_id, pwd: password})
             .then(function (data) {
                 if (data.length === 0) {
