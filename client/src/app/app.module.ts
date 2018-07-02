@@ -37,6 +37,7 @@ import { OrganizationManagementComponent } from './component/organization-manage
 import { ActionComponent } from './shared/modals/action/action.component';
 import { JobListComponent } from './component/job-list/job-list.component';
 import { JobComponent } from './component/job-list/job/job.component';
+import { JobCreationComponent } from './component/job-list/job-creation/job-creation.component';
 
 
 const routes: Routes = [
@@ -54,6 +55,7 @@ const routes: Routes = [
   {path: 'activity-creation', component: ActivityCreationComponent},
   {path: 'project-creation', component: ProjectCreationComponent},
   {path: 'admin-users', component: AdminUsersComponent},
+  {path: 'job-creation', component: JobCreationComponent},
   {path: 'admin-organization-management', component: OrganizationManagementComponent}
 ];
 
@@ -89,7 +91,8 @@ const routes: Routes = [
     AdminUsersComponent,
     ActionComponent,
     JobListComponent,
-    JobComponent
+    JobComponent,
+    JobCreationComponent
   ],
   imports: [
     HttpClientModule,
