@@ -1,3 +1,87 @@
-<p>
-  job-list works!
-</p>
+<div class="container">
+
+  <!-- SOP List back button -->
+  <div class="row row-first">
+    <div class="col">
+      <button type="button" class="btn btn-outline-danger waves-effect" [routerLink]="['/sop-list']"><h6 class="no-margin-bottom"><i class="fa fa-times mr-3"></i>Back</h6></button>
+    </div>
+  </div>
+
+  <div class="row row-first justify-content-center">
+
+    <div class="col-12 card card-cascade hoverable">
+      <!--Table-->
+      <div class="card-body card-body-cascade">
+
+        <form>
+          <!-- Job Title -->
+          <div class="row md-form">
+            <div class="col">
+              <i class="fa fa-pencil prefix grey-text"></i>
+              <input [(ngModel)]="newJobTitle" name="newJobTitle" type="text" id="newJobTitle" class="form-control">
+              <label for="newJobTitle">Job title</label>
+            </div>
+            <div>
+              <button class="btn btn-success waves-effect" type="button" (click)="addJob()">Add</button>
+            </div>
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="row row-first justify-content-end">
+    <div class=" md-form" id="search-bar">
+      <input id="search" (keyup)="search()" class="form-control" type="text" placeholder="Search" aria-label="Search">
+    </div>
+  </div>
+
+  <div class="row justify-content-center">
+
+    <div class="col-12 card card-cascade hoverable">
+      <!--Table-->
+      <div class="card-body card-body-cascade">
+        <table class="table table-borderless table-hover table-fixed" id="sop-table">
+
+          <!--Table head-->
+          <thead class="">
+          <tr class="text-white">
+            <th style="width:80%;"  (click)="sortTable(0)"><a>Job Code</a></th>
+            <th class="text-center" style="width:10%;" ><a>Activities</a></th>
+            <th class="text-center" style="width:10%;"><a>Delete</a></th>
+          </tr>
+          </thead>
+          <!--Table head-->
+
+          <!--Table body-->
+          <tbody>
+          <tr *ngFor="let job of jobs">
+            <td>{{job.job_code}}</td>
+            <td class="text-center">
+              <a (click)="bindActivities(job.job_id)"><i class="fa fa-cog text-blue"></i></a>
+            </td>
+            <td class="text-center">
+              <a data-toggle="modal" data-target="#warningModal"><i class="fa fa-close text-red"></i></a>
+            </td>
+          </tr>
+          </tbody>
+          <!--Table body-->
+
+        </table>
+        <!--Table-->
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Modal warning -->
+<app-warning title="Delete Job"
+             text="Are you sure you want to delete the Job : from the Job list ?"
+             link="sop-list"
+             [isLink]=false>
+             <!--(success)="deleteSop(sopSelected.sop_id)"-->
+
+</app-warning>
+

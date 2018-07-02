@@ -12,7 +12,7 @@ export class WarningComponent implements OnInit {
 
   /* ----- Data ----- */
   @Input() title: string = "";
-  @Input() text: string = "";
+  @Input() text: string;
   @Input() link: string = "";
   @Input() isLink: boolean;
 

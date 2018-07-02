@@ -38,6 +38,11 @@ export class ActivityService {
     return this.http.get(this.domain + '/api/activity/all_from_sop/'+sop_id,this.httpOptions);
   }
 
+  selectAllFromJob(job_id){
+    this.generateHeaders();
+    return this.http.get(this.domain + '/api/activity/all_from_job/'+job_id,this.httpOptions);
+  }
+
   delete(activity_id) {
     this.generateHeaders();
     console.log("activity id : ", activity_id)

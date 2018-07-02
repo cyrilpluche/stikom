@@ -1,3 +1,92 @@
-<p>
-  job-creation works!
-</p>
+<div class="container">
+
+  <!-- SOP List back button -->
+  <div class="row row-first">
+    <div class="col">
+      <button type="button" class="btn btn-outline-danger waves-effect" data-toggle="modal" data-target="#warningModal"><h6 class="no-margin-bottom"><i class="fa fa-times mr-3"></i>Back</h6></button>
+    </div>
+  </div>
+
+  <!--Error message-->
+  <div class="row">
+    <!-- Error alert -->
+    <div *ngIf="errorMessage" class="col offset-2 row justify-content-end error-text">
+      <i>{{errorMessage}}</i>
+    </div>
+  </div>
+
+  <!-- SOP Form -->
+  <div class="row row-first justify-content-center">
+
+    <!-- Card -->
+    <div class="col card card-cascade hoverable">
+
+      <!-- Card content -->
+      <div class="card-body card-body-cascade">
+
+        <p class="h4 text-center mb-4">Job code : {{job.job_code}}</p>
+
+          <div class="row row-first">
+            <div class="col-3 text-center">Selected</div>
+            <div class="offset-1 col-6">Activity name</div>
+            <div class="col-2 text-center">Sub activities</div>
+          </div>
+
+          <div (click)="isActivityPicked()" *ngFor="let activity of activities">
+            <hr>
+            <div class="row">
+              <div class="col-3 text-center">
+                <input type="checkbox" class="form-check-input" (click)="pickActivity(activity)" id="{{activity.activity_id}}">
+              </div>
+              <div class="offset-1 col-6">{{activity.activity_title}}</div>
+              <div class="col text-center">
+                <a>
+                  <i class="fa fa-eye text-blue" data-toggle="collapse" [attr.data-target]="'#s_' + activity.activity_id" aria-expanded="false" aria-controls="{{activity.activity_title}}"></i>
+                </a>
+              </div>
+            </div>
+            <!-- Collapsible element -->
+            <div class="collapse" id="s_{{activity.activity_id}}">
+              <div *ngFor="let sub_activity of sub_activities[activities.indexOf(activity)]" class="row">
+                <div class="offset-1 col-2 text-center">
+                  <input type="checkbox" class="form-check-input" id="{{sub_activity.activity_id}}">
+                </div>
+                <div class="offset-1 col-6">{{sub_activity.activity_title}}</div>
+              </div>
+            </div>
+            <!-- / Collapsible element -->
+          </div>
+
+        <div class="row md-form">
+          <div class="col-12 row justify-content-end">
+            <div class="">
+              <button [disabled]="!isJobChecked" class="btn btn-success waves-effect" data-toggle="modal" data-target="#confirmationModal" type="button">Finish</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <!-- Card content -->
+
+    </div>
+    <!-- Card -->
+
+  </div>
+  <!-- SOP Form -->
+
+</div>
+
+<!-- Modal confirmation -->
+<app-confirmation title="Confirmation SOP creation"
+                  text="Are you sure do you want to link these activities to the job : {{job.job_code}} ?"
+                  (success)="onSubmit($event)"
+                  [isLinkActive]=false
+                  link="job-list">
+</app-confirmation>
+
+<!-- Modal warning -->
+<app-warning title="Exit"
+             text="Are you sure you want to go back to the JOB list ?"
+             [isLink]=true
+             link="job-list">
+</app-warning>

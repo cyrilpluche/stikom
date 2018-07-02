@@ -89,8 +89,6 @@ export class ActivityCreationComponent implements OnInit {
             }
           }
         }
-        console.log(this.subActivityArray);
-
       },
       error => {
         this.errorMessage = error.error.message;
