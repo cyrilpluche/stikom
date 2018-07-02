@@ -71,6 +71,7 @@ export class MemberService {
   }
 
   storeUserDataFull(user:any) {
+    localStorage.setItem('Id', user['member_id']);
     localStorage.setItem('FirstName', user['member_first_name']);
     localStorage.setItem('Name', user['member_name']);
     localStorage.setItem('Mail', user['member_mail']);
@@ -136,6 +137,19 @@ export class MemberService {
     console.log(idUser);
     this.generateHeaders();
     return this.http.put(this.domain + '/api/member/validate_member',body,this.httpOptions);
+  }
+
+  passwordUpdate(actual:string,newP:string,confP:string)
+  {
+    let body = {
+      member_mail: localStorage.getItem("Mail"),
+      old_password:actual,
+      new_password1:newP,
+      new_password2:confP
+    };
+    console.log(localStorage.getItem("Mail"));
+    this.generateHeaders();
+    return this.http.put(this.domain + '/api/member/update_password',body,this.httpOptions);
   }
 
   /*

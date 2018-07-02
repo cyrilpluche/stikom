@@ -12,6 +12,12 @@ export class AccountComponent implements OnInit {
   firstName:string;
   name:string;
 
+  actualPassword:string;
+  newPassword:string;
+  newPasswordCheck:string;
+  errorMessage:string="";
+  changeFinished:boolean=false;
+
   constructor(private _memberService: MemberService,) { }
 
   ngOnInit() {
@@ -20,6 +26,40 @@ export class AccountComponent implements OnInit {
     this.firstName=userData['first_name'];
     this.name=userData['name'];
 
+
+  }
+
+  onSubmit() {
+    this.errorMessage = "";
+    if (this.actualPassword == null || this.actualPassword == "")
+    {
+      this.errorMessage = "Actual password is required.";
+    }else if (this.newPassword == null || this.newPassword == "") {
+      this.errorMessage = "New password is required.";
+    }else if(this.newPasswordCheck == null || this.newPasswordCheck == "")
+    {
+      this.errorMessage = "New password confirmation is required.";
+    }else if(this.newPassword !== this.newPasswordCheck)
+    {
+      this.errorMessage = "New password and confirmation not the same.";
+    }else{
+      this.sendPassword(this.actualPassword,this.newPassword,this.newPasswordCheck);
+    }
+  }
+
+  sendPassword(actual:string,newP:string,confP:string)
+  {
+    this._memberService.passwordUpdate(actual,newP,confP)
+      .subscribe( (res) => {
+          this.errorMessage = "";
+          this._memberService.logout();
+          this.changeFinished=true;
+        },
+        error => {
+          console.log("ERREUR : ",error);
+
+          this.errorMessage = error.error.message;
+        });
 
   }
 

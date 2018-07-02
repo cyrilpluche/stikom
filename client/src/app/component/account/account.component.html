@@ -1,4 +1,4 @@
-<div class="container">
+<div *ngIf="!changeFinished" class="container">
   <div class="row row-first">
     <div class="col-12 card card-cascade hoverable">
       <!--Table-->
@@ -23,23 +23,34 @@
       <p class="float-lg-left float-sm-right">{{mail}}</p>
     </div>
   </div>
+  <form (ngSubmit)="onSubmit()">
   <div class="row" style="margin-top: 20px;">
-    <div class="col-sm-12 col-lg-3" style="padding-top: 30px;">
+    <div class="col-sm-12 col-lg-12" style="padding-top: 30px;">
       <p class="font-weight-bold">Change password</p>
     </div>
     <div class="col-sm-12 col-lg-3">
       <div class="md-form">
         <i class="fa fa-lock prefix grey-text"></i>
-        <input required [(ngModel)]="password" name=password type="password" id="newPassword" class="form-control">
+        <input required [(ngModel)]="actualPassword" name=actualPassword type="password" id="actualPassword" class="form-control">
+        <label for="newPassword">Actual password</label>
+      </div>
+    </div>
+    <div class="col-sm-12 col-lg-3">
+      <div class="md-form">
+        <i class="fa fa-lock prefix grey-text"></i>
+        <input required [(ngModel)]="newPassword" name=newPassword type="password" id="newPassword" class="form-control">
         <label for="newPassword">New password</label>
       </div>
     </div>
     <div class="col-sm-12 col-lg-3">
       <div class="md-form">
         <i class="fa fa-lock prefix grey-text"></i>
-        <input required [(ngModel)]="password" name=password type="password" id="newPasswordCheck" class="form-control">
+        <input required [(ngModel)]="newPasswordCheck" name=password type="password" id="newPasswordCheck" class="form-control">
         <label for="newPasswordCheck">Confirm new password</label>
       </div>
+    </div>
+    <div *ngIf="errorMessage" class="alert alert-danger" role="alert">
+      {{errorMessage}}
     </div>
     <div class="col-sm-12 col-lg-3">
       <div class="text-center mt-4">
@@ -47,5 +58,12 @@
       </div>
     </div>
   </div>
+  </form>
 
 </div>
+
+<app-summary *ngIf="changeFinished"
+             title="Success"
+             text="Your password has been updated, please login to confirm your statut."
+             buttonTitle="Login" link="authentification">
+</app-summary>

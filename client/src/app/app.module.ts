@@ -38,6 +38,7 @@ import { ActionComponent } from './shared/modals/action/action.component';
 import { JobListComponent } from './component/job-list/job-list.component';
 import { JobComponent } from './component/job-list/job/job.component';
 import { JobCreationComponent } from './component/job-list/job-creation/job-creation.component';
+import { PdfSopComponent} from "./documents/pdf-sop/pdf-sop.component";
 
 
 const routes: Routes = [
@@ -56,6 +57,8 @@ const routes: Routes = [
   {path: 'project-creation', component: ProjectCreationComponent},
   {path: 'admin-users', component: AdminUsersComponent},
   {path: 'job-creation', component: JobCreationComponent},
+  {path: 'admin-organization-management', component: OrganizationManagementComponent},
+  {path: 'pdf-sop', component: PdfSopComponent}
   {path: 'job-list', component: JobListComponent},
   {path: 'admin-organization-management', component: OrganizationManagementComponent}
 ];
@@ -93,7 +96,8 @@ const routes: Routes = [
     ActionComponent,
     JobListComponent,
     JobComponent,
-    JobCreationComponent
+    JobCreationComponent,
+    PdfSopComponent
   ],
   imports: [
     HttpClientModule,

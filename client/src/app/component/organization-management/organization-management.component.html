@@ -70,10 +70,10 @@
             </div>
             <div class="md-form">
               <input [(ngModel)]="addInput" name="addInput" type="text" id="addInput" class="form-control">
-              <label *ngIf="!organisationChoosen" for="addInput">Organization name</label>
-              <label *ngIf="organisationChoosen && !branchChoosen" for="addInput">Branch name</label>
-              <label *ngIf="branchChoosen && !departmentChoosen" for="addInput">Department name</label>
-              <label *ngIf="departmentChoosen && !subDepartmentChoosen" for="addInput">Sub department name</label>
+              <label *ngIf="!organisationChoosen" for="addInput">New Organization name</label>
+              <label *ngIf="organisationChoosen && !branchChoosen" for="addInput">New Branch name</label>
+              <label *ngIf="branchChoosen && !departmentChoosen" for="addInput">New Department name</label>
+              <label *ngIf="departmentChoosen && !subDepartmentChoosen" for="addInput">New Sub department name</label>
             </div>
             <div class="md-form">
               <a class="btn btn-success" (click)="addOrganization()" *ngIf="!organisationChoosen">Add a new organization</a>
