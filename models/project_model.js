@@ -7,14 +7,14 @@ let project = {
             'VALUES (${project_title}, ${project_code}, ${project_work_code}, ${sub_department_id}) \n' +
             'returning project_id;', project)
             .then(function (data) {
-            if (data.length === 0) {
-                return false
-            } else {
-                return data[0]
-            }
-        }).catch(function (err) {
-            throw ERRORTYPE.customError('The server has encountred an internal error: ' + err.toString())
-        })
+                if (data.length === 0) {
+                    return false
+                } else {
+                    return data[0]
+                }
+            }).catch(function (err) {
+                throw ERRORTYPE.customError('The server has encountred an internal error: ' + err.toString())
+            })
     },
 
     selectById (project_id) {
