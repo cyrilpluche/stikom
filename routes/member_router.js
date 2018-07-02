@@ -196,7 +196,7 @@ router.put('/validate_member',
 });
 
 router.put('/update_password',
-    policy.checkParameters(['member_id, old_password, new_password1, new_password2']),
+    policy.checkParameters(['member_id', 'old_password', 'new_password1', 'new_password2']),
     checkPwdUpdate,
     function (req, res, next) {
         bcrypt.hash(req.body.new_password1, 10).then(function (hash) {
