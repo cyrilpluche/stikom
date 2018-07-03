@@ -29,11 +29,11 @@ export class SopListComponent implements OnInit {
   getAllSop(){
     this._sopService.selectAll()
       .subscribe( (res) => {
-        console.log(res['data']);
+        this.errorMessage = "";
         this.sopList=res['data'];
         },
         error => {
-          console.log("ERREUR : ",error);
+          this.errorMessage = error.error.message;
         });
   }
 

@@ -13,6 +13,9 @@ router.post('/create',
     function (req, res, next) {
         let sop = {
             sop_title: req.body.sop_title,
+            sop_creation: new Date(),
+            sop_revision: new Date(),
+            sop_published: new Date(),
             sop_approvment: req.body.sop_approvment,
             sop_rules: req.body.sop_rules,
             sop_warning: req.body.sop_warning,
@@ -21,12 +24,24 @@ router.post('/create',
             sop_type_reports: req.body.sop_type_reports,
             sop_objectives: req.body.sop_objectives,
             sop_valid: 1
-        }
+        };
         modelSop.insert(sop).then(function (data) {
             res.json({data: data})
         }).catch(function (e) {
             next(e)
         })
+    });
+
+router.post('/bind_sop_unit',
+    policy.checkParameters(['sop_id', 'unit_id']),
+    function (req, res, next) {
+        modelSop.insertSopNeedsUnit(req.body.sop_id, req.body.unit_id).then(function (data) {
+            if (!data) {
+                throw ERRORTYPE.INTERNAL_ERROR
+            } else {
+                res.json({data: data});
+            }
+        }).catch(next)
     });
 
 router.get('/all',

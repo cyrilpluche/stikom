@@ -56,6 +56,21 @@ let job = {
             }).catch(function (err) {
                 throw ERRORTYPE.customError('The server has encountred an internal error: ' + err.toString())
             })
+    },
+
+    update (job) {
+        return db.any('UPDATE public.job\n' +
+            'SET job_id=${job_id}, job_name=${job_name}, job_code=${job_code}\n' +
+            'WHERE sop_id = ${sop_id}',job).then(function (data) {
+            if (data.length === 0) {
+                return false
+            } else {
+                return data[0]
+            }
+        }).catch(function (err) {
+            throw ERRORTYPE.customError('The server has encountred an internal error\n ' + err.toString());
+
+        });
     }
 };
 

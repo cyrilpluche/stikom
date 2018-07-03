@@ -23,9 +23,17 @@ let activity = {
     selectAllBySopId (sop_id) {
         return db.any('SELECT * FROM public.activity WHERE sop_id = $1', sop_id)
             .then(function (data) {
-                return data
+                if (data.length === 0) {
+                    throw ERRORTYPE.NOT_FOUND
+                } else {
+                    return data
+                }
             }).catch(function (err) {
-                throw ERRORTYPE.customError('The server has encountred an internal error\n ' + err.toString())
+                if (err.type) { // means that it comes from a then
+                    throw err;
+                } else {
+                    throw ERRORTYPE.customError('The server has encountred an internal error\n ' + err.toString());
+                }
             })
     },
 

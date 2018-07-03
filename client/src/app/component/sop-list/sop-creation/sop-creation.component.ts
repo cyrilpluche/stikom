@@ -3,6 +3,7 @@ import { SopService } from "../../../objects/sop/sop.service";
 import {current} from "codelyzer/util/syntaxKind";
 import {MemberService} from "../../../objects/member/member.service";
 import {Router} from "@angular/router";
+import {UnitService} from "../../../objects/unit/unit.service";
 
 @Component({
   selector: 'app-sop-creation',
@@ -43,7 +44,8 @@ export class SopCreationComponent implements OnInit {
 
   constructor(private _sopService: SopService,
               private _memberService: MemberService,
-              private router: Router) { }
+              private router: Router,
+              private _unitService: UnitService) { }
 
   ngOnInit() {
     this.captionSelected = this.captions[0];
@@ -194,7 +196,6 @@ export class SopCreationComponent implements OnInit {
     this.summary += "Are you sure all informations provided for this SOP are given ? \n\n"
     this.summary += "Title : " + this.newTitle + '\n';
     this.summary += "Objective : "+ this.newObjective + '\n';
-    console.log("Form ok.");
   }
 
   //Final function that add the SOP into the database
@@ -241,7 +242,6 @@ export class SopCreationComponent implements OnInit {
         this.newObjective
       ).subscribe((res) => {
         this.errorMessage = "";
-        console.log("Form added");
 
         //We get the id of the new SOP
         this.sopId = res['data'];
@@ -249,11 +249,35 @@ export class SopCreationComponent implements OnInit {
 
         //We store this id in the local storage to re-use it for the activities creation
         localStorage.setItem('Sop_id', this.sopId);
-        this.router.navigate(['/','activity-creation']);
 
+        //We insert the unit in the Database too
+        this.insertUnits();
       },
         error => {
           this.errorMessage = error.error.message;
+        });
+    }
+  }
+
+  insertUnits(){
+    let success: boolean = true;
+    for (let u of this.units) {
+      this._unitService.createUnit(u).subscribe((res) => {
+          this.errorMessage = "";
+          this._unitService.bindUnitSop(res['data']['unit_id'], this.sopId).subscribe((res) => {
+              this.errorMessage = "";
+              if(success && this.units.indexOf(u) == (this.units.length-1) ){
+                this.router.navigate(['/','activity-creation']);
+              }
+            },
+            error => {
+              this.errorMessage = error.error.message;
+              success = false;
+            });
+        },
+        error => {
+          this.errorMessage = error.error.message;
+          success = false;
         });
     }
   }
