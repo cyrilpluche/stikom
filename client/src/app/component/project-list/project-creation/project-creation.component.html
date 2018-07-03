@@ -27,9 +27,9 @@
 
               <div class="offset-2 col-8">
                 <p class="text-center mb-4 text-description"> Please select a SOP model to begin your project </p>
-                <select [(ngModel)]="sop_id_selected" name="sop_id_selected" class="form-control" multiple>
+                <select [(ngModel)]="sop_id_selected" name="sop_id_selected" (click)="loadJobsFromSop(); loadUnitsFromSop();" class="form-control" multiple>
                   <option value="" disabled selected>Choose your model</option>
-                  <option *ngFor="let sop of sops" (click)="loadJobsFromSop(); loadUnitsFromSop();" value="{{sop.sop_id}}">{{sop.sop_title}}</option>
+                  <option *ngFor="let sop of sops" value="{{sop.sop_id}}">{{sop.sop_title}}</option>
                 </select>
               </div>
             </div>
@@ -111,7 +111,7 @@
                 <button class="btn btn-danger waves-effect" type="button" (click)="changeStep(false)">Back</button>
               </div>
               <div>
-                <button [disabled]="jobs_selected.length == 0" class="btn btn-primary waves-effect" type="button" (click)="changeStep(true)">Next</button>
+                <button [disabled]="jobs_selected.length == 0" class="btn btn-primary waves-effect" type="button" (click)="changeStep(true); loadActivityFromJob();">Next</button>
               </div>
             </div>
           </div>
@@ -131,7 +131,7 @@
             <div class="row md-form">
               <div class="offset-2 col-8">
                 <select [(ngModel)]="member_selected" name="member_selected" class="form-control" multiple>
-                  <option value="" disabled selected>Add a member to the unit selected</option>
+                  <option value="" disabled selected>Add a member to the selected unit</option>
                   <option *ngFor="let member of members" (click)="pickMember(member); ">{{member.member_name}} {{member.member_first_name}}</option>
                 </select>
               </div>
@@ -147,6 +147,36 @@
           </div>
           <!-- Unit affectation -->
 
+          <!-- Activity affectation -->
+          <div [hidden]="stepSelected != 4">
+            <div class="row md-form">
+              <div class="offset-2 col-8">
+                <p class="text-center mb-4 text-description"> Choose an activity and pick unit you want to bind with</p>
+                <select name="activity_id_selected" class="form-control" multiple>
+                  <option value="" disabled selected>Choose an activity</option>
+                  <option *ngFor="let activity of activities_binded" (click)="pickActivity(activity); " value="{{activity.activity_id}}">{{activity.activity_title}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="row md-form">
+              <div class="offset-2 col-8">
+                <select [(ngModel)]="member_selected" name="member_selected" class="form-control" multiple>
+                  <option value="" disabled selected>Add a member to the selected unit</option>
+                  <option *ngFor="let unit of units" (click)="bindUnitActivity(unit); ">{{unit.unit_name}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="row justify-content-center">
+              <div>
+                <button class="btn btn-danger waves-effect" type="button" (click)="changeStep(false)">Back</button>
+              </div>
+              <div>
+                <button class="btn btn-primary waves-effect" type="button" (click)="changeStep(true)">Next</button>
+              </div>
+            </div>
+          </div>
+          <!-- Activity affectation -->
+
         </form>
         <!-- Form -->
 
@@ -161,9 +191,10 @@
 
 
   <!--Title of the unit-->
-  <div class="row row-first" [hidden]="stepSelected != 3" >
+  <div class="row row-first" [hidden]="stepSelected != 3 && stepSelected != 4" >
     <h4>
-      <span class="badge badge-pill badge-primary" *ngIf="unit_selected != null">{{unit_selected.unit_name}}</span>
+      <span class="badge badge-pill badge-primary" *ngIf="unit_selected != null && stepSelected == 3">{{unit_selected.unit_name}}</span>
+      <span class="badge badge-pill badge-primary" *ngIf="activity_selected != null && stepSelected == 4">{{activity_selected.activity_title}}</span>
     </h4>
     <!-- Error alert -->
     <div *ngIf="errorMessage" class="col offset-2 row justify-content-end error-text">
@@ -172,7 +203,7 @@
   </div>
 
   <!-- Member Unit Binding Display -->
-  <div class="row row-last justify-content-center" [hidden]="stepSelected != 3">
+  <div class="row row-last justify-content-center" [hidden]="stepSelected != 3 && stepSelected != 4">
 
     <!-- Card -->
     <div class="col card card-cascade hoverable">
@@ -184,14 +215,21 @@
 
           <!--Table head-->
           <thead class="">
-          <tr class="text-white">
+          <tr class="text-white" *ngIf="unit_selected != null && stepSelected == 3">
             <th style="width:40%;"  (click)="sortTable(0)"><a>Last Name</a></th>
             <th style="width:40%;" (click)="sortTable(1)"><a>First Name</a></th>
             <th style="width:10%;">Remove</th>
           </tr>
+
+          <tr class="text-white" *ngIf="unit_binded != null && stepSelected == 4">
+            <th style="width:70%;"  (click)="sortTable(0)"><a>Last Name</a></th>
+            <th style="width:30%;">Remove</th>
+          </tr>
           </thead>
 
-          <tbody *ngIf="unit_selected != null">
+
+
+          <tbody *ngIf="unit_selected != null && stepSelected == 3">
 
           <tr *ngFor="let member of members_binded[units.indexOf(unit_selected)]">
             <td>{{member.member_name}}</td>
@@ -200,6 +238,16 @@
               <a (click)="removeMember(member)"><i class="fa fa-close text-red"></i></a>
             </td>
           </tr>
+
+          <tbody *ngIf="unit_binded != null && stepSelected == 4">
+
+          <tr *ngFor="let unit of unit_binded[activities_binded.indexOf(activity_selected)]">
+            <td>{{unit.unit_name}}</td>
+            <td>
+              <a (click)="removeUnit(unit)"><i class="fa fa-close text-red"></i></a>
+            </td>
+          </tr>
+
           </tbody>
         </table>
       </div>

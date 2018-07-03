@@ -6,6 +6,9 @@ import {JobService} from "../../../objects/job/job.service";
 import {Unit} from "../../../objects/unit/unit";
 import {UnitService} from "../../../objects/unit/unit.service";
 import {Member} from "../../../objects/member/member";
+import {MemberService} from "../../../objects/member/member.service";
+import {Activity} from "../../../objects/activity/activity";
+import {ActivityService} from "../../../objects/activity/activity.service";
 
 @Component({
   selector: 'app-project-creation',
@@ -24,19 +27,26 @@ export class ProjectCreationComponent implements OnInit {
 
   sop_id_selected: string;
   unit_selected: Unit;
+  activity_selected: Activity;
   member_selected: Member;
   members_binded: Member[][];
+  unit_binded: Unit[][];
+  activities_binded: Activity[];
   jobs_selected: Job[] = [];
   new_project_title: string = "";
 
   constructor(private _sopService: SopService,
               private _jobService: JobService,
-              private _unitService: UnitService) { }
+              private _unitService: UnitService,
+              private _memberService: MemberService,
+              private _activityService: ActivityService) { }
 
   ngOnInit() {
     this.stepSelected = 0 ;
+    this.activities_binded = [];
     console.log(this.stepSelected)
     this.loadSops();
+    this.loadMembers();
   }
 
   onSubmit() {
@@ -60,6 +70,9 @@ export class ProjectCreationComponent implements OnInit {
     this._jobService.selectAllFromSop(this.sop_id_selected).subscribe((res) => {
         this.errorMessage = "";
         this.jobs = res['data'] as Job[];
+        for (let i of this.jobs){
+          this.activities_binded = [];
+        }
       },
       error => {
         this.errorMessage = error.error.message;
@@ -67,13 +80,49 @@ export class ProjectCreationComponent implements OnInit {
   }
 
   loadUnitsFromSop() {
+    this.members_binded = [];
     this._unitService.selectAllFromSop(this.sop_id_selected).subscribe((res) => {
         this.errorMessage = "";
         this.units = res['data'] as Unit[];
+        for (let i of this.units){
+          this.members_binded.push([]);
+        }
       },
       error => {
         this.errorMessage = error.error.message;
       });
+  }
+
+  loadMembers(){
+    this._memberService.selectAll().subscribe((res) => {
+        this.errorMessage = "";
+        this.members = res['data'] as Member[];
+      },
+      error => {
+        this.errorMessage = error.error.message;
+      });
+  }
+
+  loadActivityFromJob() {
+    this.unit_binded = [];
+    for(let j of this.jobs_selected){
+      this._activityService.selectAllFromJob(j.job_id).subscribe((res) => {
+          this.errorMessage = "";
+
+          //We add all activities of a job selected to an array
+          for (let a of res['data']){
+            let a_cast = a as Activity;
+            this.activities_binded.push(a_cast);
+          }
+
+          for (let a of this.activities_binded){
+            this.unit_binded.push([]);
+          }
+        },
+        error => {
+          this.errorMessage = error.error.message;
+        });
+    }
   }
 
   pickJob(job) {
@@ -83,6 +132,7 @@ export class ProjectCreationComponent implements OnInit {
     }else{
       if(this.jobs_selected.includes(job)){
         let indice = this.jobs_selected.indexOf(job);
+        this.activities_binded.pop();
         this.jobs_selected.splice(indice, 1);
       }
     }
@@ -94,15 +144,36 @@ export class ProjectCreationComponent implements OnInit {
     console.log(this.unit_selected);
   }
 
+  pickActivity(activity) {
+    console.log("Activity : "+ activity)
+    this.activity_selected = activity;
+  }
+
+  //add a member to the right index of the member_binded array
   pickMember(member) {
+    console.log(this.members_binded);
     if (!this.members_binded[this.units.indexOf(this.unit_selected)].includes(member)){
       this.members_binded[this.units.indexOf(this.unit_selected)].push(member);
+    }
+  }
+
+  bindUnitActivity(unit) {
+    console.log("Let's add !")
+    if (!this.unit_binded[this.activities_binded.indexOf(this.activity_selected)].includes(unit)){
+      console.log("Add okey !")
+      this.unit_binded[this.activities_binded.indexOf(this.activity_selected)].push(unit);
+      console.log(this.unit_binded);
     }
   }
 
   removeMember(member){
     let indice = this.members_binded[this.units.indexOf(this.unit_selected)].indexOf(member);
     this.members_binded[this.units.indexOf(this.unit_selected)].splice(indice, 1);
+  }
+
+  removeUnit(unit){
+    let indice = this.unit_binded[this.activities_binded.indexOf(this.activity_selected)].indexOf(unit);
+    this.unit_binded[this.activities_binded.indexOf(this.activity_selected)].splice(indice, 1);
   }
 
   changeStep(next) {
