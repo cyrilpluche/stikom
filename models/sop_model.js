@@ -5,7 +5,7 @@ let sop = {
     insert: function (sop) {
         return db.any('INSERT INTO public.sop(\n' +
             'sop_title, sop_creation, sop_revision, sop_published, sop_approvment,\n' +
-            'sop_rules, sop_warning, sop_staff_qualification, sop_tools, sop_type_reports, sop_objectives)\n' +
+            'sop_rules, sop_warning, sop_staff_qualification, sop_tools, sop_type_reports, sop_objectives, sop_valid)\n' +
             'VALUES (${sop_title}, ${sop_creation}, ${sop_revision}, ${sop_published}, ${sop_approvment},\n' +
             '${sop_rules}, ${sop_warning}, ${sop_staff_qualification}, ${sop_tools}, ${sop_type_reports},\n' +
             '${sop_objectives}, ${sop_valid}) returning sop_id;', sop)
