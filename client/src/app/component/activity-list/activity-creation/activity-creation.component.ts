@@ -322,27 +322,6 @@ export class ActivityCreationComponent implements OnInit {
     return this.errorMessage == "";
   }
 
-  /*deleteUnsavedActivities(isDeleteNeeded) {
-    console.log("delete needed ? "+isDeleteNeeded);
-    if (isDeleteNeeded && this.addedActivities.length>0) {
-      for (let a of this.addedActivities) {
-        this._activityService.delete(a).subscribe((res) => {
-            for (let i of [0,this.addedActivitiesIndice]) {
-              localStorage.removeItem('Activity_'+i);
-            }
-            this.errorMessage = "";
-            this.router.navigate(['/sop-list']);
-          },
-          error => {
-            this.errorMessage = error.error.message;
-          });
-      }
-    }
-    else {
-      this.router.navigate(['/sop-list']);
-    }
-  }*/
-
   deleteActivity(activity_id){
     this._activityService.delete(activity_id).subscribe((res) => {
         this.errorMessage = "";

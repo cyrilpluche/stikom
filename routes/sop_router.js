@@ -35,7 +35,7 @@ router.post('/create',
 router.post('/bind_sop_unit',
     policy.checkParameters(['sop_id', 'unit_id']),
     function (req, res, next) {
-        modelSop.insertSopNeedsUnit(req.body.sop_id, req.body.unit_it).then(function (data) {
+        modelSop.insertSopNeedsUnit(req.body.sop_id, req.body.unit_id).then(function (data) {
             if (!data) {
                 throw ERRORTYPE.INTERNAL_ERROR
             } else {

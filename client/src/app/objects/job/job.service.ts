@@ -30,7 +30,7 @@ export class JobService {
     return this.http.get(this.domain + '/api/job/find_one/'+job_id,this.httpOptions);
   }
 
-  selectAllFromSop(sop_id){
+  selectAllFromSop(sop_id:string){
     this.generateHeaders();
     return this.http.get(this.domain + '/api/job/all_from_sop/'+sop_id,this.httpOptions);
   }
