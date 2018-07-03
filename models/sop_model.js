@@ -87,7 +87,7 @@ let sop = {
     },
 
     delete (sop_id) {
-        return db.any('DELETE from public.sop CASCADE WHERE sop_id = $1 CASCADE returning sop_id', sop_id)
+        return db.any('DELETE from public.sop CASCADE WHERE sop_id = $1 returning sop_id', sop_id)
             .then(function (data) {
                 return data.length !== 0
             }).catch(function (err) {
