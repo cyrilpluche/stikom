@@ -11,7 +11,28 @@ declare var jsPDF: any; // Important
 export class PdfSopComponent implements OnInit {
 
 
-  constructor() { }
+  constructor() {
+    var doc = new jsPDF('p', 'pt');
+    var columns = ["ID", "Name", "Country"];
+    var rows = [
+      [1, "Shaw", "Tanzania"],
+      [2, "Nelson", "Kazakhstan"],
+      [3, "Garcia", "Madagascar"]
+    ];
+
+    doc.autoTable(columns, rows, {
+      styles: {fillColor: [100, 255, 255]},
+      columnStyles: {
+        id: {fillColor: 255}
+      },
+      tableWidth:[100,50,20],
+      margin: {top: 60},
+      addPageContent: function(data) {
+        doc.text("Header", 40, 30);
+      }
+    });
+    doc.save('table.pdf');
+  }
 
   ngOnInit() {
     this.download();
@@ -20,24 +41,7 @@ export class PdfSopComponent implements OnInit {
   download()
   {
 
-    var columns = ["ID", "Name", "Country"];
-    var rows = [
-      [1, "Shaw", "Tanzania"],
-      [2, "Nelson", "Kazakhstan"],
-      [3, "Garcia", "Madagascar"]
-    ];
-    var doc = new jsPDF('p', 'pt');
-    doc.autoTable(columns, rows, {
-      styles: {fillColor: [100, 255, 255]},
-      columnStyles: {
-        id: {fillColor: 255}
-      },
-      margin: {top: 60},
-      addPageContent: function(data) {
-        doc.text("Header", 40, 30);
-      }
-    });
-    doc.save('table.pdf');
+
 
 
     /*var doc = new jsPDF({

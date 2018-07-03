@@ -58,7 +58,7 @@ const routes: Routes = [
   {path: 'admin-users', component: AdminUsersComponent},
   {path: 'job-creation', component: JobCreationComponent},
   {path: 'admin-organization-management', component: OrganizationManagementComponent},
-  {path: 'pdf-sop', component: PdfSopComponent}
+  {path: 'pdf-sop', component: PdfSopComponent},
   {path: 'job-list', component: JobListComponent},
   {path: 'admin-organization-management', component: OrganizationManagementComponent}
 ];
