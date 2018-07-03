@@ -15,6 +15,20 @@ let unit = {
         })
     },
 
+    insertExecute (unit_id, activity_id) {
+        return db.any('INSERT INTO public.execute(activity_id, unit_id)\n' +
+            'VALUES (${activity}, ${unit}) returning activity_id, unit_id;',
+            {unit: unit_id, activity: activity_id}).then(function (data) {
+            if (data.length === 0) {
+                return false
+            } else {
+                return data[0]
+            }
+        }).catch(function (err) {
+            throw ERRORTYPE.customError('The server has encountred an internal error\n ' + err.toString())
+        })
+    },
+
     selectAllBySopId (sop_id) {
         return db.any('SELECT U.unit_id, U.unit_name\n' +
             'FROM public.unit U, public.sop_needs_unit SNU\n' +
