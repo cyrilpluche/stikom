@@ -26,7 +26,7 @@ let sop = {
     },
 
     insertSopNeedsUnit (sop_id, unit_id) {
-        return db.any('INSERT INTO public.sop_needs_unit(sop_id, unit_name)\n' +
+        return db.any('INSERT INTO public.sop_needs_unit(sop_id, unit_id)\n' +
             'VALUES (${sop}, ${unit}) returning sop_id, unit_id;',{sop: sop_id, unit: unit_id}).then(function (data) {
             if (data.length === 0) {
                 return false

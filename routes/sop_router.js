@@ -24,7 +24,7 @@ router.post('/create',
             sop_type_reports: req.body.sop_type_reports,
             sop_objectives: req.body.sop_objectives,
             sop_valid: 1
-        }
+        };
         modelSop.insert(sop).then(function (data) {
             res.json({data: data})
         }).catch(function (e) {
