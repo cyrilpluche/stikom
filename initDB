@@ -282,147 +282,146 @@ CREATE TABLE public.member_activity_project(
 )WITHOUT OIDS;
 
 
-
-
 ALTER TABLE public.branch
 	ADD CONSTRAINT branch_organisation0_FK
 	FOREIGN KEY (organisation_id)
-	REFERENCES public.organisation(organisation_id) ON DELETE CASCADE;;
+	REFERENCES public.organisation(organisation_id) ON DELETE CASCADE;
 
 ALTER TABLE public.department
 	ADD CONSTRAINT department_branch0_FK
 	FOREIGN KEY (branch_id)
-	REFERENCES public.branch(branch_id) ON DELETE CASCADE;;
+	REFERENCES public.branch(branch_id) ON DELETE CASCADE;
 
 ALTER TABLE public.sub_department
 	ADD CONSTRAINT sub_department_department0_FK
 	FOREIGN KEY (department_id)
-	REFERENCES public.department(department_id) ON DELETE CASCADE;;
+	REFERENCES public.department(department_id) ON DELETE CASCADE;
 
 ALTER TABLE public.project
 	ADD CONSTRAINT project_sub_department0_FK
 	FOREIGN KEY (sub_department_id)
-	REFERENCES public.sub_department(sub_department_id) ON DELETE CASCADE;;
+	REFERENCES public.sub_department(sub_department_id) ON DELETE CASCADE;
 
 ALTER TABLE public.job
 	ADD CONSTRAINT job_sop0_FK
 	FOREIGN KEY (sop_id)
-	REFERENCES public.sop(sop_id) ON DELETE CASCADE;;
+	REFERENCES public.sop(sop_id) ON DELETE CASCADE;
 
 ALTER TABLE public.member
 	ADD CONSTRAINT member_sub_department0_FK
 	FOREIGN KEY (sub_department_id)
-	REFERENCES public.sub_department(sub_department_id) ON DELETE CASCADE;;
+	REFERENCES public.sub_department(sub_department_id) ON DELETE CASCADE;
 
 ALTER TABLE public.member
 	ADD CONSTRAINT member_managment_level1_FK
 	FOREIGN KEY (managment_level_id)
-	REFERENCES public.managment_level(managment_level_id) ON DELETE CASCADE;;
+	REFERENCES public.managment_level(managment_level_id) ON DELETE CASCADE;
 
 ALTER TABLE public.has_role
 	ADD CONSTRAINT has_role_member0_FK
 	FOREIGN KEY (member_id)
-	REFERENCES public.member(member_id) ON DELETE CASCADE;;
+	REFERENCES public.member(member_id) ON DELETE CASCADE;
 
 ALTER TABLE public.has_role
 	ADD CONSTRAINT has_role_role1_FK
 	FOREIGN KEY (role_id)
-	REFERENCES public.role(role_id) ON DELETE CASCADE;;
+	REFERENCES public.role(role_id) ON DELETE CASCADE;
 
 ALTER TABLE public.member_unit_project
 	ADD CONSTRAINT member_unit_project_unit0_FK
 	FOREIGN KEY (unit_id)
-	REFERENCES public.unit(unit_id) ON DELETE CASCADE;;
+	REFERENCES public.unit(unit_id) ON DELETE CASCADE;
 
 ALTER TABLE public.member_unit_project
 	ADD CONSTRAINT member_unit_project_project1_FK
 	FOREIGN KEY (project_id)
-	REFERENCES public.project(project_id) ON DELETE CASCADE;;
+	REFERENCES public.project(project_id) ON DELETE CASCADE;
 
 ALTER TABLE public.member_unit_project
 	ADD CONSTRAINT member_unit_project_member2_FK
 	FOREIGN KEY (member_id)
-	REFERENCES public.member(member_id) ON DELETE CASCADE;;
+	REFERENCES public.member(member_id) ON DELETE CASCADE;
 
 ALTER TABLE public.sop_needs_unit
 	ADD CONSTRAINT sop_needs_unit_sop0_FK
 	FOREIGN KEY (sop_id)
-	REFERENCES public.sop(sop_id) ON DELETE CASCADE;;
+	REFERENCES public.sop(sop_id) ON DELETE CASCADE;
 
 ALTER TABLE public.sop_needs_unit
 	ADD CONSTRAINT sop_needs_unit_unit1_FK
 	FOREIGN KEY (unit_id)
-	REFERENCES public.unit(unit_id) ON DELETE CASCADE;;
+	REFERENCES public.unit(unit_id) ON DELETE CASCADE;
 
 ALTER TABLE public.project_has_job
 	ADD CONSTRAINT project_has_job_job0_FK
 	FOREIGN KEY (job_id)
-	REFERENCES public.job(job_id) ON DELETE CASCADE;;
+	REFERENCES public.job(job_id) ON DELETE CASCADE;
 
 ALTER TABLE public.project_has_job
 	ADD CONSTRAINT project_has_job_project1_FK
 	FOREIGN KEY (project_id)
-	REFERENCES public.project(project_id) ON DELETE CASCADE;;
+	REFERENCES public.project(project_id) ON DELETE CASCADE;
 
 ALTER TABLE public.activity
 	ADD CONSTRAINT activity_sop0_FK
 	FOREIGN KEY (sop_id)
-	REFERENCES public.sop(sop_id) ON DELETE CASCADE;;
+	REFERENCES public.sop(sop_id) ON DELETE CASCADE;
 
 ALTER TABLE public.activity
 	ADD CONSTRAINT activity_managment_level1_FK
 	FOREIGN KEY (managment_level_id)
-	REFERENCES public.managment_level(managment_level_id) ON DELETE CASCADE;;
+	REFERENCES public.managment_level(managment_level_id) ON DELETE CASCADE;
 
 ALTER TABLE public.activity
 	ADD CONSTRAINT activity_activity2_FK
 	FOREIGN KEY (activity_id_is_father)
-	REFERENCES public.activity(activity_id) ON DELETE CASCADE;;
+	REFERENCES public.activity(activity_id) ON DELETE CASCADE;
 
 ALTER TABLE public.transition
 	ADD CONSTRAINT transition_unit0_FK
 	FOREIGN KEY (unit_id)
-	REFERENCES public.unit(unit_id) ON DELETE CASCADE;;
+	REFERENCES public.unit(unit_id) ON DELETE CASCADE;
 
 ALTER TABLE public.transition
 	ADD CONSTRAINT transition_activity1_FK
 	FOREIGN KEY (activity_id)
-	REFERENCES public.activity(activity_id) ON DELETE CASCADE;;
+	REFERENCES public.activity(activity_id) ON DELETE CASCADE;
 
 ALTER TABLE public.activity_is_job
 	ADD CONSTRAINT activity_is_job_job0_FK
 	FOREIGN KEY (job_id)
-	REFERENCES public.job(job_id) ON DELETE CASCADE;;
+	REFERENCES public.job(job_id) ON DELETE CASCADE;
 
 ALTER TABLE public.activity_is_job
 	ADD CONSTRAINT activity_is_job_activity1_FK
 	FOREIGN KEY (activity_id)
-	REFERENCES public.activity(activity_id) ON DELETE CASCADE;;
+	REFERENCES public.activity(activity_id) ON DELETE CASCADE;
 
 ALTER TABLE public.execute
 	ADD CONSTRAINT execute_activity0_FK
 	FOREIGN KEY (activity_id)
-	REFERENCES public.activity(activity_id) ON DELETE CASCADE;;
+	REFERENCES public.activity(activity_id) ON DELETE CASCADE;
 
 ALTER TABLE public.execute
 	ADD CONSTRAINT execute_unit1_FK
 	FOREIGN KEY (unit_id)
-	REFERENCES public.unit(unit_id) ON DELETE CASCADE;;
+	REFERENCES public.unit(unit_id) ON DELETE CASCADE;
 
 ALTER TABLE public.member_activity_project
 	ADD CONSTRAINT member_activity_project_project0_FK
 	FOREIGN KEY (project_id)
-	REFERENCES public.project(project_id) ON DELETE CASCADE;;
+	REFERENCES public.project(project_id) ON DELETE CASCADE;
 
 ALTER TABLE public.member_activity_project
 	ADD CONSTRAINT member_activity_project_member1_FK
 	FOREIGN KEY (member_id)
-	REFERENCES public.member(member_id) ON DELETE CASCADE;;
+	REFERENCES public.member(member_id) ON DELETE CASCADE;
 
 ALTER TABLE public.member_activity_project
 	ADD CONSTRAINT member_activity_project_activity2_FK
 	FOREIGN KEY (activity_id)
-	REFERENCES public.activity(activity_id) ON DELETE CASCADE;;
+	REFERENCES public.activity(activity_id) ON DELETE CASCADE;
+
 
 
 

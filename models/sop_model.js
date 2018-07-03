@@ -6,9 +6,9 @@ let sop = {
         return db.any('INSERT INTO public.sop(\n' +
             'sop_title, sop_creation, sop_revision, sop_published, sop_approvment,\n' +
             'sop_rules, sop_warning, sop_staff_qualification, sop_tools, sop_type_reports, sop_objectives)\n' +
-            'VALUES (${sop_title}, DATE(NOW()), DATE(NOW()), DATE(NOW()), ${sop_approvment}, ${sop_rules}, \n' +
-            '${sop_warning}, ${sop_staff_qualification}, ${sop_tools}, ${sop_type_reports}, ${sop_objectives},\n' +
-            ' ${sop_valid}) returning sop_id;', sop)
+            'VALUES (${sop_title}, ${sop_creation}, ${sop_revision}, ${sop_published}, ${sop_approvment},\n' +
+            '${sop_rules}, ${sop_warning}, ${sop_staff_qualification}, ${sop_tools}, ${sop_type_reports},\n' +
+            '${sop_objectives}, ${sop_valid}) returning sop_id;', sop)
             .then(function (data) {
                 if (data.length === 0) {
                     throw ERRORTYPE.INTERNAL_ERROR
@@ -23,6 +23,19 @@ let sop = {
                     throw ERRORTYPE.customError('The server has encountred an internal error\n ' + err.toString());
                 }
             })
+    },
+
+    insertSopNeedsUnit (sop_id, unit_id) {
+        return db.any('INSERT INTO public.sop_needs_unit(sop_id, unit_name)\n' +
+            'VALUES (${sop}, ${unit}) returning sop_id, unit_id;',{sop: sop_id, unit: unit_id}).then(function (data) {
+            if (data.length === 0) {
+                return false
+            } else {
+                return data[0]
+            }
+        }).catch(function (err) {
+            throw ERRORTYPE.customError('The server has encountred an internal error\n ' + err.toString())
+        })
     },
     selectAll: function () {
         return db.any('SELECT * FROM public.sop').then(function (data) {

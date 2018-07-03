@@ -47,4 +47,23 @@ router.get('/find_one/:job', function (req, res, next) {
     }).catch(next)
 });
 
+router.put('/update',
+    policy.checkParameters(['job_id', 'job_name', 'job_code', 'sop_id']),
+    function (req, res, next) {
+        let job = {
+            job_id: req.body.job_id,
+            job_name: req.body.job_name,
+            job_code: req.body.job_code,
+            sop_id: req.body.sop_id
+        };
+        modelJob.update(job).then(function (data) {
+            if (!data) {
+                throw ERRORTYPE.INTERNAL_ERROR
+            } else {
+                res.json ({data: data})
+            }
+        }).catch(next)
+    }
+);
+
 module.exports = router;
