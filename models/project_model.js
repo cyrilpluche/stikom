@@ -32,6 +32,38 @@ let project = {
         })
     },
 
+    insertMemberUnitProject (unit_id, project_id, member_id) {
+        return db.any('INSERT INTO public.member_unit_project(unit_id, project_id, member_id)\n' +
+            'VALUES (${unit}, ${project}, ${member}) returning unit_id, project_id, member_id;',
+            {unit: unit_id, project: project_id, member: member_id}) .then(function (data) {
+            if (data.length === 0) {
+                return false
+            } else {
+                return data[0]
+            }
+        }).catch(function (err) {
+            throw ERRORTYPE.customError('The server has encountred an internal error: ' + err.toString())
+        })
+    },
+
+    insertMemberActivityProject (data) {
+        return db.any('INSERT INTO public.member_activity_project(\n' +
+            'project_id, member_id, activity_id, target_date, date_begin, evaluation, finished_date, sign, note,\n' +
+            'target_quantity, finished_quantity, finished_duration)\n' +
+            'VALUES (${project_id}, ${member_id}, ${activity_id}, ${target_date}, ${date_begin}, ${evaluation}, \n' +
+            '${finished_date}, ${sign}, ${note}, ${target_quantity},${finished_quantity}, ${finished_duration})\n' +
+            'returning project_id, member_id, activity_id;', data)
+            .then(function (data) {
+                if (data.length === 0) {
+                    return false
+                } else {
+                    return data[0]
+                }
+            }).catch(function (err) {
+                throw ERRORTYPE.customError('The server has encountred an internal error: ' + err.toString())
+            })
+    },
+
     selectAll () {
       return db.any('SELECT * FROM public.project').then(function (data) {
           return data
@@ -41,7 +73,11 @@ let project = {
     },
 
     selectAllBySopId (sop_id) {
-        return db.any('SELECT ', sop_id).then(function (data) {
+        return db.any('SELECT P.project_id, P.project_title, P.project_code, P.project_work_code, P.project_start, \n' +
+            'P.project_end, P.sub_department_id\n' +
+            'FROM public.project P, public.project_has_job PHJ, public.job J\n' +
+            'WHERE P.project_id = PHJ.job_id AND PHJ.job_id = J.job_id AND J.sop_id = $1',
+            sop_id).then(function (data) {
             if (data.length === 0) {
                 throw ERRORTYPE.NOT_FOUND
             } else {
