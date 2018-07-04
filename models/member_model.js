@@ -157,7 +157,7 @@ const member = {
         })
     },
 
-    findOne: function (member_id) {
+    selectById: function (member_id) {
         return db.any('SELECT * FROM public.member WHERE member_id = $1', [member_id])
             .then(function (data) {
                 if (data.length === 0) {

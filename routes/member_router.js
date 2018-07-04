@@ -34,6 +34,13 @@ router.get('/waiting_member',
         }).catch(next)
     }
 );
+
+router.get('/find_one/:member', function (req, res, next) {
+    modelMember.selectById(req.params.member)
+        .then(function (data) {
+            res.json({data: data})
+        }).catch(next)
+});
 /*
 =========================================== ROUTER POST =============================================
  */
