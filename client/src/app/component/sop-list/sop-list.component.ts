@@ -38,6 +38,7 @@ export class SopListComponent implements OnInit {
   }
 
   deleteSop(sop_id) {
+    console.log('hey');
     this._sopService.delete(sop_id).subscribe((res) => {
         this.errorMessage = "";
         this.getAllSop();
