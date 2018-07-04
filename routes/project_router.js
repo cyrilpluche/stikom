@@ -3,6 +3,12 @@ const router = express.Router();
 const policy = require('../policy/policy_middleware');
 const modelProject = require('../models/project_model');
 
+router.get('/all', function (req, res, next) {
+    modelProject.selectAll().then(function (data) {
+        res.json({data: data})
+    }).catch(next)
+});
+
 router.post('/create',
     policy.checkParameters(['project_title', 'project_code', 'project_work_code','project_start', 'project_end',
         'sub_department_id']),
@@ -34,7 +40,7 @@ router.post('/create_activity_member',
         member_id: req.body.member_id,
         activity_id: req.body.activity_id,
         target_date: req.body.target_date,
-        date_begin: req.date.date_begin,
+        date_begin: req.body.date_begin,
         evaluation: req.body.evaluation ,
         finished_date: req.body.finished_date,
         sign: req.body.sign,

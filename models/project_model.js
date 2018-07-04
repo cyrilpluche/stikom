@@ -32,6 +32,30 @@ let project = {
         })
     },
 
+    selectAll () {
+      return db.any('SELECT * FROM public.project').then(function (data) {
+          return data
+      }).catch(function (err) {
+          throw ERRORTYPE.customError('The server has encountred an internal error: ' + err.toString())
+      })
+    },
+
+    selectAllBySopId (sop_id) {
+        return db.any('SELECT ', sop_id).then(function (data) {
+            if (data.length === 0) {
+                throw ERRORTYPE.NOT_FOUND
+            } else {
+                return data[0]
+            }
+        }).catch(function (err) {
+            if (err.type) { // means that it comes from a then
+                throw err;
+            } else {
+                throw ERRORTYPE.customError('The server has encountred an internal error\n ' + err.toString());
+            }
+        })
+    },
+
     selectById (project_id) {
         return db.any('SELECT * FROM public.project WHERE project_id = $1', project_id)
             .then(function (data) {
