@@ -15,6 +15,11 @@ export class MemberService {
 
   }
 
+  select(member_id){
+    this.generateHeaders();
+    return this.http.get(this.domain + '/api/member/find_one/'+member_id,this.httpOptions);
+  }
+
   auth(mail:string, password:string){
     let body = {
       mail: mail,
@@ -89,6 +94,7 @@ export class MemberService {
       };
     }else{
       return {
+        id: localStorage.getItem("Id"),
         mail: localStorage.getItem("Mail"),
         first_name:localStorage.getItem("FirstName"),
         name:localStorage.getItem("Name")

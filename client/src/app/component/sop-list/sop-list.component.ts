@@ -13,7 +13,7 @@ export class SopListComponent implements OnInit {
   errorMessage: string = "";
   sopList: [Sop];
   sopSelected: Sop = new Sop();
-  buttonsTitles: string [] = ['Modify SOP informations', 'Create or modify activites', 'Create or modify jobs'];
+  buttonsTitles: string [] = ['Set up SOP informations', 'Set up activites', 'Set up jobs'];
   buttonsLinks: string [] = ['', 'activity-creation', 'job-list'];
 
   constructor(private _sopService: SopService) { }

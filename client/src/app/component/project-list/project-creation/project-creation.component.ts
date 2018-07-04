@@ -9,6 +9,8 @@ import {Member} from "../../../objects/member/member";
 import {MemberService} from "../../../objects/member/member.service";
 import {Activity} from "../../../objects/activity/activity";
 import {ActivityService} from "../../../objects/activity/activity.service";
+import {ProjectService} from "../../../objects/project/project.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-project-creation',
@@ -27,30 +29,89 @@ export class ProjectCreationComponent implements OnInit {
 
   sop_id_selected: string;
   unit_selected: Unit;
-  activity_selected: Activity;
   member_selected: Member;
   members_binded: Member[][];
-  unit_binded: Unit[][];
-  activities_binded: Activity[];
   jobs_selected: Job[] = [];
   new_project_title: string = "";
+  new_project_start: any;
+  new_project_end: any;
+  new_project_id: string = "";
 
   constructor(private _sopService: SopService,
               private _jobService: JobService,
               private _unitService: UnitService,
               private _memberService: MemberService,
-              private _activityService: ActivityService) { }
+              private _activityService: ActivityService,
+              private _projectService: ProjectService,
+              private router: Router) {
+  }
 
   ngOnInit() {
+    this.new_project_start = new Date();
+    this.new_project_end = new Date();
+    this.new_project_end.setDate(this.new_project_end.getDate()+30);
     this.stepSelected = 0 ;
-    this.activities_binded = [];
     console.log(this.stepSelected)
     this.loadSops();
     this.loadMembers();
   }
 
+  see(){
+    console.log(this.new_project_start)
+    console.log(this.new_project_end);
+  }
+
   onSubmit() {
 
+    //We insert the project into the database (project_code & project_work_code to modify!)
+    let project_code = "XXXXX";
+    let project_work_code = "000000";
+    let sub_department_id = "";
+
+    //We find the id of the sub_department by checking the member
+    this._memberService.select(localStorage.getItem('Id'))
+      .subscribe( (res) => {
+        this.errorMessage = "";
+        sub_department_id = res['data']['sub_department_id'];
+
+          //We insert the project
+          this._projectService.createProject(this.new_project_title, project_code, project_work_code, this.new_project_start, this.new_project_end, sub_department_id)
+            .subscribe( (res) => {
+                this.errorMessage = "";
+                this.new_project_id = res['data']['project_id'];
+                console.log(this.new_project_id);
+                let vm = this;
+                this.bindMemberUnitProject(function (){
+                  vm.router.navigate(['/project-list']);
+                });
+
+              },
+              error => {
+                this.errorMessage = error;
+              });
+
+      },
+      error => {
+        this.errorMessage = error;
+      });
+  }
+
+  bindMemberUnitProject(callback){
+    for (let u of this.units){
+      let i = this.units.indexOf(u);
+      if(this.members_binded[i].length > 0){
+        for (let m of this.members_binded[i]){
+          this._projectService.bindMemberUnitProject(this.new_project_id, u.unit_id, localStorage.getItem('Id'))
+            .subscribe( (res) => {
+              this.errorMessage = "";
+            },
+            error => {
+              this.errorMessage = error;
+            });
+        }
+      }
+    }
+    callback();
   }
 
   loadSops(){
@@ -71,7 +132,6 @@ export class ProjectCreationComponent implements OnInit {
         this.errorMessage = "";
         this.jobs = res['data'] as Job[];
         for (let i of this.jobs){
-          this.activities_binded = [];
         }
       },
       error => {
@@ -103,27 +163,6 @@ export class ProjectCreationComponent implements OnInit {
       });
   }
 
-  loadActivityFromJob() {
-    this.unit_binded = [];
-    for(let j of this.jobs_selected){
-      this._activityService.selectAllFromJob(j.job_id).subscribe((res) => {
-          this.errorMessage = "";
-
-          //We add all activities of a job selected to an array
-          for (let a of res['data']){
-            let a_cast = a as Activity;
-            this.activities_binded.push(a_cast);
-          }
-
-          for (let a of this.activities_binded){
-            this.unit_binded.push([]);
-          }
-        },
-        error => {
-          this.errorMessage = error.error.message;
-        });
-    }
-  }
 
   pickJob(job) {
     let j = document.getElementById(job.job_id);
@@ -132,21 +171,14 @@ export class ProjectCreationComponent implements OnInit {
     }else{
       if(this.jobs_selected.includes(job)){
         let indice = this.jobs_selected.indexOf(job);
-        this.activities_binded.pop();
         this.jobs_selected.splice(indice, 1);
       }
     }
-    console.log(this.jobs_selected);
   }
 
   pickUnit(unit) {
     this.unit_selected = unit;
     console.log(this.unit_selected);
-  }
-
-  pickActivity(activity) {
-    console.log("Activity : "+ activity)
-    this.activity_selected = activity;
   }
 
   //add a member to the right index of the member_binded array
@@ -157,23 +189,9 @@ export class ProjectCreationComponent implements OnInit {
     }
   }
 
-  bindUnitActivity(unit) {
-    console.log("Let's add !")
-    if (!this.unit_binded[this.activities_binded.indexOf(this.activity_selected)].includes(unit)){
-      console.log("Add okey !")
-      this.unit_binded[this.activities_binded.indexOf(this.activity_selected)].push(unit);
-      console.log(this.unit_binded);
-    }
-  }
-
   removeMember(member){
     let indice = this.members_binded[this.units.indexOf(this.unit_selected)].indexOf(member);
     this.members_binded[this.units.indexOf(this.unit_selected)].splice(indice, 1);
-  }
-
-  removeUnit(unit){
-    let indice = this.unit_binded[this.activities_binded.indexOf(this.activity_selected)].indexOf(unit);
-    this.unit_binded[this.activities_binded.indexOf(this.activity_selected)].splice(indice, 1);
   }
 
   changeStep(next) {

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Project} from "../../objects/project/project";
+import {ProjectService} from "../../objects/project/project.service";
 
 @Component({
   selector: 'app-project-list',
@@ -12,11 +13,23 @@ export class ProjectListComponent implements OnInit {
   errorMessage: string = "";
   projects: Project[];
 
-  constructor() { }
+  constructor(private _projectService: ProjectService) { }
 
   ngOnInit() {
+    this.loadProjects();
   }
 
+  loadProjects(){
+    this.projects = [];
+    this._projectService.selectAll()
+      .subscribe( (res) => {
+          this.errorMessage = "";
+          this.projects = res['data'] as Project[];
+        },
+        error => {
+          this.errorMessage = error.error.message;
+        });
+  }
 
   sortTable(n) {
     var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
@@ -75,7 +88,7 @@ export class ProjectListComponent implements OnInit {
 
   search() {
     // Declare variables
-    var input, filter, table, tr, td, i;
+    var input, filter, table, tr, td, td2, i;
     input = document.getElementById("search");
     filter = input.value.toUpperCase();
     table = document.getElementById("project-table");
@@ -83,10 +96,12 @@ export class ProjectListComponent implements OnInit {
 
     // Loop through all table rows, and hide those who don't match the search query
     for (i = 0; i < tr.length; i++) {
-      td = tr[i].getElementsByTagName("td")[2];
-      console.log(td);
-      if (td) {
-        if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+      td = tr[i].getElementsByTagName("td")[1];
+      td2 = tr[i].getElementsByTagName("td")[2];
+      console.log(td)
+      console.log(td2)
+      if (td || td2) {
+        if (td.innerHTML.toUpperCase().indexOf(filter) > -1 || td2.innerHTML.toUpperCase().indexOf(filter) > -1) {
           tr[i].style.display = "";
         } else {
           tr[i].style.display = "none";
