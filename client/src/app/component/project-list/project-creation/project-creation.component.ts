@@ -27,6 +27,9 @@ export class ProjectCreationComponent implements OnInit {
   units: Unit[];
   members: Member[];
 
+  member_unit_project: Array<Object>;
+  activities_from_unit: Activity[];
+
   sop_id_selected: string;
   unit_selected: Unit;
   member_selected: Member;
@@ -51,14 +54,8 @@ export class ProjectCreationComponent implements OnInit {
     this.new_project_end = new Date();
     this.new_project_end.setDate(this.new_project_end.getDate()+30);
     this.stepSelected = 0 ;
-    console.log(this.stepSelected)
     this.loadSops();
     this.loadMembers();
-  }
-
-  see(){
-    console.log(this.new_project_start)
-    console.log(this.new_project_end);
   }
 
   onSubmit() {
@@ -79,12 +76,21 @@ export class ProjectCreationComponent implements OnInit {
             .subscribe( (res) => {
                 this.errorMessage = "";
                 this.new_project_id = res['data']['project_id'];
-                console.log(this.new_project_id);
-                let vm = this;
-                this.bindMemberUnitProject(function (){
-                  vm.router.navigate(['/project-list']);
-                });
 
+                //We have the project id, now we can insert into project_has_job
+                for (let j of this.jobs_selected){
+                  this._projectService.bindProjectJob(this.new_project_id, j.job_id)
+                    .subscribe( (res) => {
+                        this.errorMessage = "";
+                      },
+                      error => {
+                        this.errorMessage = error;
+                      });
+                }
+
+                //We have the project id, now we can insert in member_unit_project and member_activity_project
+                this.bindMemberUnitProject();
+                this.router.navigate(['/project-list']);
               },
               error => {
                 this.errorMessage = error;
@@ -96,22 +102,49 @@ export class ProjectCreationComponent implements OnInit {
       });
   }
 
-  bindMemberUnitProject(callback){
-    for (let u of this.units){
-      let i = this.units.indexOf(u);
-      if(this.members_binded[i].length > 0){
-        for (let m of this.members_binded[i]){
-          this._projectService.bindMemberUnitProject(this.new_project_id, u.unit_id, localStorage.getItem('Id'))
-            .subscribe( (res) => {
-              this.errorMessage = "";
-            },
-            error => {
-              this.errorMessage = error;
-            });
+  bindMemberUnitProject(){
+      this.member_unit_project = [];
+      for (let u of this.units){
+        let i = this.units.indexOf(u);
+        if(this.members_binded[i].length > 0){
+          for (let m of this.members_binded[i]){
+            this._projectService.bindMemberUnitProject(this.new_project_id, u.unit_id, m.member_id.toString())
+              .subscribe( (res) => {
+                  this.errorMessage = "";
+                  this.member_unit_project.push(res['data']);
+                  this.bindMemberActivityProject(res['data']['member_id'], res['data']['unit_id']);
+                },
+                error => {
+                  this.errorMessage = error.error.message;
+                });
+          }
         }
       }
-    }
-    callback();
+  }
+
+  //We insert into the database : member_activity_project
+  bindMemberActivityProject(member_id, unit_id){
+
+    //First we load all activities of the unit of the member choosen
+    this._activityService.selectAllFromUnit(unit_id).subscribe((res) => {
+        this.errorMessage = "";
+        this.activities_from_unit = res['data'] as Activity[];
+
+        //For each activities we insert into the database member_activity_project
+        for (let a of this.activities_from_unit){
+          let target_date = new Date();
+          this._projectService.bindMemberActivityProject(this.new_project_id, member_id, a.activity_id, target_date, this.new_project_start, "", null, "", "", 0, 0, 0)
+            .subscribe( (res) => {
+                this.errorMessage = "";
+              },
+              error => {
+                this.errorMessage = error;
+              });
+        }
+      },
+      error => {
+        this.errorMessage = error.error.message;
+      });
   }
 
   loadSops(){
@@ -178,12 +211,10 @@ export class ProjectCreationComponent implements OnInit {
 
   pickUnit(unit) {
     this.unit_selected = unit;
-    console.log(this.unit_selected);
   }
 
   //add a member to the right index of the member_binded array
   pickMember(member) {
-    console.log(this.members_binded);
     if (!this.members_binded[this.units.indexOf(this.unit_selected)].includes(member)){
       this.members_binded[this.units.indexOf(this.unit_selected)].push(member);
     }

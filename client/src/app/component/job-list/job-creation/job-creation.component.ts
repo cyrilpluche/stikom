@@ -58,10 +58,7 @@ export class JobCreationComponent implements OnInit {
         let activities = res['data'];
         console.log(activities);
         for (let i = 0; i<picks.length; i++){
-          console.log("tour : "+i)
           for (let a of activities){
-            console.log("activity database : "+a['activity_id'])
-            console.log("input : "+picks[i]['id'])
             if (a['activity_id'] == picks[i]['id']) {
               picks[i]['checked'] = true;
             }

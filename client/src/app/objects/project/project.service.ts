@@ -33,6 +33,16 @@ export class ProjectService {
     return this.http.post(this.domain + '/api/project/create',body,this.httpOptions);
   }
 
+  bindProjectJob(project_id:string, job_id:string){
+    let body = {
+      project_id: project_id,
+      job_id: job_id
+    };
+    console.log(body);
+    this.generateHeaders();
+    return this.http.post(this.domain + '/api/project/bind_project_job',body,this.httpOptions);
+  }
+
   bindMemberUnitProject(project_id:string, unit_id:string, member_id:string) {
     let body = {
       project_id: project_id,
@@ -42,6 +52,32 @@ export class ProjectService {
     console.log(body);
     this.generateHeaders();
     return this.http.post(this.domain + '/api/project/bind_member_unit_project',body,this.httpOptions);
+  }
+
+  bindMemberActivityProject(project_id:string, member_id:string, activity_id:string, target_date:Date, date_begin:Date,
+                            evaluation:string, finished_date:Date, sign:string, note:string, target_quantity:number, finished_quantity:number, finished_duration:number) {
+    let body = {
+      project_id: project_id,
+      member_id: member_id,
+      activity_id: activity_id,
+      target_date: target_date,
+      date_begin: date_begin,
+      evaluation: evaluation,
+      finished_date: finished_date,
+      sign: sign,
+      note: note,
+      target_quantity: target_quantity,
+      finished_quantity: finished_quantity,
+      finished_duration: finished_duration
+    };
+    console.log(body);
+    this.generateHeaders();
+    return this.http.post(this.domain + '/api/project/bind_member_activity_project',body,this.httpOptions);
+  }
+
+  delete(project_id) {
+    this.generateHeaders();
+    return this.http.delete(this.domain + '/api/project/delete/'+project_id,this.httpOptions);
   }
 
   generateHeaders()

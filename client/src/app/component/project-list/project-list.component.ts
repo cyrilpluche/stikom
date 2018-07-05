@@ -12,6 +12,9 @@ export class ProjectListComponent implements OnInit {
   /* ----- Data ----- */
   errorMessage: string = "";
   projects: Project[];
+  project_selected: Project = new Project();
+  buttonsTitles: string [] = ['Set up project informations', 'Gantt'];
+  buttonsLinks: string [] = ['', 'gantt'];
 
   constructor(private _projectService: ProjectService) { }
 
@@ -108,6 +111,20 @@ export class ProjectListComponent implements OnInit {
         }
       }
     }
+  }
+
+  selectProject(project){
+    this.project_selected = project;
+  }
+
+  deleteProject(project_id) {
+    this._projectService.delete(project_id).subscribe((res) => {
+        this.errorMessage = "";
+        this.loadProjects();
+      },
+      error => {
+        this.errorMessage = error.error.message;
+      });
   }
 
 }

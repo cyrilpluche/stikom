@@ -43,6 +43,11 @@ export class ActivityService {
     return this.http.get(this.domain + '/api/activity/all_from_job/'+job_id,this.httpOptions);
   }
 
+  selectAllFromUnit(unit_id){
+    this.generateHeaders();
+    return this.http.get(this.domain + '/api/activity/all_from_unit/'+unit_id,this.httpOptions);
+  }
+
   delete(activity_id) {
     this.generateHeaders();
     console.log("activity id : ", activity_id)
