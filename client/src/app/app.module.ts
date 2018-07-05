@@ -39,6 +39,7 @@ import { JobListComponent } from './component/job-list/job-list.component';
 import { JobComponent } from './component/job-list/job/job.component';
 import { JobCreationComponent } from './component/job-list/job-creation/job-creation.component';
 import { PdfSopComponent} from "./documents/pdf-sop/pdf-sop.component";
+import { PdfGanttComponent } from './documents/pdf-gantt/pdf-gantt.component';
 
 
 const routes: Routes = [
@@ -97,7 +98,8 @@ const routes: Routes = [
     JobListComponent,
     JobComponent,
     JobCreationComponent,
-    PdfSopComponent
+    PdfSopComponent,
+    PdfGanttComponent
   ],
   imports: [
     HttpClientModule,

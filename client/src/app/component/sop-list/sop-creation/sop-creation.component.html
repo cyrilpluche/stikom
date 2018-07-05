@@ -128,7 +128,7 @@
           <div class="row md-form"  [hidden]="stepSelected != 7">
             <div class="col">
               <i class="fa fa-pencil prefix grey-text"></i>
-              <input (change)="fieldVerification()" [(ngModel)]="newObjective" name="newObjective" type="text" id="newObjective" class="form-control">
+              <input (keyup)="fieldVerification()" [(ngModel)]="newObjective" name="newObjective" type="text" id="newObjective" class="form-control">
               <label for="newObjective">Objectif indication</label>
             </div>
             <div>
@@ -166,7 +166,10 @@
       <div class="card-body card-body-cascade">
 
         <ul class="list-group list-group-flush">
-          <li *ngFor="let element of elementsArray" class="list-group-item">{{element}}</li>
+          <li *ngFor="let element of elementsArray" class="list-group-item">
+            <a (click)="deleteElement(element)"><i class="fa fa-close text-red"></i></a>
+            {{element}}
+          </li>
         </ul>
 
       </div>

@@ -5,6 +5,9 @@ import {Activity} from "../../../objects/activity/activity";
 import {ActivityService} from "../../../objects/activity/activity.service";
 import { ManagmentLevel } from "../../../objects/managment_level/managment_level";
 import { ManagmentLevelService} from "../../../objects/managment_level/managment-level.service";
+import {Unit} from "../../../objects/unit/unit";
+import {UnitService} from "../../../objects/unit/unit.service";
+import {Sop} from "../../../objects/sop/sop";
 
 @Component({
   selector: 'app-activity-creation',
@@ -20,6 +23,8 @@ export class ActivityCreationComponent implements OnInit {
   activityArray: Activity[];
   subActivityArray: Activity[][];
   managmentLevelsArray: ManagmentLevel[] = [];
+  units: Unit[] = [];
+  unit_id_selected: string = "";
 
   activitySelected: Activity;
   isCheckboxChecked: boolean = false;
@@ -48,7 +53,8 @@ export class ActivityCreationComponent implements OnInit {
   constructor(private router: Router,
               private _sopService: SopService,
               private _activityService: ActivityService,
-              private _managmentService: ManagmentLevelService) { }
+              private _managmentService: ManagmentLevelService,
+              private _unitService: UnitService) { }
 
   ngOnInit() {
     this.sopId = this._sopService.getSopIdLocal();
@@ -58,10 +64,21 @@ export class ActivityCreationComponent implements OnInit {
     this.subActivityArray = [[]];
     this.loadActivity();
     this.loadManagmentLevels();
+    this.loadUnitsFromSop();
   }
 
   onSubmit(isSubmitted) {
     this.router.navigate(["/sop-list"]);
+  }
+
+  loadUnitsFromSop() {
+    this._unitService.selectAllFromSop(this.sopId).subscribe((res) => {
+        this.errorMessage = "";
+        this.units = res['data'] as Unit[];
+      },
+      error => {
+        this.errorMessage = error.error.message;
+      });
   }
 
   loadActivity() {
@@ -184,6 +201,15 @@ export class ActivityCreationComponent implements OnInit {
             newActivity.activity_id = res['data'];
             newActivity.activity_id = newActivity.activity_id['activity_id'];
 
+            //We link the unit and the activity
+            this._unitService.bindUnitActivity(this.unit_id_selected, newActivity.activity_id)
+              .subscribe( (res) => {
+                this.errorMessage = "";
+              },
+              error => {
+                this.errorMessage = error;
+              });
+
             //View insert
             this.activityArray.push(newActivity);
             this.subActivityArray.push([]);
@@ -250,6 +276,15 @@ export class ActivityCreationComponent implements OnInit {
             //We get the id of the new activity
             newSubActivity.activity_id = res['data'];
             newSubActivity.activity_id = newSubActivity.activity_id['activity_id'];
+
+            //We link the unit and the activity
+            this._unitService.bindUnitActivity(this.unit_id_selected, newSubActivity.activity_id)
+              .subscribe( (res) => {
+                  this.errorMessage = "";
+                },
+                error => {
+                  this.errorMessage = error;
+                });
 
             //View insert
             this.subActivityArray[this.activity_index].push(newSubActivity);

@@ -31,6 +31,15 @@ export class UnitService {
     return this.http.post(this.domain + '/api/sop/bind_sop_unit',body,this.httpOptions);
   }
 
+  bindUnitActivity(unit_id:string, activity_id:string){
+    let body = {
+      unit_id: unit_id,
+      activity_id: activity_id
+    };
+    this.generateHeaders();
+    return this.http.post(this.domain + '/api/unit/execute_activity',body,this.httpOptions);
+  }
+
   selectAllFromSop(sop_id:string){
     this.generateHeaders();
     return this.http.get(this.domain + '/api/unit/all_from_sop/'+sop_id,this.httpOptions);

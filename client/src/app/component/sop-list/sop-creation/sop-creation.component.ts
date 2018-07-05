@@ -191,6 +191,12 @@ export class SopCreationComponent implements OnInit {
     }
   }
 
+  //Delete an element of the current array displayed
+  deleteElement(element){
+    let i = this.elementsArray.indexOf(element);
+    this.elementsArray.splice(i, 1);
+  }
+
   onSubmit() {
     //Need to fix the ligne jump
     this.summary += "Are you sure all informations provided for this SOP are given ? \n\n"
@@ -205,7 +211,7 @@ export class SopCreationComponent implements OnInit {
       let date_creation = new Date(Date.now());
       let date_revision = new Date(Date.now());
       let date_published = new Date(Date.now());
-      let sop_approvment = "Unknow";
+      let sop_approvment = this._memberService.getUserDataFull().name.toUpperCase()+' '+this._memberService.getUserDataFull().first_name
 
       let sop_rules = "";
       for (let r of this.rules) {
