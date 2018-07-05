@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const policy = require('../policy/policy_middleware');
 const modelProject = require('../models/project_model');
+const ERRORTYPE = require('../policy/errorType');
+
 
 /*
 ===========================================  ROUTER GET ============================================
@@ -19,6 +21,19 @@ router.get('/all_from_sop/:sop', function (req, res, next) {
             res.json({data: data})
         }).catch(next)
 });
+
+router.get('/all_member_activity_project/:project',
+    function (req, res, next) {
+        modelProject.selectAllMemberActivityProjectByProject_id(req.params.project)
+            .then(function (data) {
+                if (!data) {
+                    throw ERRORTYPE.NOT_FOUND
+                } else {
+                    res.json({data: data})
+                }
+            }).catch(next)
+    }
+);
 
 /*
 =========================================== ROUTER POST =============================================

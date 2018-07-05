@@ -5,6 +5,18 @@ const policy = require('../policy/policy_middleware');
 const ERRORTYPE = require('../policy/errorType');
 
 
+router.get('/find_one/:activity',
+    function (req, res, next) {
+        modelActivity.selectById(req.params.activity_id).then(function (data) {
+            if (!data) {
+                throw ERRORTYPE.NOT_FOUND
+            } else {
+                res.json({data: data})
+            }
+        }).catch(next)
+    }
+);
+
 router.get('/all_from_sop/:sop',
     function (req, res, next) {
         modelActivity.selectAllBySopId(req.params.sop).then(function (data) {
@@ -18,6 +30,19 @@ router.get('/all_from_job/:job',
             res.json({data: data});
         }).catch(next)
 });
+
+router.get('/all_from_unit/:unit',
+    function (req, res, next) {
+        modelActivity.selectAllByUnitId(req.params.unit)
+            .then(function (data) {
+                if (!data) {
+                    throw ERRORTYPE.NOT_FOUND
+                } else {
+                    res.json({data: data})
+                }
+            }).catch(next)
+    }
+);
 
 router.post('/create',
     policy.checkParameters(['activity_title', 'activity_type_duration', 'activity_duration', 'activity_type',
