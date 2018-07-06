@@ -93,7 +93,20 @@ let project = {
     },
 
     selectAllMemberActivityProjectByProject_id (project_id) {
-        return db.any('SELECT DISTINCT activity_id FROM public.member_activity_project WHERE project_id = $1', project_id)
+        return db.any('SELECT * FROM public.member_activity_project WHERE project_id = $1', project_id)
+            .then(function (data) {
+                if (data.length === 0) {
+                    return false
+                } else {
+                    return data
+                }
+            }).catch(function (err) {
+                throw ERRORTYPE.customError('The server has encountred an internal error: ' + err.toString())
+            });
+    },
+
+    selectAllIdMemberActivityProjectByProject_id (project_id) {
+        return db.any('SELECT activity_id FROM public.member_activity_project WHERE project_id = $1', project_id)
             .then(function (data) {
                 if (data.length === 0) {
                     return false
