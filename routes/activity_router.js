@@ -45,7 +45,14 @@ router.get('/all_from_unit/:unit',
 );
 
 router.get('/all_from_project/:project', function (req, res, next) {
-
+    modelActivity.selectAllByProjectId(req.params.project)
+        .then(function (data) {
+            if (!data) {
+                throw ERRORTYPE.NOT_FOUND
+            } else {
+                res.json({data: data})
+            }
+        }).catch(next)
 });
 
 router.post('/create',
