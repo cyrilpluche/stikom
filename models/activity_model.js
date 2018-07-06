@@ -77,6 +77,10 @@ let activity = {
             })
     },
 
+    selectAllByProjectId (project_id) {
+
+    },
+
     selectById (activity_id) {
         return db.any('SELECT * FROM public.activity WHERE activity_id = $1', activity_id).then(function (data) {
             if (data.length === 0) {

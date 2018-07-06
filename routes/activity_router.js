@@ -7,7 +7,7 @@ const ERRORTYPE = require('../policy/errorType');
 
 router.get('/find_one/:activity',
     function (req, res, next) {
-        modelActivity.selectById(req.params.activity_id).then(function (data) {
+        modelActivity.selectById(req.params.activity).then(function (data) {
             if (!data) {
                 throw ERRORTYPE.NOT_FOUND
             } else {
@@ -43,6 +43,10 @@ router.get('/all_from_unit/:unit',
             }).catch(next)
     }
 );
+
+router.get('/all_from_project/:project', function (req, res, next) {
+
+});
 
 router.post('/create',
     policy.checkParameters(['activity_title', 'activity_type_duration', 'activity_duration', 'activity_type',
