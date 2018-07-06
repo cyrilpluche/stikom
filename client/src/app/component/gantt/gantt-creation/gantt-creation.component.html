@@ -1,0 +1,67 @@
+<!--Small yellow-->
+<div class="preloader-wrapper big active" >
+  <div class="spinner-layer spinner-yellow-only">
+    <div class="circle-clipper left">
+      <div class="circle"></div>
+    </div>
+    <div class="gap-patch">
+      <div class="circle"></div>
+    </div>
+    <div class="circle-clipper right">
+      <div class="circle"></div>
+    </div>
+  </div>
+</div>
+
+<div class="container" *ngIf="ready">
+
+  <div class="row row-first">
+    <div class="col">
+      <button type="button" class="btn btn-outline-default waves-effect" [routerLink]="['/project-creation']"><h6 class="no-margin-bottom"><i class="fa fa-plus mr-3"></i>New Project</h6></button>
+    </div>
+  </div>
+
+  <div class="row row-first justify-content-end">
+    <div class=" md-form" id="search-bar">
+      <input id="search" (keyup)="search()" class="form-control" type="text" placeholder="Search" aria-label="Search">
+    </div>
+  </div>
+
+  <div class="row justify-content-center">
+
+        <table class="col-12 hoverable table table-borderless table-hover table-fixed" id="gantt-table">
+
+          <!--Table head-->
+          <thead class="">
+          <tr class="text-white">
+            <th style="width:10%;">No</th>
+            <th style="width:15%;">Activity</th>
+            <th style="width:15%;">Target Date</th>
+            <th style="width:15%;">Finished Date</th>
+            <th style="width:15%;">Evaluation</th>
+            <th style="width:15%;">Sign</th>
+            <th style="width:15%;">Note</th>
+          </tr>
+          </thead>
+          <!--Table head-->
+
+          <!--Table body-->
+          <tbody>
+          <!-- elements[0]: member_activity_project && elements[1]: activity -->
+          <tr *ngFor="let element of elements" (click)="selectRow(element)">
+            <td>{{element[1]['activity_id']}}</td>
+            <td>{{element[1]['activity_title']}}</td>
+            <td>{{element[2][0]['target_date'] | date:"MM/dd/yyyy"}}</td>
+            <td>{{element[2][0]['finished_date'] | date:"MM/dd/yyyy"}}</td>
+            <td>{{element[2][0]['evaluation']}}</td>
+            <td>{{element[2][0]['sign']}}</td>
+            <td>{{element[2][0]['note']}}</td>
+          </tr>
+          </tbody>
+          <!--Table body-->
+
+        </table>
+        <!--Table-->
+
+  </div>
+</div>

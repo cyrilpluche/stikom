@@ -41,6 +41,7 @@ import { JobCreationComponent } from './component/job-list/job-creation/job-crea
 import { PdfSopComponent} from "./documents/pdf-sop/pdf-sop.component";
 import { PdfGanttComponent } from './documents/pdf-gantt/pdf-gantt.component';
 import { GanttComponent } from './component/gantt/gantt.component';
+import { GanttCreationComponent } from './component/gantt/gantt-creation/gantt-creation.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -62,7 +63,8 @@ const routes: Routes = [
   {path: 'pdf-sop', component: PdfSopComponent},
   {path: 'job-list', component: JobListComponent},
   {path: 'admin-organization-management', component: OrganizationManagementComponent},
-  {path: 'gantt', component: GanttComponent}
+  {path: 'gantt', component: GanttComponent},
+  {path: 'gantt-creation', component: GanttCreationComponent}
 ];
 
 @NgModule({
@@ -101,7 +103,8 @@ const routes: Routes = [
     JobCreationComponent,
     PdfSopComponent,
     PdfGanttComponent,
-    GanttComponent
+    GanttComponent,
+    GanttCreationComponent
   ],
   imports: [
     HttpClientModule,

@@ -13,8 +13,8 @@ export class ProjectListComponent implements OnInit {
   errorMessage: string = "";
   projects: Project[];
   project_selected: Project = new Project();
-  buttonsTitles: string [] = ['Set up project informations', 'Gantt'];
-  buttonsLinks: string [] = ['', 'gantt'];
+  buttonsTitles: string [] = ['Set up project informations', 'Master of work', 'Set up Gantt'];
+  buttonsLinks: string [] = ['', '', 'gantt-creation'];
 
   constructor(private _projectService: ProjectService) { }
 
@@ -101,8 +101,6 @@ export class ProjectListComponent implements OnInit {
     for (i = 0; i < tr.length; i++) {
       td = tr[i].getElementsByTagName("td")[1];
       td2 = tr[i].getElementsByTagName("td")[2];
-      console.log(td)
-      console.log(td2)
       if (td || td2) {
         if (td.innerHTML.toUpperCase().indexOf(filter) > -1 || td2.innerHTML.toUpperCase().indexOf(filter) > -1) {
           tr[i].style.display = "";
@@ -115,6 +113,7 @@ export class ProjectListComponent implements OnInit {
 
   selectProject(project){
     this.project_selected = project;
+    localStorage.setItem('Project_id', project.project_id);
   }
 
   deleteProject(project_id) {
