@@ -14,6 +14,16 @@ router.get('/all', policy.checkParameters(['department']), function (req, res, n
     })
 });
 
+router.get('/find_one/:sub_dep', function (req, res, next) {
+    modelSubDepartment.selectById(req.params.sub_dep).then(function (data) {
+        if (!data) {
+            throw ERRORTYPE.INTERNAL_ERROR
+        } else {
+            res.json ({data: data})
+        }
+    }).catch(next)
+});
+
 router.post('/create',
     policy.requireAdmin,
     policy.checkParameters(['sub_department_name', 'department_id']),

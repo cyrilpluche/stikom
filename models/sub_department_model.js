@@ -34,6 +34,21 @@ let department = {
             })
     },
 
+    selectById (sub_dep_id) {
+      return db.any('SELECT * FROM public.sub_department S, public.department D, public.branch B, public.organisation O\n' +
+          'WHERE S.department_id = D.department_id AND D.branch_id = B.branch_id \n' +
+          'AND B.organisation_id = O.organisation_id AND S.sub_department_id = $1',
+          sub_dep_id).then(function (data) {
+          if (data.length === 0) {
+              return false
+          } else {
+              return data
+          }
+      }).catch(function (err) {
+          throw ERRORTYPE.customError('The server has encountred an internal error\n ' + err.toString())
+      })
+    },
+
     delete (sub_department_id) {
         return db.any('DELETE FROM public.sub_department CASCADE WHERE sub_department_id = $1\n' +
             'returning sub_department_id', sub_department_id).then(function (data) {
