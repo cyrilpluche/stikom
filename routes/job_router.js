@@ -2,6 +2,30 @@ const express = require('express');
 const router = express.Router();
 const policy = require('../policy/policy_middleware');
 const modelJob = require('../models/job_model');
+const ERRORTYPE = require('../policy/errorType');
+
+router.get('/all_from_sop/:sop', function (req, res, next) {
+    modelJob.selectAllBySopId(req.params.sop)
+        .then(function (data) {
+            res.json({data: data})
+        }).catch(next)
+});
+
+router.get('/find_one/:job', function (req, res, next) {
+    modelJob.selectById(req.params.job).then(function (data) {
+        res.json({data})
+    }).catch(next)
+});
+
+router.get('/all_from_project/:project', function (req, res, next) {
+    modelJob.selectAllByProjectId(req.params.project).then(function (data) {
+        if (!data) {
+            throw ERRORTYPE.NOT_FOUND
+        } else {
+            res.json({data})
+        }
+    }).catch(next)
+});
 
 router.post('/create',
     policy.checkParameters(['job_name', 'job_code', 'sop_id']),
@@ -34,18 +58,6 @@ router.post('/bind_job_activity',
             }).catch(next)
 });
 
-router.get('/all_from_sop/:sop', function (req, res, next) {
-    modelJob.selectAllBySopId(req.params.sop)
-        .then(function (data) {
-            res.json({data: data})
-        }).catch(next)
-});
-
-router.get('/find_one/:job', function (req, res, next) {
-    modelJob.selectById(req.params.job).then(function (data) {
-        res.json({data})
-    }).catch(next)
-});
 
 router.put('/update',
     policy.checkParameters(['job_id', 'job_name', 'job_code', 'sop_id']),
