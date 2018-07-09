@@ -25,7 +25,11 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use('/static', express.static(__dirname + '/public'));
 
-// TODO mettre en place express jwt
+const unlessPath = [
+    '/favicon.ico', '/api/member/register', '/api/member/login', '/api/member/validate_registration',
+    '/api/organisation/all', '/api/department/all', '/api/branch/all', '/api/sub_department/all'
+];
+app.use('/api/',expressJwt({ secret: process.env.JWT_SECRET }).unless({ path: unlessPath}));
 
 /*
 ========================================== ROUTERS ============================================

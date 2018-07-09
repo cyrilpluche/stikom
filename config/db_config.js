@@ -37,4 +37,14 @@ let connectionString = 'postgres://' + dataBaseCredential.user +':' + dataBaseCr
     + dataBaseCredential.port+ '/' + dataBaseCredential.name */
 
 // module.exports = client;
+
+const Moment = require('moment');
+const parseDate = function parseDate(val) {
+    return val === null ? null : Moment(val).format('YYYY-MM-DD')
+};
+let types = pgp.pg.types;
+const DATATYPE_DATE = 1082;
+types.setTypeParser(DATATYPE_DATE, function(val) {
+    return val === null ? null : parseDate(val)
+});
 module.exports = pgp(connectionString);
