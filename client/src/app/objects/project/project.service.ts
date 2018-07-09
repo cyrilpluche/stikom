@@ -19,6 +19,11 @@ export class ProjectService {
     return this.http.get(this.domain + '/api/project/all',this.httpOptions);
   }
 
+  select(project_id){
+    this.generateHeaders();
+    return this.http.get(this.domain + '/api/project/find_one/'+project_id,this.httpOptions);
+  }
+
   createProject(project_title:string, project_code:string, project_work_code:string, project_start:Date, project_end:Date, sub_department_id:string) {
     let body = {
       project_title: project_title,
