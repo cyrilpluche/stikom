@@ -122,7 +122,7 @@ let project = {
         return db.any('SELECT * FROM public.project WHERE project_id = $1', project_id)
             .then(function (data) {
                 if (data.length === 0) {
-                    throw ERRORTYPE.NOT_FOUND
+                    return false
                 } else {
                     return data[0]
                 }

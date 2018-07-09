@@ -35,6 +35,17 @@ router.get('/all_member_activity_project/:project',
     }
 );
 
+router.get('/find_one/:project', function (req, res, next) {
+    modelProject.selectById(req.params.project)
+        .then(function (data) {
+            if (!data) {
+                throw ERRORTYPE.NOT_FOUND
+            } else {
+                res.json({data: data})
+            }
+        }).catch(next)
+});
+
 router.get('/all_member_activity_project_distinct/:project',
     function (req, res, next) {
         modelProject.selectAllIdMemberActivityProjectByProject_id(req.params.project)
