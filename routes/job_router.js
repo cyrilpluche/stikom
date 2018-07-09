@@ -4,6 +4,11 @@ const policy = require('../policy/policy_middleware');
 const modelJob = require('../models/job_model');
 const ERRORTYPE = require('../policy/errorType');
 
+
+/*
+===========================================  ROUTER GET ============================================
+ */
+
 router.get('/all_from_sop/:sop', function (req, res, next) {
     modelJob.selectAllBySopId(req.params.sop)
         .then(function (data) {
@@ -26,6 +31,10 @@ router.get('/all_from_project/:project', function (req, res, next) {
         }
     }).catch(next)
 });
+
+/*
+=========================================== ROUTER POST =============================================
+ */
 
 router.post('/create',
     policy.checkParameters(['job_name', 'job_code', 'sop_id']),
@@ -58,7 +67,9 @@ router.post('/bind_job_activity',
             }).catch(next)
 });
 
-
+/*
+=========================================== ROUTER PUT ==============================================
+ */
 router.put('/update',
     policy.checkParameters(['job_id', 'job_name', 'job_code', 'sop_id']),
     function (req, res, next) {

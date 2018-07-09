@@ -135,6 +135,25 @@ let project = {
             })
     },
 
+    updateMemberActivityProject (map) {
+        return db.any('UPDATE public.member_activity_project\n' +
+            'SET target_date=${target_date}, date_begin=${date_begin}, evaluation=${evaluation},\n' +
+            'finished_date=${finished_date}, sign=${sign}, note=${note}, target_quantity=${target_quantity},\n' +
+            'finished_quantity=${finished_quantity}, finished_duration=${finished_duration}\n' +
+            'WHERE project_id= ${project_id} AND activity_id = ${activity_id} AND member_id = ${member_id}\n' +
+            'returning member_id, activity_id, project_id',
+            map)
+            .then(function (data) {
+                if (data.length === 0) {
+                    return false
+                } else {
+                    return data[0]
+                }
+            }).catch(function (err) {
+                throw ERRORTYPE.customError('The server has encountred an internal error\n ' + err.toString());
+            })
+    },
+
     delete (project_id) {
         return db.any('DELETE from public.project CASCADE WHERE project_id = $1 returning project_id', project_id)
             .then(function (data) {

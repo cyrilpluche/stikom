@@ -172,6 +172,32 @@ router.post('/create_activity_member',
 ========================================== ROUTER PUT ============================================
  */
 
+router.put('/update_member_activity_project',
+    policy.checkParameters(['member_id', 'activity_id', 'target_date', 'date_begin', 'evaluation', 'finished_date',
+        'sign', 'note', 'target_quantity', 'finished_quantity', 'finished_duration']),
+    function (req, res, next) {
+        let map = {
+            project_id: req.body.project_id,
+            member_id: req.body.member_id,
+            activity_id: req.body.activity_id,
+            target_date: req.body.target_date,
+            date_begin: new Date(req.body.date_begin),
+            evaluation: req.body.evaluation,
+            finished_date: new Date(req.body.finished_date),
+            sign: req.body.sign,
+            note: req.body.note,
+            target_quantity: req.body.target_quantity,
+            finished_quantity: req.body.finished_quantity,
+            finished_duration: req.body.finished_duration
+        };
+        modelProject.updateMemberActivityProject(map).then(function (data) {
+            if (!data) {
+                throw ERRORTYPE.INTERNAL_ERROR
+            } else {
+                res.json({data: data})
+            }
+        }).catch(next)
+});
 
 /*
 ========================================== ROUTER DELETE =========================================
