@@ -173,36 +173,8 @@ export class PdfSopComponent implements OnInit {
 
 
 
-    doc.save("table.pdf");
+    doc.save("sop.pdf");
 
-    /*
-
-    var doc = new jsPDF('l', 'pt');
-    doc.autoTable(columns, rows, {
-      theme: "plain",
-      styles: {
-        lineColor: 0,
-        lineWidth: 1},
-      columnStyles: {
-        id: {fillColor: 255}
-      },
-      tableWidth:[10,100,20],
-      margin: {top: 20},
-      addPageContent: function(data) {
-      }
-    });
-    doc.save('table.pdf');
-
-//----------------------------------------------------------
-    var doc = new jsPDF({
-      orientation: 'landscape',
-      unit: 'in',
-      format: [4, 2]
-    })
-
-    doc.text('Hello world!', 1, 1);
-    doc.save('two-by-four.pdf');
-  */
 
 
 

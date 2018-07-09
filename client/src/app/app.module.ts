@@ -40,6 +40,10 @@ import { JobComponent } from './component/job-list/job/job.component';
 import { JobCreationComponent } from './component/job-list/job-creation/job-creation.component';
 import { PdfSopComponent} from "./documents/pdf-sop/pdf-sop.component";
 import { PdfGanttComponent } from './documents/pdf-gantt/pdf-gantt.component';
+import { PdfProgressEvaluationComponent } from './documents/pdf-progress-evaluation/pdf-progress-evaluation.component';
+import { PdfPerformanceTargetComponent } from './documents/pdf-performance-target/pdf-performance-target.component';
+import { PdfPerformanceReportComponent } from './documents/pdf-performance-report/pdf-performance-report.component';
+
 import { GanttComponent } from './component/gantt/gantt.component';
 import { GanttCreationComponent } from './component/gantt/gantt-creation/gantt-creation.component';
 
@@ -61,10 +65,15 @@ const routes: Routes = [
   {path: 'job-creation', component: JobCreationComponent},
   {path: 'admin-organization-management', component: OrganizationManagementComponent},
   {path: 'pdf-sop', component: PdfSopComponent},
+  {path: 'pdf-gantt', component: PdfGanttComponent},
+  {path: 'pdf-progress-evaluation', component: PdfProgressEvaluationComponent},
   {path: 'job-list', component: JobListComponent},
   {path: 'admin-organization-management', component: OrganizationManagementComponent},
   {path: 'gantt', component: GanttComponent},
-  {path: 'gantt-creation', component: GanttCreationComponent}
+  {path: 'gantt-creation', component: GanttCreationComponent},
+  {path: 'admin-organization-management', component: OrganizationManagementComponent},
+  {path: 'pdf-performance-target', component: PdfPerformanceTargetComponent},
+  {path: 'pdf-performance-report', component: PdfPerformanceReportComponent}
 ];
 
 @NgModule({
@@ -102,6 +111,10 @@ const routes: Routes = [
     JobComponent,
     JobCreationComponent,
     PdfSopComponent,
+    PdfGanttComponent,
+    PdfProgressEvaluationComponent,
+    PdfPerformanceTargetComponent,
+    PdfPerformanceReportComponent,
     PdfGanttComponent,
     GanttComponent,
     GanttCreationComponent
