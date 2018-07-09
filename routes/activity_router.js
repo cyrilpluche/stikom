@@ -20,14 +20,22 @@ router.get('/find_one/:activity',
 router.get('/all_from_sop/:sop',
     function (req, res, next) {
         modelActivity.selectAllBySopId(req.params.sop).then(function (data) {
-            res.json({data: data});
+            if (!data) {
+                throw ERRORTYPE.NOT_FOUND
+            } else {
+                res.json({data: data})
+            }
         }).catch(next)
 });
 
 router.get('/all_from_job/:job',
     function (req, res, next) {
         modelActivity.selectAllByJobId(req.params.job).then(function (data) {
-            res.json({data: data});
+            if (!data) {
+                throw ERRORTYPE.NOT_FOUND
+            } else {
+                res.json({data: data})
+            }
         }).catch(next)
 });
 

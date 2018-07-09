@@ -21,10 +21,16 @@ let activity = {
     },
 
     selectAllBySopId (sop_id) {
-        return db.any('SELECT * FROM public.activity WHERE sop_id = $1', sop_id)
+        return db.any('SELECT activity_id, activity_title, activity_type_duration, activity_duration, activity_type,\n' +
+            ' activity_type_output, activity_description,\n' +
+            'activity_shape, activity_id_is_father, sop_id, managment_level_id, activity_unit(activity_id)\n' +
+            'FROM public.activity WHERE sop_id = $1\n' +
+            'GROUP BY activity_id, activity_title, activity_type_duration, activity_duration, activity_type,\n' +
+            'activity_type_output, activity_description,\n'+
+            'activity_shape, activity_id_is_father, sop_id, managment_level_id', sop_id)
             .then(function (data) {
                 if (data.length === 0) {
-                    throw ERRORTYPE.NOT_FOUND
+                   return false
                 } else {
                     return data
                 }
@@ -45,12 +51,15 @@ let activity = {
     selectAllByJobId (job_id) {
         return db.any('SELECT A.activity_id, A.activity_title, A.activity_type_duration, A.activity_duration,\n' +
             'A.activity_type, A.activity_type_output, A.activity_description, A.activity_shape, A.sop_id,\n' +
-            'A.managment_level_id, A.activity_id_is_father \n' +
+            'A.managment_level_id, A.activity_id_is_father,  activity_unit(activity_id) \n' +
             'FROM public.activity A, public.activity_is_job ASJ\n' +
-            'WHERE A.activity_id = ASJ.activity_id AND ASJ.job_id = $1', job_id)
+            'WHERE A.activity_id = ASJ.activity_id AND ASJ.job_id = $1\n' +
+            'GROUP BY A.activity_id, A.activity_title, A.activity_type_duration, A.activity_duration, A.activity_type,\n' +
+            'A.activity_type_output, A.activity_description, A.activity_shape, A.activity_id_is_father, A.sop_id,\n' +
+            'managment_level_id', job_id)
             .then(function (data) {
                 if (data.length === 0) {
-                    throw ERRORTYPE.NOT_FOUND
+                    return false
                 } else {
                     return data
                 }
