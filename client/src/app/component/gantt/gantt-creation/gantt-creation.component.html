@@ -1,15 +1,6 @@
-<!--Small yellow-->
-<div class="preloader-wrapper big active" >
-  <div class="spinner-layer spinner-yellow-only">
-    <div class="circle-clipper left">
-      <div class="circle"></div>
-    </div>
-    <div class="gap-patch">
-      <div class="circle"></div>
-    </div>
-    <div class="circle-clipper right">
-      <div class="circle"></div>
-    </div>
+<div class="container" *ngIf="!ready">
+  <div class="row-first">
+    <app-loader></app-loader>
   </div>
 </div>
 
@@ -17,7 +8,7 @@
 
   <div class="row row-first">
     <div class="col">
-      <button type="button" class="btn btn-outline-default waves-effect" [routerLink]="['/project-creation']"><h6 class="no-margin-bottom"><i class="fa fa-plus mr-3"></i>New Project</h6></button>
+      <button type="button" class="btn btn-outline-danger waves-effect" data-toggle="modal" data-target="#warningModal"><h6 class="no-margin-bottom"><i class="fa fa-times mr-3"></i>Back</h6></button>
     </div>
   </div>
 
@@ -34,28 +25,58 @@
           <!--Table head-->
           <thead class="">
           <tr class="text-white">
-            <th style="width:10%;">No</th>
-            <th style="width:15%;">Activity</th>
-            <th style="width:15%;">Target Date</th>
-            <th style="width:15%;">Finished Date</th>
-            <th style="width:15%;">Evaluation</th>
-            <th style="width:15%;">Sign</th>
-            <th style="width:15%;">Note</th>
+            <th (click)="sortTable(0)"><a>No</a></th>
+            <th (click)="sortTable(1)"><a>Activity</a></th>
+            <th (click)="sortTable(2)"><a>Target Date</a></th>
           </tr>
           </thead>
           <!--Table head-->
 
           <!--Table body-->
           <tbody>
-          <!-- elements[0]: member_activity_project && elements[1]: activity -->
-          <tr *ngFor="let element of elements" (click)="selectRow(element)">
-            <td>{{element[1]['activity_id']}}</td>
-            <td>{{element[1]['activity_title']}}</td>
-            <td>{{element[2][0]['target_date'] | date:"MM/dd/yyyy"}}</td>
-            <td>{{element[2][0]['finished_date'] | date:"MM/dd/yyyy"}}</td>
-            <td>{{element[2][0]['evaluation']}}</td>
-            <td>{{element[2][0]['sign']}}</td>
-            <td>{{element[2][0]['note']}}</td>
+          <!-- elements[0]: activity_id && elements[1]: activity && elements[2]: m_a_p && elements[3]: members linked -->
+            <tr *ngFor="let element of elements" (click)="selectRow(element)">
+              <td><a>{{element[1]['activity_id']}}</a></td>
+              <td><a>{{element[1]['activity_title']}}</a></td>
+              <td>
+                <input [ngModel]="calculDateTarget(element) | date:'yyyy-MM-dd'" type="date" id="{{element[1]['activity_id']}}" min="{{calculDateTarget(element) | date:'yyyy-MM-dd'}}" max="{{project.project_end | date:'yyyy-MM-dd'}}" class="form-control">
+              </td>
+            </tr>
+          </tbody>
+          <!--Table body-->
+
+        </table>
+        <!--Table-->
+
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <button class="btn btn-success waves-effect" type="button" data-toggle="modal" data-target="#confirmationModal">Submit</button>
+    </div>
+  </div>
+
+  <div class="row justify-content-center">
+        <table class="col-12 hoverable table table-borderless table-hover table-fixed" id="worker-table" *ngIf="workers_selected != null">
+
+          <!--Table head-->
+          <thead class="">
+          <tr class="text-white">
+            <th (click)="sortTable1(0)"><a>Last Name</a></th>
+            <th (click)="sortTable1(1)"><a>First Name</a></th>
+            <th>Target Quantity</th>
+          </tr>
+          </thead>
+          <!--Table head-->
+
+          <!--Table body-->
+          <tbody >
+          <tr *ngFor="let worker of workers_selected">
+            <td>{{worker[0].member_name.toUpperCase()}}</td>
+            <td>{{worker[0].member_first_name}}</td>
+            <td>
+              <input [ngModel]="worker[1]" [(ngModel)]="target_quantities[activity_selected.activity_id.toString() + worker[0].member_id]" id="q_{{worker[0].member_id}}" (change)="saveTarget(worker[0].member_id)" type="number" class="form-control">
+            </td>
           </tr>
           </tbody>
           <!--Table body-->
@@ -65,3 +86,18 @@
 
   </div>
 </div>
+
+<!-- Modal warning -->
+<app-warning title="Exit"
+             text="Are you sure you want to go back to the projects list ?"
+             [isLink]=true
+             link="project-list">
+</app-warning>
+
+<!-- Modal confirmation -->
+<app-confirmation title="Confirmation Project creation"
+                  text="Are you sure sure you want to set these quantities ?"
+                  (success)="onSubmit()"
+                  [isLinkActive]=false
+                  link="project-creation">
+</app-confirmation>

@@ -46,6 +46,7 @@ import { PdfPerformanceReportComponent } from './documents/pdf-performance-repor
 
 import { GanttComponent } from './component/gantt/gantt.component';
 import { GanttCreationComponent } from './component/gantt/gantt-creation/gantt-creation.component';
+import { LoaderComponent } from './shared/Loader/loader/loader.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -117,7 +118,8 @@ const routes: Routes = [
     PdfPerformanceReportComponent,
     PdfGanttComponent,
     GanttComponent,
-    GanttCreationComponent
+    GanttCreationComponent,
+    LoaderComponent
   ],
   imports: [
     HttpClientModule,
