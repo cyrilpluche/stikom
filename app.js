@@ -29,7 +29,8 @@ const unlessPath = [
     '/favicon.ico', '/api/member/register', '/api/member/login', '/api/member/validate_registration',
     '/api/organisation/all', '/api/department/all', '/api/branch/all', '/api/sub_department/all'
 ];
-app.use('/api/',expressJwt({ secret: process.env.JWT_SECRET }).unless({ path: unlessPath}));
+// TODO remettre en place express jwt
+// app.use('/api/',expressJwt({ secret: process.env.JWT_SECRET }).unless({ path: unlessPath}));
 
 /*
 ========================================== ROUTERS ============================================
