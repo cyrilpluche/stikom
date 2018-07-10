@@ -63,6 +63,36 @@ router.get('/all_from_project/:project', function (req, res, next) {
         }).catch(next)
 });
 
+router.get('/all_from_all_job_from_project/:project',
+    function (req, res, next) {
+        require('../models/job_model').selectAllByProjectId(req.params.project).then(function (jobs) {
+            if (!jobs) {
+                throw ERRORTYPE.NOT_FOUND
+            } else {
+                console.log('Job', jobs)
+                let promises = [] // array of promises
+                for (let i = 0; i < jobs.length; i++) {
+                    promises.push(modelActivity.selectAllByJobId(jobs[i].job_id))
+                }
+
+                Promise.all(promises).then(function (activities) {
+                    for (let i = 0; i < activities.length; i++) {
+                        if (!activities[i]) {
+                            jobs[i].activities = ERRORTYPE.NOT_FOUND
+                        } else {
+                            jobs[i].activities = activities[i]
+                        }
+                    }
+                    res.json({data: jobs});
+                }).catch(function (e) {
+                    throw e
+                })
+            }
+        }).catch(next)
+    }
+);
+
+
 router.post('/create',
     policy.checkParameters(['activity_title', 'activity_type_duration', 'activity_duration', 'activity_type',
         'activity_type_output', 'activity_description', 'activity_shape', 'activity_id_is_father', 'sop_id',

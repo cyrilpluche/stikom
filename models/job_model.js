@@ -59,8 +59,8 @@ let job = {
     },
 
     selectAllByProjectId (project_id) {
-        return db.any('SELECT * FROM public.job J, public.project_has_job PHJ\n' +
-            'WHERE J.job_id = PHJ.job_id AND PHJ.project_id = $1',
+        return db.any('SELECT * FROM public.job J, public.project_has_job PHJ, public.sop S\n' +
+            'WHERE J.job_id = PHJ.job_id AND PHJ.project_id = $1  AND S.sop_id = J.sop_id',
             project_id)
             .then(function (data) {
                 if (data.length === 0) {
