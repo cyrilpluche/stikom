@@ -7,6 +7,7 @@ import {ActivityService} from "../../../objects/activity/activity.service";
 import {ProjectService} from "../../../objects/project/project.service";
 import {Member} from "../../../objects/member/member";
 import {MemberService} from "../../../objects/member/member.service";
+import {Router} from "@angular/router";
 
 
 
@@ -38,7 +39,8 @@ export class GanttCreationComponent implements OnInit {
   constructor(private _memberActivityProjectService: MemberActivityProjectService,
               private _activityService: ActivityService,
               private _projectService: ProjectService,
-              private _memberService: MemberService) { }
+              private _memberService: MemberService,
+              private router: Router) { }
 
   ngOnInit() {
     this.project_id = localStorage.getItem('Project_id');
@@ -47,7 +49,8 @@ export class GanttCreationComponent implements OnInit {
   }
 
   onSubmit(){
-
+    this.updateQuantities();
+    this.router.navigate(['/project-list']);
   }
 
   loadProject(){
@@ -67,21 +70,13 @@ export class GanttCreationComponent implements OnInit {
 
     let vm = this;
 
-    //
-    //
-    this.allFromProject()
-
-    /* pour remettre à 0
     this.loadRowsDistinct()
     setTimeout(function () {
-
       vm._memberActivityProjectService.selectAllFromProject(vm.project_id)
         .subscribe((res) => {
             vm.errorMessage = "";
             vm.members_activities_project = res['data'] as MemberActivityProject[];
             let i = 0;
-
-            console.log('Element size : '+vm.elements.length)
 
             //For each m_a_p we check which activity is linked
             for (let e of vm.elements){
@@ -93,15 +88,14 @@ export class GanttCreationComponent implements OnInit {
                   sort_map.push(map);
                   vm._memberService.select(map.member_id)
                     .subscribe((res) => {
-                        vm.errorMessage = "";
-                        let libelle = map.activity_id.toString() + map.member_id.toString();
-                        console.log('quantity : ', map.target_quantity);
-                        vm.target_quantities.set(libelle, map.target_quantity as number);
-                        sort_members.push(res['data'] as Member)
-                      },
-                      error => {
-                        vm.errorMessage = error.error.message;
-                      });
+                    vm.errorMessage = "";
+                    let libelle = map.activity_id.toString() + map.member_id.toString();
+                    vm.target_quantities.set(libelle, map.target_quantity as number);
+                    sort_members.push(res['data'] as Member)
+                    },
+                    error => {
+                      vm.errorMessage = error.error.message;
+                    });
                 }
               }
               e[3] = sort_members;
@@ -116,63 +110,11 @@ export class GanttCreationComponent implements OnInit {
           });
     }, 2000)
 
-     */
-
-  }
-
-  async allFromProject () {
-    let vm = this
-    await this.loadRowsDistinct().then(function () {
-
-      vm._memberActivityProjectService.selectAllFromProject(vm.project_id)
-        .subscribe((res) => {
-            vm.errorMessage = "";
-            vm.members_activities_project = res['data'] as MemberActivityProject[];
-            let i = 0;
-
-            console.log('Element size : '+vm.elements.length)
-
-            //For each m_a_p we check which activity is linked
-            for (let e of vm.elements){
-              vm._memberService.select(e)
-              let sort_map = [];
-              let sort_members = [];
-              for (let map of vm.members_activities_project){
-                if (map.activity_id == e[1]['activity_id']){
-                  sort_map.push(map);
-                  vm._memberService.select(map.member_id)
-                    .subscribe((res) => {
-                        vm.errorMessage = "";
-                        let libelle = map.activity_id.toString() + map.member_id.toString();
-                        console.log('quantity : ', map.target_quantity);
-                        vm.target_quantities.set(libelle, map.target_quantity as number);
-                        sort_members.push(res['data'] as Member)
-                      },
-                      error => {
-                        vm.errorMessage = error.error.message;
-                      });
-                }
-              }
-              e[3] = sort_members;
-              e[2] = sort_map;
-              i++;
-            }
-
-            vm.ready=true;
-          },
-          error => {
-            vm.errorMessage = error.error.message;
-            throw error
-          });
-    }).catch(function (e) {
-      console.log(e)
-      vm.errorMessage = e.error.message
-    })
 
   }
 
   loadRowsDistinct(){
-    return new Promise((resolve, reject) => {
+    let promise = new Promise((resolve, reject) => {
       this._memberActivityProjectService.selectAllFromProjectDistinct(this.project_id).toPromise()
         .then(res => {
             this.errorMessage = "";
@@ -195,11 +137,10 @@ export class GanttCreationComponent implements OnInit {
             reject(error);
           });
     });
-
+    return promise;
   }
 
   selectRow(element) {
-    console.log(element);
     this.element_selected = element;
     this.activity_selected = element[1];
     this.member_activity_project_selected = element[0];
@@ -208,8 +149,6 @@ export class GanttCreationComponent implements OnInit {
       //We get the quantity stored in the Map
       let libelle = element[1]['activity_id'].toString()+e['member_id'];
       let q:number = this.target_quantities.get(libelle) as number;
-      console.log('value : ',q)
-      console.log('tpe : ', typeof q)
       //We add it the the displayed list
       this.workers_selected.push([e, q])
     }
@@ -221,7 +160,6 @@ export class GanttCreationComponent implements OnInit {
    let quantity = document.getElementById('q_'+member_id)['value'];
    //We store it into the Map
     this.target_quantities.set(this.activity_selected.activity_id.toString()+member_id, quantity);
-    console.log(this.target_quantities);
   }
 
   sortTable(n) {
@@ -345,7 +283,6 @@ export class GanttCreationComponent implements OnInit {
     // Loop through all table rows, and hide those who don't match the search query
     for (i = 0; i < tr.length; i++) {
       td = tr[i].getElementsByTagName("td")[1];
-      console.log(td);
       if (td) {
         if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
           tr[i].style.display = "";
@@ -366,7 +303,36 @@ export class GanttCreationComponent implements OnInit {
     else if (activity.activity_type_duration == "months") {
       answer.setMonth(answer.getMonth()+activity.activity_duration);
     }
-    return answer;
+    let target_date = new Date(informations.target_date);
+    if (answer > target_date){
+      return answer;
+    }
+    else {
+      return target_date;
+    }
+  }
+
+  updateQuantities(){
+    for (let m_a_p of this.members_activities_project){
+
+      //We set the new quantity
+      let libelle = m_a_p.activity_id.toString()+m_a_p.member_id;
+      let quantity:number = this.target_quantities.get(libelle);
+      m_a_p.target_quantity = quantity;
+
+      //We search for the new date_target to set it
+      let target_date = document.getElementById(m_a_p.activity_id.toString())['value'];
+      m_a_p.target_date = target_date;
+
+      //We update the database
+      this._memberActivityProjectService.update(m_a_p)
+        .subscribe((res) => {
+          this.errorMessage = "";
+        },
+        error => {
+          this.errorMessage = error.error.message;
+        });
+    }
   }
 
 }
