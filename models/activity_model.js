@@ -51,7 +51,7 @@ let activity = {
     selectAllByJobId (job_id) {
         return db.any('SELECT A.activity_id, A.activity_title, A.activity_type_duration, A.activity_duration,\n' +
             'A.activity_type, A.activity_type_output, A.activity_description, A.activity_shape, A.sop_id,\n' +
-            'A.managment_level_id, A.activity_id_is_father,  activity_unit(activity_id) \n' +
+            'A.managment_level_id, A.activity_id_is_father,  activity_unit(A.activity_id) \n' +
             'FROM public.activity A, public.activity_is_job ASJ\n' +
             'WHERE A.activity_id = ASJ.activity_id AND ASJ.job_id = $1\n' +
             'GROUP BY A.activity_id, A.activity_title, A.activity_type_duration, A.activity_duration, A.activity_type,\n' +
