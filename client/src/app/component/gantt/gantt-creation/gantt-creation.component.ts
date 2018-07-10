@@ -67,8 +67,14 @@ export class GanttCreationComponent implements OnInit {
 
     let vm = this;
 
+    //
+    //
+    this.allFromProject()
+
+    /* pour remettre à 0
     this.loadRowsDistinct()
     setTimeout(function () {
+
       vm._memberActivityProjectService.selectAllFromProject(vm.project_id)
         .subscribe((res) => {
             vm.errorMessage = "";
@@ -87,15 +93,15 @@ export class GanttCreationComponent implements OnInit {
                   sort_map.push(map);
                   vm._memberService.select(map.member_id)
                     .subscribe((res) => {
-                    vm.errorMessage = "";
-                    let libelle = map.activity_id.toString() + map.member_id.toString();
-                    console.log('quantity : ', map.target_quantity);
-                    vm.target_quantities.set(libelle, map.target_quantity as number);
-                    sort_members.push(res['data'] as Member)
-                    },
-                    error => {
-                      vm.errorMessage = error.error.message;
-                    });
+                        vm.errorMessage = "";
+                        let libelle = map.activity_id.toString() + map.member_id.toString();
+                        console.log('quantity : ', map.target_quantity);
+                        vm.target_quantities.set(libelle, map.target_quantity as number);
+                        sort_members.push(res['data'] as Member)
+                      },
+                      error => {
+                        vm.errorMessage = error.error.message;
+                      });
                 }
               }
               e[3] = sort_members;
@@ -110,11 +116,63 @@ export class GanttCreationComponent implements OnInit {
           });
     }, 2000)
 
+     */
+
+  }
+
+  async allFromProject () {
+    let vm = this
+    await this.loadRowsDistinct().then(function () {
+
+      vm._memberActivityProjectService.selectAllFromProject(vm.project_id)
+        .subscribe((res) => {
+            vm.errorMessage = "";
+            vm.members_activities_project = res['data'] as MemberActivityProject[];
+            let i = 0;
+
+            console.log('Element size : '+vm.elements.length)
+
+            //For each m_a_p we check which activity is linked
+            for (let e of vm.elements){
+              vm._memberService.select(e)
+              let sort_map = [];
+              let sort_members = [];
+              for (let map of vm.members_activities_project){
+                if (map.activity_id == e[1]['activity_id']){
+                  sort_map.push(map);
+                  vm._memberService.select(map.member_id)
+                    .subscribe((res) => {
+                        vm.errorMessage = "";
+                        let libelle = map.activity_id.toString() + map.member_id.toString();
+                        console.log('quantity : ', map.target_quantity);
+                        vm.target_quantities.set(libelle, map.target_quantity as number);
+                        sort_members.push(res['data'] as Member)
+                      },
+                      error => {
+                        vm.errorMessage = error.error.message;
+                      });
+                }
+              }
+              e[3] = sort_members;
+              e[2] = sort_map;
+              i++;
+            }
+
+            vm.ready=true;
+          },
+          error => {
+            vm.errorMessage = error.error.message;
+            throw error
+          });
+    }).catch(function (e) {
+      console.log(e)
+      vm.errorMessage = e.error.message
+    })
 
   }
 
   loadRowsDistinct(){
-    let promise = new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
       this._memberActivityProjectService.selectAllFromProjectDistinct(this.project_id).toPromise()
         .then(res => {
             this.errorMessage = "";
@@ -137,7 +195,7 @@ export class GanttCreationComponent implements OnInit {
             reject(error);
           });
     });
-    return promise;
+
   }
 
   selectRow(element) {

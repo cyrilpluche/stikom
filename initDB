@@ -532,9 +532,12 @@ INSERT INTO execute (activity_id, unit_id) VALUES (8, 4);
 INSERT INTO execute (activity_id, unit_id) VALUES (9, 4);
 INSERT INTO execute (activity_id, unit_id) VALUES (10, 5);
 
-INSERT INTO member (member_first_name, member_name, member_mail, member_password, member_admin, member_valid, seed, sub_department_id, managment_level_id) VALUES ('Cyril', 'Pluche', 'pluche.cyril@gmail.com', '$2b$10$MpXnAKMa9XpS65A1AoNEp.zzbFEjlIsPfc0oZnZnR.zFqkXaLUQOW', 1, 1, NULL, 3, 3);
-INSERT INTO member (member_first_name, member_name, member_mail, member_password, member_admin, member_valid, seed, sub_department_id, managment_level_id) VALUES ('James', 'Terrien', 'james.terrien@gmail.com', '$2b$10$MpXnAKMa9XpS65A1AoNEp.zzbFEjlIsPfc0oZnZnR.zFqkXaLUQOW', 1, 1, NULL, 3, 3);
-INSERT INTO member (member_first_name, member_name, member_mail, member_password, member_admin, member_valid, seed, sub_department_id, managment_level_id) VALUES ('Enzo', 'Fabre', 'enzo.fabre@gmail.com', '$2b$10$MpXnAKMa9XpS65A1AoNEp.zzbFEjlIsPfc0oZnZnR.zFqkXaLUQOW', 1, 1, NULL, 3, 3);
+INSERT INTO member (member_first_name, member_name, member_mail, member_password, member_admin, member_valid, seed, sub_department_id, managment_level_id)
+    VALUES ('Cyril', 'Pluche', 'pluche.cyril@gmail.com', '$2b$10$MpXnAKMa9XpS65A1AoNEp.zzbFEjlIsPfc0oZnZnR.zFqkXaLUQOW', 1, 1, NULL, 3, 3);
+INSERT INTO member (member_first_name, member_name, member_mail, member_password, member_admin, member_valid, seed, sub_department_id, managment_level_id)
+    VALUES ('James', 'Terrien', 'james.terrien@gmail.com', '$2b$10$MpXnAKMa9XpS65A1AoNEp.zzbFEjlIsPfc0oZnZnR.zFqkXaLUQOW', 1, 1, NULL, 3, 3);
+INSERT INTO member (member_first_name, member_name, member_mail, member_password, member_admin, member_valid, seed, sub_department_id, managment_level_id)
+    VALUES ('Enzo', 'Fabre', 'enzo.fabre@gmail.com', '$2b$10$MpXnAKMa9XpS65A1AoNEp.zzbFEjlIsPfc0oZnZnR.zFqkXaLUQOW', 1, 1, NULL, 3, 3);
 INSERT INTO member (member_first_name, member_name, member_mail, member_password, member_admin, member_valid, seed, sub_department_id, managment_level_id) VALUES ('Yudi', 'Agusta', 'yudi.agusta@gmail.com', '$2b$10$MpXnAKMa9XpS65A1AoNEp.zzbFEjlIsPfc0oZnZnR.zFqkXaLUQOW', 1, 1, NULL, 3, 3);
 INSERT INTO member (member_first_name, member_name, member_mail, member_password, member_admin, member_valid, seed, sub_department_id, managment_level_id) VALUES ('Benjamin', 'Pavard', 'benjamin.pavard@gmail.com', '$2b$10$MpXnAKMa9XpS65A1AoNEp.zzbFEjlIsPfc0oZnZnR.zFqkXaLUQOW', 1, 1, NULL, 3, 3);
 
