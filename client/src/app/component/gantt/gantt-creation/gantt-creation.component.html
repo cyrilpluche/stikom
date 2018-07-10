@@ -4,11 +4,12 @@
   </div>
 </div>
 
-<div class="container"> <!-- *ngIf="ready" -->
+<div class="container" *ngIf="ready">
 
   <div class="row row-first">
     <div class="col">
       <button type="button" class="btn btn-outline-danger waves-effect" data-toggle="modal" data-target="#warningModal"><h6 class="no-margin-bottom"><i class="fa fa-times mr-3"></i>Back</h6></button>
+      <button class="btn btn-success waves-effect" type="button" data-toggle="modal" data-target="#confirmationModal">Submit</button>
     </div>
   </div>
 
@@ -48,19 +49,10 @@
         </table>
         <!--Table-->
 
-  </div>
-
-  <div class="row">
-    <div class="col">
-      <button class="btn btn-success waves-effect" type="button" data-toggle="modal" data-target="#confirmationModal">Submit</button>
-    </div>
-  </div>
-
-  <div class="row justify-content-center">
         <table class="col-12 hoverable table table-borderless table-hover table-fixed" id="worker-table" *ngIf="workers_selected != null">
 
           <!--Table head-->
-          <thead class="">
+          <thead class="thead-secondary">
           <tr class="text-white">
             <th (click)="sortTable1(0)"><a>Last Name</a></th>
             <th (click)="sortTable1(1)"><a>First Name</a></th>
@@ -95,9 +87,9 @@
 </app-warning>
 
 <!-- Modal confirmation -->
-<app-confirmation title="Confirmation Project creation"
-                  text="Are you sure sure you want to set these quantities ?"
+<app-confirmation title="Finalize gantt informations"
+                  text="Are you sure all informations provided are correct ?"
                   (success)="onSubmit()"
                   [isLinkActive]=false
-                  link="project-creation">
+                  link="project-list">
 </app-confirmation>

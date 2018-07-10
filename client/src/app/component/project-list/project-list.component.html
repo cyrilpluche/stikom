@@ -14,47 +14,41 @@
 
   <div class="row justify-content-center">
 
-    <div class="col-12 card card-cascade hoverable">
+  <!--Table-->
+    <table class="col-12 table table-borderless table-hover table-fixed" id="project-table">
 
-      <!--Table-->
-      <div class="card-body card-body-cascade">
-        <table class="table table-borderless table-hover table-fixed" id="project-table">
+      <!--Table head-->
+      <thead class="">
+      <tr class="text-white">
+        <th style="width:5%;"></th>
+        <th style="width:10%;"  (click)="sortTable(1)"><a>Code</a></th>
+        <th style="width:40%;" (click)="sortTable(2)"><a>Title</a></th>
+        <th style="width:20%;" (click)="sortTable(3)"><a>Start Date</a></th>
+        <th style="width:20%;" (click)="sortTable(4)"><a>Finished Date</a></th>
+        <th style="width:5%;"></th>
+      </tr>
+      </thead>
+      <!--Table head-->
 
-          <!--Table head-->
-          <thead class="">
-          <tr class="text-white">
-            <th style="width:5%;"></th>
-            <th style="width:10%;"  (click)="sortTable(1)"><a>Code</a></th>
-            <th style="width:40%;" (click)="sortTable(2)"><a>Title</a></th>
-            <th style="width:20%;" (click)="sortTable(3)"><a>Start Date</a></th>
-            <th style="width:20%;" (click)="sortTable(4)"><a>Finished Date</a></th>
-            <th style="width:5%;"></th>
-          </tr>
-          </thead>
-          <!--Table head-->
+      <!--Table body-->
+      <tbody>
+      <tr *ngFor="let project of projects" (click)="selectProject(project)">
+        <td scope="row">
+          <a data-toggle="modal" data-target="#actionModal"><i class="fa fa-cog text-blue"></i></a>
+        </td>
+        <td>{{project.project_code}}</td>
+        <td>{{project.project_title.substr(0,50)}}</td>
+        <td>{{project.project_start | date:"MM/dd/yyyy"}}</td>
+        <td>{{project.project_end | date:"MM/dd/yyyy"}}</td>
+        <td>
+          <a data-toggle="modal" data-target="#warningModal"><i class="fa fa-close text-red"></i></a>
+        </td>
+      </tr>
+      </tbody>
+      <!--Table body-->
 
-          <!--Table body-->
-          <tbody>
-          <tr *ngFor="let project of projects" (click)="selectProject(project)">
-            <td scope="row">
-              <a data-toggle="modal" data-target="#actionModal"><i class="fa fa-cog text-blue"></i></a>
-            </td>
-            <td>{{project.project_code}}</td>
-            <td>{{project.project_title.substr(0,50)}}</td>
-            <td>{{project.project_start | date:"MM/dd/yyyy"}}</td>
-            <td>{{project.project_end | date:"MM/dd/yyyy"}}</td>
-            <td>
-              <a data-toggle="modal" data-target="#warningModal"><i class="fa fa-close text-red"></i></a>
-            </td>
-          </tr>
-          </tbody>
-          <!--Table body-->
-
-        </table>
-        <!--Table-->
-
-      </div>
-    </div>
+    </table>
+    <!--Table-->
 
   </div>
 </div>
