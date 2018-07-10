@@ -13,13 +13,14 @@ export class ProjectListComponent implements OnInit {
   errorMessage: string = "";
   projects: Project[];
   project_selected: Project = new Project();
-  buttonsTitles: string [] = ['Set up project informations', 'Master of work', 'Set up Gantt'];
-  buttonsLinks: string [] = ['', '', 'gantt-creation'];
+  buttonsTitles: string [] = ['Set up project informations', 'Master of work', 'Set up Gantt', 'Volume Progress'];
+  buttonsLinks: string [] = ['', '', 'gantt-creation', 'volume-progress'];
 
   constructor(private _projectService: ProjectService) { }
 
   ngOnInit() {
     this.loadProjects();
+
   }
 
   loadProjects(){

@@ -1,0 +1,37 @@
+<div class="container" *ngIf="!ready">
+  <div class="row-first">
+    <app-loader></app-loader>
+  </div>
+</div>
+
+<div class="container" *ngIf="ready">
+
+  <div class="row row-first">
+    <div class="col">
+      <button type="button" class="btn btn-outline-danger waves-effect" routerLink="/project-list"><h6 class="no-margin-bottom"><i class="fa fa-times mr-3"></i>Back</h6></button>
+    </div>
+  </div>
+
+  <div class="row row-first justify-content-end">
+    <div class=" md-form" id="search-bar">
+      <input id="search" (keyup)="search()" class="form-control" type="text" placeholder="Search" aria-label="Search">
+    </div>
+  </div>
+
+  <div class="row justify-content-center">
+
+    <div class="col-12 card card-cascade hoverable text-small">
+      <div class="card-body card-body-cascade">
+
+        <ul class="list-group list-group-flush">
+          <li *ngFor="let element of elements" class="list-group-item">
+            {{element['member']['member_name'].toUpperCase()}} {{element['member']['member_first_name']}}
+          </li>
+        </ul>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
