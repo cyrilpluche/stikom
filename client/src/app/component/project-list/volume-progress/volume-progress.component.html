@@ -20,18 +20,35 @@
 
   <div class="row justify-content-center">
 
-    <div class="col-12 card card-cascade hoverable text-small">
-      <div class="card-body card-body-cascade">
+    <table class="col-12 hoverable table table-borderless table-hover table-fixed" id="gantt-table">
 
-        <ul class="list-group list-group-flush">
-          <li *ngFor="let element of elements" class="list-group-item">
-            {{element['member']['member_name'].toUpperCase()}} {{element['member']['member_first_name']}}
-          </li>
-        </ul>
+      <!--Table head-->
+      <thead class="">
+      <tr class="text-white">
+        <th><a>No</a></th>
+        <th class="text-small"><a>Staff Names</a></th>
+        <th class="text-small"><a>Total Target</a></th>
+        <th><a>{{months_label[month_index]}}</a></th>
+      </tr>
+      </thead>
+      <!--Table head-->
 
-      </div>
-    </div>
+      <!--Table body-->
+      <tbody>
+      <!-- elements[0]: activity_id && elements[1]: activity && elements[2]: m_a_p && elements[3]: members linked -->
+      <tr *ngFor="let element of elements">
+        <td>{{element['member']['member_id']}}</td>
+        <td class="text-small">{{element['member']['member_name'].toUpperCase()}} {{element['member']['member_first_name']}}</td>
+        <td>{{element['total_target']}}</td>
+        <td></td>
+      </tr>
+      </tbody>
+      <!--Table body-->
+
+    </table>
+    <!--Table-->
 
   </div>
+
 </div>
 
