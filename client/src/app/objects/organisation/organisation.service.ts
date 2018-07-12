@@ -49,4 +49,9 @@ export class OrganisationService {
     this.generateHeaders();
     return this.http.delete(this.domain + '/api/organisation/delete/'+organisation,this.httpOptions);
   }
+
+  selectSchema(sub_dep_id:string){
+    this.generateHeaders();
+    return this.http.get(this.domain + '/api/sub_department/find_one/'+sub_dep_id,this.httpOptions);
+  }
 }

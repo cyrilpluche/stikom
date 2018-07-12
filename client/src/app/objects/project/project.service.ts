@@ -103,4 +103,16 @@ export class ProjectService {
       };
     }
   }
+
+  getProject(project_id:string){
+    this.generateHeaders();
+    console.log(project_id);
+    return this.http.get(this.domain + '/api/project/find_One/'+project_id,this.httpOptions);
+  }
+
+
+  selectAllFromProject(project_id:string){
+    this.generateHeaders();
+    return this.http.get(this.domain + '/api/activity/all_from_all_job_from_project/'+project_id,this.httpOptions);
+  }
 }

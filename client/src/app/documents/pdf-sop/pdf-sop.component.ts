@@ -1,6 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import * as jsPdf from 'jspdf';
 import 'jspdf-autotable';
+import {OrganisationService} from "../../objects/organisation/organisation.service";
+import {BranchService} from "../../objects/branch/branch.service";
+import {DepartmentService} from "../../objects/department/department.service";
+import {SubDepartmentService} from "../../objects/sub_department/sub-department.service";
+import {SopService} from "../../objects/sop/sop.service";
+import {DatePipe} from "@angular/common";
+import {ProjectService} from "../../objects/project/project.service";
 
 declare var jsPDF: any;
 
@@ -11,15 +18,81 @@ declare var jsPDF: any;
 })
 export class PdfSopComponent implements OnInit {
 
+  sop_id:string="";
+  project_id:string="1";
 
-  constructor() {
+
+  organisation_id:string;
+  organisation_name:string="";
+
+  branch_id:string;
+  branch_name:string="";
+
+  department_id:string;
+  department_name:string="";
+
+  sub_department_id:string;
+  sub_department_name:string="";
+
+  sop_title:string="NA";
+  sop_creation:Date=new Date();
+  sop_revision:Date=new Date();
+  sop_published:Date=new Date();
+  sop_approvment:string="NA";
+  sop_rules:string="NA";
+  sop_warning:string="NA";
+  sop_staff_qualification:string="NA";
+  sop_tools:string="NA";
+  sop_type_reports:string="NA";
+  sop_objectives:string="NA";
+
+  units:[string]=[""];
+  activities:string[][]=[];
+
+
+
+
+
+
+  constructor(private _organisationService: OrganisationService,
+              private _branchService: BranchService,
+              private _departmentService: DepartmentService,
+              private _subDepartmentService: SubDepartmentService,
+              private _sopService: SopService,
+              private _projectService: ProjectService) {
   }
 
   ngOnInit() {
-    this.download();
+    if(this.sop_id === "" && this.project_id === "") {
+      console.log("ERREUR : Aucune donnée envoyé au componnent de création du PDF.")
+    }
+    else if(this.sop_id !== ""){
+      this.getSOP(this.sop_id);
+      setTimeout(() => {
+        console.log(this.sop_title);
+        //console.log("date de creation : "+ );
+        console.log("fin");
+        //this.download(this.sop_title);
+
+      }, 1000);
+
+
+
+     //let value = this.sop_creation.transform(value, 'dd/MM/yyyy');
+
+    }else if(this.project_id !== ""){
+      this.getProject(this.project_id);
+      setTimeout(() => {
+        console.log(this.sop_title);
+        //console.log("date de creation : "+ );
+        console.log("fin");
+        //this.download(this.sop_title);
+
+      }, 2000);
+    }
   }
 
-  download() {
+  download(sop_title:string) {
 
     var columns = [  {title: "0", dataKey: "0"},
       {title: "1", dataKey: "1"},
@@ -27,10 +100,10 @@ export class PdfSopComponent implements OnInit {
       {title: "3", dataKey: "3"}
     ];
     var rows = [
-      ["", "Branch Name", "Creation Date", "date"],
-      ["", "Department Name", "Revision Date", "Date"],
-      ["", "Sub Department Name", "Published Date", "date"],
-      ["", "", "Approved By", "name"],
+      ["", this.organisation_name, "Creation Date",new DatePipe('en-US').transform(this.sop_creation, 'dd-MM-yyyy')],
+      ["", this.branch_name, "Revision Date", new DatePipe('en-US').transform(this.sop_revision, 'dd-MM-yyyy')],
+      ["", this.department_name, "Published Date", new DatePipe('en-US').transform(this.sop_published, 'dd-MM-yyyy')],
+      ["",this.sub_department_name, "Approved By", this.sop_approvment],
       ["","","",""]
     ];
 
@@ -51,7 +124,7 @@ export class PdfSopComponent implements OnInit {
         if (row.index === 4) {
           doc.setTextColor(0,0,0);
           doc.rect(data.settings.margin.left, row.y, data.table.width, 40, 'S');
-          doc.autoTableText("STANDARD OPERATION PROCEDURE \n SOP Name", data.settings.margin.left + data.table.width / 2, row.y + row.height, {
+          doc.autoTableText(sop_title, data.settings.margin.left + data.table.width / 2, row.y + row.height, {
             halign: 'center',
             valign: 'middle'
           });
@@ -82,14 +155,15 @@ export class PdfSopComponent implements OnInit {
     ];
     var rows = [
       ["Base Rule/Regulation","", "Staff Qualifications"],
-      ["Content","", "Content"],
+      [this.sop_rules,"", this.sop_staff_qualification],
       ["Related Working Units","", "Supporting tools"],
-      ["Content","", "Content"],
+      ["No units","", this.sop_tools],
       ["Warning","", "Types of Forms and Reports"],
-      ["Content","", "Content"],
+      [this.sop_warning,"", this.sop_type_reports],
       ["","","",""]
     ];
 
+    let sopObjectives:string=this.sop_objectives;
 
     doc.autoTable(columns, rows, {
       theme: 'plain',
@@ -105,7 +179,7 @@ export class PdfSopComponent implements OnInit {
         if (row2.index === 6) {
           doc.setTextColor(0,0,0);
           doc.rect(data2.settings.margin.left, row2.y, data2.table.width, 40, 'S');
-          doc.autoTableText("Objective :", data2.settings.margin.left + data2.table.width / 2, row2.y + row2.height, {
+          doc.autoTableText(sopObjectives, data2.settings.margin.left + data2.table.width / 2, row2.y + row2.height, {
             halign: 'left',
             valign: 'middle'
           });
@@ -179,4 +253,192 @@ export class PdfSopComponent implements OnInit {
 
 
   }
+
+  async getAllSopFromProject(idProject: string){
+    await this._projectService.selectAllFromProject(idProject)
+      .subscribe( (res) => {
+          console.log(res['data']);
+
+          // Take all the sop informations and preparing them for display in the var
+          this.sop_creation=new Date(res['data'][0]['sop_creation']);
+          this.sop_revision=new Date(res['data'][0]['sop_revision']);
+          this.sop_published=new Date(res['data'][0]['sop_published']);
+          this.sop_approvment=res['data'][0]['sop_approvment'];
+          this.sop_rules=res['data'][0]['sop_rules'];
+          this.sop_warning=res['data'][0]['sop_warning'];
+          this.sop_staff_qualification=res['data'][0]['sop_staff_qualification'];
+          this.sop_tools=res['data'][0]['sop_tools'];
+          this.sop_type_reports=res['data'][0]['sop_type_reports'];
+          this.sop_objectives=res['data'][0]['sop_objectives'];
+          this.sop_title="STANDARD OPERATION PROCEDURE \n "+res['data'][0]['sop_title'];
+
+          //creating a table of the units working for this project
+        let counter=0;
+        for (let job of res['data'])
+        {
+          for (let activitie of job['activities'])
+          {
+            for (let unit of activitie['activity_unit'])
+            {
+               if(!this.isInUnitTable(unit))
+               {
+                 console.log(unit);
+                 if(counter==0)
+                 {
+                   this.units[0]=unit;
+                 }else{
+                   this.units.push(unit);
+                 }
+
+
+               }
+              counter=counter+1;
+            }
+          }
+        }
+          console.log("Tableau final 1 : "+this.units);
+        //End unit tab filling up
+          let counter2=0;
+          for (let job of res['data'])
+          {
+            for (let activitie of job['activities'])
+            {
+              console.log(activitie);
+              if (activitie['activity_is_father']===null){
+                let temp:string[]=[];
+                temp.push(activitie['activity_id']);
+                temp.push(activitie['activity_title']);
+                for(let i of this.units)
+                {
+                  temp.push("");
+                }
+                this.activities.push(temp);
+
+              }else{
+                let pointeur=0;
+                for(let j in this.activities)
+                {
+                  if (j[0]===activitie['activity_id'])
+                  {
+                    if(activitie['activity_unit']==null){
+                      let points=0;
+                      let res;
+                      for(let unit of this.units)
+                      {
+                        if (unit==activitie['activity_unit'][0])
+                        {
+                          res=points;
+                        }
+                        points=points+1;
+
+                      }
+                      if (res !== null)
+                      {
+                        this.activities[pointeur][res+2]=activitie['activity_title'];
+                      }
+
+                    }
+
+                  }
+                  pointeur=pointeur+1;
+                }
+              }
+
+
+            }
+          }
+
+        console.log("Tableau final 2 : "+this.activities);
+
+
+
+        },//end subscribe
+        error => {
+          console.log("ERREUR : ",error);
+
+        });
+  }
+
+
+  async getOrganisation(idSubDepartment: string){
+    await this._organisationService.selectSchema(idSubDepartment)
+      .subscribe( (res) => {
+          console.log(res['data']);
+          this.sub_department_name=res['data'][0]['sub_department_name'];
+          this.department_name=res['data'][0]['department_name'];
+          this.branch_name=res['data'][0]['branch_name'];
+          this.organisation_name=res['data'][0]['organisation_name'];
+
+        },
+        error => {
+          console.log("ERREUR : ",error);
+
+        });
+  }
+
+  async getSOP(idSop: string){
+    console.log("ici : "+idSop);
+    await this._sopService.getSop(idSop)
+      .subscribe( (res) => {
+          console.log(res['data']);
+          //this.res=res['data'];
+          this.sop_creation=new Date(res['data']['sop_creation']);
+          this.sop_revision=new Date(res['data']['sop_revision']);
+          this.sop_published=new Date(res['data']['sop_published']);
+          this.sop_approvment=res['data']['sop_approvment'];
+          this.sop_rules=res['data']['sop_rules'];
+          this.sop_warning=res['data']['sop_warning'];
+          this.sop_staff_qualification=res['data']['sop_staff_qualification'];
+          this.sop_tools=res['data']['sop_tools'];
+          this.sop_type_reports=res['data']['sop_type_reports'];
+          this.sop_objectives=res['data']['sop_objectives'];
+          this.sop_title="STANDARD OPERATION PROCEDURE \n "+res['data']['sop_title'];
+          console.log(res['data']['sop_title']);
+
+
+
+        },
+        error => {
+          console.log("ERREUR : ",error);
+
+        });
+  }
+
+  async getProject(idProject: string){
+    console.log("ici projet id : "+idProject);
+    await this._projectService.getProject(idProject)
+      .subscribe( (res) => {
+          console.log(res['data']);
+          //this.res=res['data'];
+
+
+          this.getOrganisation(res['data']['sub_department_id']);
+          this.getAllSopFromProject(idProject);
+
+
+
+
+
+
+        },
+        error => {
+          console.log("ERREUR : ",error);
+
+        });
+  }
+
+  isInUnitTable(value:string)
+  {
+    let exist=false;
+    for (let pin of this.units)
+    {
+      if(pin==value && !exist)
+      {
+        exist=true;
+      }
+    }
+    return exist;
+  }
+
+
 }
