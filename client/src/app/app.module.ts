@@ -47,6 +47,7 @@ import { PdfPerformanceReportComponent } from './documents/pdf-performance-repor
 import { GanttComponent } from './component/gantt/gantt.component';
 import { GanttCreationComponent } from './component/gantt/gantt-creation/gantt-creation.component';
 import { LoaderComponent } from './shared/Loader/loader/loader.component';
+import { VolumeProgressComponent } from './component/project-list/volume-progress/volume-progress.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -74,7 +75,8 @@ const routes: Routes = [
   {path: 'gantt-creation', component: GanttCreationComponent},
   {path: 'admin-organization-management', component: OrganizationManagementComponent},
   {path: 'pdf-performance-target', component: PdfPerformanceTargetComponent},
-  {path: 'pdf-performance-report', component: PdfPerformanceReportComponent}
+  {path: 'pdf-performance-report', component: PdfPerformanceReportComponent},
+  {path: 'volume-progress', component: VolumeProgressComponent}
 ];
 
 @NgModule({
@@ -119,7 +121,8 @@ const routes: Routes = [
     PdfGanttComponent,
     GanttComponent,
     GanttCreationComponent,
-    LoaderComponent
+    LoaderComponent,
+    VolumeProgressComponent
   ],
   imports: [
     HttpClientModule,

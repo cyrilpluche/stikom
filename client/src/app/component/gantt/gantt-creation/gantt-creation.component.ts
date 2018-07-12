@@ -42,7 +42,7 @@ export class GanttCreationComponent implements OnInit {
               private _memberService: MemberService,
               private router: Router) { }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.project_id = localStorage.getItem('Project_id');
     this.loadProject();
     this.loadRows();
@@ -296,7 +296,7 @@ export class GanttCreationComponent implements OnInit {
   calculDateTarget(element){
     let activity = element[1] as Activity;
     let informations = element[2][0] as MemberActivityProject;
-    let answer = new Date(informations.date_begin);
+    let answer = new Date(this.project.project_start);
     if (activity.activity_type_duration == "days") {
       answer.setDate(answer.getDate()+activity.activity_duration);
     }
@@ -309,6 +309,25 @@ export class GanttCreationComponent implements OnInit {
     }
     else {
       return target_date;
+    }
+  }
+
+  calculDateBegin(element){
+    let activity = element[1] as Activity;
+    let informations = element[2][0] as MemberActivityProject;
+    let answer = new Date(informations.target_date);
+    if (activity.activity_type_duration == "days") {
+      answer.setDate(answer.getDate()-activity.activity_duration);
+    }
+    else if (activity.activity_type_duration == "months") {
+      answer.setMonth(answer.getMonth()-activity.activity_duration);
+    }
+    let date_begin = new Date(this.project.project_start);
+    if (answer > date_begin){
+      return answer;
+    }
+    else {
+      return date_begin;
     }
   }
 

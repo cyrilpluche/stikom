@@ -29,6 +29,7 @@
             <th (click)="sortTable(0)"><a>No</a></th>
             <th (click)="sortTable(1)"><a>Activity</a></th>
             <th (click)="sortTable(2)"><a>Target Date</a></th>
+            <th (click)="sortTable(3)"><a>Begin Date</a></th>
           </tr>
           </thead>
           <!--Table head-->
@@ -41,6 +42,9 @@
               <td><a>{{element[1]['activity_title']}}</a></td>
               <td>
                 <input [ngModel]="calculDateTarget(element) | date:'yyyy-MM-dd'" type="date" id="{{element[1]['activity_id']}}" min="{{calculDateTarget(element) | date:'yyyy-MM-dd'}}" max="{{project.project_end | date:'yyyy-MM-dd'}}" class="form-control">
+              </td>
+              <td>
+                <input [ngModel]="calculDateBegin(element) | date:'yyyy-MM-dd'" type="date" id="start_{{element[1]['activity_id']}}" min="{{project.project_start | date:'yyyy-MM-dd'}}" max="{{calculDateBegin(element) | date:'yyyy-MM-dd'}}" class="form-control">
               </td>
             </tr>
           </tbody>
