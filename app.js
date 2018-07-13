@@ -23,6 +23,7 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'dist')));
 app.use('/static', express.static(__dirname + '/public'));
 
 const unlessPath = [
@@ -54,11 +55,13 @@ app.use('/api/unit', require('./routes/unit_router'));
 ========================================== ERROR HANDLERS ============================================
  */
 
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   // TODO rediriger l'erreur sur le dist
-    console.log('Error')
-  next(createError(404));
+   // console.log('Error')
+  // next(createError(404));
+    res.sendFile(path.join(__dirname, 'dist/index.html'));
 });
 
 // error handler
