@@ -1,5 +1,5 @@
-import db from '../config/db_config'
-import ERRORTYPE from '../policy/errorType'
+const db = require('../config/db_config');
+const ERRORTYPE = require('../policy/errorType');
 
 let activity = {
     insert  (activity) {

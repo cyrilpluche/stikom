@@ -1,10 +1,10 @@
-import express from 'express'
-import policy from '../policy/policy_middleware'
-import ERRORTYPE from '../policy/errorType'
-import modelSop from '../models/sop_model'
-import ROLE from '../policy/roles'
-
+const express = require('express');
 const router = express.Router();
+const policy = require('../policy/policy_middleware');
+const ERRORTYPE = require('../policy/errorType');
+const modelSop = require('../models/sop_model');
+const ROLE = require('../policy/roles');
+
 // TODO see for right
 router.post('/create',
     policy.requireSpecificRight(ROLE.Planner),

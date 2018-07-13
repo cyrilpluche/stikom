@@ -1,10 +1,9 @@
-import express from 'express'
-import modelActivity from '../models/activity_model'
-import policy from '../policy/policy_middleware'
-import ERRORTYPE from '../policy/errorType'
-import {selectAllByProjectId} from '../models/job_model'
-
+const express = require('express');
 const router = express.Router();
+const modelActivity = require('../models/activity_model');
+const policy = require('../policy/policy_middleware');
+const ERRORTYPE = require('../policy/errorType');
+
 
 router.get('/find_one/:activity',
     function (req, res, next) {
@@ -67,7 +66,7 @@ router.get('/all_from_project/:project', function (req, res, next) {
 // select every activities from every job from a projet (with units)
 router.get('/all_from_all_job_from_project/:project',
     function (req, res, next) {
-        selectAllByProjectId(req.params.project).then(function (jobs) {
+        require('../models/job_model').selectAllByProjectId(req.params.project).then(function (jobs) {
             if (!jobs) {
                 throw ERRORTYPE.NOT_FOUND
             } else {
