@@ -20,7 +20,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 //app.use(express.static(path.join(__dirname, 'dist')));
-app.use('./dist');
+app.use(express.static(__dirname + '/dist/client'));
 app.use('/static', express.static(__dirname + '/public'));
 
 const unlessPath = [
