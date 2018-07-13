@@ -61,7 +61,7 @@ app.use(function(req, res, next) {
   // TODO rediriger l'erreur sur le dist
    // console.log('Error')
   // next(createError(404));
-    res.sendFile(path.join(__dirname, 'dist/index.html'));
+    res.sendFile(path.join(__dirname, 'dist/client/index.html'));
 });
 
 // error handler
