@@ -21,7 +21,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 //app.use(express.static(path.join(__dirname, 'dist')));
 app.use(express.static(__dirname + '/dist/client'));
-app.use('/static', express.static(__dirname + '/public'));
+app.use(express.static(path.join(__dirname, 'dist/client')));
 
 const unlessPath = [
     '/favicon.ico', '/api/member/register', '/api/member/login', '/api/member/validate_registration',
@@ -59,7 +59,7 @@ app.use(function(req, res, next) {
    // console.log('Error')
   // next(createError(404));
     // res.sendFile(path.join(__dirname, 'dist/client/index.html'));
-    res.sendFile(express.static(__dirname + '/dist/client/index.html'));
+    res.sendFile(path.join(__dirname, 'dist/client/index.html'));
 
 });
 
