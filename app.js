@@ -59,7 +59,7 @@ app.use(function(req, res, next) {
    // console.log('Error')
   // next(createError(404));
     // res.sendFile(path.join(__dirname, 'dist/client/index.html'));
-    res.sendFile('./dist/client/index.html');
+    res.sendFile(express.static(__dirname + '/dist/client/index.html'));
 
 });
 
