@@ -47,7 +47,7 @@ export class PdfSopComponent implements OnInit {
   sop_objectives:string="NA";
 
   units:[string]=[""];
-  activities:string[][]=[];
+  activities:[string]=[""];
 
 
 
@@ -86,7 +86,7 @@ export class PdfSopComponent implements OnInit {
         console.log(this.sop_title);
         //console.log("date de creation : "+ );
         console.log("fin");
-        //this.download(this.sop_title);
+        this.download(this.sop_title);
 
       }, 2000);
     }
@@ -218,11 +218,11 @@ export class PdfSopComponent implements OnInit {
       {title: "8", dataKey: "8"}
     ];
     var rows = [
-      ["No","Activity", "Unit 1", "Unit 2","Unit 3","Unit 4","Supporting \n Materials/input","Duration","Output"],
-      ["1","description", "schema","schema","schema", "schema","text","time", "text"],
-      ["2","description", "schema","schema","schema", "schema","text","time", "text"],
-      ["3","description", "schema","schema","schema", "schema","text","time", "text"],
-      ["4","description", "schema","schema","schema", "schema","text","time", "text"],
+      ["No","Activity", this.units[0], this.units[1],this.units[2],"Unit 4","Supporting \n Materials/input","Duration","Output"],
+      [this.activities[0][0],this.activities[0][1], this.activities[0][5],this.activities[0][6],this.activities[0][7], "schema",this.activities[0][2],this.activities[0][3],this.activities[0][4],],
+      [this.activities[1][0],this.activities[1][1], this.activities[1][5],this.activities[1][6],this.activities[1][7], "schema",this.activities[1][2],this.activities[1][3],this.activities[1][4]],
+      [this.activities[2][0],this.activities[2][1], this.activities[2][5],this.activities[2][6],this.activities[2][7], "schema",this.activities[2][2],this.activities[2][3],this.activities[2][4]],
+      [this.activities[3][0],this.activities[3][1], this.activities[3][5],this.activities[3][6],this.activities[3][7], "schema",this.activities[3][2],this.activities[3][3],this.activities[3][4]],
 
     ];
 
@@ -230,8 +230,10 @@ export class PdfSopComponent implements OnInit {
     doc.autoTable(columns, rows, {
       theme: 'plain',
       styles: {
+        overflow: 'linebreak',
         lineColor: 0,
-        lineWidth: 1},
+        lineWidth: 1,
+        columnWidth: [10,40,30,30,30,30,30,30,30]},
       showHeader: 'never',
       startY: 10,
       drawRow: function (row2, data2) {
@@ -299,33 +301,64 @@ export class PdfSopComponent implements OnInit {
           console.log("Tableau final 1 : "+this.units);
         //End unit tab filling up
           let counter2=0;
+          console.log("Tableau des jobs :");
+          console.log(res['data']);
           for (let job of res['data'])
           {
+            console.log("Job "+counter2+" :");
+            console.log(job);
             for (let activitie of job['activities'])
             {
+              console.log("Activité :");
               console.log(activitie);
-              if (activitie['activity_is_father']===null){
-                let temp:string[]=[];
-                temp.push(activitie['activity_id']);
-                temp.push(activitie['activity_title']);
-                for(let i of this.units)
-                {
-                  temp.push("");
-                }
-                this.activities.push(temp);
+              if (activitie['activity_id_is_father']==null){
+                console.log("Est père car atribue est : ");
+                console.log(activitie['activity_id_is_father']);
+
+               let temp:string[]=[];
+               temp.push(activitie['activity_id']);
+               temp.push(activitie['activity_title']+ " : "+activitie['activity_description']);
+                temp.push(activitie['activity_type']);
+                temp.push(activitie['activity_duration']+" "+activitie['activity_type_duration']);
+                temp.push(activitie['activity_type_output']);
+               for(let i of this.units)
+               {
+                 temp.push("");
+               }
+               if ( this.activities[0] =="")
+               {
+                 this.activities[0]=temp;
+               }else{
+                 this.activities.push(temp);
+               }
+
+                console.log("Is father :");
+                console.log(temp);
 
               }else{
                 let pointeur=0;
-                for(let j in this.activities)
+                console.log("Père recherché :");
+                console.log(activitie['activity_id_is_father']);
+                console.log("dans le tableau d'acitivté suivant :");
+                console.log(this.activities);
+                for(let j=0; j<this.activities.length; j++)
                 {
-                  if (j[0]===activitie['activity_id'])
+                  console.log("j :");
+                  console.log(this.activities[j]);
+                  console.log("j[0] :");
+                  console.log(this.activities[j][0]);
+                  if (this.activities[j][0]===activitie['activity_id_is_father'])
                   {
-                    if(activitie['activity_unit']==null){
+
+                    console.log("J'y suis père trouvé");
+                    if(activitie['activity_unit']!==null){
                       let points=0;
                       let res;
-                      for(let unit of this.units)
+                      for(let k=0; k<this.units.length; k++)
                       {
-                        if (unit==activitie['activity_unit'][0])
+                        console.log("activitie['activity_unit'][0] :");
+                        console.log(activitie['activity_unit'][0]);
+                        if (this.units[k]==activitie['activity_unit'][0])
                         {
                           res=points;
                         }
@@ -334,7 +367,7 @@ export class PdfSopComponent implements OnInit {
                       }
                       if (res !== null)
                       {
-                        this.activities[pointeur][res+2]=activitie['activity_title'];
+                        this.activities[pointeur][res+5]=activitie['activity_title']+ " : "+activitie['activity_description'];
                       }
 
                     }
@@ -348,7 +381,8 @@ export class PdfSopComponent implements OnInit {
             }
           }
 
-        console.log("Tableau final 2 : "+this.activities);
+        console.log("Tableau final 2 : ");
+          console.log(this.activities);
 
 
 
