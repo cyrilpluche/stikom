@@ -1,5 +1,285 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([["main"],{
 
+/***/ "./node_modules/moment/locale sync recursive ^\\.\\/.*$":
+/*!**************************************************!*\
+  !*** ./node_modules/moment/locale sync ^\.\/.*$ ***!
+  \**************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var map = {
+	"./af": "./node_modules/moment/locale/af.js",
+	"./af.js": "./node_modules/moment/locale/af.js",
+	"./ar": "./node_modules/moment/locale/ar.js",
+	"./ar-dz": "./node_modules/moment/locale/ar-dz.js",
+	"./ar-dz.js": "./node_modules/moment/locale/ar-dz.js",
+	"./ar-kw": "./node_modules/moment/locale/ar-kw.js",
+	"./ar-kw.js": "./node_modules/moment/locale/ar-kw.js",
+	"./ar-ly": "./node_modules/moment/locale/ar-ly.js",
+	"./ar-ly.js": "./node_modules/moment/locale/ar-ly.js",
+	"./ar-ma": "./node_modules/moment/locale/ar-ma.js",
+	"./ar-ma.js": "./node_modules/moment/locale/ar-ma.js",
+	"./ar-sa": "./node_modules/moment/locale/ar-sa.js",
+	"./ar-sa.js": "./node_modules/moment/locale/ar-sa.js",
+	"./ar-tn": "./node_modules/moment/locale/ar-tn.js",
+	"./ar-tn.js": "./node_modules/moment/locale/ar-tn.js",
+	"./ar.js": "./node_modules/moment/locale/ar.js",
+	"./az": "./node_modules/moment/locale/az.js",
+	"./az.js": "./node_modules/moment/locale/az.js",
+	"./be": "./node_modules/moment/locale/be.js",
+	"./be.js": "./node_modules/moment/locale/be.js",
+	"./bg": "./node_modules/moment/locale/bg.js",
+	"./bg.js": "./node_modules/moment/locale/bg.js",
+	"./bm": "./node_modules/moment/locale/bm.js",
+	"./bm.js": "./node_modules/moment/locale/bm.js",
+	"./bn": "./node_modules/moment/locale/bn.js",
+	"./bn.js": "./node_modules/moment/locale/bn.js",
+	"./bo": "./node_modules/moment/locale/bo.js",
+	"./bo.js": "./node_modules/moment/locale/bo.js",
+	"./br": "./node_modules/moment/locale/br.js",
+	"./br.js": "./node_modules/moment/locale/br.js",
+	"./bs": "./node_modules/moment/locale/bs.js",
+	"./bs.js": "./node_modules/moment/locale/bs.js",
+	"./ca": "./node_modules/moment/locale/ca.js",
+	"./ca.js": "./node_modules/moment/locale/ca.js",
+	"./cs": "./node_modules/moment/locale/cs.js",
+	"./cs.js": "./node_modules/moment/locale/cs.js",
+	"./cv": "./node_modules/moment/locale/cv.js",
+	"./cv.js": "./node_modules/moment/locale/cv.js",
+	"./cy": "./node_modules/moment/locale/cy.js",
+	"./cy.js": "./node_modules/moment/locale/cy.js",
+	"./da": "./node_modules/moment/locale/da.js",
+	"./da.js": "./node_modules/moment/locale/da.js",
+	"./de": "./node_modules/moment/locale/de.js",
+	"./de-at": "./node_modules/moment/locale/de-at.js",
+	"./de-at.js": "./node_modules/moment/locale/de-at.js",
+	"./de-ch": "./node_modules/moment/locale/de-ch.js",
+	"./de-ch.js": "./node_modules/moment/locale/de-ch.js",
+	"./de.js": "./node_modules/moment/locale/de.js",
+	"./dv": "./node_modules/moment/locale/dv.js",
+	"./dv.js": "./node_modules/moment/locale/dv.js",
+	"./el": "./node_modules/moment/locale/el.js",
+	"./el.js": "./node_modules/moment/locale/el.js",
+	"./en-au": "./node_modules/moment/locale/en-au.js",
+	"./en-au.js": "./node_modules/moment/locale/en-au.js",
+	"./en-ca": "./node_modules/moment/locale/en-ca.js",
+	"./en-ca.js": "./node_modules/moment/locale/en-ca.js",
+	"./en-gb": "./node_modules/moment/locale/en-gb.js",
+	"./en-gb.js": "./node_modules/moment/locale/en-gb.js",
+	"./en-ie": "./node_modules/moment/locale/en-ie.js",
+	"./en-ie.js": "./node_modules/moment/locale/en-ie.js",
+	"./en-il": "./node_modules/moment/locale/en-il.js",
+	"./en-il.js": "./node_modules/moment/locale/en-il.js",
+	"./en-nz": "./node_modules/moment/locale/en-nz.js",
+	"./en-nz.js": "./node_modules/moment/locale/en-nz.js",
+	"./eo": "./node_modules/moment/locale/eo.js",
+	"./eo.js": "./node_modules/moment/locale/eo.js",
+	"./es": "./node_modules/moment/locale/es.js",
+	"./es-do": "./node_modules/moment/locale/es-do.js",
+	"./es-do.js": "./node_modules/moment/locale/es-do.js",
+	"./es-us": "./node_modules/moment/locale/es-us.js",
+	"./es-us.js": "./node_modules/moment/locale/es-us.js",
+	"./es.js": "./node_modules/moment/locale/es.js",
+	"./et": "./node_modules/moment/locale/et.js",
+	"./et.js": "./node_modules/moment/locale/et.js",
+	"./eu": "./node_modules/moment/locale/eu.js",
+	"./eu.js": "./node_modules/moment/locale/eu.js",
+	"./fa": "./node_modules/moment/locale/fa.js",
+	"./fa.js": "./node_modules/moment/locale/fa.js",
+	"./fi": "./node_modules/moment/locale/fi.js",
+	"./fi.js": "./node_modules/moment/locale/fi.js",
+	"./fo": "./node_modules/moment/locale/fo.js",
+	"./fo.js": "./node_modules/moment/locale/fo.js",
+	"./fr": "./node_modules/moment/locale/fr.js",
+	"./fr-ca": "./node_modules/moment/locale/fr-ca.js",
+	"./fr-ca.js": "./node_modules/moment/locale/fr-ca.js",
+	"./fr-ch": "./node_modules/moment/locale/fr-ch.js",
+	"./fr-ch.js": "./node_modules/moment/locale/fr-ch.js",
+	"./fr.js": "./node_modules/moment/locale/fr.js",
+	"./fy": "./node_modules/moment/locale/fy.js",
+	"./fy.js": "./node_modules/moment/locale/fy.js",
+	"./gd": "./node_modules/moment/locale/gd.js",
+	"./gd.js": "./node_modules/moment/locale/gd.js",
+	"./gl": "./node_modules/moment/locale/gl.js",
+	"./gl.js": "./node_modules/moment/locale/gl.js",
+	"./gom-latn": "./node_modules/moment/locale/gom-latn.js",
+	"./gom-latn.js": "./node_modules/moment/locale/gom-latn.js",
+	"./gu": "./node_modules/moment/locale/gu.js",
+	"./gu.js": "./node_modules/moment/locale/gu.js",
+	"./he": "./node_modules/moment/locale/he.js",
+	"./he.js": "./node_modules/moment/locale/he.js",
+	"./hi": "./node_modules/moment/locale/hi.js",
+	"./hi.js": "./node_modules/moment/locale/hi.js",
+	"./hr": "./node_modules/moment/locale/hr.js",
+	"./hr.js": "./node_modules/moment/locale/hr.js",
+	"./hu": "./node_modules/moment/locale/hu.js",
+	"./hu.js": "./node_modules/moment/locale/hu.js",
+	"./hy-am": "./node_modules/moment/locale/hy-am.js",
+	"./hy-am.js": "./node_modules/moment/locale/hy-am.js",
+	"./id": "./node_modules/moment/locale/id.js",
+	"./id.js": "./node_modules/moment/locale/id.js",
+	"./is": "./node_modules/moment/locale/is.js",
+	"./is.js": "./node_modules/moment/locale/is.js",
+	"./it": "./node_modules/moment/locale/it.js",
+	"./it.js": "./node_modules/moment/locale/it.js",
+	"./ja": "./node_modules/moment/locale/ja.js",
+	"./ja.js": "./node_modules/moment/locale/ja.js",
+	"./jv": "./node_modules/moment/locale/jv.js",
+	"./jv.js": "./node_modules/moment/locale/jv.js",
+	"./ka": "./node_modules/moment/locale/ka.js",
+	"./ka.js": "./node_modules/moment/locale/ka.js",
+	"./kk": "./node_modules/moment/locale/kk.js",
+	"./kk.js": "./node_modules/moment/locale/kk.js",
+	"./km": "./node_modules/moment/locale/km.js",
+	"./km.js": "./node_modules/moment/locale/km.js",
+	"./kn": "./node_modules/moment/locale/kn.js",
+	"./kn.js": "./node_modules/moment/locale/kn.js",
+	"./ko": "./node_modules/moment/locale/ko.js",
+	"./ko.js": "./node_modules/moment/locale/ko.js",
+	"./ky": "./node_modules/moment/locale/ky.js",
+	"./ky.js": "./node_modules/moment/locale/ky.js",
+	"./lb": "./node_modules/moment/locale/lb.js",
+	"./lb.js": "./node_modules/moment/locale/lb.js",
+	"./lo": "./node_modules/moment/locale/lo.js",
+	"./lo.js": "./node_modules/moment/locale/lo.js",
+	"./lt": "./node_modules/moment/locale/lt.js",
+	"./lt.js": "./node_modules/moment/locale/lt.js",
+	"./lv": "./node_modules/moment/locale/lv.js",
+	"./lv.js": "./node_modules/moment/locale/lv.js",
+	"./me": "./node_modules/moment/locale/me.js",
+	"./me.js": "./node_modules/moment/locale/me.js",
+	"./mi": "./node_modules/moment/locale/mi.js",
+	"./mi.js": "./node_modules/moment/locale/mi.js",
+	"./mk": "./node_modules/moment/locale/mk.js",
+	"./mk.js": "./node_modules/moment/locale/mk.js",
+	"./ml": "./node_modules/moment/locale/ml.js",
+	"./ml.js": "./node_modules/moment/locale/ml.js",
+	"./mn": "./node_modules/moment/locale/mn.js",
+	"./mn.js": "./node_modules/moment/locale/mn.js",
+	"./mr": "./node_modules/moment/locale/mr.js",
+	"./mr.js": "./node_modules/moment/locale/mr.js",
+	"./ms": "./node_modules/moment/locale/ms.js",
+	"./ms-my": "./node_modules/moment/locale/ms-my.js",
+	"./ms-my.js": "./node_modules/moment/locale/ms-my.js",
+	"./ms.js": "./node_modules/moment/locale/ms.js",
+	"./mt": "./node_modules/moment/locale/mt.js",
+	"./mt.js": "./node_modules/moment/locale/mt.js",
+	"./my": "./node_modules/moment/locale/my.js",
+	"./my.js": "./node_modules/moment/locale/my.js",
+	"./nb": "./node_modules/moment/locale/nb.js",
+	"./nb.js": "./node_modules/moment/locale/nb.js",
+	"./ne": "./node_modules/moment/locale/ne.js",
+	"./ne.js": "./node_modules/moment/locale/ne.js",
+	"./nl": "./node_modules/moment/locale/nl.js",
+	"./nl-be": "./node_modules/moment/locale/nl-be.js",
+	"./nl-be.js": "./node_modules/moment/locale/nl-be.js",
+	"./nl.js": "./node_modules/moment/locale/nl.js",
+	"./nn": "./node_modules/moment/locale/nn.js",
+	"./nn.js": "./node_modules/moment/locale/nn.js",
+	"./pa-in": "./node_modules/moment/locale/pa-in.js",
+	"./pa-in.js": "./node_modules/moment/locale/pa-in.js",
+	"./pl": "./node_modules/moment/locale/pl.js",
+	"./pl.js": "./node_modules/moment/locale/pl.js",
+	"./pt": "./node_modules/moment/locale/pt.js",
+	"./pt-br": "./node_modules/moment/locale/pt-br.js",
+	"./pt-br.js": "./node_modules/moment/locale/pt-br.js",
+	"./pt.js": "./node_modules/moment/locale/pt.js",
+	"./ro": "./node_modules/moment/locale/ro.js",
+	"./ro.js": "./node_modules/moment/locale/ro.js",
+	"./ru": "./node_modules/moment/locale/ru.js",
+	"./ru.js": "./node_modules/moment/locale/ru.js",
+	"./sd": "./node_modules/moment/locale/sd.js",
+	"./sd.js": "./node_modules/moment/locale/sd.js",
+	"./se": "./node_modules/moment/locale/se.js",
+	"./se.js": "./node_modules/moment/locale/se.js",
+	"./si": "./node_modules/moment/locale/si.js",
+	"./si.js": "./node_modules/moment/locale/si.js",
+	"./sk": "./node_modules/moment/locale/sk.js",
+	"./sk.js": "./node_modules/moment/locale/sk.js",
+	"./sl": "./node_modules/moment/locale/sl.js",
+	"./sl.js": "./node_modules/moment/locale/sl.js",
+	"./sq": "./node_modules/moment/locale/sq.js",
+	"./sq.js": "./node_modules/moment/locale/sq.js",
+	"./sr": "./node_modules/moment/locale/sr.js",
+	"./sr-cyrl": "./node_modules/moment/locale/sr-cyrl.js",
+	"./sr-cyrl.js": "./node_modules/moment/locale/sr-cyrl.js",
+	"./sr.js": "./node_modules/moment/locale/sr.js",
+	"./ss": "./node_modules/moment/locale/ss.js",
+	"./ss.js": "./node_modules/moment/locale/ss.js",
+	"./sv": "./node_modules/moment/locale/sv.js",
+	"./sv.js": "./node_modules/moment/locale/sv.js",
+	"./sw": "./node_modules/moment/locale/sw.js",
+	"./sw.js": "./node_modules/moment/locale/sw.js",
+	"./ta": "./node_modules/moment/locale/ta.js",
+	"./ta.js": "./node_modules/moment/locale/ta.js",
+	"./te": "./node_modules/moment/locale/te.js",
+	"./te.js": "./node_modules/moment/locale/te.js",
+	"./tet": "./node_modules/moment/locale/tet.js",
+	"./tet.js": "./node_modules/moment/locale/tet.js",
+	"./tg": "./node_modules/moment/locale/tg.js",
+	"./tg.js": "./node_modules/moment/locale/tg.js",
+	"./th": "./node_modules/moment/locale/th.js",
+	"./th.js": "./node_modules/moment/locale/th.js",
+	"./tl-ph": "./node_modules/moment/locale/tl-ph.js",
+	"./tl-ph.js": "./node_modules/moment/locale/tl-ph.js",
+	"./tlh": "./node_modules/moment/locale/tlh.js",
+	"./tlh.js": "./node_modules/moment/locale/tlh.js",
+	"./tr": "./node_modules/moment/locale/tr.js",
+	"./tr.js": "./node_modules/moment/locale/tr.js",
+	"./tzl": "./node_modules/moment/locale/tzl.js",
+	"./tzl.js": "./node_modules/moment/locale/tzl.js",
+	"./tzm": "./node_modules/moment/locale/tzm.js",
+	"./tzm-latn": "./node_modules/moment/locale/tzm-latn.js",
+	"./tzm-latn.js": "./node_modules/moment/locale/tzm-latn.js",
+	"./tzm.js": "./node_modules/moment/locale/tzm.js",
+	"./ug-cn": "./node_modules/moment/locale/ug-cn.js",
+	"./ug-cn.js": "./node_modules/moment/locale/ug-cn.js",
+	"./uk": "./node_modules/moment/locale/uk.js",
+	"./uk.js": "./node_modules/moment/locale/uk.js",
+	"./ur": "./node_modules/moment/locale/ur.js",
+	"./ur.js": "./node_modules/moment/locale/ur.js",
+	"./uz": "./node_modules/moment/locale/uz.js",
+	"./uz-latn": "./node_modules/moment/locale/uz-latn.js",
+	"./uz-latn.js": "./node_modules/moment/locale/uz-latn.js",
+	"./uz.js": "./node_modules/moment/locale/uz.js",
+	"./vi": "./node_modules/moment/locale/vi.js",
+	"./vi.js": "./node_modules/moment/locale/vi.js",
+	"./x-pseudo": "./node_modules/moment/locale/x-pseudo.js",
+	"./x-pseudo.js": "./node_modules/moment/locale/x-pseudo.js",
+	"./yo": "./node_modules/moment/locale/yo.js",
+	"./yo.js": "./node_modules/moment/locale/yo.js",
+	"./zh-cn": "./node_modules/moment/locale/zh-cn.js",
+	"./zh-cn.js": "./node_modules/moment/locale/zh-cn.js",
+	"./zh-hk": "./node_modules/moment/locale/zh-hk.js",
+	"./zh-hk.js": "./node_modules/moment/locale/zh-hk.js",
+	"./zh-tw": "./node_modules/moment/locale/zh-tw.js",
+	"./zh-tw.js": "./node_modules/moment/locale/zh-tw.js"
+};
+
+
+function webpackContext(req) {
+	var id = webpackContextResolve(req);
+	var module = __webpack_require__(id);
+	return module;
+}
+function webpackContextResolve(req) {
+	var id = map[req];
+	if(!(id + 1)) { // check for number or string
+		var e = new Error('Cannot find module "' + req + '".');
+		e.code = 'MODULE_NOT_FOUND';
+		throw e;
+	}
+	return id;
+}
+webpackContext.keys = function webpackContextKeys() {
+	return Object.keys(map);
+};
+webpackContext.resolve = webpackContextResolve;
+module.exports = webpackContext;
+webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
+
+/***/ }),
+
 /***/ "./src/$$_lazy_route_resource lazy recursive":
 /*!**********************************************************!*\
   !*** ./src/$$_lazy_route_resource lazy namespace object ***!
@@ -1603,7 +1883,7 @@ var SignUpComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container\" *ngIf=\"!ready\">\r\n  <div class=\"row-first\">\r\n    <app-loader></app-loader>\r\n  </div>\r\n</div>\r\n\r\n<div class=\"container\" *ngIf=\"ready\">\r\n\r\n  <div class=\"row row-first\">\r\n    <div class=\"col\">\r\n      <button type=\"button\" class=\"btn btn-outline-danger waves-effect\" data-toggle=\"modal\" data-target=\"#warningModal\"><h6 class=\"no-margin-bottom\"><i class=\"fa fa-times mr-3\"></i>Back</h6></button>\r\n      <button class=\"btn btn-success waves-effect\" type=\"button\" data-toggle=\"modal\" data-target=\"#confirmationModal\">Submit</button>\r\n    </div>\r\n  </div>\r\n\r\n  <div class=\"row row-first justify-content-end\">\r\n    <div class=\" md-form\" id=\"search-bar\">\r\n      <input id=\"search\" (keyup)=\"search()\" class=\"form-control\" type=\"text\" placeholder=\"Search\" aria-label=\"Search\">\r\n    </div>\r\n  </div>\r\n\r\n  <div class=\"row justify-content-center\">\r\n\r\n        <table class=\"col-12 hoverable table table-borderless table-hover table-fixed\" id=\"gantt-table\">\r\n\r\n          <!--Table head-->\r\n          <thead class=\"\">\r\n          <tr class=\"text-white\">\r\n            <th (click)=\"sortTable(0)\"><a>No</a></th>\r\n            <th (click)=\"sortTable(1)\"><a>Activity</a></th>\r\n            <th (click)=\"sortTable(2)\"><a>Target Date</a></th>\r\n            <th (click)=\"sortTable(3)\"><a>Begin Date</a></th>\r\n          </tr>\r\n          </thead>\r\n          <!--Table head-->\r\n\r\n          <!--Table body-->\r\n          <tbody>\r\n          <!-- elements[0]: activity_id && elements[1]: activity && elements[2]: m_a_p && elements[3]: members linked -->\r\n            <tr *ngFor=\"let element of elements\" (click)=\"selectRow(element)\">\r\n              <td><a>{{element[1]['activity_id']}}</a></td>\r\n              <td><a>{{element[1]['activity_title']}}</a></td>\r\n              <td>\r\n                <input [ngModel]=\"calculDateTarget(element) | date:'yyyy-MM-dd'\" type=\"date\" id=\"{{element[1]['activity_id']}}\" min=\"{{calculDateTarget(element) | date:'yyyy-MM-dd'}}\" max=\"{{project.project_end | date:'yyyy-MM-dd'}}\" class=\"form-control\">\r\n              </td>\r\n              <td>\r\n                <input [ngModel]=\"calculDateBegin(element) | date:'yyyy-MM-dd'\" type=\"date\" id=\"start_{{element[1]['activity_id']}}\" min=\"{{project.project_start | date:'yyyy-MM-dd'}}\" max=\"{{calculDateBegin(element) | date:'yyyy-MM-dd'}}\" class=\"form-control\">\r\n              </td>\r\n            </tr>\r\n          </tbody>\r\n          <!--Table body-->\r\n\r\n        </table>\r\n        <!--Table-->\r\n\r\n        <table class=\"col-12 hoverable table table-borderless table-hover table-fixed\" id=\"worker-table\" *ngIf=\"workers_selected != null\">\r\n\r\n          <!--Table head-->\r\n          <thead class=\"thead-secondary\">\r\n          <tr class=\"text-white\">\r\n            <th (click)=\"sortTable1(0)\"><a>Last Name</a></th>\r\n            <th (click)=\"sortTable1(1)\"><a>First Name</a></th>\r\n            <th>Target Quantity</th>\r\n          </tr>\r\n          </thead>\r\n          <!--Table head-->\r\n\r\n          <!--Table body-->\r\n          <tbody >\r\n          <tr *ngFor=\"let worker of workers_selected\">\r\n            <td>{{worker[0].member_name.toUpperCase()}}</td>\r\n            <td>{{worker[0].member_first_name}}</td>\r\n            <td>\r\n              <input [ngModel]=\"worker[1]\" [(ngModel)]=\"target_quantities[activity_selected.activity_id.toString() + worker[0].member_id]\" id=\"q_{{worker[0].member_id}}\" (change)=\"saveTarget(worker[0].member_id)\" type=\"number\" class=\"form-control\">\r\n            </td>\r\n          </tr>\r\n          </tbody>\r\n          <!--Table body-->\r\n\r\n        </table>\r\n        <!--Table-->\r\n\r\n  </div>\r\n</div>\r\n\r\n<!-- Modal warning -->\r\n<app-warning title=\"Exit\"\r\n             text=\"Are you sure you want to go back to the projects list ?\"\r\n             [isLink]=true\r\n             link=\"project-list\">\r\n</app-warning>\r\n\r\n<!-- Modal confirmation -->\r\n<app-confirmation title=\"Finalize gantt informations\"\r\n                  text=\"Are you sure all informations provided are correct ?\"\r\n                  (success)=\"onSubmit()\"\r\n                  [isLinkActive]=false\r\n                  link=\"project-list\">\r\n</app-confirmation>\r\n"
+module.exports = "<div class=\"container\" *ngIf=\"!ready\">\r\n  <div class=\"row-first\">\r\n    <app-loader></app-loader>\r\n  </div>\r\n</div>\r\n\r\n<div class=\"container\" *ngIf=\"ready\">\r\n\r\n  <div class=\"row row-first\">\r\n    <div class=\"col\">\r\n      <button type=\"button\" class=\"btn btn-outline-danger waves-effect\" data-toggle=\"modal\" data-target=\"#warningModal\"><h6 class=\"no-margin-bottom\"><i class=\"fa fa-times mr-3\"></i>Back</h6></button>\r\n      <button class=\"btn btn-success waves-effect\" type=\"button\" data-toggle=\"modal\" data-target=\"#confirmationModal\">Submit</button>\r\n    </div>\r\n  </div>\r\n\r\n  <div class=\"row row-first justify-content-end\">\r\n    <div class=\" md-form\" id=\"search-bar\">\r\n      <input id=\"search\" (keyup)=\"search()\" class=\"form-control\" type=\"text\" placeholder=\"Search\" aria-label=\"Search\">\r\n    </div>\r\n  </div>\r\n\r\n  <div class=\"row justify-content-center\">\r\n\r\n        <table class=\"col-12 hoverable table table-borderless table-hover table-fixed\" id=\"gantt-table\">\r\n\r\n          <!--Table head-->\r\n          <thead class=\"\">\r\n          <tr class=\"text-white\">\r\n            <th (click)=\"sortTable(0)\"><a>No</a></th>\r\n            <th (click)=\"sortTable(1)\"><a>Activity</a></th>\r\n            <th (click)=\"sortTable(2)\"><a>Target Date</a></th>\r\n            <th (click)=\"sortTable(3)\"><a>Begin Date</a></th>\r\n          </tr>\r\n          </thead>\r\n          <!--Table head-->\r\n\r\n          <!--Table body-->\r\n          <tbody>\r\n          <!-- elements[0]: activity_id && elements[1]: activity && elements[2]: m_a_p && elements[3]: members linked -->\r\n            <tr *ngFor=\"let element of elements\">\r\n              <td (click)=\"selectRow(element)\"><a>{{element['activity'].activity_id}}</a></td>\r\n              <td (click)=\"selectRow(element)\"><a>{{element['activity'].activity_title}}</a></td>\r\n              <td>\r\n                <input (change)=\"minMaxBeginDates(element)\" [(ngModel)]=\"elements[elements.indexOf(element)]['date_target']\" min=\"{{element['min_date_target'] | date:'yyyy-MM-dd'}}\" max=\"{{element['max_date_target'] | date:'yyyy-MM-dd'}}\" type=\"date\" class=\"form-control\">\r\n              </td>\r\n              <td>\r\n                <input [(ngModel)]=\"elements[elements.indexOf(element)]['date_begin']\" min=\"{{element['min_date_begin'] | date:'yyyy-MM-dd'}}\" max=\"{{element['max_date_begin'] | date:'yyyy-MM-dd'}}\" type=\"date\" class=\"form-control\">\r\n              </td>\r\n            </tr>\r\n          </tbody>\r\n          <!--Table body-->\r\n\r\n        </table>\r\n        <!--Table-->\r\n\r\n        <table class=\"col-12 hoverable table table-borderless table-hover table-fixed\" id=\"worker-table\" *ngIf=\"element_selected != null\">\r\n\r\n          <!--Table head-->\r\n          <thead class=\"thead-secondary\">\r\n          <tr class=\"text-white\">\r\n            <th (click)=\"sortTable1(0)\"><a>Last Name</a></th>\r\n            <th (click)=\"sortTable1(1)\"><a>First Name</a></th>\r\n            <th>Target Quantity</th>\r\n          </tr>\r\n          </thead>\r\n          <!--Table head-->\r\n\r\n          <!--Table body-->\r\n          <tbody >\r\n          <tr *ngFor=\"let worker of element_selected['maps_members']\">\r\n            <td>{{worker['member'].member_name.toUpperCase()}}</td>\r\n            <td>{{worker['member'].member_first_name}}</td>\r\n            <td>\r\n              <input [(ngModel)]=\"worker['m_a_p'].target_quantity\" type=\"number\" class=\"form-control\">\r\n            </td>\r\n          </tr>\r\n          </tbody>\r\n          <!--Table body-->\r\n\r\n        </table>\r\n        <!--Table-->\r\n\r\n  </div>\r\n</div>\r\n\r\n<!-- Modal warning -->\r\n<app-warning title=\"Exit\"\r\n             text=\"Are you sure you want to go back to the projects list ?\"\r\n             [isLink]=true\r\n             link=\"project-list\">\r\n</app-warning>\r\n\r\n<!-- Modal confirmation -->\r\n<app-confirmation title=\"Finalize gantt informations\"\r\n                  text=\"Are you sure all informations provided are correct ?\"\r\n                  (success)=\"onSubmit()\"\r\n                  [isLinkActive]=false\r\n                  link=\"project-list\">\r\n</app-confirmation>\r\n"
 
 /***/ }),
 
@@ -1629,13 +1909,12 @@ module.exports = ""
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "GanttCreationComponent", function() { return GanttCreationComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _objects_activity_activity__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../objects/activity/activity */ "./src/app/objects/activity/activity.ts");
-/* harmony import */ var _objects_member_activity_project_member_activity_project_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../objects/member_activity_project/member-activity-project.service */ "./src/app/objects/member_activity_project/member-activity-project.service.ts");
-/* harmony import */ var _objects_member_activity_project_member_activity_project__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../objects/member_activity_project/member-activity-project */ "./src/app/objects/member_activity_project/member-activity-project.ts");
-/* harmony import */ var _objects_activity_activity_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../objects/activity/activity.service */ "./src/app/objects/activity/activity.service.ts");
-/* harmony import */ var _objects_project_project_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../objects/project/project.service */ "./src/app/objects/project/project.service.ts");
-/* harmony import */ var _objects_member_member_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../objects/member/member.service */ "./src/app/objects/member/member.service.ts");
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var _objects_member_activity_project_member_activity_project_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../objects/member_activity_project/member-activity-project.service */ "./src/app/objects/member_activity_project/member-activity-project.service.ts");
+/* harmony import */ var _objects_activity_activity_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../objects/activity/activity.service */ "./src/app/objects/activity/activity.service.ts");
+/* harmony import */ var _objects_project_project_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../objects/project/project.service */ "./src/app/objects/project/project.service.ts");
+/* harmony import */ var _objects_member_member_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../objects/member/member.service */ "./src/app/objects/member/member.service.ts");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1687,7 +1966,6 @@ var __generator = (undefined && undefined.__generator) || function (thisArg, bod
 
 
 
-
 var GanttCreationComponent = /** @class */ (function () {
     function GanttCreationComponent(_memberActivityProjectService, _activityService, _projectService, _memberService, router) {
         this._memberActivityProjectService = _memberActivityProjectService;
@@ -1697,138 +1975,239 @@ var GanttCreationComponent = /** @class */ (function () {
         this.router = router;
         /* ----- Data ----- */
         this.errorMessage = "";
-        this.project_id = "";
         this.ready = false;
-        this.test = "0";
-        this.elements = [];
-        this.element_selected = [];
-        this.target_quantities = new Map();
-        this.activities_from_project = [];
-        this.members_activities_project = [];
-        this.activity_selected = new _objects_activity_activity__WEBPACK_IMPORTED_MODULE_1__["Activity"]();
-        this.member_activity_project_selected = new _objects_member_activity_project_member_activity_project__WEBPACK_IMPORTED_MODULE_3__["MemberActivityProject"]();
-        this.new_dates_target = [];
     }
     GanttCreationComponent.prototype.ngOnInit = function () {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
-                this.project_id = localStorage.getItem('Project_id');
-                this.loadProject();
-                this.loadRows();
+                this.loadData();
                 return [2 /*return*/];
             });
         });
     };
     GanttCreationComponent.prototype.onSubmit = function () {
-        this.updateQuantities();
-        this.router.navigate(['/project-list']);
+        return __awaiter(this, void 0, void 0, function () {
+            var _i, _a, element, _b, _c, map, m;
+            return __generator(this, function (_d) {
+                switch (_d.label) {
+                    case 0:
+                        _i = 0, _a = this.elements;
+                        _d.label = 1;
+                    case 1:
+                        if (!(_i < _a.length)) return [3 /*break*/, 6];
+                        element = _a[_i];
+                        _b = 0, _c = element['maps_members'];
+                        _d.label = 2;
+                    case 2:
+                        if (!(_b < _c.length)) return [3 /*break*/, 5];
+                        map = _c[_b];
+                        m = map['m_a_p'];
+                        m.target_date = element['date_target'];
+                        m.date_begin = element['date_begin'];
+                        return [4 /*yield*/, this._memberActivityProjectService.update(m).toPromise()];
+                    case 3:
+                        _d.sent();
+                        _d.label = 4;
+                    case 4:
+                        _b++;
+                        return [3 /*break*/, 2];
+                    case 5:
+                        _i++;
+                        return [3 /*break*/, 1];
+                    case 6:
+                        this.router.navigate(['/project-list']);
+                        return [2 /*return*/];
+                }
+            });
+        });
     };
     GanttCreationComponent.prototype.loadProject = function () {
-        var _this = this;
-        this._projectService.select(this.project_id).subscribe(function (res) {
-            _this.errorMessage = "";
-            _this.project = res['data'];
-        }, function (error) {
-            _this.errorMessage = error.error.message;
+        return __awaiter(this, void 0, void 0, function () {
+            var project_id, project, error_1;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        project_id = localStorage.getItem('Project_id');
+                        return [4 /*yield*/, this._projectService.select(project_id).toPromise()];
+                    case 1:
+                        project = _a.sent();
+                        this.project = project['data'];
+                        return [3 /*break*/, 3];
+                    case 2:
+                        error_1 = _a.sent();
+                        this.errorMessage = error_1.error.message;
+                        return [3 /*break*/, 3];
+                    case 3: return [2 /*return*/];
+                }
+            });
         });
     };
-    GanttCreationComponent.prototype.loadRows = function () {
-        this.elements = [];
-        this.activities_from_project = [];
-        this.members_activities_project = [];
-        var vm = this;
-        this.loadRowsDistinct();
-        setTimeout(function () {
-            vm._memberActivityProjectService.selectAllFromProject(vm.project_id)
-                .subscribe(function (res) {
-                vm.errorMessage = "";
-                vm.members_activities_project = res['data'];
-                var i = 0;
-                var _loop_1 = function (e) {
-                    vm._memberService.select(e);
-                    var sort_map = [];
-                    var sort_members = [];
-                    var _loop_2 = function (map) {
-                        if (map.activity_id == e[1]['activity_id']) {
-                            sort_map.push(map);
-                            vm._memberService.select(map.member_id)
-                                .subscribe(function (res) {
-                                vm.errorMessage = "";
-                                var libelle = map.activity_id.toString() + map.member_id.toString();
-                                vm.target_quantities.set(libelle, map.target_quantity);
-                                sort_members.push(res['data']);
-                            }, function (error) {
-                                vm.errorMessage = error.error.message;
-                            });
+    GanttCreationComponent.prototype.loadData = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var maps, error_2, _i, _a, a, activity, error_3, map, error_4, _b, _c, m, member, element, error_5, _d, _e, a, element, mm_linked, _f, _g, m, date;
+            return __generator(this, function (_h) {
+                switch (_h.label) {
+                    case 0:
+                        this.ready = false;
+                        return [4 /*yield*/, this.loadProject()];
+                    case 1:
+                        _h.sent();
+                        _h.label = 2;
+                    case 2:
+                        _h.trys.push([2, 4, , 5]);
+                        this.activities_id_distinct = [];
+                        return [4 /*yield*/, this._memberActivityProjectService.selectAllFromProjectDistinct(this.project.project_id).toPromise()];
+                    case 3:
+                        maps = _h.sent();
+                        this.activities_id_distinct = maps['data'];
+                        return [3 /*break*/, 5];
+                    case 4:
+                        error_2 = _h.sent();
+                        this.errorMessage = error_2.error.message;
+                        return [3 /*break*/, 5];
+                    case 5:
+                        _h.trys.push([5, 10, , 11]);
+                        this.activities = [];
+                        _i = 0, _a = this.activities_id_distinct;
+                        _h.label = 6;
+                    case 6:
+                        if (!(_i < _a.length)) return [3 /*break*/, 9];
+                        a = _a[_i];
+                        return [4 /*yield*/, this._activityService.select(a.activity_id).toPromise()];
+                    case 7:
+                        activity = _h.sent();
+                        this.activities.push(activity['data']);
+                        _h.label = 8;
+                    case 8:
+                        _i++;
+                        return [3 /*break*/, 6];
+                    case 9: return [3 /*break*/, 11];
+                    case 10:
+                        error_3 = _h.sent();
+                        this.errorMessage = error_3.error.message;
+                        return [3 /*break*/, 11];
+                    case 11:
+                        _h.trys.push([11, 13, , 14]);
+                        this.m_a_ps = [];
+                        return [4 /*yield*/, this._memberActivityProjectService.selectAllFromProject(this.project.project_id).toPromise()];
+                    case 12:
+                        map = _h.sent();
+                        this.m_a_ps = map['data'];
+                        return [3 /*break*/, 14];
+                    case 13:
+                        error_4 = _h.sent();
+                        this.errorMessage = error_4.error.message;
+                        return [3 /*break*/, 14];
+                    case 14:
+                        _h.trys.push([14, 19, , 20]);
+                        this.m_a_ps_members = [];
+                        _b = 0, _c = this.m_a_ps;
+                        _h.label = 15;
+                    case 15:
+                        if (!(_b < _c.length)) return [3 /*break*/, 18];
+                        m = _c[_b];
+                        return [4 /*yield*/, this._memberService.select(m.member_id).toPromise()];
+                    case 16:
+                        member = _h.sent();
+                        element = {
+                            m_a_p: m,
+                            member: member['data']
+                        };
+                        this.m_a_ps_members.push(element);
+                        _h.label = 17;
+                    case 17:
+                        _b++;
+                        return [3 /*break*/, 15];
+                    case 18: return [3 /*break*/, 20];
+                    case 19:
+                        error_5 = _h.sent();
+                        this.errorMessage = error_5.error;
+                        return [3 /*break*/, 20];
+                    case 20:
+                        //Now we insert all inside the element array to use it in the view
+                        this.elements = [];
+                        for (_d = 0, _e = this.activities; _d < _e.length; _d++) {
+                            a = _e[_d];
+                            element = {
+                                activity: a
+                            };
+                            mm_linked = [];
+                            for (_f = 0, _g = this.m_a_ps_members; _f < _g.length; _f++) {
+                                m = _g[_f];
+                                if (a.activity_id == m['m_a_p'].activity_id) {
+                                    mm_linked.push(m);
+                                }
+                            }
+                            element['maps_members'] = mm_linked;
+                            element['date_target'] = element['maps_members'][0]['m_a_p'].target_date;
+                            element['date_begin'] = element['maps_members'][0]['m_a_p'].date_begin;
+                            date = new Date(this.project.project_start);
+                            if (element['activity'].activity_type_duration == 'days') {
+                                date.setDate(date.getDate() + element['activity'].activity_duration);
+                            }
+                            else if (element['activity'].activity_type_duration == 'month') {
+                                date.setMonth(date.getMonth() + element['activity'].activity_duration);
+                            }
+                            element['min_date_target'] = date;
+                            date = new Date(this.project.project_end);
+                            element['max_date_target'] = date;
+                            //We calcul min and max date begin
+                            date = new Date(this.project.project_start);
+                            element['min_date_begin'] = date;
+                            date = new Date(element['date_target']);
+                            if (element['activity'].activity_type_duration == 'days') {
+                                date.setDate(date.getDate() - element['activity'].activity_duration);
+                            }
+                            else if (element['activity'].activity_type_duration == 'month') {
+                                date.setMonth(date.getMonth() - element['activity'].activity_duration);
+                            }
+                            element['max_date_begin'] = date;
+                            this.elements.push(element);
                         }
-                    };
-                    for (var _i = 0, _a = vm.members_activities_project; _i < _a.length; _i++) {
-                        var map = _a[_i];
-                        _loop_2(map);
-                    }
-                    e[3] = sort_members;
-                    e[2] = sort_map;
-                    i++;
-                };
-                //For each m_a_p we check which activity is linked
-                for (var _i = 0, _a = vm.elements; _i < _a.length; _i++) {
-                    var e = _a[_i];
-                    _loop_1(e);
+                        console.log(this.elements);
+                        this.ready = true;
+                        return [2 /*return*/];
                 }
-                vm.ready = true;
-            }, function (error) {
-                vm.errorMessage = error.error.message;
-            });
-        }, 2000);
-    };
-    GanttCreationComponent.prototype.loadRowsDistinct = function () {
-        var _this = this;
-        var promise = new Promise(function (resolve, reject) {
-            _this._memberActivityProjectService.selectAllFromProjectDistinct(_this.project_id).toPromise()
-                .then(function (res) {
-                _this.errorMessage = "";
-                var _loop_3 = function (map) {
-                    //Now that we have all m_a_p of the project, we select information of each activity
-                    _this._activityService.select(map['activity_id'])
-                        .subscribe(function (res1) {
-                        _this.errorMessage = "";
-                        _this.activities_from_project.push(res1['data']);
-                        _this.elements.push([map, res1['data'], [], []]);
-                    }, function (error) {
-                        _this.errorMessage = error.error.message;
-                    });
-                };
-                for (var _i = 0, _a = res['data']; _i < _a.length; _i++) {
-                    var map = _a[_i];
-                    _loop_3(map);
-                }
-                resolve();
-            }, function (error) {
-                _this.errorMessage = error.error.message;
-                reject(error);
             });
         });
-        return promise;
+    };
+    GanttCreationComponent.prototype.minMaxBeginDates = function (element) {
+        element['min_date_begin'] = new _angular_common__WEBPACK_IMPORTED_MODULE_6__["DatePipe"]('en-US').transform(this.project.project_start, 'yyyy-MM-dd');
+        var date = new Date(element['date_target']);
+        if (element['activity'].activity_type_duration == 'days') {
+            date.setDate(date.getDate() - element['activity'].activity_duration);
+        }
+        else if (element['activity'].activity_type_duration == 'month') {
+            date.setMonth(date.getMonth() - element['activity'].activity_duration);
+        }
+        element['max_date_begin'] = new _angular_common__WEBPACK_IMPORTED_MODULE_6__["DatePipe"]('en-US').transform(date, 'yyyy-MM-dd');
+        this.verificationDates(element);
+    };
+    GanttCreationComponent.prototype.verificationDates = function (element) {
+        var date_begin = new Date(element['date_begin']);
+        var max_date_begin = new Date(element['max_date_begin']);
+        if (element['activity'].activity_type_duration != 'days' && element['activity'].activity_type_duration != 'months') {
+            if (date_begin > max_date_begin) {
+                date_begin = new Date(element['date_target']);
+                element['date_begin'] = new _angular_common__WEBPACK_IMPORTED_MODULE_6__["DatePipe"]('en-US').transform(date_begin, 'yyyy-MM-dd');
+            }
+        }
+        else {
+            if (date_begin >= max_date_begin) {
+                date_begin = new Date(element['date_target']);
+                if (element['activity'].activity_type_duration == 'days') {
+                    date_begin.setDate(date_begin.getDate() - element['activity'].activity_duration);
+                }
+                else if (element['activity'].activity_type_duration == 'months') {
+                    date_begin.setMonth(date_begin.getMonth() - element['activity'].activity_duration);
+                }
+                element['date_begin'] = new _angular_common__WEBPACK_IMPORTED_MODULE_6__["DatePipe"]('en-US').transform(date_begin, 'yyyy-MM-dd');
+            }
+        }
     };
     GanttCreationComponent.prototype.selectRow = function (element) {
         this.element_selected = element;
-        this.activity_selected = element[1];
-        this.member_activity_project_selected = element[0];
-        this.workers_selected = [];
-        for (var _i = 0, _a = element[3]; _i < _a.length; _i++) {
-            var e = _a[_i];
-            //We get the quantity stored in the Map
-            var libelle = element[1]['activity_id'].toString() + e['member_id'];
-            var q = this.target_quantities.get(libelle);
-            //We add it the the displayed list
-            this.workers_selected.push([e, q]);
-        }
-    };
-    GanttCreationComponent.prototype.saveTarget = function (member_id) {
-        //We take the quantity from the input
-        var quantity = document.getElementById('q_' + member_id)['value'];
-        //We store it into the Map
-        this.target_quantities.set(this.activity_selected.activity_id.toString() + member_id, quantity);
     };
     GanttCreationComponent.prototype.sortTable = function (n) {
         var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
@@ -1962,73 +2341,17 @@ var GanttCreationComponent = /** @class */ (function () {
             }
         }
     };
-    GanttCreationComponent.prototype.calculDateTarget = function (element) {
-        var activity = element[1];
-        var informations = element[2][0];
-        var answer = new Date(this.project.project_start);
-        if (activity.activity_type_duration == "days") {
-            answer.setDate(answer.getDate() + activity.activity_duration);
-        }
-        else if (activity.activity_type_duration == "months") {
-            answer.setMonth(answer.getMonth() + activity.activity_duration);
-        }
-        var target_date = new Date(informations.target_date);
-        if (answer > target_date) {
-            return answer;
-        }
-        else {
-            return target_date;
-        }
-    };
-    GanttCreationComponent.prototype.calculDateBegin = function (element) {
-        var activity = element[1];
-        var informations = element[2][0];
-        var answer = new Date(informations.target_date);
-        if (activity.activity_type_duration == "days") {
-            answer.setDate(answer.getDate() - activity.activity_duration);
-        }
-        else if (activity.activity_type_duration == "months") {
-            answer.setMonth(answer.getMonth() - activity.activity_duration);
-        }
-        var date_begin = new Date(this.project.project_start);
-        if (answer > date_begin) {
-            return answer;
-        }
-        else {
-            return date_begin;
-        }
-    };
-    GanttCreationComponent.prototype.updateQuantities = function () {
-        var _this = this;
-        for (var _i = 0, _a = this.members_activities_project; _i < _a.length; _i++) {
-            var m_a_p = _a[_i];
-            //We set the new quantity
-            var libelle = m_a_p.activity_id.toString() + m_a_p.member_id;
-            var quantity = this.target_quantities.get(libelle);
-            m_a_p.target_quantity = quantity;
-            //We search for the new date_target to set it
-            var target_date = document.getElementById(m_a_p.activity_id.toString())['value'];
-            m_a_p.target_date = target_date;
-            //We update the database
-            this._memberActivityProjectService.update(m_a_p)
-                .subscribe(function (res) {
-                _this.errorMessage = "";
-            }, function (error) {
-                _this.errorMessage = error.error.message;
-            });
-        }
-    };
     GanttCreationComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'app-gantt-creation',
             template: __webpack_require__(/*! ./gantt-creation.component.html */ "./src/app/component/gantt/gantt-creation/gantt-creation.component.html"),
             styles: [__webpack_require__(/*! ./gantt-creation.component.scss */ "./src/app/component/gantt/gantt-creation/gantt-creation.component.scss")]
         }),
-        __metadata("design:paramtypes", [_objects_member_activity_project_member_activity_project_service__WEBPACK_IMPORTED_MODULE_2__["MemberActivityProjectService"],
-            _objects_activity_activity_service__WEBPACK_IMPORTED_MODULE_4__["ActivityService"],
-            _objects_project_project_service__WEBPACK_IMPORTED_MODULE_5__["ProjectService"],
-            _objects_member_member_service__WEBPACK_IMPORTED_MODULE_6__["MemberService"],
-            _angular_router__WEBPACK_IMPORTED_MODULE_7__["Router"]])
+        __metadata("design:paramtypes", [_objects_member_activity_project_member_activity_project_service__WEBPACK_IMPORTED_MODULE_1__["MemberActivityProjectService"],
+            _objects_activity_activity_service__WEBPACK_IMPORTED_MODULE_2__["ActivityService"],
+            _objects_project_project_service__WEBPACK_IMPORTED_MODULE_3__["ProjectService"],
+            _objects_member_member_service__WEBPACK_IMPORTED_MODULE_4__["MemberService"],
+            _angular_router__WEBPACK_IMPORTED_MODULE_5__["Router"]])
     ], GanttCreationComponent);
     return GanttCreationComponent;
 }());
@@ -3309,7 +3632,12 @@ var ProjectCreationComponent = /** @class */ (function () {
             _this.errorMessage = "";
             sub_department_id = res['data']['sub_department_id'];
             //We insert the project
-            _this._projectService.createProject(_this.new_project_title, project_code, project_work_code, _this.new_project_start, _this.new_project_end, sub_department_id)
+            //We set seconds, minutes, hours to default value with this process
+            var project_start = new Date(_this.new_project_start);
+            var project_end = new Date(_this.new_project_end);
+            project_start = new Date(project_start.getFullYear(), project_start.getMonth(), project_start.getDate());
+            project_end = new Date(project_end.getFullYear(), project_end.getMonth(), project_end.getDate());
+            _this._projectService.createProject(_this.new_project_title, project_code, project_work_code, project_start, project_end, sub_department_id)
                 .subscribe(function (res) {
                 _this.errorMessage = "";
                 _this.new_project_id = res['data']['project_id'];
@@ -3778,7 +4106,7 @@ var ProjectComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container\" *ngIf=\"!ready\">\r\n  <div class=\"row-first\">\r\n    <app-loader></app-loader>\r\n  </div>\r\n</div>\r\n\r\n<div class=\"container\" *ngIf=\"ready\">\r\n\r\n  <div class=\"row row-first\">\r\n    <div class=\"col\">\r\n      <button type=\"button\" class=\"btn btn-outline-danger waves-effect\" routerLink=\"/project-list\"><h6 class=\"no-margin-bottom\"><i class=\"fa fa-times mr-3\"></i>Back</h6></button>\r\n    </div>\r\n  </div>\r\n\r\n  <div class=\"row row-first justify-content-end\">\r\n    <div class=\" md-form\" id=\"search-bar\">\r\n      <input id=\"search\" (keyup)=\"search()\" class=\"form-control\" type=\"text\" placeholder=\"Search\" aria-label=\"Search\">\r\n    </div>\r\n  </div>\r\n\r\n  <div class=\"row justify-content-center\">\r\n\r\n    <table class=\"col-12 hoverable table table-borderless table-hover table-fixed\" id=\"gantt-table\">\r\n\r\n      <!--Table head-->\r\n      <thead class=\"\">\r\n      <tr class=\"text-white\">\r\n        <th><a>No</a></th>\r\n        <th class=\"text-small\"><a>Staff Names</a></th>\r\n        <th class=\"text-small\"><a>Total Target</a></th>\r\n        <th><a>{{months_label[month_index]}}</a></th>\r\n      </tr>\r\n      </thead>\r\n      <!--Table head-->\r\n\r\n      <!--Table body-->\r\n      <tbody>\r\n      <!-- elements[0]: activity_id && elements[1]: activity && elements[2]: m_a_p && elements[3]: members linked -->\r\n      <tr *ngFor=\"let element of elements\">\r\n        <td>{{element['member']['member_id']}}</td>\r\n        <td class=\"text-small\">{{element['member']['member_name'].toUpperCase()}} {{element['member']['member_first_name']}}</td>\r\n        <td>{{element['total_target']}}</td>\r\n        <td></td>\r\n      </tr>\r\n      </tbody>\r\n      <!--Table body-->\r\n\r\n    </table>\r\n    <!--Table-->\r\n\r\n  </div>\r\n\r\n</div>\r\n\r\n"
+module.exports = "<div class=\"container\" *ngIf=\"!ready\">\r\n  <div class=\"row-first\">\r\n    <app-loader></app-loader>\r\n  </div>\r\n</div>\r\n\r\n<div class=\"container\" *ngIf=\"ready\">\r\n\r\n  <div class=\"row row-first\">\r\n    <div class=\"col\">\r\n      <button type=\"button\" class=\"btn btn-outline-danger waves-effect\" routerLink=\"/project-list\"><h6 class=\"no-margin-bottom\"><i class=\"fa fa-times mr-3\"></i>Back</h6></button>\r\n    </div>\r\n  </div>\r\n\r\n  <div class=\"row row-first\">\r\n    <div class=\" md-form\" id=\"search-bar\">\r\n      <input id=\"search\" (keyup)=\"search()\" class=\"form-control\" type=\"text\" placeholder=\"Search\" aria-label=\"Search\">\r\n    </div>\r\n  </div>\r\n\r\n  <div class=\"row justify-content-center\">\r\n\r\n    <table class=\"col-12 hoverable table table-borderless table-hover table-fixed\" id=\"gantt-table\">\r\n\r\n      <!--Table head-->\r\n      <thead class=\"\">\r\n      <tr class=\"text-white\">\r\n        <th><a>No</a></th>\r\n        <th class=\"text-small\"><a>Staff Names</a></th>\r\n        <th class=\"text-small\"><a>Total Target</a></th>\r\n        <th *ngIf=\"weeks[0] != null\">{{weeks[0][0]}}</th>\r\n        <th *ngIf=\"weeks[1] != null\">{{weeks[1][0]}}</th>\r\n        <th *ngIf=\"weeks[2] != null\">{{weeks[2][0]}}</th>\r\n        <th *ngIf=\"weeks[3] != null\">{{weeks[3][0]}}</th>\r\n        <th *ngIf=\"weeks[4] != null\">{{weeks[4][0]}}</th>\r\n        <th *ngIf=\"weeks[5] != null\">{{weeks[5][0]}}</th>\r\n      </tr>\r\n      </thead>\r\n      <!--Table head-->\r\n\r\n      <!--Table body-->\r\n      <tbody>\r\n      <!-- elements[0]: activity_id && elements[1]: activity && elements[2]: m_a_p && elements[3]: members linked -->\r\n      <tr *ngFor=\"let element of elements\">\r\n        <td>{{element['member']['member_id']}}</td>\r\n        <td class=\"text-small\">{{element['member']['member_name'].toUpperCase()}} {{element['member']['member_first_name']}}</td>\r\n        <td>{{element['total_target']}}</td>\r\n        <th *ngIf=\"weeks[0] != null\">{{targets.get(element['member']['member_id']).get(weeks[1][0])}}</th>\r\n        <th *ngIf=\"weeks[1] != null\">{{targets.get(element['member']['member_id']).get(weeks[1][1])}}</th>\r\n        <th *ngIf=\"weeks[2] != null\">{{targets.get(element['member']['member_id']).get(weeks[2][1])}}</th>\r\n        <th *ngIf=\"weeks[3] != null\">{{targets.get(element['member']['member_id']).get(weeks[3][1])}}</th>\r\n        <th *ngIf=\"weeks[4] != null\">{{targets.get(element['member']['member_id']).get(weeks[4][1])}}</th>\r\n        <th *ngIf=\"weeks[5] != null\">{{targets.get(element['member']['member_id']).get(weeks[5][1])}}</th>\r\n      </tr>\r\n      </tbody>\r\n      <!--Table body-->\r\n\r\n    </table>\r\n    <!--Table-->\r\n\r\n  </div>\r\n\r\n</div>\r\n\r\n"
 
 /***/ }),
 
@@ -3808,6 +4136,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _objects_member_member_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../objects/member/member.service */ "./src/app/objects/member/member.service.ts");
 /* harmony import */ var _objects_activity_activity_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../objects/activity/activity.service */ "./src/app/objects/activity/activity.service.ts");
 /* harmony import */ var _objects_project_project_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../objects/project/project.service */ "./src/app/objects/project/project.service.ts");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_5__);
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -3857,6 +4187,7 @@ var __generator = (undefined && undefined.__generator) || function (thisArg, bod
 
 
 
+
 var VolumeProgressComponent = /** @class */ (function () {
     function VolumeProgressComponent(_memberActivityProjectService, _memberService, _activityService, _projectService) {
         this._memberActivityProjectService = _memberActivityProjectService;
@@ -3870,9 +4201,9 @@ var VolumeProgressComponent = /** @class */ (function () {
         this.activities = [];
         this.elements = [];
         this.sorted_workers = [];
+        this.targets = new Map();
         this.ready = false;
-        this.months_label = [];
-        this.month_index = 0;
+        this.weeks = [];
     }
     VolumeProgressComponent.prototype.ngOnInit = function () {
         return __awaiter(this, void 0, void 0, function () {
@@ -3884,7 +4215,10 @@ var VolumeProgressComponent = /** @class */ (function () {
                         return [4 /*yield*/, this.sortElements()];
                     case 2:
                         _a.sent();
-                        this.calendarRange();
+                        console.log(this.elements);
+                        this.typeOfCalendar();
+                        this.calculTargetsPerWeek();
+                        this.calculWeeksPerMonth(2018, 7);
                         return [2 /*return*/];
                 }
             });
@@ -3998,19 +4332,214 @@ var VolumeProgressComponent = /** @class */ (function () {
         }
     };
     VolumeProgressComponent.prototype.calendarRange = function () {
-        var start = new Date(this.project.project_start);
-        var end = new Date(this.project.project_end);
-        var intervalDay = this.dateInterval(start, end);
-        //let intervalMonth = Math.ceil(intervalDay/31);
-        // We get label of all months
-        var locale = "en-us";
-        var date = start;
-        var month;
-        for (var i = start.getMonth(); i <= end.getMonth(); i++) {
-            month = date.toLocaleDateString(locale, { month: "long" });
-            this.months_label.push(month);
-            date.setMonth(date.getMonth() + 1);
+        return __awaiter(this, void 0, void 0, function () {
+            var start, end, fake_start, fake_end, locale, date, i, element, j, fake_start_2, fake_end_2, month, k, day;
+            return __generator(this, function (_a) {
+                start = new Date(this.project.project_start);
+                end = new Date(this.project.project_end);
+                fake_start = new Date(this.project.project_start);
+                fake_end = new Date(this.project.project_end);
+                this.calendar = [];
+                locale = "en-us";
+                date = new Date(start);
+                /* ----- We get each days ----- */
+                /* ----- We get each days ----- */
+                for (i = start.getFullYear(); i <= end.getFullYear(); i++) {
+                    element = {
+                        year: i,
+                        months: []
+                    };
+                    fake_start.setFullYear(i);
+                    fake_end.setFullYear(i);
+                    /* ----- We check first and last month of the loop ----- */
+                    //If it's not the first year, we need to begin at January
+                    if (i != start.getFullYear()) {
+                        fake_start.setMonth(0);
+                    }
+                    //If it's the last year, we need to finish at the right Month
+                    if (i == end.getFullYear()) {
+                        fake_end.setMonth(end.getMonth());
+                    }
+                    else {
+                        fake_end.setMonth(11);
+                    }
+                    /* ----- We get each months ----- */
+                    /* ----- We get each months ----- */
+                    for (j = fake_start.getMonth(); j <= fake_end.getMonth(); j++) {
+                        fake_start_2 = new Date(fake_start);
+                        fake_end_2 = new Date(fake_end);
+                        fake_start_2.setMonth(j);
+                        fake_end_2.setMonth(j);
+                        date.setMonth(j);
+                        month = {
+                            month: j,
+                            month_label: date.toLocaleDateString(locale, { month: "long" }),
+                            days: []
+                        };
+                        /* ----- We check first and last day of the loop ----- */
+                        //if it's not the first month of the first year, we need to begin the 1st
+                        if (!(i == start.getFullYear() && j == start.getMonth())) {
+                            fake_start_2.setDate(1);
+                        }
+                        //If it's the last month of the last year, we need to finish at the right day
+                        if (i == end.getFullYear() && j == end.getMonth()) {
+                            fake_end_2.setDate(end.getDate());
+                        }
+                        else {
+                            fake_end_2.setMonth(j + 1);
+                            fake_end_2.setDate(0);
+                        }
+                        /* ----- We get each days ----- */
+                        /* ----- We get each days ----- */
+                        for (k = fake_start_2.getDate(); k <= fake_end_2.getDate(); k++) {
+                            date.setDate(k);
+                            day = {
+                                day: k,
+                                target_quantity: 0,
+                                quantity_finished: 0
+                            };
+                            month['days'].push(day);
+                        }
+                        /* ----- /We get each days ----- */
+                        element['months'].push(month);
+                    }
+                    /* ----- /We get each months ----- */
+                    this.calendar.push(element);
+                }
+                /* ----- /We get each years ----- */
+                console.log(this.calendar);
+                return [2 /*return*/];
+            });
+        });
+    };
+    VolumeProgressComponent.prototype.intervalDate = function (d1, d2) {
+        var start = new Date(d1);
+        var end = new Date(d2);
+        var interval = Math.floor((Date.UTC(end.getFullYear(), end.getMonth(), end.getDate()) - Date.UTC(start.getFullYear(), start.getMonth(), start.getDate())) / (1000 * 60 * 60 * 24));
+        return interval;
+    };
+    VolumeProgressComponent.prototype.typeOfCalendar = function () {
+        var interval = this.intervalDate(this.project.project_start, this.project.project_end);
+        if (interval < 8) {
+            this.calendarType = "1week";
         }
+        else if (interval < 15) {
+            this.calendarType = "2week";
+        }
+        else if (interval < 22) {
+            this.calendarType = "3week";
+        }
+        else {
+            this.calendarType = "month";
+        }
+        console.log(this.calendarType);
+    };
+    VolumeProgressComponent.prototype.calculTargetsPerWeek = function () {
+        //Map where MEMBER is the key, value : new MAP { Week date : quantity }
+        this.targets = new Map();
+        //We check every members
+        for (var _i = 0, _a = this.elements; _i < _a.length; _i++) {
+            var element = _a[_i];
+            this.targets.set(element['member'].member_id, new Map());
+            /* ----- We check every m_a_ps of the member ----- */
+            for (var _b = 0, _c = element['m_a_ps']; _b < _c.length; _b++) {
+                var map = _c[_b];
+                console.log('\nNEW MAP');
+                var start = new Date(map.date_begin);
+                var end = new Date(map.target_date);
+                //Interval in days & quantity per day
+                var interval = moment__WEBPACK_IMPORTED_MODULE_5__(end).diff(start) / (1000 * 60 * 60 * 24) + 1;
+                var one_quantity = Math.floor(map.target_quantity / interval);
+                var full_quantity = map.target_quantity;
+                console.log("I will give : ", one_quantity, " for the global amount of : ", map.target_quantity, " - Interval : ", interval);
+                var quantity_given = 0;
+                var quantity = one_quantity;
+                var w = void 0;
+                //The day that will be the key of the amount of quantity calculated
+                if (moment__WEBPACK_IMPORTED_MODULE_5__(start).format('dddd') == 'Monday') {
+                    w = new Date(start.getFullYear(), start.getMonth(), start.getDate()); //We do this process to have minutes, hours & seconds at default value
+                }
+                else {
+                    var fake_date = new Date(start);
+                    var first_day = moment__WEBPACK_IMPORTED_MODULE_5__(fake_date).format('dddd');
+                    while (first_day != 'Monday' && fake_date != start) {
+                        fake_date.setDate(fake_date.getDate() - 1);
+                        first_day = moment__WEBPACK_IMPORTED_MODULE_5__(fake_date).format('dddd');
+                    }
+                    //FIRST KEY
+                    w = new Date(fake_date.getFullYear(), fake_date.getMonth(), fake_date.getDate());
+                }
+                /* ----- We check every days ----- */
+                /* ----- We check every days ----- */
+                for (var i = new Date(start); i <= end; i.setDate(i.getDate() + 1)) {
+                    var day = moment__WEBPACK_IMPORTED_MODULE_5__(i).format('dddd');
+                    //If it's Monday, we store the previous quantity in a week, and continue in a new week
+                    if (day == 'Monday' && i.toString() != start.toString()) {
+                        //If it's the last day, we need to add the rest of the quantity
+                        if (i.toString() == end.toString()) {
+                            quantity = full_quantity - quantity_given;
+                            console.log("It's the end : ", quantity);
+                        }
+                        var previous_quantity = 0;
+                        if (this.targets.get(element['member'].member_id).get(w.toString()) != null) {
+                            //Yes, we need to increase with the existing quantity
+                            previous_quantity = this.targets.get(element['member'].member_id).get(w.toString());
+                        }
+                        this.targets.get(element['member'].member_id).set(w.toString(), previous_quantity + quantity);
+                        quantity_given += quantity;
+                        console.log("I gave: ", quantity, " for this key ", moment__WEBPACK_IMPORTED_MODULE_5__(w));
+                        //We get the new Monday date for next quantities
+                        w = new Date(i.getFullYear(), i.getMonth(), i.getDate());
+                        quantity = 0;
+                    }
+                    else {
+                        quantity += one_quantity;
+                    }
+                }
+                /* ----- /We check every days ----- */
+                //If it's Monday, we have already add the quantity, so we add only if it's not monday
+                var last_day = moment__WEBPACK_IMPORTED_MODULE_5__(end).format('dddd');
+                if (last_day != 'Monday') {
+                    //Is the week already exist ?
+                    console.log('Quantity is like this : ', quantity);
+                    quantity = full_quantity - quantity_given;
+                    var previous_quantity = 0;
+                    if (this.targets.get(element['member'].member_id).get(w.toString()) != null) {
+                        //Yes, we need to increase with the existing quantity
+                        previous_quantity = this.targets.get(element['member'].member_id).get(w.toString());
+                    }
+                    console.log('Last quantity given : ', quantity, " Key : ", w);
+                    this.targets.get(element['member'].member_id).set(w.toString(), previous_quantity + quantity);
+                }
+            }
+            /* ----- /We check every m_a_ps of the member ----- */
+        }
+        console.log(this.targets);
+    };
+    VolumeProgressComponent.prototype.calculWeeksPerMonth = function (year, month) {
+        this.weeks = [];
+        var start = new Date(year, month);
+        var end = new Date(year, month + 1, 0);
+        var first_day = moment__WEBPACK_IMPORTED_MODULE_5__(start).format('dddd');
+        while (first_day != 'Monday') {
+            console.log("Day : ", start);
+            start.setDate(start.getDate() - 1);
+            first_day = moment__WEBPACK_IMPORTED_MODULE_5__(start).format('dddd');
+        }
+        var i = new Date(start);
+        var date_label = "";
+        var j = 0;
+        console.log("Iterator : ", i);
+        while (i <= end && j < 56) {
+            var key = new Date(i);
+            date_label = moment__WEBPACK_IMPORTED_MODULE_5__(i).format('M/D') + ' - ';
+            i.setDate(i.getDate() + 6);
+            date_label += moment__WEBPACK_IMPORTED_MODULE_5__(i).format('M/D');
+            this.weeks.push([date_label, key.toString()]);
+            i.setDate(i.getDate() + 1);
+            j++;
+        }
+        console.log(this.weeks);
     };
     /* Give the number of days between 2 dates */
     VolumeProgressComponent.prototype.dateInterval = function (d1, d2) {
@@ -7013,26 +7542,6 @@ var MemberActivityProjectService = /** @class */ (function () {
 
 /***/ }),
 
-/***/ "./src/app/objects/member_activity_project/member-activity-project.ts":
-/*!****************************************************************************!*\
-  !*** ./src/app/objects/member_activity_project/member-activity-project.ts ***!
-  \****************************************************************************/
-/*! exports provided: MemberActivityProject */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MemberActivityProject", function() { return MemberActivityProject; });
-var MemberActivityProject = /** @class */ (function () {
-    function MemberActivityProject() {
-    }
-    return MemberActivityProject;
-}());
-
-
-
-/***/ }),
-
 /***/ "./src/app/objects/organisation/organisation.service.ts":
 /*!**************************************************************!*\
   !*** ./src/app/objects/organisation/organisation.service.ts ***!
@@ -8117,7 +8626,7 @@ __webpack_require__.r(__webpack_exports__);
 // The list of file replacements can be found in `angular.json`.
 var environment = {
     production: false,
-    SERVEUR_URL: "http://localhost:1330"
+    SERVEUR_URL: 'https://stikom-sop-managment.herokuapp.com'
 };
 /*
  * In development mode, to ignore zone related error stack frames such as

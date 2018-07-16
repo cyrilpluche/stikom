@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  SERVEUR_URL:"http://localhost:1330"
+  SERVEUR_URL:"http://localhost:1330" // 'https://stikom-sop-managment.herokuapp.com'
 };
 
 /*
