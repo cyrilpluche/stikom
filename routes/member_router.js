@@ -219,7 +219,6 @@ router.put('/update_password',
         });
     });
 
-// TODO can be accessible by anyone
 router.put('/validate_registration',
     policy.requiresNoAuthenticateUser,
     policy.checkParameters(['seed']),

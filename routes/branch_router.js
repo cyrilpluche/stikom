@@ -4,7 +4,6 @@ const policy = require('../policy/policy_middleware');
 const modelBranch = require('../models/branch_model');
 const ERRORTYPE = require('../policy/errorType');
 
-// TODO everybody can acces this route
 router.get('/all', policy.checkParameters(['organisation']) ,function (req, res, next) {
     let organisation_id = req.query.organisation
     modelBranch.selectAllByOrganisationId(organisation_id).then(function (data) {
