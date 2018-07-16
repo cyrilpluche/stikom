@@ -129,13 +129,13 @@ router.post('/login', policy.requiresNoAuthenticateUser,// the user is already l
                 throw ERRORTYPE.WRONG_IDENTIFIER
             } else {
                 if (member.member_valid !== 1 &&
-                    (member.seed !== undefined || member.seed != null || member.seed != '')) { // the member needs to validate hist account
+                    (member.seed !== undefined || member.seed != null || member.seed !== '')) { // the member needs to validate hist account
                     throw ERRORTYPE.VALIDATION_REQUIRED
                 } else {
                     member.member_password = undefined; // we don't want to send the pwd to the client
-                    let token = jwtHelpers.jwtSignMember(member)
-                    member.member_role = undefined // we don't want the client to see the member role
-                    member.seed = undefined
+                    let token = jwtHelpers.jwtSignMember(member);
+                    member.member_role = undefined; // we don't want the client to see the member role
+                    member.seed = undefined;
                     res.json({
                         token: token,
                         data: member
@@ -259,7 +259,7 @@ router.put('/reset_password');
  * @param next
  */
 function requireNoneExistingMail (req, res, next) {
-    let mail = req.body.mail
+    let mail = req.body.mail;
     modelMember.existByMail(mail).then(function (data) {
         if (data) { // the mail exists the users cannot connect
             throw ERRORTYPE.customError('This email arealdy exists please find another one',
@@ -283,7 +283,7 @@ function requireSeed (req, res, next) {
         if (data) {
             next ()
         } else {
-            throw ERRORTYPE.customError('Coudn\'t find this member, you link has maybe expired', 'SEED NOT FOUND', 404);
+            throw ERRORTYPE.customError('Coudn\'t find this member, you link might have expired', 'SEED NOT FOUND', 404);
         }
     }).catch(next)
 }

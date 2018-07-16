@@ -47,7 +47,7 @@ export class PdfSopComponent implements OnInit {
   sop_objectives:string="NA";
 
   units:[string]=[""];
-  activities:[string]=[""];
+  activities = [];
 
 
 
@@ -94,12 +94,12 @@ export class PdfSopComponent implements OnInit {
 
   download(sop_title:string) {
 
-    var columns = [  {title: "0", dataKey: "0"},
+    let columns = [  {title: "0", dataKey: "0"},
       {title: "1", dataKey: "1"},
       {title: "2", dataKey: "2"},
       {title: "3", dataKey: "3"}
     ];
-    var rows = [
+    let rows = [
       ["", this.organisation_name, "Creation Date",new DatePipe('en-US').transform(this.sop_creation, 'dd-MM-yyyy')],
       ["", this.branch_name, "Revision Date", new DatePipe('en-US').transform(this.sop_revision, 'dd-MM-yyyy')],
       ["", this.department_name, "Published Date", new DatePipe('en-US').transform(this.sop_published, 'dd-MM-yyyy')],
@@ -107,7 +107,7 @@ export class PdfSopComponent implements OnInit {
       ["","","",""]
     ];
 
-    var doc = new jsPDF('l', 'pt');
+    let doc = new jsPDF('l', 'pt');
 
 
     doc.autoTable(columns, rows, {
@@ -149,11 +149,11 @@ export class PdfSopComponent implements OnInit {
       }
     });
 
-    var columns = [  {title: "0", dataKey: "0"},
+    columns = [  {title: "0", dataKey: "0"},
       {title: "1", dataKey: "1"},
       {title: "2", dataKey: "2"}
     ];
-    var rows = [
+    rows = [
       ["Base Rule/Regulation","", "Staff Qualifications"],
       [this.sop_rules,"", this.sop_staff_qualification],
       ["Related Working Units","", "Supporting tools"],
@@ -207,7 +207,7 @@ export class PdfSopComponent implements OnInit {
 
     doc.addPage();
 
-    var columns = [  {title: "0", dataKey: "0"},
+    columns = [  {title: "0", dataKey: "0"},
       {title: "1", dataKey: "1"},
       {title: "2", dataKey: "2"},
       {title: "3", dataKey: "3"},
@@ -217,12 +217,17 @@ export class PdfSopComponent implements OnInit {
       {title: "7", dataKey: "7"},
       {title: "8", dataKey: "8"}
     ];
-    var rows = [
-      ["No","Activity", this.units[0], this.units[1],this.units[2],"Unit 4","Supporting \n Materials/input","Duration","Output"],
-      [this.activities[0][0],this.activities[0][1], this.activities[0][5],this.activities[0][6],this.activities[0][7], "schema",this.activities[0][2],this.activities[0][3],this.activities[0][4],],
-      [this.activities[1][0],this.activities[1][1], this.activities[1][5],this.activities[1][6],this.activities[1][7], "schema",this.activities[1][2],this.activities[1][3],this.activities[1][4]],
-      [this.activities[2][0],this.activities[2][1], this.activities[2][5],this.activities[2][6],this.activities[2][7], "schema",this.activities[2][2],this.activities[2][3],this.activities[2][4]],
-      [this.activities[3][0],this.activities[3][1], this.activities[3][5],this.activities[3][6],this.activities[3][7], "schema",this.activities[3][2],this.activities[3][3],this.activities[3][4]],
+    rows = [
+      ["No","Activity", this.units[0], this.units[1],this.units[2],"Unit 4","Supporting \n Materials/input","Duration",
+        "Output"],
+      [this.activities[0][0],this.activities[0][1], this.activities[0][5],this.activities[0][6],this.activities[0][7],
+        "schema",this.activities[0][2],this.activities[0][3],this.activities[0][4]],
+      [this.activities[1][0],this.activities[1][1], this.activities[1][5],this.activities[1][6],this.activities[1][7],
+        "schema",this.activities[1][2],this.activities[1][3],this.activities[1][4]],
+      [this.activities[2][0],this.activities[2][1], this.activities[2][5],this.activities[2][6],this.activities[2][7],
+        "schema",this.activities[2][2],this.activities[2][3],this.activities[2][4]],
+      [this.activities[3][0],this.activities[3][1], this.activities[3][5],this.activities[3][6],this.activities[3][7],
+        "schema",this.activities[3][2],this.activities[3][3],this.activities[3][4]],
 
     ];
 
