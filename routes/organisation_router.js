@@ -4,7 +4,7 @@ const modelOrganisation = require('../models/organisation_model');
 const policy = require('../policy/policy_middleware');
 const ERRORTYPE = require('../policy/errorType');
 
-// TODO everybody can access to this route
+
 router.get('/all', function (req, res, next) {
     modelOrganisation.selectAll().then(function (data) {
         res.json({data: data});

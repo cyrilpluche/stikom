@@ -52,7 +52,6 @@ export class AccountComponent implements OnInit {
     this._memberService.passwordUpdate(actual,newP,confP)
       .subscribe( (res) => {
           this.errorMessage = "";
-          this._memberService.logout();
           this.changeFinished=true;
         },
         error => {

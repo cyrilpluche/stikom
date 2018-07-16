@@ -86,7 +86,6 @@ const policies = {
                 }
             })
             // will check if the user has right to do what he aimed to do
-            // TODO maybe split this function into differents function to handle different level of right
         })
     },
 

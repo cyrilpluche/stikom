@@ -5,7 +5,6 @@ const modelDepartment = require('../models/department_model');
 const ERRORTYPE = require('../policy/errorType');
 
 
-// TODO everybody can access this route
 router.get('/all', policy.checkParameters(['branch']), function (req, res, next) {
     let branch_id = req.query.branch
     modelDepartment.selectAllByBranchId(branch_id).then(function (data) {

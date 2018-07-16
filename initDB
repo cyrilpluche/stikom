@@ -564,7 +564,7 @@ RETURN array(SELECT r.role_title FROM public.role r, public.has_role h
 	WHERE h.member_id = _member_id AND r.role_id = h.role_id);
 END
 $func$ LANGUAGE plpgsql;
-SELECT M.member_name, member_role(M.member_id) FROM public.member M group by M.member_name, M.member_id
+SELECT M.member_name, member_role(M.member_id) FROM public.member M group by M.member_name, M.member_id;
 
 DROP FUNCTION IF EXISTS activity_unit(integer);
 CREATE OR REPLACE FUNCTION activity_unit (_activity_id public.activity.activity_id%TYPE) RETURNS varchar array

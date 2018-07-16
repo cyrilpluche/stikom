@@ -1,7 +1,5 @@
 
 /* const { Client } = require('pg')
-// TODO penser à modifier le .env
-// TODO peut etre utiliser pg-promise
 const client = new Client({
     user: process.env.DB_USER,
     host: process.env.DB_HOST,
