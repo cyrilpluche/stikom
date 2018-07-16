@@ -8,6 +8,7 @@ import {ProjectService} from "../../../objects/project/project.service";
 import {Member} from "../../../objects/member/member";
 import {MemberService} from "../../../objects/member/member.service";
 import {Router} from "@angular/router";
+import {DatePipe} from "@angular/common";
 
 
 
@@ -20,21 +21,17 @@ export class GanttCreationComponent implements OnInit {
 
   /* ----- Data ----- */
   errorMessage: string = "";
-  project_id: string = "";
-  project: Project;
+
   ready: boolean = false;
 
-  test: string = "0";
-  elements: Object[][] = [];
-  element_selected = [];
-  workers_selected: Object[];
-  target_quantities = new Map();
-  activities_from_project: Activity[] = [];
-  members_activities_project: MemberActivityProject[] = [];
-  activity_selected: Activity = new Activity();
-  member_activity_project_selected: MemberActivityProject = new MemberActivityProject();
-
-  new_dates_target: string[] = [];
+  /* NEW */
+  project: Project;
+  activities_id_distinct: MemberActivityProject[];
+  m_a_ps: MemberActivityProject[];
+  activities: Activity[];
+  m_a_ps_members: Object[];
+  elements: Object[];
+  element_selected;
 
   constructor(private _memberActivityProjectService: MemberActivityProjectService,
               private _activityService: ActivityService,
@@ -43,123 +40,178 @@ export class GanttCreationComponent implements OnInit {
               private router: Router) { }
 
   async ngOnInit() {
-    this.project_id = localStorage.getItem('Project_id');
-    this.loadProject();
-    this.loadRows();
+    this.loadData();
   }
 
-  onSubmit(){
-    this.updateQuantities();
+  async onSubmit(){
+
+    for (let element of this.elements){
+      for(let map of element['maps_members']){
+        let m = map['m_a_p'] as MemberActivityProject;
+        m.target_date = element['date_target'];
+        m.date_begin = element['date_begin'];
+        await this._memberActivityProjectService.update(m).toPromise();
+      }
+    }
+
     this.router.navigate(['/project-list']);
   }
 
-  loadProject(){
-    this._projectService.select(this.project_id).subscribe((res) => {
-        this.errorMessage = "";
-        this.project = res['data'] as Project;
-      },
-      error => {
-        this.errorMessage = error.error.message;
-      });
+  async loadProject(){
+    try {
+      let project_id = localStorage.getItem('Project_id');
+      let project = await this._projectService.select(project_id).toPromise();
+      this.project = project['data'];
+    }
+    catch (error) {
+      this.errorMessage = error.error.message;
+    }
   }
 
-  loadRows(){
+  async loadData() {
+
+    this.ready = false;
+
+    await this.loadProject();
+
+    //We select all id activities DISTINCT
+    try {
+      this.activities_id_distinct = [];
+      let maps = await this._memberActivityProjectService.selectAllFromProjectDistinct(this.project.project_id).toPromise();
+      this.activities_id_distinct = maps['data'] as MemberActivityProject[];
+    }
+    catch (error) {
+      this.errorMessage = error.error.message;
+    }
+
+    //Now that we have all id activity distinct of the project, we select information of each activity
+    try {
+      this.activities = [];
+      for (let a of this.activities_id_distinct) {
+        let activity = await this._activityService.select(a.activity_id).toPromise();
+        this.activities.push(activity['data'] as Activity);
+      }
+    }
+    catch (error) {
+      this.errorMessage = error.error.message;
+    }
+
+    //We select now all m_a_p
+    try {
+      this.m_a_ps = [];
+      let map = await this._memberActivityProjectService.selectAllFromProject(this.project.project_id).toPromise();
+      this.m_a_ps = map['data'] as MemberActivityProject[];
+    }
+    catch (error) {
+      this.errorMessage = error.error.message;
+    }
+
+    //Now we select all members linked
+    try {
+      this.m_a_ps_members = [];
+      for (let m of this.m_a_ps){
+        let member = await this._memberService.select(m.member_id).toPromise();
+        let element = {
+          m_a_p: m as MemberActivityProject,
+          member: member['data'] as Member
+        };
+        this.m_a_ps_members.push(element);
+      }
+    }
+    catch (error) {
+      this.errorMessage = error.error;
+    }
+
+    //Now we insert all inside the element array to use it in the view
     this.elements = [];
-    this.activities_from_project = [];
-    this.members_activities_project = [];
+    for (let a of this.activities){
+      let element = {
+        activity: a
+      };
 
-    let vm = this;
+      //We group all map linked to this activity
+      let mm_linked = [];
+      for (let m of this.m_a_ps_members){
+        if (a.activity_id == m['m_a_p'].activity_id){
+          mm_linked.push(m);
+        }
+      }
 
-    this.loadRowsDistinct()
-    setTimeout(function () {
-      vm._memberActivityProjectService.selectAllFromProject(vm.project_id)
-        .subscribe((res) => {
-            vm.errorMessage = "";
-            vm.members_activities_project = res['data'] as MemberActivityProject[];
-            let i = 0;
+      element['maps_members'] = mm_linked;
+      element['date_target'] = element['maps_members'][0]['m_a_p'].target_date;
+      element['date_begin'] = element['maps_members'][0]['m_a_p'].date_begin;
 
-            //For each m_a_p we check which activity is linked
-            for (let e of vm.elements){
-              vm._memberService.select(e)
-              let sort_map = [];
-              let sort_members = [];
-              for (let map of vm.members_activities_project){
-                if (map.activity_id == e[1]['activity_id']){
-                  sort_map.push(map);
-                  vm._memberService.select(map.member_id)
-                    .subscribe((res) => {
-                    vm.errorMessage = "";
-                    let libelle = map.activity_id.toString() + map.member_id.toString();
-                    vm.target_quantities.set(libelle, map.target_quantity as number);
-                    sort_members.push(res['data'] as Member)
-                    },
-                    error => {
-                      vm.errorMessage = error.error.message;
-                    });
-                }
-              }
-              e[3] = sort_members;
-              e[2] = sort_map;
-              i++;
-            }
+      //We calcul the min and max date target
+      let date = new Date(this.project.project_start);
+      if (element['activity'].activity_type_duration == 'days'){
+        date.setDate(date.getDate() + element['activity'].activity_duration);
+      }
+      else if (element['activity'].activity_type_duration == 'month'){
+        date.setMonth(date.getMonth() + element['activity'].activity_duration);
+      }
+      element['min_date_target'] = date;
+      date = new Date(this.project.project_end);
+      element['max_date_target'] = date;
 
-            vm.ready=true;
-          },
-          error => {
-            vm.errorMessage = error.error.message;
-          });
-    }, 2000)
+      //We calcul min and max date begin
+      date = new Date(this.project.project_start);
+      element['min_date_begin'] = date;
+      date = new Date(element['date_target']);
+      if (element['activity'].activity_type_duration == 'days'){
+        date.setDate(date.getDate() - element['activity'].activity_duration);
+      }
+      else if (element['activity'].activity_type_duration == 'month'){
+        date.setMonth(date.getMonth() - element['activity'].activity_duration);
+      }
+      element['max_date_begin'] = date;
 
+        this.elements.push(element);
+    }
+
+    console.log(this.elements);
+    this.ready = true;
 
   }
 
-  loadRowsDistinct(){
-    let promise = new Promise((resolve, reject) => {
-      this._memberActivityProjectService.selectAllFromProjectDistinct(this.project_id).toPromise()
-        .then(res => {
-            this.errorMessage = "";
-            for (let map of res['data']){
-              //Now that we have all m_a_p of the project, we select information of each activity
-              this._activityService.select(map['activity_id'])
-                .subscribe((res1) => {
-                    this.errorMessage = "";
-                    this.activities_from_project.push(res1['data'] as Activity);
-                    this.elements.push([map, res1['data'], [], []]);
-                  },
-                  error => {
-                    this.errorMessage = error.error.message;
-                  });
-            }
-            resolve();
-          },
-          error => {
-            this.errorMessage = error.error.message;
-            reject(error);
-          });
-    });
-    return promise;
+  minMaxBeginDates(element){
+    element['min_date_begin'] = new DatePipe('en-US').transform(this.project.project_start, 'yyyy-MM-dd');
+    let date = new Date(element['date_target']);
+    if (element['activity'].activity_type_duration == 'days'){
+      date.setDate(date.getDate() - element['activity'].activity_duration);
+    }
+    else if (element['activity'].activity_type_duration == 'month'){
+      date.setMonth(date.getMonth() - element['activity'].activity_duration);
+    }
+    element['max_date_begin'] = new DatePipe('en-US').transform(date, 'yyyy-MM-dd');
+    this.verificationDates(element);
+  }
+
+  verificationDates(element){
+    let date_begin = new Date(element['date_begin']);
+    let max_date_begin = new Date(element['max_date_begin']);
+
+    if (element['activity'].activity_type_duration != 'days' && element['activity'].activity_type_duration != 'months') {
+      if (date_begin > max_date_begin) {
+        date_begin = new Date(element['date_target']);
+        element['date_begin'] = new DatePipe('en-US').transform(date_begin, 'yyyy-MM-dd');
+      }
+    }
+    else{
+      if (date_begin >= max_date_begin) {
+        date_begin = new Date(element['date_target']);
+        if (element['activity'].activity_type_duration == 'days'){
+          date_begin.setDate(date_begin.getDate() - element['activity'].activity_duration)
+        }
+        else if (element['activity'].activity_type_duration == 'months'){
+          date_begin.setMonth(date_begin.getMonth() - element['activity'].activity_duration)
+        }
+        element['date_begin'] = new DatePipe('en-US').transform(date_begin, 'yyyy-MM-dd');
+      }
+    }
   }
 
   selectRow(element) {
     this.element_selected = element;
-    this.activity_selected = element[1];
-    this.member_activity_project_selected = element[0];
-    this.workers_selected = [];
-    for (let e of element[3]){
-      //We get the quantity stored in the Map
-      let libelle = element[1]['activity_id'].toString()+e['member_id'];
-      let q:number = this.target_quantities.get(libelle) as number;
-      //We add it the the displayed list
-      this.workers_selected.push([e, q])
-    }
-
-  }
-
-  saveTarget(member_id){
-    //We take the quantity from the input
-   let quantity = document.getElementById('q_'+member_id)['value'];
-   //We store it into the Map
-    this.target_quantities.set(this.activity_selected.activity_id.toString()+member_id, quantity);
   }
 
   sortTable(n) {
@@ -290,67 +342,6 @@ export class GanttCreationComponent implements OnInit {
           tr[i].style.display = "none";
         }
       }
-    }
-  }
-
-  calculDateTarget(element){
-    let activity = element[1] as Activity;
-    let informations = element[2][0] as MemberActivityProject;
-    let answer = new Date(this.project.project_start);
-    if (activity.activity_type_duration == "days") {
-      answer.setDate(answer.getDate()+activity.activity_duration);
-    }
-    else if (activity.activity_type_duration == "months") {
-      answer.setMonth(answer.getMonth()+activity.activity_duration);
-    }
-    let target_date = new Date(informations.target_date);
-    if (answer > target_date){
-      return answer;
-    }
-    else {
-      return target_date;
-    }
-  }
-
-  calculDateBegin(element){
-    let activity = element[1] as Activity;
-    let informations = element[2][0] as MemberActivityProject;
-    let answer = new Date(informations.target_date);
-    if (activity.activity_type_duration == "days") {
-      answer.setDate(answer.getDate()-activity.activity_duration);
-    }
-    else if (activity.activity_type_duration == "months") {
-      answer.setMonth(answer.getMonth()-activity.activity_duration);
-    }
-    let date_begin = new Date(this.project.project_start);
-    if (answer > date_begin){
-      return answer;
-    }
-    else {
-      return date_begin;
-    }
-  }
-
-  updateQuantities(){
-    for (let m_a_p of this.members_activities_project){
-
-      //We set the new quantity
-      let libelle = m_a_p.activity_id.toString()+m_a_p.member_id;
-      let quantity:number = this.target_quantities.get(libelle);
-      m_a_p.target_quantity = quantity;
-
-      //We search for the new date_target to set it
-      let target_date = document.getElementById(m_a_p.activity_id.toString())['value'];
-      m_a_p.target_date = target_date;
-
-      //We update the database
-      this._memberActivityProjectService.update(m_a_p)
-        .subscribe((res) => {
-          this.errorMessage = "";
-        },
-        error => {
-          this.errorMessage = error.error.message;
-        });
     }
   }
 

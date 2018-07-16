@@ -37,14 +37,14 @@
           <!--Table body-->
           <tbody>
           <!-- elements[0]: activity_id && elements[1]: activity && elements[2]: m_a_p && elements[3]: members linked -->
-            <tr *ngFor="let element of elements" (click)="selectRow(element)">
-              <td><a>{{element[1]['activity_id']}}</a></td>
-              <td><a>{{element[1]['activity_title']}}</a></td>
+            <tr *ngFor="let element of elements">
+              <td (click)="selectRow(element)"><a>{{element['activity'].activity_id}}</a></td>
+              <td (click)="selectRow(element)"><a>{{element['activity'].activity_title}}</a></td>
               <td>
-                <input [ngModel]="calculDateTarget(element) | date:'yyyy-MM-dd'" type="date" id="{{element[1]['activity_id']}}" min="{{calculDateTarget(element) | date:'yyyy-MM-dd'}}" max="{{project.project_end | date:'yyyy-MM-dd'}}" class="form-control">
+                <input (change)="minMaxBeginDates(element)" [(ngModel)]="elements[elements.indexOf(element)]['date_target']" min="{{element['min_date_target'] | date:'yyyy-MM-dd'}}" max="{{element['max_date_target'] | date:'yyyy-MM-dd'}}" type="date" class="form-control">
               </td>
               <td>
-                <input [ngModel]="calculDateBegin(element) | date:'yyyy-MM-dd'" type="date" id="start_{{element[1]['activity_id']}}" min="{{project.project_start | date:'yyyy-MM-dd'}}" max="{{calculDateBegin(element) | date:'yyyy-MM-dd'}}" class="form-control">
+                <input [(ngModel)]="elements[elements.indexOf(element)]['date_begin']" min="{{element['min_date_begin'] | date:'yyyy-MM-dd'}}" max="{{element['max_date_begin'] | date:'yyyy-MM-dd'}}" type="date" class="form-control">
               </td>
             </tr>
           </tbody>
@@ -53,7 +53,7 @@
         </table>
         <!--Table-->
 
-        <table class="col-12 hoverable table table-borderless table-hover table-fixed" id="worker-table" *ngIf="workers_selected != null">
+        <table class="col-12 hoverable table table-borderless table-hover table-fixed" id="worker-table" *ngIf="element_selected != null">
 
           <!--Table head-->
           <thead class="thead-secondary">
@@ -67,11 +67,11 @@
 
           <!--Table body-->
           <tbody >
-          <tr *ngFor="let worker of workers_selected">
-            <td>{{worker[0].member_name.toUpperCase()}}</td>
-            <td>{{worker[0].member_first_name}}</td>
+          <tr *ngFor="let worker of element_selected['maps_members']">
+            <td>{{worker['member'].member_name.toUpperCase()}}</td>
+            <td>{{worker['member'].member_first_name}}</td>
             <td>
-              <input [ngModel]="worker[1]" [(ngModel)]="target_quantities[activity_selected.activity_id.toString() + worker[0].member_id]" id="q_{{worker[0].member_id}}" (change)="saveTarget(worker[0].member_id)" type="number" class="form-control">
+              <input [(ngModel)]="worker['m_a_p'].target_quantity" type="number" class="form-control">
             </td>
           </tr>
           </tbody>

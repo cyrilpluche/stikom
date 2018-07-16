@@ -12,7 +12,7 @@
     </div>
   </div>
 
-  <div class="row row-first justify-content-end">
+  <div class="row row-first">
     <div class=" md-form" id="search-bar">
       <input id="search" (keyup)="search()" class="form-control" type="text" placeholder="Search" aria-label="Search">
     </div>
@@ -28,7 +28,12 @@
         <th><a>No</a></th>
         <th class="text-small"><a>Staff Names</a></th>
         <th class="text-small"><a>Total Target</a></th>
-        <th><a>{{months_label[month_index]}}</a></th>
+        <th *ngIf="weeks[0] != null">{{weeks[0][0]}}</th>
+        <th *ngIf="weeks[1] != null">{{weeks[1][0]}}</th>
+        <th *ngIf="weeks[2] != null">{{weeks[2][0]}}</th>
+        <th *ngIf="weeks[3] != null">{{weeks[3][0]}}</th>
+        <th *ngIf="weeks[4] != null">{{weeks[4][0]}}</th>
+        <th *ngIf="weeks[5] != null">{{weeks[5][0]}}</th>
       </tr>
       </thead>
       <!--Table head-->
@@ -40,7 +45,12 @@
         <td>{{element['member']['member_id']}}</td>
         <td class="text-small">{{element['member']['member_name'].toUpperCase()}} {{element['member']['member_first_name']}}</td>
         <td>{{element['total_target']}}</td>
-        <td></td>
+        <th *ngIf="weeks[0] != null">{{targets.get(element['member']['member_id']).get(weeks[1][0])}}</th>
+        <th *ngIf="weeks[1] != null">{{targets.get(element['member']['member_id']).get(weeks[1][1])}}</th>
+        <th *ngIf="weeks[2] != null">{{targets.get(element['member']['member_id']).get(weeks[2][1])}}</th>
+        <th *ngIf="weeks[3] != null">{{targets.get(element['member']['member_id']).get(weeks[3][1])}}</th>
+        <th *ngIf="weeks[4] != null">{{targets.get(element['member']['member_id']).get(weeks[4][1])}}</th>
+        <th *ngIf="weeks[5] != null">{{targets.get(element['member']['member_id']).get(weeks[5][1])}}</th>
       </tr>
       </tbody>
       <!--Table body-->

@@ -72,7 +72,13 @@ export class ProjectCreationComponent implements OnInit {
         sub_department_id = res['data']['sub_department_id'];
 
           //We insert the project
-          this._projectService.createProject(this.new_project_title, project_code, project_work_code, this.new_project_start, this.new_project_end, sub_department_id)
+
+          //We set seconds, minutes, hours to default value with this process
+          let project_start = new Date (this.new_project_start);
+          let project_end = new Date (this.new_project_end);
+          project_start = new Date(project_start.getFullYear(), project_start.getMonth(), project_start.getDate());
+          project_end = new Date(project_end.getFullYear(), project_end.getMonth(), project_end.getDate());
+          this._projectService.createProject(this.new_project_title, project_code, project_work_code, project_start, project_end, sub_department_id)
             .subscribe( (res) => {
                 this.errorMessage = "";
                 this.new_project_id = res['data']['project_id'];
