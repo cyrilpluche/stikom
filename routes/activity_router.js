@@ -32,7 +32,7 @@ router.get('/all_from_job/:job',
     function (req, res, next) {
         modelActivity.selectAllByJobId(req.params.job).then(function (data) {
             if (!data) {
-                throw ERRORTYPE.NOT_FOUND
+                res.json({data: []})
             } else {
                 res.json({data: data})
             }
