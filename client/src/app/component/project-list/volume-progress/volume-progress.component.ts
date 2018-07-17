@@ -32,6 +32,8 @@ export class VolumeProgressComponent implements OnInit {
   calendar:Object[];
   calendarType: string;
   weeks = [];
+  month_selected: string;
+  months = [];
 
   constructor(private _memberActivityProjectService: MemberActivityProjectService,
               private _memberService: MemberService,
@@ -43,8 +45,10 @@ export class VolumeProgressComponent implements OnInit {
     await this.sortElements();
     console.log(this.elements);
     this.typeOfCalendar();
-    this.calculTargetsPerWeek()
-    this.calculWeeksPerMonth(2018, 7);
+    this.calculTargetsPerWeek();
+
+    this.calculMonths();
+    console.log(this.targets);
   }
 
   /* Load the project & all m_a_p data with the activity & member linked */
@@ -122,6 +126,237 @@ export class VolumeProgressComponent implements OnInit {
       let element = {member: s, m_a_ps: sorted_map, total_target: total_target};
       this.elements.push(element);
     }
+  }
+
+  /* Give the number of days between 2 dates */
+  intervalDate(d1, d2){
+    let start = new Date(d1);
+    let end = new Date(d2);
+    let interval = Math.floor((Date.UTC(end.getFullYear(), end.getMonth(), end.getDate()) - Date.UTC(start.getFullYear(), start.getMonth(), start.getDate()) ) /(1000 * 60 * 60 * 24));
+    return interval;
+  }
+
+  /* Store every target of each m_a_ps in the good week of the period */
+  calculTargetsPerWeek() {
+    //Map where MEMBER is the key, value : new MAP { Week date : quantity }
+    this.targets = new Map();
+
+    //We check every members
+    for (let element of this.elements) {
+      this.targets.set(element['member'].member_id, new Map());
+
+      /* ----- We check every m_a_ps of the member ----- */
+      for (let map of element['m_a_ps']) {
+
+        let start = new Date(map.date_begin);
+        let end = new Date(map.target_date);
+
+        //Interval in days & quantity per day
+        let interval = moment(end).diff(start) / (1000 * 60 * 60 * 24) + 1;
+        let one_quantity: number = Math.floor(map.target_quantity / interval);
+        let one_quantity_finished: number = Math.floor(map.finished_quantity / interval);
+
+        let quantity_given = 0;
+        let quantity_finished_given = 0;
+        let quantity = one_quantity;
+        let quantity_finished = one_quantity_finished;
+        let full_quantity = one_quantity * interval;
+        let full_quantity_finished = one_quantity_finished * interval;
+
+        if (one_quantity == 0){
+          one_quantity = parseFloat((map.target_quantity / interval).toFixed(1));
+          full_quantity = parseFloat((one_quantity * interval).toFixed(1));
+
+          console.log('oui oui : ', parseInt((map.target_quantity / interval).toFixed(1)));
+        }
+        if (one_quantity_finished == 0){
+          one_quantity_finished = parseFloat((map.finished_quantity / interval).toFixed(1));
+          full_quantity_finished = parseFloat((one_quantity_finished * interval).toFixed(1));
+        }
+
+        let w;
+
+        //The day that will be the key of the amount of quantity calculated
+        if (moment(start).format('dddd') == 'Monday'){
+          w = new Date(start.getFullYear(), start.getMonth(), start.getDate()); //We do this process to have minutes, hours & seconds at default value
+        }else{
+          let fake_date = new Date(start);
+          let first_day = moment(fake_date).format('dddd');
+          while (first_day != 'Monday' && fake_date != start){
+            fake_date.setDate(fake_date.getDate()-1);
+            first_day = moment(fake_date).format('dddd');
+          }
+          //FIRST KEY
+          w = new Date(fake_date.getFullYear(), fake_date.getMonth(), fake_date.getDate());
+        }
+
+
+        /* ----- We check every days ----- */
+        /* ----- We check every days ----- */
+        for (let i = new Date(start); i <= end; i.setDate(i.getDate() + 1)) {
+
+          let day = moment(i).format('dddd');
+
+          //If it's Monday, we store the previous quantity in a week, and continue in a new week
+          if (day == 'Monday' && i.toString() != start.toString()) {
+
+            //If it's the last day, we need to add the rest of the quantity
+            if(i.toString() == end.toString()){
+              quantity = full_quantity - quantity_given;
+              quantity_finished = full_quantity_finished - quantity_finished_given;
+            }
+
+            let previous_quantity = 0;
+            let previous_quantity_finished = 0;
+              if (this.targets.get(element['member'].member_id).get(w.toString()) != null){
+              //Yes, we need to increase with the existing quantity
+              previous_quantity = this.targets.get(element['member'].member_id).get(w.toString())['target_quantity'];
+              previous_quantity_finished = this.targets.get(element['member'].member_id).get(w.toString())['finished_quantity'];
+            }
+            let e = {
+                finished_quantity: previous_quantity_finished+quantity_finished,
+                target_quantity: previous_quantity+quantity
+            }
+            this.targets.get(element['member'].member_id).set(w.toString(), e);
+            quantity_given += quantity;
+            quantity_finished_given += quantity_finished;
+
+            //We get the new Monday date for next quantities
+            w = new Date(i.getFullYear(), i.getMonth(), i.getDate());
+            quantity = 0;
+            quantity_finished = 0;
+          }
+          else {
+            quantity += one_quantity;
+            quantity_finished += one_quantity_finished;
+          }
+        }
+        /* ----- /We check every days ----- */
+
+        //If it's Monday, we have already add the quantity, so we add only if it's not monday
+        let last_day = moment(end).format('dddd');
+        if (last_day != 'Monday') {
+          //Is the week already exist ?
+          quantity = full_quantity - quantity_given;
+          quantity_finished = full_quantity_finished - quantity_finished_given;
+          let previous_quantity = 0;
+          let previous_quantity_finished = 0;
+
+          if (this.targets.get(element['member'].member_id).get(w.toString()) != null) {
+            //Yes, we need to increase with the existing quantity
+            previous_quantity = this.targets.get(element['member'].member_id).get(w.toString())['target_quantity'];
+            previous_quantity_finished = this.targets.get(element['member'].member_id).get(w.toString())['finished_quantity'];
+          }
+          let e = {
+            target_quantity: previous_quantity+quantity,
+            finished_quantity: previous_quantity_finished+quantity_finished
+          };
+          this.targets.get(element['member'].member_id).set(w.toString(), e);
+        }
+      }
+      /* ----- /We check every m_a_ps of the member ----- */
+    }
+  }
+
+  /* Give all weeks for a given month (used for the targets display data) */
+  calculWeeksPerMonth(year, month){
+    this.weeks = [];
+    let start = new Date(year, month);
+    let end = new Date(year, month+1, 0);
+
+    let first_day = moment(start).format('dddd');
+    while (first_day != 'Monday'){
+      start.setDate(start.getDate()-1);
+      first_day = moment(start).format('dddd');
+    }
+
+    let i = new Date(start);
+    let date_label = "";
+    let j =0
+    while(i<=end && j<56){
+      let key = new Date(i);
+      date_label = moment(i).format('M/D')+' - '
+      i.setDate(i.getDate()+6);
+      date_label += moment(i).format('M/D');
+      this.weeks.push([date_label, key.toString()]);
+      i.setDate(i.getDate()+1);
+      j++;
+    }
+  }
+
+  calculPourcentage(value, total){
+    console.log(value, 'and ', total);
+    console.log(Math.ceil(value*100/total))
+    return Math.ceil(value*100/total);
+  }
+
+  calculMonths(){
+    let start = new Date(this.project.project_start);
+    let end = new Date(this.project.project_end);
+    start.setDate(1);
+    end.setMonth(end.getMonth()+1);
+    end.setDate(0);
+    console.log('start : ',start);
+    let i = new Date(start);
+    while (i<end){
+      let m = {
+        month: new Date(i),
+        month_label: moment(i).format('MMMM')
+      };
+      this.months.push(m);
+      i.setMonth(i.getMonth()+1);
+      console.log('i : ',i);
+    }
+    console.log(this.months);
+    this.month_selected = this.months[0];
+    this.calculWeeksPerMonth(start.getFullYear(), start.getMonth());
+  }
+
+  changeMonth(next){
+    let indice = this.months.indexOf(this.month_selected);
+    let changed: boolean = false;
+    console.log(this.month_selected);
+    if (next &&  indice < this.months.length-1){
+      this.month_selected = this.months[indice+1];
+
+      changed = true;
+    }
+    else if (!next && indice>0){
+      this.month_selected = this.months[indice-1];
+      changed = true;
+    }
+    console.log('become ', this.month_selected);
+
+    if (changed) {
+      let date = new Date(this.month_selected['month']);
+      console.log(date, 'and', date.getFullYear(), ' and ', date.getMonth());
+      this.calculWeeksPerMonth(date.getFullYear(), date.getMonth());
+    }
+  }
+
+  /* Give the number of days between 2 dates */
+  dateInterval (d1,d2){
+    var nb = d2.getTime() - d1.getTime();
+    return Math.ceil(nb/(1000*60*60*24));
+  }
+
+  typeOfCalendar(){
+
+    let interval = this.intervalDate(this.project.project_start, this.project.project_end);
+
+    if (interval<8){
+      this.calendarType = "1week";
+    }
+    else if (interval<15){
+      this.calendarType = "2week";
+    }
+    else if (interval<22){
+      this.calendarType = "3week";
+    }
+    else {
+      this.calendarType = "month";
+    }
+    console.log(this.calendarType);
   }
 
   async calendarRange() {
@@ -216,163 +451,6 @@ export class VolumeProgressComponent implements OnInit {
     }
     /* ----- /We get each years ----- */
     console.log(this.calendar);
-  }
-
-  intervalDate(d1, d2){
-    let start = new Date(d1);
-    let end = new Date(d2);
-    let interval = Math.floor((Date.UTC(end.getFullYear(), end.getMonth(), end.getDate()) - Date.UTC(start.getFullYear(), start.getMonth(), start.getDate()) ) /(1000 * 60 * 60 * 24));
-    return interval;
-  }
-
-  typeOfCalendar(){
-
-    let interval = this.intervalDate(this.project.project_start, this.project.project_end);
-
-    if (interval<8){
-      this.calendarType = "1week";
-    }
-    else if (interval<15){
-      this.calendarType = "2week";
-    }
-    else if (interval<22){
-      this.calendarType = "3week";
-    }
-    else {
-      this.calendarType = "month";
-    }
-    console.log(this.calendarType);
-  }
-
-  calculTargetsPerWeek() {
-    //Map where MEMBER is the key, value : new MAP { Week date : quantity }
-    this.targets = new Map();
-
-    //We check every members
-    for (let element of this.elements) {
-      this.targets.set(element['member'].member_id, new Map());
-
-      /* ----- We check every m_a_ps of the member ----- */
-      for (let map of element['m_a_ps']) {
-        console.log('\nNEW MAP');
-
-        let start = new Date(map.date_begin);
-        let end = new Date(map.target_date);
-
-        //Interval in days & quantity per day
-        let interval = moment(end).diff(start) / (1000 * 60 * 60 * 24) + 1;
-        let one_quantity = Math.floor(map.target_quantity / interval);
-        let full_quantity = map.target_quantity;
-        console.log("I will give : ", one_quantity, " for the global amount of : ", map.target_quantity, " - Interval : ", interval);
-        let quantity_given = 0;
-        let quantity = one_quantity;
-        let w;
-
-        //The day that will be the key of the amount of quantity calculated
-        if (moment(start).format('dddd') == 'Monday'){
-          w = new Date(start.getFullYear(), start.getMonth(), start.getDate()); //We do this process to have minutes, hours & seconds at default value
-        }else{
-          let fake_date = new Date(start);
-          let first_day = moment(fake_date).format('dddd');
-          while (first_day != 'Monday' && fake_date != start){
-            fake_date.setDate(fake_date.getDate()-1);
-            first_day = moment(fake_date).format('dddd');
-          }
-          //FIRST KEY
-          w = new Date(fake_date.getFullYear(), fake_date.getMonth(), fake_date.getDate());
-        }
-
-
-        /* ----- We check every days ----- */
-        /* ----- We check every days ----- */
-        for (let i = new Date(start); i <= end; i.setDate(i.getDate() + 1)) {
-
-          let day = moment(i).format('dddd');
-
-          //If it's Monday, we store the previous quantity in a week, and continue in a new week
-          if (day == 'Monday' && i.toString() != start.toString()) {
-
-            //If it's the last day, we need to add the rest of the quantity
-            if(i.toString() == end.toString()){
-              quantity = full_quantity - quantity_given;
-              console.log("It's the end : ", quantity);
-            }
-
-            let previous_quantity = 0;
-              if (this.targets.get(element['member'].member_id).get(w.toString()) != null){
-              //Yes, we need to increase with the existing quantity
-              previous_quantity = this.targets.get(element['member'].member_id).get(w.toString());
-            }
-
-            this.targets.get(element['member'].member_id).set(w.toString(), previous_quantity+quantity);
-            quantity_given += quantity;
-
-            console.log("I gave: ", quantity, " for this key ", moment(w));
-
-
-            //We get the new Monday date for next quantities
-            w = new Date(i.getFullYear(), i.getMonth(), i.getDate());
-            quantity = 0;
-          }
-          else {
-            quantity += one_quantity;
-          }
-        }
-        /* ----- /We check every days ----- */
-
-        //If it's Monday, we have already add the quantity, so we add only if it's not monday
-        let last_day = moment(end).format('dddd');
-        if (last_day != 'Monday') {
-          //Is the week already exist ?
-          console.log('Quantity is like this : ', quantity)
-          quantity = full_quantity - quantity_given;
-          let previous_quantity = 0;
-
-          if (this.targets.get(element['member'].member_id).get(w.toString()) != null) {
-            //Yes, we need to increase with the existing quantity
-            previous_quantity = this.targets.get(element['member'].member_id).get(w.toString());
-          }
-          console.log('Last quantity given : ', quantity, " Key : ", w)
-          this.targets.get(element['member'].member_id).set(w.toString(), previous_quantity+quantity);
-        }
-      }
-      /* ----- /We check every m_a_ps of the member ----- */
-    }
-    console.log(this.targets);
-  }
-
-  calculWeeksPerMonth(year, month){
-    this.weeks = [];
-    let start = new Date(year, month);
-    let end = new Date(year, month+1, 0);
-
-    let first_day = moment(start).format('dddd');
-    while (first_day != 'Monday'){
-      console.log("Day : ", start)
-      start.setDate(start.getDate()-1);
-      first_day = moment(start).format('dddd');
-    }
-
-    let i = new Date(start);
-    let date_label = "";
-    let j =0
-    console.log("Iterator : ", i)
-    while(i<=end && j<56){
-      let key = new Date(i);
-      date_label = moment(i).format('M/D')+' - '
-      i.setDate(i.getDate()+6);
-      date_label += moment(i).format('M/D');
-      this.weeks.push([date_label, key.toString()]);
-      i.setDate(i.getDate()+1);
-      j++;
-    }
-    console.log(this.weeks);
-  }
-
-  /* Give the number of days between 2 dates */
-  dateInterval (d1,d2){
-    var nb = d2.getTime() - d1.getTime();
-    return Math.ceil(nb/(1000*60*60*24));
   }
 
 }

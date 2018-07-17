@@ -12,9 +12,20 @@
     </div>
   </div>
 
-  <div class="row row-first">
-    <div class=" md-form" id="search-bar">
+  <div class="row row-first input-group justify-content-between">
+    <div class="md-form col-2" id="search-bar">
       <input id="search" (keyup)="search()" class="form-control" type="text" placeholder="Search" aria-label="Search">
+    </div>
+    <div class="month-select col-2">
+      <ul class="pagination pg-blue justify-content-center"  >
+        <li class="page-item text-middle" data-toggle="tooltip" data-placement="top" title="previous" ><i class="page-link no-hover fa fa-arrow-left" (click)="changeMonth(false)"></i></li>
+
+        <!--Numbers-->
+        <li><h2><span class="badge badge-default">{{month_selected['month_label']}}</span></h2></li>
+
+        <li class="page-item" data-toggle="tooltip" data-placement="top" title="next" ><i id="nextArrow" class="page-link no-hover fa fa-arrow-right" (click)="changeMonth(true)"></i></li>
+
+      </ul>
     </div>
   </div>
 
@@ -28,12 +39,7 @@
         <th><a>No</a></th>
         <th class="text-small"><a>Staff Names</a></th>
         <th class="text-small"><a>Total Target</a></th>
-        <th *ngIf="weeks[0] != null">{{weeks[0][0]}}</th>
-        <th *ngIf="weeks[1] != null">{{weeks[1][0]}}</th>
-        <th *ngIf="weeks[2] != null">{{weeks[2][0]}}</th>
-        <th *ngIf="weeks[3] != null">{{weeks[3][0]}}</th>
-        <th *ngIf="weeks[4] != null">{{weeks[4][0]}}</th>
-        <th *ngIf="weeks[5] != null">{{weeks[5][0]}}</th>
+        <th *ngFor="let week of weeks">{{week[0]}}</th>
       </tr>
       </thead>
       <!--Table head-->
@@ -45,12 +51,14 @@
         <td>{{element['member']['member_id']}}</td>
         <td class="text-small">{{element['member']['member_name'].toUpperCase()}} {{element['member']['member_first_name']}}</td>
         <td>{{element['total_target']}}</td>
-        <th *ngIf="weeks[0] != null">{{targets.get(element['member']['member_id']).get(weeks[1][0])}}</th>
-        <th *ngIf="weeks[1] != null">{{targets.get(element['member']['member_id']).get(weeks[1][1])}}</th>
-        <th *ngIf="weeks[2] != null">{{targets.get(element['member']['member_id']).get(weeks[2][1])}}</th>
-        <th *ngIf="weeks[3] != null">{{targets.get(element['member']['member_id']).get(weeks[3][1])}}</th>
-        <th *ngIf="weeks[4] != null">{{targets.get(element['member']['member_id']).get(weeks[4][1])}}</th>
-        <th *ngIf="weeks[5] != null">{{targets.get(element['member']['member_id']).get(weeks[5][1])}}</th>
+
+        <th *ngFor="let week of weeks">
+          <h6>
+            <span *ngIf="targets.get(element['member']['member_id']).get(week[1]) != null" class="badge badge-default">{{targets.get(element['member']['member_id']).get(week[1])['finished_quantity']}}</span>
+            <span *ngIf="targets.get(element['member']['member_id']).get(week[1]) != null" class="badge badge-primary">{{targets.get(element['member']['member_id']).get(week[1])['target_quantity']}}</span>
+            <span *ngIf="targets.get(element['member']['member_id']).get(week[1]) != null" class="badge badge-danger">{{calculPourcentage(targets.get(element['member']['member_id']).get(week[1])['finished_quantity'], targets.get(element['member']['member_id']).get(week[1])['target_quantity'])}}%</span>
+          </h6>
+        </th>
       </tr>
       </tbody>
       <!--Table body-->
@@ -61,4 +69,11 @@
   </div>
 
 </div>
+
+<script>
+  // Material Select Initialization
+  $(document).ready(function() {
+    $('.mdb-select').material_select();
+  });
+</script>
 
