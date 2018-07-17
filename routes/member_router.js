@@ -68,7 +68,7 @@ router.post('/register',
                 console.log(generateLink);
                 mailSender.send(req.body.mail, 'Account created',
                     `<h3 style="color: blue">Your account has been created with success !</h3><br><br>Click on the following link to valid your account.
-                       Yet can't connect unless an administrateur valid again your account.<br><br>
+                       Yet you can't connect unless an administrateur validate again your account.<br><br>
                         <h4><a href="${generateLink}">valid my acount</a></h4>`,
                     [], function (error, response) {
                         if (error) {
@@ -293,7 +293,7 @@ function requireSeed (req, res, next) {
  * @param next
  */
 function requireNullSeeder (req, res, next) {
-    modelMember.findOne(req.body.member_id).then(function (data) {
+    modelMember.selectById(req.body.member_id).then(function (data) {
         if (data.seed != null || data.member_valid === 0) {
             throw ERRORTYPE.customError('Error this user hasn\'t activated his link yet you cannot activate now',
                 'ACCOUNT NOT ACTIVATED', 403)

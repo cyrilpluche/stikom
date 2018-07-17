@@ -206,6 +206,7 @@ const member = {
       })
     },
 
+
     /**
      *
      * @param member_mail
