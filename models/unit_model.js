@@ -46,6 +46,35 @@ let unit = {
                     throw ERRORTYPE.customError('The server has encountred an internal error\n ' + err.toString());
                 }
             })
+    },
+
+    selectAllByJobId (job_id) {
+        return db.any('SELECT U.unit_id, U.unit_name\n' +
+            'FROM public.unit U, public.execute E, public.activity_is_job ASJ\n' +
+            'WHERE U.unit_id = E.unit_id AND ASJ.activity_id = E.activity_id AND ASJ.job_id = $1',
+            job_id).then(function (data) {
+            if (data.length === 0) {
+                return false
+            } else {
+                return data
+            }
+        }).catch(function (err) {
+            throw ERRORTYPE.customError('The server has encountred an internal error\n ' + err.toString())
+        })
+    },
+
+    selectAllByJActivityId (activity_id) {
+        return db.any('SELECT U.unit_id, U.unit_name\n' +
+            'FROM public.unit U, public.execute E\n' +
+            'WHERE U.unit_id = E.unit_id AND E.activity_id = $1', activity_id).then(function (data) {
+            if (data.length === 0) {
+                return false
+            } else {
+                return data
+            }
+        }).catch(function (err) {
+            throw ERRORTYPE.customError('The server has encountred an internal error\n ' + err.toString())
+        })
     }
 };
 
