@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import 'jspdf-autotable';
+import {ProjectService} from "../../objects/project/project.service";
+import {MemberActivityProjectService} from "../../objects/member_activity_project/member-activity-project.service";
+import {Project} from "../../objects/project/project";
+import {DatePipe} from "@angular/common";
 
 declare var jsPDF: any;
 
@@ -10,10 +14,16 @@ declare var jsPDF: any;
 })
 export class PdfGanttComponent implements OnInit {
 
-  constructor() { }
+  idProject:string="1";
+  project:Project;
+  activities:any[];
+
+  constructor(private _projectService:ProjectService,
+              private _memberActivityProjectService:MemberActivityProjectService) { }
 
   ngOnInit() {
-    this.download();
+    this.getProject(this.idProject);
+    // this.download();
   }
   download() {
 
@@ -23,8 +33,8 @@ export class PdfGanttComponent implements OnInit {
       {title: "3", dataKey: "3"}
     ];
     var rows = [
-      ["Work Code", "00000000", "Project Code", "24200"],
-      ["Name of Project", "lumbuk tagagatum in ferne memonerisatum", "", ""],
+      ["Work Code", "0301000"+this.project.project_code, "Project Code", this.project.project_work_code],
+      ["Name of Project", this.project.project_title, "", ""],
     ];
 
     var doc = new jsPDF('l', 'pt');
@@ -68,6 +78,15 @@ export class PdfGanttComponent implements OnInit {
       {title: "Sign", dataKey: "6"},
       {title: "Note", dataKey: "7"}
     ];
+
+    var rows2=[];
+    for (let i=0; i<this.activities.length; i++)
+    {
+      rows2.push([this.activities[i]["activity_id"], this.activities[i]["activity_title"], new DatePipe('en-US').transform(this.activities[i]["target_date"], 'dd-MM-yyyy'), new DatePipe('en-US').transform(this.activities[i]["finished_date"], 'dd-MM-yyyy'), this.activities[i]["evaluation"], "Staff 1", this.activities[i]["sign"], this.activities[i]["note"]])
+    }
+
+    console.log(rows2);
+      /*
     var rows2 = [
       ["1", "Step I Process", "", "", "", "Staff 1", "", ""],
       ["2", "Step II Process", "", "", "", "Staff 1, Staff 2", "", ""],
@@ -79,7 +98,7 @@ export class PdfGanttComponent implements OnInit {
       ["8", "Step VIII Process", "", "", "", "Staff 1", "", ""],
       ["9", "Step IX Process", "", "", "", "Staff 1", "", ""],
       ["1", "Step X Process", "", "", "", "Staff 1", "", ""],
-    ];
+    ];*/
 
 
 
@@ -106,6 +125,43 @@ export class PdfGanttComponent implements OnInit {
 
 
     doc.save("Gantt-charts.pdf");
+  }
+
+
+  async selectAllFromProject(idProject: string){
+    console.log("ici : "+idProject);
+    await this._memberActivityProjectService.selectAllFromProject(idProject)
+      .subscribe( (res) => {
+          console.log(res['data']);
+          //this.res=res['data'];
+        this.activities=res['data'];
+
+        console.log("res :");
+        console.log(this.project);
+        console.log(this.activities);
+        this.download();
+        },
+        error => {
+          console.log("ERREUR : ",error);
+
+        });
+  }
+
+  async getProject(idProject: string){
+    console.log("ici projet id : "+idProject);
+    await this._projectService.getProject(idProject)
+      .subscribe( (res) => {
+          console.log(res['data']);
+          //this.res=res['data'];
+        this.project=res['data'];
+          this.selectAllFromProject(idProject);
+
+
+        },
+        error => {
+          console.log("ERREUR : ",error);
+
+        });
   }
 
 }

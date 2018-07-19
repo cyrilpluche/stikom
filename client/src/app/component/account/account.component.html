@@ -32,7 +32,7 @@
       <div class="md-form">
         <i class="fa fa-lock prefix grey-text"></i>
         <input required [(ngModel)]="actualPassword" name=actualPassword type="password" id="actualPassword" class="form-control">
-        <label for="newPassword">Actual password</label>
+        <label for="actualPassword">Actual password</label>
       </div>
     </div>
     <div class="col-sm-12 col-lg-3">
@@ -65,5 +65,5 @@
 <app-summary *ngIf="changeFinished"
              title="Success"
              text="Your password has been updated, please login to confirm your statut."
-             buttonTitle="Login" link="authentification">
+             buttonTitle="Home" link="home">
 </app-summary>
