@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {environment} from "../../../environments/environment";
 import {Router} from "@angular/router";
+import {Project} from "./project";
+import {MemberActivityProject} from "../member_activity_project/member-activity-project";
 
 @Injectable({
   providedIn: 'root'
@@ -24,16 +26,15 @@ export class ProjectService {
     return this.http.get(this.domain + '/api/project/find_one/'+project_id,this.httpOptions);
   }
 
-  createProject(project_title:string, project_code:string, project_work_code:string, project_start:Date, project_end:Date, sub_department_id:string) {
+  createProject(project:Project) {
     let body = {
-      project_title: project_title,
-      project_code: project_code,
-      project_work_code: project_work_code,
-      project_start: project_start,
-      project_end: project_end,
-      sub_department_id: sub_department_id
+      project_title: project.project_title,
+      project_code: project.project_code,
+      project_work_code: project.project_work_code,
+      project_start: project.project_start,
+      project_end: project.project_end,
+      sub_department_id: project.sub_department_id
     };
-    console.log(body)
     this.generateHeaders();
     return this.http.post(this.domain + '/api/project/create',body,this.httpOptions);
   }
@@ -43,7 +44,6 @@ export class ProjectService {
       project_id: project_id,
       job_id: job_id
     };
-    console.log(body);
     this.generateHeaders();
     return this.http.post(this.domain + '/api/project/bind_project_job',body,this.httpOptions);
   }
@@ -54,28 +54,26 @@ export class ProjectService {
       unit_id: unit_id,
       member_id: member_id
     };
-    console.log(body);
     this.generateHeaders();
     return this.http.post(this.domain + '/api/project/bind_member_unit_project',body,this.httpOptions);
   }
 
-  bindMemberActivityProject(project_id:string, member_id:string, activity_id:string, target_date:Date, date_begin:Date,
-                            evaluation:string, finished_date:Date, sign:string, note:string, target_quantity:number, finished_quantity:number, finished_duration:number) {
+  bindMemberActivityProject(m_a_p:MemberActivityProject) {
     let body = {
-      project_id: project_id,
-      member_id: member_id,
-      activity_id: activity_id,
-      target_date: target_date,
-      date_begin: date_begin,
-      evaluation: evaluation,
-      finished_date: finished_date,
-      sign: sign,
-      note: note,
-      target_quantity: target_quantity,
-      finished_quantity: finished_quantity,
-      finished_duration: finished_duration
+      project_id: m_a_p.project_id,
+      job_id: m_a_p.job_id,
+      member_id: m_a_p.member_id,
+      activity_id: m_a_p.activity_id,
+      target_date: m_a_p.target_date,
+      date_begin: m_a_p.date_begin,
+      evaluation: m_a_p.evaluation,
+      finished_date: m_a_p.finished_date,
+      sign: m_a_p.sign,
+      note: m_a_p.note,
+      target_quantity: m_a_p.target_quantity,
+      finished_quantity: m_a_p.finished_quantity,
+      finished_duration: m_a_p.finished_duration
     };
-    console.log(body);
     this.generateHeaders();
     return this.http.post(this.domain + '/api/project/bind_member_activity_project',body,this.httpOptions);
   }
@@ -106,7 +104,6 @@ export class ProjectService {
 
   getProject(project_id:string){
     this.generateHeaders();
-    console.log(project_id);
     return this.http.get(this.domain + '/api/project/find_One/'+project_id,this.httpOptions);
   }
 

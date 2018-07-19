@@ -28,6 +28,7 @@ export class MemberActivityProjectService {
   update(m_a_p:MemberActivityProject){
     let body = {
       project_id: m_a_p.project_id,
+      job_id: m_a_p.job_id,
       member_id: m_a_p.member_id,
       activity_id: m_a_p.activity_id,
       target_date: m_a_p.target_date,

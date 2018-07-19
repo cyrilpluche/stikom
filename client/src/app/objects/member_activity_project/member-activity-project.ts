@@ -1,6 +1,7 @@
 export interface MemberActivityProject {
   project_id:number;
   member_id:number;
+  job_id: number;
   activity_id:number;
   target_date:string;
   date_begin:string;
@@ -16,6 +17,7 @@ export interface MemberActivityProject {
 export class MemberActivityProject {
   project_id:number;
   member_id:number;
+  job_id: number;
   activity_id:number;
   target_date:string;
   date_begin:string;

@@ -17,7 +17,7 @@
       <input id="search" (keyup)="search()" class="form-control" type="text" placeholder="Search" aria-label="Search">
     </div>
     <div class="month-select col-2">
-      <ul class="pagination pg-blue justify-content-center"  >
+      <ul class="pagination pg-blue justify-content-center" *ngIf="month_selected != null" >
         <li class="page-item text-middle" data-toggle="tooltip" data-placement="top" title="previous" ><i class="page-link no-hover fa fa-arrow-left" (click)="changeMonth(false)"></i></li>
 
         <!--Numbers-->
@@ -31,14 +31,14 @@
 
   <div class="row justify-content-center">
 
-    <table class="col-12 hoverable table table-borderless table-hover table-fixed" id="gantt-table">
+    <table class="col-12 hoverable table table-borderless table-hover table-fixed" id="volume-table">
 
       <!--Table head-->
       <thead class="">
       <tr class="text-white">
-        <th><a>No</a></th>
-        <th class="text-small"><a>Staff Names</a></th>
-        <th class="text-small"><a>Total Target</a></th>
+        <th style="width: 5%" (click)="sortTable(0)"><a>No</a></th>
+        <th class="text-small" (click)="sortTable(1)"><a>Staff Names</a></th>
+        <th class="text-small" (click)="sortTable(2)"><a>Total Target</a></th>
         <th *ngFor="let week of weeks">{{week[0]}}</th>
       </tr>
       </thead>
@@ -46,19 +46,58 @@
 
       <!--Table body-->
       <tbody>
-      <!-- elements[0]: activity_id && elements[1]: activity && elements[2]: m_a_p && elements[3]: members linked -->
-      <tr *ngFor="let element of elements">
-        <td>{{element['member']['member_id']}}</td>
-        <td class="text-small">{{element['member']['member_name'].toUpperCase()}} {{element['member']['member_first_name']}}</td>
-        <td>{{element['total_target']}}</td>
+        <!-- elements[0]: activity_id && elements[1]: activity && elements[2]: m_a_p && elements[3]: members linked -->
+        <tr *ngFor="let element of elements" id="{{element['member']['member_id']}}">
+          <td (click)="selectMember(element)"><a>{{element['member']['member_id']}}</a></td>
+          <td class="text-small" (click)="selectMember(element)"><a>{{element['member']['member_name'].toUpperCase()}} {{element['member']['member_first_name']}}</a></td>
+          <td>
+            <h6>
+              <span class="badge badge-default">{{element['total_finished']}}</span>
+              <span class="badge badge-primary">{{element['total_target']}}</span>
+              <span class="badge badge-danger">{{calculPourcentage(element['total_finished'], element['total_target'])}}%</span>
+            </h6>
+          </td>
 
-        <th *ngFor="let week of weeks">
-          <h6>
-            <span *ngIf="targets.get(element['member']['member_id']).get(week[1]) != null" class="badge badge-default">{{targets.get(element['member']['member_id']).get(week[1])['finished_quantity']}}</span>
-            <span *ngIf="targets.get(element['member']['member_id']).get(week[1]) != null" class="badge badge-primary">{{targets.get(element['member']['member_id']).get(week[1])['target_quantity']}}</span>
-            <span *ngIf="targets.get(element['member']['member_id']).get(week[1]) != null" class="badge badge-danger">{{calculPourcentage(targets.get(element['member']['member_id']).get(week[1])['finished_quantity'], targets.get(element['member']['member_id']).get(week[1])['target_quantity'])}}%</span>
-          </h6>
-        </th>
+          <th *ngFor="let week of weeks">
+            <h6>
+              <span *ngIf="targets.get(element['member']['member_id']).get(week[1]) != null" class="badge badge-default">{{targets.get(element['member']['member_id']).get(week[1])['finished_quantity']}}</span>
+              <span *ngIf="targets.get(element['member']['member_id']).get(week[1]) != null" class="badge badge-primary">{{targets.get(element['member']['member_id']).get(week[1])['target_quantity']}}</span>
+              <span *ngIf="targets.get(element['member']['member_id']).get(week[1]) != null" class="badge badge-danger">{{calculPourcentage(targets.get(element['member']['member_id']).get(week[1])['finished_quantity'], targets.get(element['member']['member_id']).get(week[1])['target_quantity'])}}%</span>
+            </h6>
+          </th>
+        </tr>
+      </tbody>
+      <!--Table body-->
+
+    </table>
+    <!--Table-->
+
+    <table class="col-10 hoverable table table-borderless table-hover table-fixed" id="activity-table" *ngIf="element_selected != null">
+
+      <!--Table head-->
+      <thead class="thead-secondary">
+      <tr class="text-white">
+        <th (click)="sortTable1(0)"><a>No</a></th>
+        <th (click)="sortTable1(1)"><a>Activity Name</a></th>
+        <th (click)="sortTable1(2)"><a>Finished Quantity</a></th>
+        <th (click)="sortTable1(3)"><a>Target Quantity</a></th>
+        <th (click)="sortTable1(4)"><a>Finished Duration</a></th>
+      </tr>
+      </thead>
+      <!--Table head-->
+
+      <!--Table body-->
+      <tbody >
+      <tr *ngFor="let activity of element_selected['m_a_ps']">
+        <td>{{activity['activity'].activity_id}}</td>
+        <td class="text-small">{{activity['activity'].activity_title}}</td>
+        <td>
+          <input [(ngModel)]="activity['m_a_p'].finished_quantity" type="number" class="form-control" max="{{activity['m_a_p'].target_quantity}}" min="0">
+        </td>
+        <td>{{activity['m_a_p'].target_quantity}}</td>
+        <td>
+          <input [(ngModel)]="activity['m_a_p'].finished_duration" type="date" class="form-control">
+        </td>
       </tr>
       </tbody>
       <!--Table body-->
@@ -66,9 +105,24 @@
     </table>
     <!--Table-->
 
+    <div class="col-2 text-center" *ngIf="element_selected != null">
+      <button class="btn btn-success waves-effect" type="button" data-toggle="modal" data-target="#confirmationModal">Save</button>
+      <br>
+      <!-- Error alert -->
+      <i class="error-text" *ngIf="errorMessage && errorMessage != ''">{{errorMessage}}</i>
+    </div>
+
   </div>
 
 </div>
+
+<!-- Modal confirmation -->
+<app-confirmation title="Save finished quantities and duration"
+                  text="Are you sure all informations provided are correct ?"
+                  (success)="onSubmit(element_selected)"
+                  [isLinkActive]=false
+                  link="project-list">
+</app-confirmation>
 
 <script>
   // Material Select Initialization

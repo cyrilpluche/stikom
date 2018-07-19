@@ -112,8 +112,22 @@ export class JobCreationComponent implements OnInit {
   }
 
   pickActivity(activity){
-    let a = document.getElementById(activity.activity_id);
+
     let sub_a = this.sub_activities[this.activities.indexOf(activity)];
+    let a = document.getElementById(activity.activity_id);
+
+    let old = document.getElementsByTagName('input');
+    for (let i = 0; i < (old.length); i++){
+      old[i]['checked'] = false;
+    }
+
+    a['checked'] = true;
+
+    for (let s of sub_a){
+      document.getElementById(s.activity_id)['checked'] = true;
+    }
+
+    /*
     if (a['checked']) {
       for (let s of sub_a){
         document.getElementById(s.activity_id)['checked'] = true;
@@ -122,7 +136,7 @@ export class JobCreationComponent implements OnInit {
       for (let s of sub_a){
         document.getElementById(s.activity_id)['checked'] = false;
       }
-    }
+    }*/
   }
 
   isActivityPicked() {

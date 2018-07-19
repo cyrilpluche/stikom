@@ -26,6 +26,7 @@ export class VolumeProgressComponent implements OnInit {
   elements: Object[] = [];
   sorted_workers = [];
   targets = new Map();
+  element_selected: Object;
 
   ready:boolean = false;
 
@@ -34,6 +35,7 @@ export class VolumeProgressComponent implements OnInit {
   weeks = [];
   month_selected: string;
   months = [];
+  old_cell;
 
   constructor(private _memberActivityProjectService: MemberActivityProjectService,
               private _memberService: MemberService,
@@ -44,10 +46,11 @@ export class VolumeProgressComponent implements OnInit {
     await this.loadData();
     await this.sortElements();
     console.log(this.elements);
-    this.typeOfCalendar();
-    this.calculTargetsPerWeek();
+    /*this.typeOfCalendar();*/
+    await this.calculTargetsPerWeek();
 
-    this.calculMonths();
+    await this.calculMonths();
+    this.ready = true;
     console.log(this.targets);
   }
 
@@ -92,12 +95,10 @@ export class VolumeProgressComponent implements OnInit {
       this.errorMessage = error.error.message;
     }
 
-    this.ready = true;
-
   }
 
   /* For one member, we group all his m_a_p inside the elements array.It's like a distinct member request */
-  sortElements() {
+  async sortElements() {
     this.sorted_workers = [];
     let add: boolean;
     //I CHECK EVERY WORKERS
@@ -117,13 +118,30 @@ export class VolumeProgressComponent implements OnInit {
     for (let s of this.sorted_workers){
       let sorted_map = [];
       let total_target = 0;
+      let total_finished = 0;
       for (let m of this.m_a_p){
         if (s.member_id == m.member_id){
-          sorted_map.push(m);
-          total_target += m.target_quantity;
+          try{
+            let a = await this._activityService.select(m.activity_id).toPromise();
+            let e = {
+              m_a_p: m,
+              activity: a['data'] as Activity
+            };
+            sorted_map.push(e);
+            total_target += m.target_quantity;
+            total_finished += m.finished_quantity;
+          }
+          catch (error){
+            this.errorMessage = error.error.message;
+          }
         }
       }
-      let element = {member: s, m_a_ps: sorted_map, total_target: total_target};
+      let element = {
+        member: s,
+        m_a_ps: sorted_map,
+        total_target: total_target,
+        total_finished: total_finished
+      };
       this.elements.push(element);
     }
   }
@@ -148,13 +166,13 @@ export class VolumeProgressComponent implements OnInit {
       /* ----- We check every m_a_ps of the member ----- */
       for (let map of element['m_a_ps']) {
 
-        let start = new Date(map.date_begin);
-        let end = new Date(map.target_date);
+        let start = new Date(map['m_a_p'].date_begin);
+        let end = new Date(map['m_a_p'].target_date);
 
         //Interval in days & quantity per day
         let interval = moment(end).diff(start) / (1000 * 60 * 60 * 24) + 1;
-        let one_quantity: number = Math.floor(map.target_quantity / interval);
-        let one_quantity_finished: number = Math.floor(map.finished_quantity / interval);
+        let one_quantity: number = Math.floor(map['m_a_p'].target_quantity / interval);
+        let one_quantity_finished: number = Math.floor(map['m_a_p'].finished_quantity / interval);
 
         let quantity_given = 0;
         let quantity_finished_given = 0;
@@ -164,13 +182,11 @@ export class VolumeProgressComponent implements OnInit {
         let full_quantity_finished = one_quantity_finished * interval;
 
         if (one_quantity == 0){
-          one_quantity = parseFloat((map.target_quantity / interval).toFixed(1));
+          one_quantity = parseFloat((map['m_a_p'].target_quantity / interval).toFixed(1));
           full_quantity = parseFloat((one_quantity * interval).toFixed(1));
-
-          console.log('oui oui : ', parseInt((map.target_quantity / interval).toFixed(1)));
         }
         if (one_quantity_finished == 0){
-          one_quantity_finished = parseFloat((map.finished_quantity / interval).toFixed(1));
+          one_quantity_finished = parseFloat((map['m_a_p'].finished_quantity / interval).toFixed(1));
           full_quantity_finished = parseFloat((one_quantity_finished * interval).toFixed(1));
         }
 
@@ -285,8 +301,6 @@ export class VolumeProgressComponent implements OnInit {
   }
 
   calculPourcentage(value, total){
-    console.log(value, 'and ', total);
-    console.log(Math.ceil(value*100/total))
     return Math.ceil(value*100/total);
   }
 
@@ -296,18 +310,15 @@ export class VolumeProgressComponent implements OnInit {
     start.setDate(1);
     end.setMonth(end.getMonth()+1);
     end.setDate(0);
-    console.log('start : ',start);
     let i = new Date(start);
     while (i<end){
       let m = {
         month: new Date(i),
-        month_label: moment(i).format('MMMM')
+        month_label: moment(i).format('MMMM Y')
       };
       this.months.push(m);
       i.setMonth(i.getMonth()+1);
-      console.log('i : ',i);
     }
-    console.log(this.months);
     this.month_selected = this.months[0];
     this.calculWeeksPerMonth(start.getFullYear(), start.getMonth());
   }
@@ -315,7 +326,6 @@ export class VolumeProgressComponent implements OnInit {
   changeMonth(next){
     let indice = this.months.indexOf(this.month_selected);
     let changed: boolean = false;
-    console.log(this.month_selected);
     if (next &&  indice < this.months.length-1){
       this.month_selected = this.months[indice+1];
 
@@ -325,12 +335,184 @@ export class VolumeProgressComponent implements OnInit {
       this.month_selected = this.months[indice-1];
       changed = true;
     }
-    console.log('become ', this.month_selected);
 
     if (changed) {
       let date = new Date(this.month_selected['month']);
-      console.log(date, 'and', date.getFullYear(), ' and ', date.getMonth());
       this.calculWeeksPerMonth(date.getFullYear(), date.getMonth());
+    }
+  }
+
+  selectMember(element){
+    if(this.element_selected != null){
+      let oldCell = document.getElementById(this.element_selected['member']['member_id']);
+      oldCell.className = "";
+    }
+
+    this.element_selected = element;
+
+    let newCell = document.getElementById(element['member']['member_id']);
+    newCell.className += "selected";
+  }
+
+  async onSubmit(element){
+    this.old_cell = element['member']['member_id'];
+    try{
+      for (let map of element['m_a_ps']){
+        let m = map['m_a_p'] as MemberActivityProject;
+        if(m.finished_quantity>m.target_quantity){
+          throw new Error('One or more finished quantities are greater than their target quantity');
+        }
+      }
+
+      for(let map of element['m_a_ps']){
+        let m = map['m_a_p'] as MemberActivityProject;
+        await this._memberActivityProjectService.update(m).toPromise();
+      }
+      this.errorMessage = "";
+      this.ready = false;
+
+      await this.loadData();
+      await this.sortElements();
+      await this.calculTargetsPerWeek();
+      await this.calculMonths();
+
+      this.ready = true;
+
+    }
+    catch (error){
+      this.errorMessage = error;
+    }
+
+  }
+
+  sortTable(n) {
+    var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+    table = document.getElementById("volume-table");
+    switching = true;
+    // Set the sorting direction to ascending:
+    dir = "asc";
+    /* Make a loop that will continue until
+    no switching has been done: */
+    while (switching) {
+      // Start by saying: no switching is done:
+      switching = false;
+      rows = table.getElementsByTagName("TR");
+      /* Loop through all table rows (except the
+      first, which contains table headers): */
+      for (i = 1; i < (rows.length - 1); i++) {
+        // Start by saying there should be no switching:
+        shouldSwitch = false;
+        /* Get the two elements you want to compare,
+        one from current row and one from the next: */
+        x = rows[i].getElementsByTagName("TD")[n];
+        y = rows[i + 1].getElementsByTagName("TD")[n];
+        /* Check if the two rows should switch place,
+        based on the direction, asc or desc: */
+        if (dir == "asc") {
+          if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+            // If so, mark as a switch and break the loop:
+            shouldSwitch = true;
+            break;
+          }
+        } else if (dir == "desc") {
+          if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+            // If so, mark as a switch and break the loop:
+            shouldSwitch = true;
+            break;
+          }
+        }
+      }
+      if (shouldSwitch) {
+        /* If a switch has been marked, make the switch
+        and mark that a switch has been done: */
+        rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+        switching = true;
+        // Each time a switch is done, increase this count by 1:
+        switchcount ++;
+      } else {
+        /* If no switching has been done AND the direction is "asc",
+        set the direction to "desc" and run the while loop again. */
+        if (switchcount == 0 && dir == "asc") {
+          dir = "desc";
+          switching = true;
+        }
+      }
+    }
+  }
+
+  sortTable1(n) {
+    var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+    table = document.getElementById("activity-table");
+    switching = true;
+    // Set the sorting direction to ascending:
+    dir = "asc";
+    /* Make a loop that will continue until
+    no switching has been done: */
+    while (switching) {
+      // Start by saying: no switching is done:
+      switching = false;
+      rows = table.getElementsByTagName("TR");
+      /* Loop through all table rows (except the
+      first, which contains table headers): */
+      for (i = 1; i < (rows.length - 1); i++) {
+        // Start by saying there should be no switching:
+        shouldSwitch = false;
+        /* Get the two elements you want to compare,
+        one from current row and one from the next: */
+        x = rows[i].getElementsByTagName("TD")[n];
+        y = rows[i + 1].getElementsByTagName("TD")[n];
+        /* Check if the two rows should switch place,
+        based on the direction, asc or desc: */
+        if (dir == "asc") {
+          if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+            // If so, mark as a switch and break the loop:
+            shouldSwitch = true;
+            break;
+          }
+        } else if (dir == "desc") {
+          if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+            // If so, mark as a switch and break the loop:
+            shouldSwitch = true;
+            break;
+          }
+        }
+      }
+      if (shouldSwitch) {
+        /* If a switch has been marked, make the switch
+        and mark that a switch has been done: */
+        rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+        switching = true;
+        // Each time a switch is done, increase this count by 1:
+        switchcount ++;
+      } else {
+        /* If no switching has been done AND the direction is "asc",
+        set the direction to "desc" and run the while loop again. */
+        if (switchcount == 0 && dir == "asc") {
+          dir = "desc";
+          switching = true;
+        }
+      }
+    }
+  }
+
+  search() {
+    // Declare variables
+    var input, filter, table, tr, td, i;
+    input = document.getElementById("search");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("volume-table");
+    tr = table.getElementsByTagName("tr");
+
+    // Loop through all table rows, and hide those who don't match the search query
+    for (i = 0; i < tr.length; i++) {
+      td = tr[i].getElementsByTagName("td")[1];
+      if (td) {
+        if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = "";
+        } else {
+          tr[i].style.display = "none";
+        }
+      }
     }
   }
 
@@ -356,7 +538,6 @@ export class VolumeProgressComponent implements OnInit {
     else {
       this.calendarType = "month";
     }
-    console.log(this.calendarType);
   }
 
   async calendarRange() {

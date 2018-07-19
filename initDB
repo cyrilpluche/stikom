@@ -556,9 +556,9 @@ INSERT INTO member_unit_project (unit_id, project_id, member_id) VALUES (5, 2, 2
 INSERT INTO project_has_job (job_id, project_id) VALUES (1, 1);
 INSERT INTO project_has_job (job_id, project_id) VALUES (2, 1);
 
-INSERT INTO member_activity_project (target_date, date_begin, evaluation, finished_date, sign, note, target_quantity, finished_quantity, finished_duration, member_id, activity_id, project_id) VALUES ('2018-10-01', '2018-09-28', 'the evaluation in text format','2018-09-30','a sign', 'a note', 10, 10, 0,1,3,1 );
-INSERT INTO member_activity_project (target_date, date_begin, evaluation, finished_date, sign, note, target_quantity, finished_quantity, finished_duration, member_id, activity_id, project_id) VALUES ('2018-10-04', '2018-10-01', 'the evaluation in text format','2018-10-03','a sign', 'a note', 9, 9, 0,2,1,1 );
-INSERT INTO member_activity_project (target_date, date_begin, evaluation, finished_date, sign, note, target_quantity, finished_quantity, finished_duration, member_id, activity_id, project_id) VALUES ('2018-09-28', '2018-09-25', 'the evaluation in text format','2018-09-28','a sign', 'a note', 11, 12, 0,1,2,1 );
+INSERT INTO member_activity_project (target_date, date_begin, evaluation, finished_date, job_id, sign, note, target_quantity, finished_quantity, finished_duration, member_id, activity_id, project_id) VALUES ('2018-10-01', '2018-09-28', 'the evaluation in text format','2018-09-30', 1, 'a sign', 'a note', 10, 10, 0,1,3,1 );
+INSERT INTO member_activity_project (target_date, date_begin, evaluation, finished_date, job_id, sign, note, target_quantity, finished_quantity, finished_duration, member_id, activity_id, project_id) VALUES ('2018-10-04', '2018-10-01', 'the evaluation in text format','2018-10-03', 1, 'a sign', 'a note', 9, 9, 0,2,1,1 );
+INSERT INTO member_activity_project (target_date, date_begin, evaluation, finished_date, job_id, sign, note, target_quantity, finished_quantity, finished_duration, member_id, activity_id, project_id) VALUES ('2018-09-28', '2018-09-25', 'the evaluation in text format','2018-09-28', 1, 'a sign', 'a note', 11, 12, 0,1,2,1 );
 
 
 ------------------------------------------------------------

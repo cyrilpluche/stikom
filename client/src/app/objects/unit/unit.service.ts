@@ -45,6 +45,16 @@ export class UnitService {
     return this.http.get(this.domain + '/api/unit/all_from_sop/'+sop_id,this.httpOptions);
   }
 
+  selectAllFromActivity(activity_id:string){
+    this.generateHeaders();
+    return this.http.get(this.domain + '/api/unit/all_from_activity/'+activity_id,this.httpOptions);
+  }
+
+  selectAllFromJob(job_id:string){
+    this.generateHeaders();
+    return this.http.get(this.domain + '/api/unit/all_from_job/'+job_id,this.httpOptions);
+  }
+
   generateHeaders()
   {
     if(localStorage.getItem("Token") === null)
