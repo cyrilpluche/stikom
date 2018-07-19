@@ -180,14 +180,16 @@ CREATE TABLE public.has_role(
 )WITHOUT OIDS;
 
 
+
 ------------------------------------------------------------
 -- Table: member_unit_project
 ------------------------------------------------------------
 CREATE TABLE public.member_unit_project(
 	unit_id      INT  NOT NULL ,
 	project_id   INT  NOT NULL ,
-	member_id    INT  NOT NULL  ,
-	CONSTRAINT member_unit_project_PK PRIMARY KEY (unit_id,project_id,member_id)
+	member_id    INT  NOT NULL ,
+	job_id       INT  NOT NULL  ,
+	CONSTRAINT member_unit_project_PK PRIMARY KEY (unit_id,project_id,member_id,job_id)
 )WITHOUT OIDS;
 
 
@@ -428,6 +430,11 @@ ALTER TABLE public.member_activity_project
 	FOREIGN KEY (job_id)
 	REFERENCES public.job(job_id) ON DELETE CASCADE;
 
+
+ALTER TABLE public.member_unit_project
+	ADD CONSTRAINT member_unit_project_job3_FK
+	FOREIGN KEY (job_id)
+	REFERENCES public.job(job_id) ON DELETE CASCADE;
 
 ------------------------------------------------------------
 -- Insertions
