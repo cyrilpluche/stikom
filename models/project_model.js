@@ -48,9 +48,9 @@ let project = {
 
     insertMemberActivityProject (data) {
         return db.any('INSERT INTO public.member_activity_project(\n' +
-            'project_id, member_id, activity_id, target_date, date_begin, evaluation, finished_date, sign, note,\n' +
+            'project_id, member_id, activity_id, job_id, target_date, date_begin, evaluation, finished_date, sign, note,\n' +
             'target_quantity, finished_quantity, finished_duration)\n' +
-            'VALUES (${project_id}, ${member_id}, ${activity_id}, ${target_date}, ${date_begin}, ${evaluation}, \n' +
+            'VALUES (${project_id}, ${member_id}, ${activity_id}, ${job_id}, ${target_date}, ${date_begin}, ${evaluation}, \n' +
             '${finished_date}, ${sign}, ${note}, ${target_quantity},${finished_quantity}, ${finished_duration})\n' +
             'returning project_id, member_id, activity_id;', data)
             .then(function (data) {
@@ -135,14 +135,15 @@ let project = {
             })
     },
 
-    updateMemberActivityProject (map) {
+    updateMemberActivityProject (member_activity_project) {
         return db.any('UPDATE public.member_activity_project\n' +
             'SET target_date=${target_date}, date_begin=${date_begin}, evaluation=${evaluation},\n' +
             'finished_date=${finished_date}, sign=${sign}, note=${note}, target_quantity=${target_quantity},\n' +
             'finished_quantity=${finished_quantity}, finished_duration=${finished_duration}\n' +
-            'WHERE project_id= ${project_id} AND activity_id = ${activity_id} AND member_id = ${member_id}\n' +
-            'returning member_id, activity_id, project_id',
-            map)
+            'WHERE project_id= ${project_id} AND activity_id = ${activity_id} AND member_id = ${member_id} AND\n' +
+            'job_id = ${job_id}\n' +
+            'returning member_id, activity_id, project_id, job_id',
+            member_activity_project)
             .then(function (data) {
                 if (data.length === 0) {
                     return false
