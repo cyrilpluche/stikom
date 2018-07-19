@@ -106,7 +106,8 @@ let project = {
     },
 
     selectAllIdMemberActivityProjectByProject_id (project_id) {
-        return db.any('SELECT DISTINCT activity_id FROM public.member_activity_project WHERE project_id = $1', project_id)
+        return db.any('SELECT DISTINCT activity_id, job_id FROM public.member_activity_project WHERE project_id = $1',
+            project_id)
             .then(function (data) {
                 if (data.length === 0) {
                     return false
