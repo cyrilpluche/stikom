@@ -119,7 +119,7 @@ router.post('/bind_project_job',
 
 router.post('/bind_member_activity_project',
     policy.checkParameters(['project_id', 'member_id', 'activity_id', 'target_date', 'date_begin', 'evaluation',
-        'finished_date', 'sign', 'note', 'target_quantity', 'finished_quantity', 'finished_duration']),
+        'finished_date', 'sign', 'note', 'target_quantity', 'finished_quantity', 'finished_duration', 'job_id']),
     function (req, res, next) {
         let d = {
             project_id: req.body.project_id,
@@ -133,7 +133,8 @@ router.post('/bind_member_activity_project',
             note: req.body.note,
             target_quantity: req.body.target_quantity,
             finished_quantity: req.body.finished_quantity,
-            finished_duration: req.body.finished_duration
+            finished_duration: req.body.finished_duration,
+            job_id: req.body.job_id
         };
         modelProject.insertMemberActivityProject(d)
             .then(function (data) {
@@ -174,7 +175,7 @@ router.post('/create_activity_member',
 
 router.put('/update_member_activity_project',
     policy.checkParameters(['member_id', 'activity_id', 'target_date', 'date_begin', 'evaluation', 'finished_date',
-        'sign', 'note', 'target_quantity', 'finished_quantity', 'finished_duration']),
+        'sign', 'note', 'target_quantity', 'finished_quantity', 'finished_duration', 'job_id']),
     function (req, res, next) {
         let map = {
             project_id: req.body.project_id,
@@ -188,7 +189,8 @@ router.put('/update_member_activity_project',
             note: req.body.note,
             target_quantity: req.body.target_quantity,
             finished_quantity: req.body.finished_quantity,
-            finished_duration: req.body.finished_duration
+            finished_duration: req.body.finished_duration,
+            job_id: req.body.job_id
         };
         modelProject.updateMemberActivityProject(map).then(function (data) {
             if (!data) {
