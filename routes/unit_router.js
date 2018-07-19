@@ -36,4 +36,24 @@ router.get('/all_from_sop/:sop', function (req, res, next) {
     }).catch(next)
 });
 
+router.get('/all_from_job/:job', function (req, res, next) {
+    modelUnit.selectAllByJobId(req.params.job).then(function (data) {
+        if (!data) {
+            res.json({data: []})
+        } else {
+            res.json({data: data})
+        }
+    }).catch(next)
+});
+
+router.get('/all_from_activity/:activity', function (req, res, next) {
+    modelUnit.selectAllByJActivityId(req.params.activity).then(function (data) {
+        if (!data) {
+            res.json({data: []})
+        } else {
+            res.json({data: data})
+        }
+    }).catch(next)
+});
+
 module.exports = router;
