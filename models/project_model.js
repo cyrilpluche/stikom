@@ -52,7 +52,7 @@ let project = {
             'target_quantity, finished_quantity, finished_duration)\n' +
             'VALUES (${project_id}, ${member_id}, ${activity_id}, ${job_id}, ${target_date}, ${date_begin}, ${evaluation}, \n' +
             '${finished_date}, ${sign}, ${note}, ${target_quantity},${finished_quantity}, ${finished_duration})\n' +
-            'returning project_id, member_id, activity_id;', data)
+            'returning project_id, member_id, activity_id, job_id;', data)
             .then(function (data) {
                 if (data.length === 0) {
                     return false
