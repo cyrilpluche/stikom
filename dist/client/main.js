@@ -481,22 +481,22 @@ var routes = [
     { path: 'authentification', component: _component_authentification_authentification_component__WEBPACK_IMPORTED_MODULE_19__["AuthentificationComponent"] },
     { path: 'sign-up', component: _component_authentification_sign_up_sign_up_component__WEBPACK_IMPORTED_MODULE_21__["SignUpComponent"] },
     { path: 'authentification', component: _component_authentification_authentification_component__WEBPACK_IMPORTED_MODULE_19__["AuthentificationComponent"] },
-    { path: 'project-list', component: _component_project_list_project_list_component__WEBPACK_IMPORTED_MODULE_17__["ProjectListComponent"] },
-    { path: 'sop-creation', component: _component_sop_list_sop_creation_sop_creation_component__WEBPACK_IMPORTED_MODULE_23__["SopCreationComponent"] },
-    { path: 'sop-list', component: _component_sop_list_sop_list_component__WEBPACK_IMPORTED_MODULE_9__["SopListComponent"] },
-    { path: 'activity-creation', component: _component_activity_list_activity_creation_activity_creation_component__WEBPACK_IMPORTED_MODULE_30__["ActivityCreationComponent"] },
-    { path: 'project-creation', component: _component_project_list_project_creation_project_creation_component__WEBPACK_IMPORTED_MODULE_27__["ProjectCreationComponent"] },
-    { path: 'admin-users', component: _component_admin_users_admin_users_component__WEBPACK_IMPORTED_MODULE_32__["AdminUsersComponent"] },
-    { path: 'job-creation', component: _component_job_list_job_creation_job_creation_component__WEBPACK_IMPORTED_MODULE_37__["JobCreationComponent"] },
-    { path: 'admin-organization-management', component: _component_organization_management_organization_management_component__WEBPACK_IMPORTED_MODULE_33__["OrganizationManagementComponent"] },
+    { path: 'project-list', component: _component_project_list_project_list_component__WEBPACK_IMPORTED_MODULE_17__["ProjectListComponent"], canActivate: [_guards_auth_guard__WEBPACK_IMPORTED_MODULE_2__["AuthGuard"]] },
+    { path: 'sop-creation', component: _component_sop_list_sop_creation_sop_creation_component__WEBPACK_IMPORTED_MODULE_23__["SopCreationComponent"], canActivate: [_guards_auth_guard__WEBPACK_IMPORTED_MODULE_2__["AuthGuard"]] },
+    { path: 'sop-list', component: _component_sop_list_sop_list_component__WEBPACK_IMPORTED_MODULE_9__["SopListComponent"], canActivate: [_guards_auth_guard__WEBPACK_IMPORTED_MODULE_2__["AuthGuard"]] },
+    { path: 'activity-creation', component: _component_activity_list_activity_creation_activity_creation_component__WEBPACK_IMPORTED_MODULE_30__["ActivityCreationComponent"], canActivate: [_guards_auth_guard__WEBPACK_IMPORTED_MODULE_2__["AuthGuard"]] },
+    { path: 'project-creation', component: _component_project_list_project_creation_project_creation_component__WEBPACK_IMPORTED_MODULE_27__["ProjectCreationComponent"], canActivate: [_guards_auth_guard__WEBPACK_IMPORTED_MODULE_2__["AuthGuard"]] },
+    { path: 'admin-users', component: _component_admin_users_admin_users_component__WEBPACK_IMPORTED_MODULE_32__["AdminUsersComponent"], canActivate: [_guards_auth_guard__WEBPACK_IMPORTED_MODULE_2__["AuthGuard"]] },
+    { path: 'job-creation', component: _component_job_list_job_creation_job_creation_component__WEBPACK_IMPORTED_MODULE_37__["JobCreationComponent"], canActivate: [_guards_auth_guard__WEBPACK_IMPORTED_MODULE_2__["AuthGuard"]] },
+    { path: 'admin-organization-management', component: _component_organization_management_organization_management_component__WEBPACK_IMPORTED_MODULE_33__["OrganizationManagementComponent"], canActivate: [_guards_auth_guard__WEBPACK_IMPORTED_MODULE_2__["AuthGuard"]] },
     { path: 'pdf-sop', component: _documents_pdf_sop_pdf_sop_component__WEBPACK_IMPORTED_MODULE_38__["PdfSopComponent"] },
     { path: 'pdf-gantt', component: _documents_pdf_gantt_pdf_gantt_component__WEBPACK_IMPORTED_MODULE_39__["PdfGanttComponent"] },
     { path: 'pdf-progress-evaluation', component: _documents_pdf_progress_evaluation_pdf_progress_evaluation_component__WEBPACK_IMPORTED_MODULE_40__["PdfProgressEvaluationComponent"] },
-    { path: 'job-list', component: _component_job_list_job_list_component__WEBPACK_IMPORTED_MODULE_35__["JobListComponent"] },
-    { path: 'admin-organization-management', component: _component_organization_management_organization_management_component__WEBPACK_IMPORTED_MODULE_33__["OrganizationManagementComponent"] },
-    { path: 'gantt', component: _component_gantt_gantt_component__WEBPACK_IMPORTED_MODULE_43__["GanttComponent"] },
-    { path: 'gantt-creation', component: _component_gantt_gantt_creation_gantt_creation_component__WEBPACK_IMPORTED_MODULE_44__["GanttCreationComponent"] },
-    { path: 'admin-organization-management', component: _component_organization_management_organization_management_component__WEBPACK_IMPORTED_MODULE_33__["OrganizationManagementComponent"] },
+    { path: 'job-list', component: _component_job_list_job_list_component__WEBPACK_IMPORTED_MODULE_35__["JobListComponent"], canActivate: [_guards_auth_guard__WEBPACK_IMPORTED_MODULE_2__["AuthGuard"]] },
+    { path: 'admin-organization-management', component: _component_organization_management_organization_management_component__WEBPACK_IMPORTED_MODULE_33__["OrganizationManagementComponent"], canActivate: [_guards_auth_guard__WEBPACK_IMPORTED_MODULE_2__["AuthGuard"]] },
+    { path: 'gantt', component: _component_gantt_gantt_component__WEBPACK_IMPORTED_MODULE_43__["GanttComponent"], canActivate: [_guards_auth_guard__WEBPACK_IMPORTED_MODULE_2__["AuthGuard"]] },
+    { path: 'gantt-creation', component: _component_gantt_gantt_creation_gantt_creation_component__WEBPACK_IMPORTED_MODULE_44__["GanttCreationComponent"], canActivate: [_guards_auth_guard__WEBPACK_IMPORTED_MODULE_2__["AuthGuard"]] },
+    { path: 'admin-organization-management', component: _component_organization_management_organization_management_component__WEBPACK_IMPORTED_MODULE_33__["OrganizationManagementComponent"], canActivate: [_guards_auth_guard__WEBPACK_IMPORTED_MODULE_2__["AuthGuard"]] },
     { path: 'pdf-performance-target', component: _documents_pdf_performance_target_pdf_performance_target_component__WEBPACK_IMPORTED_MODULE_41__["PdfPerformanceTargetComponent"] },
     { path: 'pdf-performance-report', component: _documents_pdf_performance_report_pdf_performance_report_component__WEBPACK_IMPORTED_MODULE_42__["PdfPerformanceReportComponent"] },
     { path: 'volume-progress', component: _component_project_list_volume_progress_volume_progress_component__WEBPACK_IMPORTED_MODULE_46__["VolumeProgressComponent"] }
@@ -682,7 +682,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div *ngIf=\"!changeFinished\" class=\"container\">\r\n  <div class=\"row row-first\">\r\n    <div class=\"col-12 card card-cascade hoverable\">\r\n      <!--Table-->\r\n      <div class=\"card-body card-body-cascade\">\r\n        My account\r\n      </div>\r\n    </div>\r\n  </div>\r\n  <div class=\"row\" style=\"margin-top: 20px;\">\r\n    <div class=\"col-sm-12 col-lg-3\">\r\n      <p class=\"font-weight-bold\">Name first_name</p>\r\n    </div>\r\n    <div class=\"col-sm-12 col-lg-9 \">\r\n      <p class=\"float-lg-left float-sm-right\">{{name}} {{firstName}}</p>\r\n    </div>\r\n  </div>\r\n  <div class=\"row\" style=\"margin-top: 20px;\">\r\n    <div class=\"col-sm-12 col-lg-3\">\r\n      <p class=\"font-weight-bold\">Mail</p>\r\n    </div>\r\n    <div class=\"col-sm-12 col-lg-9 \">\r\n      <p class=\"float-lg-left float-sm-right\">{{mail}}</p>\r\n    </div>\r\n  </div>\r\n  <form (ngSubmit)=\"onSubmit()\">\r\n  <div class=\"row\" style=\"margin-top: 20px;\">\r\n    <div class=\"col-sm-12 col-lg-12\" style=\"padding-top: 30px;\">\r\n      <p class=\"font-weight-bold\">Change password</p>\r\n    </div>\r\n    <div class=\"col-sm-12 col-lg-3\">\r\n      <div class=\"md-form\">\r\n        <i class=\"fa fa-lock prefix grey-text\"></i>\r\n        <input required [(ngModel)]=\"actualPassword\" name=actualPassword type=\"password\" id=\"actualPassword\" class=\"form-control\">\r\n        <label for=\"newPassword\">Actual password</label>\r\n      </div>\r\n    </div>\r\n    <div class=\"col-sm-12 col-lg-3\">\r\n      <div class=\"md-form\">\r\n        <i class=\"fa fa-lock prefix grey-text\"></i>\r\n        <input required [(ngModel)]=\"newPassword\" name=newPassword type=\"password\" id=\"newPassword\" class=\"form-control\">\r\n        <label for=\"newPassword\">New password</label>\r\n      </div>\r\n    </div>\r\n    <div class=\"col-sm-12 col-lg-3\">\r\n      <div class=\"md-form\">\r\n        <i class=\"fa fa-lock prefix grey-text\"></i>\r\n        <input required [(ngModel)]=\"newPasswordCheck\" name=password type=\"password\" id=\"newPasswordCheck\" class=\"form-control\">\r\n        <label for=\"newPasswordCheck\">Confirm new password</label>\r\n      </div>\r\n    </div>\r\n    <div *ngIf=\"errorMessage\" class=\"alert alert-danger\" role=\"alert\">\r\n      {{errorMessage}}\r\n    </div>\r\n    <div class=\"col-sm-12 col-lg-3\">\r\n      <div class=\"text-center mt-4\">\r\n        <button class=\"btn btn-default btn-sm\" type=\"submit\">Change</button>\r\n      </div>\r\n    </div>\r\n  </div>\r\n  </form>\r\n\r\n</div>\r\n\r\n<app-summary *ngIf=\"changeFinished\"\r\n             title=\"Success\"\r\n             text=\"Your password has been updated, please login to confirm your statut.\"\r\n             buttonTitle=\"Login\" link=\"authentification\">\r\n</app-summary>\r\n"
+module.exports = "<div *ngIf=\"!changeFinished\" class=\"container\">\r\n  <div class=\"row row-first\">\r\n    <div class=\"col-12 card card-cascade hoverable\">\r\n      <!--Table-->\r\n      <div class=\"card-body card-body-cascade\">\r\n        My account\r\n      </div>\r\n    </div>\r\n  </div>\r\n  <div class=\"row\" style=\"margin-top: 20px;\">\r\n    <div class=\"col-sm-12 col-lg-3\">\r\n      <p class=\"font-weight-bold\">Name first_name</p>\r\n    </div>\r\n    <div class=\"col-sm-12 col-lg-9 \">\r\n      <p class=\"float-lg-left float-sm-right\">{{name}} {{firstName}}</p>\r\n    </div>\r\n  </div>\r\n  <div class=\"row\" style=\"margin-top: 20px;\">\r\n    <div class=\"col-sm-12 col-lg-3\">\r\n      <p class=\"font-weight-bold\">Mail</p>\r\n    </div>\r\n    <div class=\"col-sm-12 col-lg-9 \">\r\n      <p class=\"float-lg-left float-sm-right\">{{mail}}</p>\r\n    </div>\r\n  </div>\r\n  <form (ngSubmit)=\"onSubmit()\">\r\n  <div class=\"row\" style=\"margin-top: 20px;\">\r\n    <div class=\"col-sm-12 col-lg-12\" style=\"padding-top: 30px;\">\r\n      <p class=\"font-weight-bold\">Change password</p>\r\n    </div>\r\n    <div class=\"col-sm-12 col-lg-3\">\r\n      <div class=\"md-form\">\r\n        <i class=\"fa fa-lock prefix grey-text\"></i>\r\n        <input required [(ngModel)]=\"actualPassword\" name=actualPassword type=\"password\" id=\"actualPassword\" class=\"form-control\">\r\n        <label for=\"actualPassword\">Actual password</label>\r\n      </div>\r\n    </div>\r\n    <div class=\"col-sm-12 col-lg-3\">\r\n      <div class=\"md-form\">\r\n        <i class=\"fa fa-lock prefix grey-text\"></i>\r\n        <input required [(ngModel)]=\"newPassword\" name=newPassword type=\"password\" id=\"newPassword\" class=\"form-control\">\r\n        <label for=\"newPassword\">New password</label>\r\n      </div>\r\n    </div>\r\n    <div class=\"col-sm-12 col-lg-3\">\r\n      <div class=\"md-form\">\r\n        <i class=\"fa fa-lock prefix grey-text\"></i>\r\n        <input required [(ngModel)]=\"newPasswordCheck\" name=password type=\"password\" id=\"newPasswordCheck\" class=\"form-control\">\r\n        <label for=\"newPasswordCheck\">Confirm new password</label>\r\n      </div>\r\n    </div>\r\n    <div *ngIf=\"errorMessage\" class=\"alert alert-danger\" role=\"alert\">\r\n      {{errorMessage}}\r\n    </div>\r\n    <div class=\"col-sm-12 col-lg-3\">\r\n      <div class=\"text-center mt-4\">\r\n        <button class=\"btn btn-default btn-sm\" type=\"submit\">Change</button>\r\n      </div>\r\n    </div>\r\n  </div>\r\n  </form>\r\n\r\n</div>\r\n\r\n<app-summary *ngIf=\"changeFinished\"\r\n             title=\"Success\"\r\n             text=\"Your password has been updated, please login to confirm your statut.\"\r\n             buttonTitle=\"Home\" link=\"home\">\r\n</app-summary>\r\n"
 
 /***/ }),
 
@@ -744,7 +744,6 @@ var AccountComponent = /** @class */ (function () {
         this._memberService.passwordUpdate(actual, newP, confP)
             .subscribe(function (res) {
             _this.errorMessage = "";
-            _this._memberService.logout();
             _this.changeFinished = true;
         }, function (error) {
             console.log("ERREUR : ", error);
@@ -1269,7 +1268,7 @@ var ActivityListComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div *ngIf=\"!actionFinished\" class=\"container\">\r\n\r\n  <div class=\"row row-first\">\r\n    <div class=\"col-12 card card-cascade hoverable\">\r\n      <!--Table-->\r\n      <div class=\"card-body card-body-cascade\">\r\n        Manage Users\r\n      </div>\r\n    </div>\r\n  </div>\r\n\r\n  <div class=\"row justify-content-center\" style=\"margin-top: 20px\">\r\n\r\n    <div class=\"col-12 card card-cascade hoverable\">\r\n      <!--Table-->\r\n      <div class=\"card-body card-body-cascade\">\r\n        <table class=\"table\">\r\n\r\n          <!--Table head-->\r\n          <thead class=\"\">\r\n          <tr class=\"text-white\">\r\n            <th>First Name</th>\r\n            <th>Name</th>\r\n            <th>Mail</th>\r\n            <th>Role</th>\r\n            <th>Actions</th>\r\n          </tr>\r\n          </thead>\r\n          <!--Table head-->\r\n\r\n          <!--Table body-->\r\n          <tbody>\r\n          <tr *ngFor=\"let user of users\">\r\n            <th scope=\"row\">{{user.member_first_name}}</th>\r\n            <td scope=\"row\">{{user.member_name}}</td>\r\n            <td>{{user.member_mail}}</td>\r\n            <td *ngIf=\"user.member_admin == 1\">admin</td>\r\n            <td *ngIf=\"user.member_admin !== 1 && user.member_role === null\">no role</td>\r\n            <td *ngIf=\"user.member_admin !== 1 && user.member_role !== null\">\r\n              <span  *ngFor=\"let role of user.member_role\">{{role}}<br></span>\r\n            </td>\r\n            <td *ngIf=\"user.member_valid == 0\"><span style=\"color: red;\">mail not validated</span> </td>\r\n            <td *ngIf=\"user.member_valid == 2\"> <button (click)=\"validateUser(user.member_id)\" class=\"btn btn-warning btn-sm\">approve account</button></td>\r\n            <td *ngIf=\"user.member_valid == 1\"> <button class=\"btn btn-default btn-sm\">No action</button></td>\r\n          </tr>\r\n\r\n          </tbody>\r\n          <!--Table body-->\r\n\r\n        </table>\r\n        <!--Table-->\r\n      </div>\r\n    </div>\r\n\r\n  </div>\r\n\r\n\r\n</div>\r\n\r\n<div *ngIf=\"actionFinished\" class=\"container\">\r\n  <div class=\"row row-first justify-content-center\">\r\n\r\n    <!-- Card -->\r\n    <div class=\"col-10 col-sm-8 col-md-6 col-xl-4 card card-cascade hoverable\">\r\n\r\n      <!-- Card content -->\r\n      <div class=\"card-body card-body-cascade\">\r\n\r\n        <p class=\"h4 text-center mb-4\" >{{title}}</p>\r\n\r\n\r\n        <p class=\"text-center mb-4\">\r\n          {{text}}\r\n        </p>\r\n\r\n        <div class=\"text-center mt-4\">\r\n          <a class=\"btn btn-default\" (click)=\"goBack()\" >go Back</a>\r\n        </div>\r\n\r\n      </div>\r\n    </div>\r\n\r\n\r\n\r\n  </div>\r\n</div>\r\n"
+module.exports = "<div *ngIf=\"!actionFinished\" class=\"container\">\r\n\r\n  <div class=\"row row-first\">\r\n    <div class=\"col-12 card card-cascade hoverable\">\r\n      <!--Table-->\r\n      <div class=\"card-body card-body-cascade\">\r\n        Manage Users\r\n      </div>\r\n    </div>\r\n  </div>\r\n\r\n  <div class=\"row justify-content-center\" style=\"margin-top: 20px\">\r\n\r\n    <div class=\"col-12 card card-cascade hoverable\">\r\n      <!--Table-->\r\n      <div class=\"card-body card-body-cascade\">\r\n        <table class=\"table\">\r\n\r\n          <!--Table head-->\r\n          <thead class=\"\">\r\n          <tr class=\"text-white\">\r\n            <th>First Name</th>\r\n            <th>Name</th>\r\n            <th>Mail</th>\r\n            <th>Role</th>\r\n            <th>Actions</th>\r\n          </tr>\r\n          </thead>\r\n          <!--Table head-->\r\n\r\n          <!--Table body-->\r\n          <tbody>\r\n          <tr *ngFor=\"let user of users\">\r\n            <th scope=\"row\">{{user.member_first_name}}</th>\r\n            <td scope=\"row\">{{user.member_name}}</td>\r\n            <td>{{user.member_mail}}</td>\r\n            <td *ngIf=\"user.member_admin == 1\">admin</td>\r\n            <td *ngIf=\"user.member_admin !== 1 && user.member_role === null\">no role</td>\r\n            <td *ngIf=\"user.member_admin !== 1 && user.member_role !== null\">\r\n              <span  *ngFor=\"let role of user.member_role\">{{role}}<br></span>\r\n            </td>\r\n            <td *ngIf=\"user.member_valid == 0\"><span style=\"color: red;\">Account not valid. Mail not validated yet</span> </td>\r\n            <td *ngIf=\"user.member_valid == 2\"> <button (click)=\"validateUser(user.member_id)\" class=\"btn btn-warning btn-sm\">Approve account</button></td>\r\n            <td *ngIf=\"user.member_valid == 1\" style=\"color: green\"> Account valid</td>\r\n          </tr>\r\n\r\n          </tbody>\r\n          <!--Table body-->\r\n\r\n        </table>\r\n        <!--Table-->\r\n      </div>\r\n    </div>\r\n\r\n  </div>\r\n\r\n\r\n</div>\r\n\r\n<div *ngIf=\"actionFinished\" class=\"container\">\r\n  <div class=\"row row-first justify-content-center\">\r\n\r\n    <!-- Card -->\r\n    <div class=\"col-10 col-sm-8 col-md-6 col-xl-4 card card-cascade hoverable\">\r\n\r\n      <!-- Card content -->\r\n      <div class=\"card-body card-body-cascade\">\r\n\r\n        <p class=\"h4 text-center mb-4\" >{{title}}</p>\r\n\r\n\r\n        <p class=\"text-center mb-4\">\r\n          {{text}}\r\n        </p>\r\n\r\n        <div class=\"text-center mt-4\">\r\n          <a class=\"btn btn-default\" (click)=\"goBack()\" >go Back</a>\r\n        </div>\r\n\r\n      </div>\r\n    </div>\r\n\r\n\r\n\r\n  </div>\r\n</div>\r\n"
 
 /***/ }),
 
@@ -2635,20 +2634,27 @@ var JobCreationComponent = /** @class */ (function () {
         });
     };
     JobCreationComponent.prototype.pickActivity = function (activity) {
-        var a = document.getElementById(activity.activity_id);
         var sub_a = this.sub_activities[this.activities.indexOf(activity)];
+        var a = document.getElementById(activity.activity_id);
+        var old = document.getElementsByTagName('input');
+        for (var i = 0; i < (old.length); i++) {
+            old[i]['checked'] = false;
+        }
+        a['checked'] = true;
+        for (var _i = 0, sub_a_1 = sub_a; _i < sub_a_1.length; _i++) {
+            var s = sub_a_1[_i];
+            document.getElementById(s.activity_id)['checked'] = true;
+        }
+        /*
         if (a['checked']) {
-            for (var _i = 0, sub_a_1 = sub_a; _i < sub_a_1.length; _i++) {
-                var s = sub_a_1[_i];
-                document.getElementById(s.activity_id)['checked'] = true;
-            }
-        }
-        else {
-            for (var _a = 0, sub_a_2 = sub_a; _a < sub_a_2.length; _a++) {
-                var s = sub_a_2[_a];
-                document.getElementById(s.activity_id)['checked'] = false;
-            }
-        }
+          for (let s of sub_a){
+            document.getElementById(s.activity_id)['checked'] = true;
+          }
+        }else{
+          for (let s of sub_a){
+            document.getElementById(s.activity_id)['checked'] = false;
+          }
+        }*/
     };
     JobCreationComponent.prototype.isActivityPicked = function () {
         var elements = document.querySelectorAll(".form-check-input");
@@ -2686,7 +2692,7 @@ var JobCreationComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container\">\r\n\r\n  <!-- SOP List back button -->\r\n  <div class=\"row row-first\">\r\n    <div class=\"col\">\r\n      <button type=\"button\" class=\"btn btn-outline-danger waves-effect\" [routerLink]=\"['/sop-list']\"><h6 class=\"no-margin-bottom\"><i class=\"fa fa-times mr-3\"></i>Back</h6></button>\r\n    </div>\r\n  </div>\r\n\r\n  <div class=\"row row-first justify-content-center\">\r\n\r\n    <div class=\"col-12 card card-cascade hoverable\">\r\n      <!--Table-->\r\n      <div class=\"card-body card-body-cascade\">\r\n\r\n        <form>\r\n          <!-- Job Title -->\r\n          <div class=\"row md-form\">\r\n            <div class=\"col\">\r\n              <i class=\"fa fa-pencil prefix grey-text\"></i>\r\n              <input [(ngModel)]=\"newJobTitle\" name=\"newJobTitle\" type=\"text\" id=\"newJobTitle\" class=\"form-control\">\r\n              <label for=\"newJobTitle\">Job title</label>\r\n            </div>\r\n            <div>\r\n              <button class=\"btn btn-success waves-effect\" type=\"button\" (click)=\"addJob()\">Add</button>\r\n            </div>\r\n          </div>\r\n        </form>\r\n\r\n      </div>\r\n    </div>\r\n  </div>\r\n\r\n  <div class=\"row row-first justify-content-center\">\r\n\r\n    <div class=\"col-12 card card-cascade hoverable\">\r\n      <!--Table-->\r\n      <div class=\"card-body card-body-cascade\">\r\n        <table class=\"table table-borderless table-hover table-fixed\" id=\"sop-table\">\r\n\r\n          <!--Table head-->\r\n          <thead class=\"\">\r\n          <tr class=\"text-white\">\r\n            <th style=\"width:80%;\" ><a>Job Code</a></th>\r\n            <th class=\"text-center\" style=\"width:10%;\" ><a>Activities</a></th>\r\n            <th class=\"text-center\" style=\"width:10%;\"><a>Delete</a></th>\r\n          </tr>\r\n          </thead>\r\n          <!--Table head-->\r\n\r\n          <!--Table body-->\r\n          <tbody>\r\n          <tr *ngFor=\"let job of jobs\">\r\n            <td>{{job.job_code}}</td>\r\n            <td class=\"text-center\">\r\n              <a (click)=\"bindActivities(job.job_id)\"><i class=\"fa fa-cog text-blue\"></i></a>\r\n            </td>\r\n            <td class=\"text-center\">\r\n              <a data-toggle=\"modal\" data-target=\"#warningModal\"><i class=\"fa fa-close text-red\"></i></a>\r\n            </td>\r\n          </tr>\r\n          </tbody>\r\n          <!--Table body-->\r\n\r\n        </table>\r\n        <!--Table-->\r\n      </div>\r\n    </div>\r\n\r\n  </div>\r\n</div>\r\n\r\n<!-- Modal warning -->\r\n<app-warning title=\"Delete Job\"\r\n             text=\"Are you sure you want to delete the Job : from the Job list ?\"\r\n             link=\"sop-list\"\r\n             [isLink]=false>\r\n             <!--(success)=\"deleteSop(sopSelected.sop_id)\"-->\r\n\r\n</app-warning>\r\n\r\n"
+module.exports = "<div class=\"container\">\r\n\r\n  <!-- SOP List back button -->\r\n  <div class=\"row row-first\">\r\n    <div class=\"col\">\r\n      <button type=\"button\" class=\"btn btn-outline-danger waves-effect\" [routerLink]=\"['/sop-list']\"><h6 class=\"no-margin-bottom\"><i class=\"fa fa-times mr-3\"></i>Back</h6></button>\r\n    </div>\r\n  </div>\r\n\r\n  <div class=\"row row-first justify-content-center\">\r\n\r\n    <div class=\"col-12 card card-cascade hoverable\">\r\n      <!--Table-->\r\n      <div class=\"card-body card-body-cascade\">\r\n\r\n        <form>\r\n          <!-- Job Title -->\r\n          <div class=\"row md-form\">\r\n            <div class=\"col\">\r\n              <i class=\"fa fa-pencil prefix grey-text\"></i>\r\n              <input [(ngModel)]=\"newJobTitle\" name=\"newJobTitle\" type=\"text\" id=\"newJobTitle\" class=\"form-control\">\r\n              <label for=\"newJobTitle\">Job title</label>\r\n            </div>\r\n            <div>\r\n              <button class=\"btn btn-success waves-effect\" type=\"button\" (click)=\"addJob()\">Add</button>\r\n            </div>\r\n          </div>\r\n        </form>\r\n\r\n      </div>\r\n    </div>\r\n  </div>\r\n\r\n  <div class=\"row row-first justify-content-center\">\r\n\r\n      <!--Table-->\r\n    <table class=\"col-12 table table-borderless hoverable table-hover table-fixed\" id=\"job-table\">\r\n          <!--Table head-->\r\n          <thead class=\"\">\r\n          <tr class=\"text-white\">\r\n            <th style=\"width:80%;\" ><a>Job Code</a></th>\r\n            <th class=\"text-center\" style=\"width:10%;\" ><a>Activities</a></th>\r\n            <th class=\"text-center\" style=\"width:10%;\"><a>Delete</a></th>\r\n          </tr>\r\n          </thead>\r\n          <!--Table head-->\r\n\r\n          <!--Table body-->\r\n          <tbody>\r\n          <tr *ngFor=\"let job of jobs\">\r\n            <td>{{job.job_code}}</td>\r\n            <td class=\"text-center\">\r\n              <a (click)=\"bindActivities(job.job_id)\"><i class=\"fa fa-cog text-blue\"></i></a>\r\n            </td>\r\n            <td class=\"text-center\">\r\n              <a data-toggle=\"modal\" data-target=\"#warningModal\"><i class=\"fa fa-close text-red\"></i></a>\r\n            </td>\r\n          </tr>\r\n          </tbody>\r\n          <!--Table body-->\r\n\r\n        </table>\r\n        <!--Table-->\r\n\r\n  </div>\r\n</div>\r\n\r\n<!-- Modal warning -->\r\n<app-warning title=\"Delete Job\"\r\n             text=\"Are you sure you want to delete the Job : from the Job list ?\"\r\n             link=\"sop-list\"\r\n             [isLink]=false>\r\n             <!--(success)=\"deleteSop(sopSelected.sop_id)\"-->\r\n\r\n</app-warning>\r\n\r\n"
 
 /***/ }),
 
@@ -3547,7 +3553,7 @@ var PerformanceTargetComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container\">\r\n\r\n  <!-- SOP List back button -->\r\n  <div class=\"row row-first\">\r\n    <div class=\"col\">\r\n      <button type=\"button\" class=\"btn btn-outline-danger waves-effect\" data-toggle=\"modal\" data-target=\"#warningModal\"><h6 class=\"no-margin-bottom\"><i class=\"fa fa-times mr-3\"></i>Back</h6></button>\r\n    </div>\r\n  </div>\r\n\r\n  <!-- Project Form -->\r\n  <div class=\"row row-first justify-content-center\">\r\n\r\n    <!-- Card -->\r\n    <div class=\"col card card-cascade hoverable\">\r\n\r\n      <!-- Card content -->\r\n      <div class=\"card-body card-body-cascade\">\r\n\r\n        <p class=\"card-title h4 text-center mb-4\">Project Creation</p>\r\n\r\n        <!-- Form -->\r\n        <form (ngSubmit)=\"onSubmit()\">\r\n\r\n          <!-- SOP Model -->\r\n          <div [hidden]=\"stepSelected != 0\">\r\n            <div class=\"row md-form\">\r\n\r\n              <div class=\"offset-2 col-8\">\r\n                <p class=\"text-center mb-4 text-description\"> Please select a SOP model to begin your project </p>\r\n                <select [(ngModel)]=\"sop_id_selected\" name=\"sop_id_selected\" (click)=\"loadJobsFromSop(); loadUnitsFromSop();\" class=\"form-control\" multiple>\r\n                  <option value=\"\" disabled selected>Choose your model</option>\r\n                  <option *ngFor=\"let sop of sops\" value=\"{{sop.sop_id}}\">{{sop.sop_title}}</option>\r\n                </select>\r\n              </div>\r\n            </div>\r\n            <div class=\"row justify-content-center\">\r\n              <div>\r\n                <button [disabled]=\"sop_id_selected == null\" class=\"btn btn-primary waves-effect\" type=\"button\" (click)=\"changeStep(true)\">Next</button>\r\n              </div>\r\n            </div>\r\n          </div>\r\n\r\n          <!-- Project name -->\r\n          <div [hidden]=\"stepSelected != 1\">\r\n            <div class=\"row md-form\">\r\n              <p class=\"col-12 text-center mb-4 text-description\"> Please choose a project name </p>\r\n              <div class=\"offset-2 col-8\">\r\n                <input [(ngModel)]=\"new_project_title\" name=\"new_project_title\" type=\"text\" id=\"newTitle\" class=\"form-control\">\r\n                <label for=\"newTitle\">Project name</label>\r\n              </div>\r\n            </div>\r\n\r\n            <div class=\"row md-form\">\r\n              <p class=\"col-12 text-center mb-4 text-description\"> Project date start </p>\r\n              <div class=\"offset-2 col-8\">\r\n                <input [ngModel]=\"new_project_start | date:'yyyy-MM-dd'\" [(ngModel)]=\"new_project_start\" name=\"new_project_start\" type=\"date\" id=\"new_project_start\" class=\"form-control\" (click)=\"see()\">\r\n              </div>\r\n            </div>\r\n\r\n            <div class=\"row md-form\">\r\n              <p class=\"col-12 text-center mb-4 text-description\"> Project date start </p>\r\n              <div class=\"offset-2 col-8\">\r\n                <input [ngModel]=\"new_project_end | date:'yyyy-MM-dd'\" [(ngModel)]=\"new_project_end\" name=\"new_project_end\" type=\"date\" id=\"new_project_end\" class=\"form-control\" (click)=\"see()\">\r\n              </div>\r\n            </div>\r\n\r\n            <div class=\"row justify-content-center\">\r\n              <div>\r\n                <button class=\"btn btn-danger waves-effect\" type=\"button\" (click)=\"changeStep(false)\">Back</button>\r\n              </div>\r\n              <div>\r\n                <button [disabled]=\"new_project_title == ''\" class=\"btn btn-primary waves-effect\" type=\"button\" (click)=\"changeStep(true)\">Next</button>\r\n              </div>\r\n            </div>\r\n          </div>\r\n\r\n          <!-- Job selection -->\r\n          <div [hidden]=\"stepSelected != 2\">\r\n\r\n            <div class=\"row md-form\">\r\n              <p class=\"col-12 text-center mb-4 text-description\"> Please choose one or more jobs </p>\r\n            </div>\r\n\r\n            <div class=\"row\">\r\n              <div class=\"col-12\">\r\n                <div class=\"card-body card-body-cascade\">\r\n\r\n                  <!--Table-->\r\n                  <table class=\"table table-borderless table-hover table-fixed\" id=\"job-table\">\r\n\r\n                    <!--Table head-->\r\n                    <thead class=\"\">\r\n                    <tr class=\"text-white\">\r\n                      <th style=\"width:10%\">Selected</th>\r\n                      <th style=\"width:40%;\" ><a>Job Code</a></th>\r\n                      <th style=\"width:40%;\" ><a>Job Name</a></th>\r\n                      <th class=\"text-center\" style=\"width:10%;\" ><a>Activities</a></th>\r\n                    </tr>\r\n                    </thead>\r\n                    <!--Table head-->\r\n\r\n                    <!--Table body-->\r\n                    <tbody>\r\n                    <tr *ngFor=\"let job of jobs\">\r\n                      <td class=\"text-center\">\r\n                        <input type=\"checkbox\" class=\"form-check-input\" (click)=\"pickJob(job)\" id=\"{{job.job_id}}\">\r\n                      </td>\r\n                      <td>{{job.job_code}}</td>\r\n                      <td>{{job.job_name}}</td>\r\n                      <td class=\"text-center\">\r\n                        <a><i class=\"fa fa-eye text-blue\"></i></a>\r\n                      </td>\r\n                    </tr>\r\n                    </tbody>\r\n                    <!--Table body-->\r\n\r\n                  </table>\r\n                  <!--Table-->\r\n\r\n                </div>\r\n              </div>\r\n            </div>\r\n\r\n            <div class=\"row justify-content-center\">\r\n              <div>\r\n                <button class=\"btn btn-danger waves-effect\" type=\"button\" (click)=\"changeStep(false)\">Back</button>\r\n              </div>\r\n              <div>\r\n                <button [disabled]=\"jobs_selected.length == 0\" class=\"btn btn-primary waves-effect\" type=\"button\" (click)=\"changeStep(true)\">Next</button>\r\n              </div>\r\n            </div>\r\n          </div>\r\n          <!-- Job selection -->\r\n\r\n          <!-- Unit affectation -->\r\n          <div [hidden]=\"stepSelected != 3\">\r\n            <div class=\"row md-form\">\r\n              <div class=\"offset-2 col-8\">\r\n                <p class=\"text-center mb-4 text-description\"> Choose an unit and pick members you want to add into </p>\r\n                <select name=\"unit_id_selected\" class=\"form-control\" multiple>\r\n                  <option value=\"\" disabled selected>Choose an unit</option>\r\n                  <option *ngFor=\"let unit of units\" (click)=\"pickUnit(unit); \" value=\"{{unit.unit_id}}\">{{unit.unit_name}}</option>\r\n                </select>\r\n              </div>\r\n            </div>\r\n            <div class=\"row md-form\">\r\n              <div class=\"offset-2 col-8\">\r\n                <select [(ngModel)]=\"member_selected\" name=\"member_selected\" class=\"form-control\" multiple>\r\n                  <option value=\"\" disabled selected>Add a member to the selected unit</option>\r\n                  <option *ngFor=\"let member of members\" (click)=\"pickMember(member); \">{{member.member_name}} {{member.member_first_name}}</option>\r\n                </select>\r\n              </div>\r\n            </div>\r\n            <div class=\"row justify-content-center\">\r\n              <div>\r\n                <button class=\"btn btn-danger waves-effect\" type=\"button\" (click)=\"changeStep(false)\">Back</button>\r\n              </div>\r\n              <div>\r\n                <button class=\"btn btn-success waves-effect\" type=\"button\" data-toggle=\"modal\" data-target=\"#confirmationModal\">Finish</button>\r\n              </div>\r\n            </div>\r\n          </div>\r\n          <!-- Unit affectation -->\r\n\r\n        </form>\r\n        <!-- Form -->\r\n\r\n      </div>\r\n      <!-- Card content -->\r\n\r\n    </div>\r\n    <!-- Card -->\r\n\r\n  </div>\r\n  <!-- Project Form -->\r\n\r\n\r\n  <!--Title of the unit-->\r\n  <div class=\"row row-first\" [hidden]=\"stepSelected != 3\" >\r\n    <h4>\r\n      <span class=\"badge badge-pill badge-primary\" *ngIf=\"unit_selected != null\">{{unit_selected.unit_name}}</span>\r\n    </h4>\r\n    <!-- Error alert -->\r\n    <div *ngIf=\"errorMessage\" class=\"col offset-2 row justify-content-end error-text\">\r\n      <i>{{errorMessage}}</i>\r\n    </div>\r\n  </div>\r\n\r\n  <!-- Member Unit Binding Display -->\r\n  <div class=\"row row-last justify-content-center\" [hidden]=\"stepSelected != 3\">\r\n\r\n    <!-- Card -->\r\n    <div class=\"col card card-cascade hoverable\">\r\n\r\n      <!-- Card content -->\r\n      <div class=\"card-body card-body-cascade\">\r\n\r\n        <table class=\"table table-borderless table-hover table-fixed\" id=\"member-table\">\r\n\r\n          <!--Table head-->\r\n          <thead class=\"\">\r\n          <tr class=\"text-white\" *ngIf=\"unit_selected != null\">\r\n            <th style=\"width:40%;\"  (click)=\"sortTable(0)\"><a>Last Name</a></th>\r\n            <th style=\"width:40%;\" (click)=\"sortTable(1)\"><a>First Name</a></th>\r\n            <th style=\"width:10%;\">Remove</th>\r\n          </tr>\r\n\r\n          <tbody *ngIf=\"unit_selected != null\">\r\n\r\n          <tr *ngFor=\"let member of members_binded[units.indexOf(unit_selected)]\">\r\n            <td>{{member.member_name}}</td>\r\n            <td>{{member.member_first_name}}</td>\r\n            <td>\r\n              <a (click)=\"removeMember(member)\"><i class=\"fa fa-close text-red\"></i></a>\r\n            </td>\r\n          </tr>\r\n\r\n          </tbody>\r\n        </table>\r\n      </div>\r\n      <!-- Card content -->\r\n    </div>\r\n    <!-- Card -->\r\n\r\n  </div>\r\n  <!-- Activity Display -->\r\n\r\n\r\n\r\n</div>\r\n\r\n<!-- Modal warning -->\r\n<app-warning title=\"Exit\"\r\n                  text=\"Are you sure you want to exit ? All your work will be lost.\"\r\n                  [isLink]=true\r\n                  link=\"project-list\">\r\n</app-warning>\r\n\r\n<!-- Modal confirmation -->\r\n<app-confirmation title=\"Confirmation Project creation\"\r\n                  text=\"Are you sure all informations about this project are correct ?\"\r\n                  (success)=\"onSubmit()\"\r\n                  [isLinkActive]=false\r\n                  link=\"project-creation\">\r\n</app-confirmation>\r\n"
+module.exports = "<div class=\"container\">\r\n\r\n  <!-- SOP List back button -->\r\n  <div class=\"row row-first\">\r\n    <div class=\"col\">\r\n      <button type=\"button\" class=\"btn btn-outline-danger waves-effect\" data-toggle=\"modal\" data-target=\"#warningModal\"><h6 class=\"no-margin-bottom\"><i class=\"fa fa-times mr-3\"></i>Back</h6></button>\r\n    </div>\r\n  </div>\r\n\r\n  <!-- Project Form -->\r\n  <div class=\"row row-first justify-content-center\">\r\n\r\n    <!-- Card -->\r\n    <div class=\"col card card-cascade hoverable\">\r\n\r\n      <!-- Card content -->\r\n      <div class=\"card-body card-body-cascade\">\r\n\r\n        <p class=\"card-title h4 text-center mb-4\">Project Creation</p>\r\n\r\n        <!-- Form -->\r\n        <form>\r\n\r\n          <!-- SOP Model -->\r\n          <div [hidden]=\"stepSelected != 0\">\r\n            <div class=\"row md-form\">\r\n\r\n              <div class=\"offset-2 col-8\">\r\n                <p class=\"text-center mb-4 text-description\"> Please select a SOP model to begin your project </p>\r\n                <select name=\"sop_selected\" class=\"form-control\" multiple>\r\n                  <option value=\"\" disabled selected>Choose your model</option>\r\n                  <option *ngFor=\"let sop of sops\" (click)=\"selectSop(sop)\">{{sop.sop_title}}</option>\r\n                </select>\r\n              </div>\r\n            </div>\r\n            <div class=\"row justify-content-center\">\r\n              <div>\r\n                <button [disabled]=\"sop_selected == null\" class=\"btn btn-primary waves-effect\" type=\"button\" (click)=\"loadJobsFromSop(); changeStep(true)\">Next</button>\r\n              </div>\r\n            </div>\r\n          </div>\r\n\r\n          <!-- Project name -->\r\n          <div [hidden]=\"stepSelected != 1\">\r\n            <div class=\"row md-form\">\r\n              <p class=\"col-12 text-center mb-4 text-description\"> Please choose a project name </p>\r\n              <div class=\"offset-2 col-8\">\r\n                <input [(ngModel)]=\"new_project.project_title\" name=\"new_project.project_title\" type=\"text\" id=\"newTitle\" class=\"form-control\">\r\n                <label for=\"newTitle\">Project name</label>\r\n              </div>\r\n            </div>\r\n\r\n            <div class=\"row md-form\">\r\n              <p class=\"col-12 text-center mb-4 text-description\"> Project date start </p>\r\n              <div class=\"offset-2 col-8\">\r\n                <input [(ngModel)]=\"new_project_start\" name=\"new_project_start\" type=\"date\" id=\"new_project_start\" class=\"form-control\">\r\n              </div>\r\n            </div>\r\n\r\n            <div class=\"row md-form\">\r\n              <p class=\"col-12 text-center mb-4 text-description\"> Project date start </p>\r\n              <div class=\"offset-2 col-8\">\r\n                <input [(ngModel)]=\"new_project_end\" name=\"new_project_project_end\" type=\"date\" id=\"new_project_end\" class=\"form-control\">\r\n              </div>\r\n            </div>\r\n\r\n            <div class=\"row justify-content-center\">\r\n              <div>\r\n                <button class=\"btn btn-danger waves-effect\" type=\"button\" (click)=\"changeStep(false)\">Back</button>\r\n              </div>\r\n              <div>\r\n                <button [disabled]=\"new_project.project_title == null || new_project.project_title == ''\" class=\"btn btn-primary waves-effect\" type=\"button\" (click)=\"changeStep(true)\">Next</button>\r\n              </div>\r\n            </div>\r\n          </div>\r\n\r\n          <!-- Job selection -->\r\n          <div [hidden]=\"stepSelected != 2\">\r\n\r\n            <div class=\"row md-form\">\r\n              <p class=\"col-12 text-center mb-4 text-description\"> Please choose one or more jobs </p>\r\n            </div>\r\n\r\n            <div class=\"row\">\r\n              <div class=\"col-12\">\r\n                <div class=\"card-body card-body-cascade\">\r\n\r\n                  <!--Table-->\r\n                  <table class=\"table table-borderless table-hover table-fixed\" id=\"job-table\">\r\n\r\n                    <!--Table head-->\r\n                    <thead class=\"\">\r\n                    <tr class=\"text-white\">\r\n                      <th style=\"width:10%\">Selected</th>\r\n                      <th><a>Job Code</a></th>\r\n                      <th><a>Job Name</a></th>\r\n                      <th>Grouped</th>\r\n                      <th class=\"text-center\"><a>Activities</a></th>\r\n                    </tr>\r\n                    </thead>\r\n                    <!--Table head-->\r\n\r\n                    <!--Table body-->\r\n                    <tbody>\r\n                    <tr *ngFor=\"let job of jobs\">\r\n                      <td class=\"text-center\">\r\n                        <input type=\"checkbox\" class=\"form-check-input\" (click)=\"pickJob(job, false)\" id=\"{{job.job_id}}\">\r\n                      </td>\r\n                      <td>{{job.job_code}}</td>\r\n                      <td>{{job.job_name}}</td>\r\n                      <td class=\"text-center\">\r\n                        <input type=\"checkbox\" class=\"form-check-input grouped\" (click)=\"pickJob(job, true)\" id=\"g_{{job.job_id}}\">\r\n                      </td>\r\n                      <td class=\"text-center\">\r\n                        <a><i class=\"fa fa-eye text-blue\"></i></a>\r\n                      </td>\r\n                    </tr>\r\n                    </tbody>\r\n                    <!--Table body-->\r\n\r\n                  </table>\r\n                  <!--Table-->\r\n\r\n                </div>\r\n              </div>\r\n            </div>\r\n\r\n            <div class=\"row justify-content-center\">\r\n              <div>\r\n                <button class=\"btn btn-danger waves-effect\" type=\"button\" (click)=\"changeStep(false)\">Back</button>\r\n              </div>\r\n              <div>\r\n                <button [disabled]=\"jobs_selected.size == 0\" class=\"btn btn-primary waves-effect\" type=\"button\" (click)=\"changeStep(true); loadUnitsFromJobs();\">Next</button>\r\n              </div>\r\n            </div>\r\n          </div>\r\n          <!-- Job selection -->\r\n\r\n          <!-- Unit affectation -->\r\n          <div [hidden]=\"stepSelected != 3\">\r\n            <div class=\"row md-form\">\r\n              <div class=\"offset-2 col-8\">\r\n                <p class=\"text-center mb-4 text-description\"> Choose an unit and pick members you want to add into </p>\r\n                <select name=\"unit_id_selected\" class=\"form-control\" multiple>\r\n                  <option value=\"\" disabled selected>Choose an unit</option>\r\n                  <option *ngFor=\"let unit of elements\" (click)=\"pickUnit(unit)\">{{unit['unit'].unit_name}} - {{unit['detail']['job'].job_name}}</option>\r\n                </select>\r\n              </div>\r\n            </div>\r\n            <div class=\"row md-form\">\r\n              <div class=\"offset-2 col-8\">\r\n                <select (click)=\"isFormReady()\" name=\"member_selected\" class=\"form-control\" multiple>\r\n                  <option value=\"\" disabled selected>Add a member to the selected unit</option>\r\n                  <option *ngFor=\"let member of members\" (click)=\"pickMember(member); \">{{member.member_name}} {{member.member_first_name}}</option>\r\n                </select>\r\n              </div>\r\n            </div>\r\n            <div class=\"row justify-content-center\">\r\n              <div>\r\n                <button class=\"btn btn-danger waves-effect\" type=\"button\" (click)=\"changeStep(false)\">Back</button>\r\n              </div>\r\n              <div>\r\n                <button class=\"btn btn-success waves-effect\" type=\"button\" data-toggle=\"modal\" data-target=\"#confirmationModal\" [disabled]=\"!formReady\">Finish</button>\r\n              </div>\r\n            </div>\r\n          </div>\r\n          <!-- Unit affectation -->\r\n\r\n        </form>\r\n        <!-- Form -->\r\n\r\n      </div>\r\n      <!-- Card content -->\r\n\r\n    </div>\r\n    <!-- Card -->\r\n\r\n  </div>\r\n  <!-- Project Form -->\r\n\r\n\r\n  <!--Title of the unit-->\r\n  <div class=\"row row-first\" [hidden]=\"stepSelected != 3\" >\r\n    <h4>\r\n      <span class=\"badge badge-pill badge-primary\" *ngIf=\"unit_selected != null\">{{unit_selected['unit'].unit_name}} - {{unit_selected['detail']['job'].job_name}}</span>\r\n    </h4>\r\n    <!-- Error alert -->\r\n    <div *ngIf=\"errorMessage\" class=\"col offset-2 row justify-content-end error-text\">\r\n      <i>{{errorMessage}}</i>\r\n    </div>\r\n  </div>\r\n\r\n  <!-- Member Unit Binding Display -->\r\n  <div class=\"row row-last justify-content-center\" [hidden]=\"stepSelected != 3\">\r\n\r\n    <!-- Card -->\r\n    <div class=\"col card card-cascade hoverable\">\r\n\r\n      <!-- Card content -->\r\n      <div class=\"card-body card-body-cascade\">\r\n\r\n        <table class=\"table table-borderless table-hover table-fixed\" id=\"member-table\">\r\n\r\n          <!--Table head-->\r\n          <thead class=\"\">\r\n          <tr class=\"text-white\" *ngIf=\"unit_selected != null\">\r\n            <th style=\"width:40%;\"  (click)=\"sortTable(0)\"><a>Last Name</a></th>\r\n            <th style=\"width:40%;\" (click)=\"sortTable(1)\"><a>First Name</a></th>\r\n            <th style=\"width:10%;\">Remove</th>\r\n          </tr>\r\n\r\n          <tbody *ngIf=\"unit_selected != null\">\r\n\r\n          <tr *ngFor=\"let member of unit_selected['detail']['members']\">\r\n            <td>{{member.member_name}}</td>\r\n            <td>{{member.member_first_name}}</td>\r\n            <td>\r\n              <a (click)=\"removeMember(member)\"><i class=\"fa fa-close text-red\"></i></a>\r\n            </td>\r\n          </tr>\r\n\r\n          </tbody>\r\n        </table>\r\n      </div>\r\n      <!-- Card content -->\r\n    </div>\r\n    <!-- Card -->\r\n\r\n  </div>\r\n  <!-- Activity Display -->\r\n\r\n\r\n\r\n</div>\r\n\r\n<!-- Modal warning -->\r\n<app-warning title=\"Exit\"\r\n                  text=\"Are you sure you want to exit ? All your work will be lost.\"\r\n                  [isLink]=true\r\n                  link=\"project-list\">\r\n</app-warning>\r\n\r\n<!-- Modal confirmation -->\r\n<app-confirmation title=\"Confirmation Project creation\"\r\n                  text=\"Are you sure all informations about this project are correct ?\"\r\n                  (success)=\"onSubmit()\"\r\n                  [isLinkActive]=false\r\n                  link=\"project-creation\">\r\n</app-confirmation>\r\n"
 
 /***/ }),
 
@@ -3579,7 +3585,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _objects_member_member_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../objects/member/member.service */ "./src/app/objects/member/member.service.ts");
 /* harmony import */ var _objects_activity_activity_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../objects/activity/activity.service */ "./src/app/objects/activity/activity.service.ts");
 /* harmony import */ var _objects_project_project_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../objects/project/project.service */ "./src/app/objects/project/project.service.ts");
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var _objects_project_project__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../../objects/project/project */ "./src/app/objects/project/project.ts");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_9__);
+/* harmony import */ var _objects_member_activity_project_member_activity_project__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../../objects/member_activity_project/member-activity-project */ "./src/app/objects/member_activity_project/member-activity-project.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -3589,6 +3599,44 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 var __metadata = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __generator = (undefined && undefined.__generator) || function (thisArg, body) {
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    function verb(n) { return function (v) { return step([n, v]); }; }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) try {
+            if (f = 1, y && (t = y[op[0] & 2 ? "return" : op[0] ? "throw" : "next"]) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [0, t.value];
+            switch (op[0]) {
+                case 0: case 1: t = op; break;
+                case 4: _.label++; return { value: op[1], done: false };
+                case 5: _.label++; y = op[1]; op = [0]; continue;
+                case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                default:
+                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                    if (t[2]) _.ops.pop();
+                    _.trys.pop(); continue;
+            }
+            op = body.call(thisArg, _);
+        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
+
+
+
 
 
 
@@ -3608,173 +3656,237 @@ var ProjectCreationComponent = /** @class */ (function () {
         this.router = router;
         /* ----- Data ----- */
         this.errorMessage = "";
-        this.jobs_selected = [];
+        this.formReady = false;
+        this.jobs_selected = new Map();
         this.new_project_title = "";
         this.new_project_id = "";
     }
     ProjectCreationComponent.prototype.ngOnInit = function () {
-        this.new_project_start = new Date();
-        this.new_project_end = new Date();
-        this.new_project_end.setDate(this.new_project_end.getDate() + 30);
-        this.stepSelected = 0;
-        this.loadSops();
-        this.loadMembers();
-    };
-    ProjectCreationComponent.prototype.onSubmit = function () {
-        var _this = this;
-        //We insert the project into the database (project_code & project_work_code to modify!)
-        var project_code = "XXXXX";
-        var project_work_code = "000000";
-        var sub_department_id = "";
-        //We find the id of the sub_department by checking the member
-        this._memberService.select(localStorage.getItem('Id'))
-            .subscribe(function (res) {
-            _this.errorMessage = "";
-            sub_department_id = res['data']['sub_department_id'];
-            //We insert the project
-            //We set seconds, minutes, hours to default value with this process
-            var project_start = new Date(_this.new_project_start);
-            var project_end = new Date(_this.new_project_end);
-            project_start = new Date(project_start.getFullYear(), project_start.getMonth(), project_start.getDate());
-            project_end = new Date(project_end.getFullYear(), project_end.getMonth(), project_end.getDate());
-            _this._projectService.createProject(_this.new_project_title, project_code, project_work_code, project_start, project_end, sub_department_id)
-                .subscribe(function (res) {
-                _this.errorMessage = "";
-                _this.new_project_id = res['data']['project_id'];
-                //We have the project id, now we can insert into project_has_job
-                for (var _i = 0, _a = _this.jobs_selected; _i < _a.length; _i++) {
-                    var j = _a[_i];
-                    _this._projectService.bindProjectJob(_this.new_project_id, j.job_id)
-                        .subscribe(function (res) {
-                        _this.errorMessage = "";
-                    }, function (error) {
-                        _this.errorMessage = error;
-                    });
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        this.stepSelected = 0;
+                        this.initializeProject();
+                        return [4 /*yield*/, this.loadSops()];
+                    case 1:
+                        _a.sent();
+                        return [4 /*yield*/, this.loadMembers()];
+                    case 2:
+                        _a.sent();
+                        return [2 /*return*/];
                 }
-                //We have the project id, now we can insert in member_unit_project and member_activity_project
-                _this.bindMemberUnitProject();
-                _this.router.navigate(['/project-list']);
-            }, function (error) {
-                _this.errorMessage = error;
             });
-        }, function (error) {
-            _this.errorMessage = error;
         });
     };
-    ProjectCreationComponent.prototype.bindMemberUnitProject = function () {
-        var _this = this;
-        this.member_unit_project = [];
-        for (var _i = 0, _a = this.units; _i < _a.length; _i++) {
-            var u = _a[_i];
-            var i = this.units.indexOf(u);
-            if (this.members_binded[i].length > 0) {
-                for (var _b = 0, _c = this.members_binded[i]; _b < _c.length; _b++) {
-                    var m = _c[_b];
-                    this._projectService.bindMemberUnitProject(this.new_project_id, u.unit_id, m.member_id.toString())
-                        .subscribe(function (res) {
-                        _this.errorMessage = "";
-                        _this.member_unit_project.push(res['data']);
-                        _this.bindMemberActivityProject(res['data']['member_id'], res['data']['unit_id']);
-                    }, function (error) {
-                        _this.errorMessage = error.error.message;
-                    });
-                }
-            }
-        }
+    //We create the new project with the right date end
+    ProjectCreationComponent.prototype.initializeProject = function () {
+        this.new_project = new _objects_project_project__WEBPACK_IMPORTED_MODULE_7__["Project"]();
+        var start = new Date();
+        this.new_project_start = moment__WEBPACK_IMPORTED_MODULE_9__(start).format('YYYY-MM-DD');
+        var end = new Date();
+        end.setMonth(end.getMonth() + 1);
+        this.new_project_end = moment__WEBPACK_IMPORTED_MODULE_9__(end).format('YYYY-MM-DD');
     };
-    //We insert into the database : member_activity_project
-    ProjectCreationComponent.prototype.bindMemberActivityProject = function (member_id, unit_id) {
-        var _this = this;
-        //First we load all activities of the unit of the member choosen
-        this._activityService.selectAllFromUnit(unit_id).subscribe(function (res) {
-            _this.errorMessage = "";
-            _this.activities_from_unit = res['data'];
-            //For each activities we insert into the database member_activity_project
-            for (var _i = 0, _a = _this.activities_from_unit; _i < _a.length; _i++) {
-                var a = _a[_i];
-                var target_date = new Date();
-                _this._projectService.bindMemberActivityProject(_this.new_project_id, member_id, a.activity_id, target_date, _this.new_project_start, "", null, "", "", 0, 0, 0)
-                    .subscribe(function (res) {
-                    _this.errorMessage = "";
-                }, function (error) {
-                    _this.errorMessage = error;
-                });
-            }
-        }, function (error) {
-            _this.errorMessage = error.error.message;
-        });
-    };
+    //We get all SOP from database
     ProjectCreationComponent.prototype.loadSops = function () {
-        var _this = this;
-        this.sops = [];
-        this._sopService.selectAll()
-            .subscribe(function (res) {
-            _this.errorMessage = "";
-            _this.sops = res['data'];
-        }, function (error) {
-            _this.errorMessage = error;
+        return __awaiter(this, void 0, void 0, function () {
+            var sops, error_1;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        return [4 /*yield*/, this._sopService.selectAll().toPromise()];
+                    case 1:
+                        sops = _a.sent();
+                        this.errorMessage = "";
+                        this.sops = sops['data'];
+                        return [3 /*break*/, 3];
+                    case 2:
+                        error_1 = _a.sent();
+                        this.errorMessage = error_1.error.message;
+                        return [3 /*break*/, 3];
+                    case 3: return [2 /*return*/];
+                }
+            });
         });
     };
-    ProjectCreationComponent.prototype.loadJobsFromSop = function () {
-        var _this = this;
-        this.jobs = [];
-        this._jobService.selectAllFromSop(this.sop_id_selected).subscribe(function (res) {
-            _this.errorMessage = "";
-            _this.jobs = res['data'];
-            for (var _i = 0, _a = _this.jobs; _i < _a.length; _i++) {
-                var i = _a[_i];
-            }
-        }, function (error) {
-            _this.errorMessage = error.error.message;
-        });
-    };
-    ProjectCreationComponent.prototype.loadUnitsFromSop = function () {
-        var _this = this;
-        this.members_binded = [];
-        this._unitService.selectAllFromSop(this.sop_id_selected).subscribe(function (res) {
-            _this.errorMessage = "";
-            _this.units = res['data'];
-            for (var _i = 0, _a = _this.units; _i < _a.length; _i++) {
-                var i = _a[_i];
-                _this.members_binded.push([]);
-            }
-        }, function (error) {
-            _this.errorMessage = error.error.message;
-        });
-    };
+    //We get every Members that can work on the project
     ProjectCreationComponent.prototype.loadMembers = function () {
-        var _this = this;
-        this._memberService.selectAll().subscribe(function (res) {
-            _this.errorMessage = "";
-            _this.members = res['data'];
-        }, function (error) {
-            _this.errorMessage = error.error.message;
+        return __awaiter(this, void 0, void 0, function () {
+            var members, error_2;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        return [4 /*yield*/, this._memberService.selectAll().toPromise()];
+                    case 1:
+                        members = _a.sent();
+                        this.errorMessage = "";
+                        this.members = members['data'];
+                        return [3 /*break*/, 3];
+                    case 2:
+                        error_2 = _a.sent();
+                        this.errorMessage = error_2.error.message;
+                        return [3 /*break*/, 3];
+                    case 3: return [2 /*return*/];
+                }
+            });
         });
     };
-    ProjectCreationComponent.prototype.pickJob = function (job) {
+    ProjectCreationComponent.prototype.selectSop = function (sop) {
+        this.sop_selected = sop;
+    };
+    //We load all jobs from the sop_selected
+    ProjectCreationComponent.prototype.loadJobsFromSop = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var jobs, error_3;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        return [4 /*yield*/, this._jobService.selectAllFromSop(this.sop_selected.sop_id.toString()).toPromise()];
+                    case 1:
+                        jobs = _a.sent();
+                        this.errorMessage = "";
+                        this.jobs = jobs['data'];
+                        return [3 /*break*/, 3];
+                    case 2:
+                        error_3 = _a.sent();
+                        this.errorMessage = error_3.message;
+                        return [3 /*break*/, 3];
+                    case 3: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    //Manage checkbox of job selection and store if it's necessary
+    ProjectCreationComponent.prototype.pickJob = function (job, isG) {
         var j = document.getElementById(job.job_id);
-        if (j['checked']) {
-            this.jobs_selected.push(job);
+        var g = document.getElementById('g_' + job.job_id);
+        if (j['checked'] || ((!j['checked']) && g['checked'] && isG)) {
+            j['checked'] = true;
+            var e = {
+                job: job,
+                grouped: g['checked']
+            };
+            //We store the element
+            this.jobs_selected.set(job.job_id, e);
         }
         else {
-            if (this.jobs_selected.includes(job)) {
-                var indice = this.jobs_selected.indexOf(job);
-                this.jobs_selected.splice(indice, 1);
-            }
+            this.jobs_selected.delete(job.job_id);
+            g['checked'] = false;
         }
+    };
+    //Loads every unit of jobs selected and store them into elements array
+    ProjectCreationComponent.prototype.loadUnitsFromJobs = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var vm_1, e_1, error_4;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        vm_1 = this;
+                        this.elements = [];
+                        this.errorMessage = "";
+                        //We look all jobs selected
+                        return [4 /*yield*/, this.jobs_selected.forEach(function (value, key) {
+                                return __awaiter(this, void 0, void 0, function () {
+                                    var units, activity, _i, _a, u, ee;
+                                    return __generator(this, function (_b) {
+                                        switch (_b.label) {
+                                            case 0:
+                                                if (!value['grouped']) return [3 /*break*/, 3];
+                                                return [4 /*yield*/, vm_1.groupJob(key)];
+                                            case 1:
+                                                activity = _b.sent();
+                                                return [4 /*yield*/, vm_1._unitService.selectAllFromActivity(activity.activity_id).toPromise()];
+                                            case 2:
+                                                units = _b.sent();
+                                                e_1 = {
+                                                    activities: [activity],
+                                                    job: value['job'],
+                                                    grouped: true,
+                                                    members: []
+                                                };
+                                                return [3 /*break*/, 5];
+                                            case 3: return [4 /*yield*/, vm_1._unitService.selectAllFromJob(key).toPromise()];
+                                            case 4:
+                                                units = _b.sent();
+                                                e_1 = {
+                                                    job: value['job'],
+                                                    grouped: false,
+                                                    members: []
+                                                };
+                                                _b.label = 5;
+                                            case 5:
+                                                //Then we take all units linked to the job and store them
+                                                for (_i = 0, _a = units['data']; _i < _a.length; _i++) {
+                                                    u = _a[_i];
+                                                    ee = {
+                                                        unit: u,
+                                                        detail: JSON.parse(JSON.stringify(e_1))
+                                                    };
+                                                    vm_1.elements.push(ee);
+                                                }
+                                                return [2 /*return*/];
+                                        }
+                                    });
+                                });
+                            })];
+                    case 1:
+                        //We look all jobs selected
+                        _a.sent();
+                        return [3 /*break*/, 3];
+                    case 2:
+                        error_4 = _a.sent();
+                        this.errorMessage = error_4.message;
+                        return [3 /*break*/, 3];
+                    case 3: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    ProjectCreationComponent.prototype.groupJob = function (job_id) {
+        return __awaiter(this, void 0, void 0, function () {
+            var activitiesData, activities, activity, _i, activities_1, a;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this._activityService.selectAllFromJob(job_id).toPromise()];
+                    case 1:
+                        activitiesData = _a.sent();
+                        activities = activitiesData['data'];
+                        _i = 0, activities_1 = activities;
+                        _a.label = 2;
+                    case 2:
+                        if (!(_i < activities_1.length)) return [3 /*break*/, 5];
+                        a = activities_1[_i];
+                        if (!(a.activity_type == 'grouped')) return [3 /*break*/, 4];
+                        return [4 /*yield*/, this._unitService.selectAllFromActivity(a.activity_id).toPromise()];
+                    case 3:
+                        //we add it to the array
+                        activity = _a.sent();
+                        _a.label = 4;
+                    case 4:
+                        _i++;
+                        return [3 /*break*/, 2];
+                    case 5: return [2 /*return*/, activity];
+                }
+            });
+        });
     };
     ProjectCreationComponent.prototype.pickUnit = function (unit) {
         this.unit_selected = unit;
     };
-    //add a member to the right index of the member_binded array
+    //add a member to the unit selected Unit>Detail>Members
     ProjectCreationComponent.prototype.pickMember = function (member) {
-        if (!this.members_binded[this.units.indexOf(this.unit_selected)].includes(member)) {
-            this.members_binded[this.units.indexOf(this.unit_selected)].push(member);
+        if (!this.unit_selected['detail']['members'].includes(member)) {
+            this.unit_selected['detail']['members'].push(member);
         }
     };
     ProjectCreationComponent.prototype.removeMember = function (member) {
-        var indice = this.members_binded[this.units.indexOf(this.unit_selected)].indexOf(member);
-        this.members_binded[this.units.indexOf(this.unit_selected)].splice(indice, 1);
+        var indice = this.unit_selected['detail']['members'].indexOf(member);
+        this.unit_selected['detail']['members'].splice(indice, 1);
     };
     ProjectCreationComponent.prototype.changeStep = function (next) {
         if (next) {
@@ -3840,6 +3952,205 @@ var ProjectCreationComponent = /** @class */ (function () {
             }
         }
     };
+    ProjectCreationComponent.prototype.onSubmit = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var project_code, project_work_code, member, error_5, project_id, error_6, vm_2, error_7;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        project_code = "XXXXX";
+                        project_work_code = "000000";
+                        this.new_project.project_work_code = project_work_code;
+                        this.new_project.project_code = project_code;
+                        _a.label = 1;
+                    case 1:
+                        _a.trys.push([1, 3, , 4]);
+                        return [4 /*yield*/, this._memberService.select(localStorage.getItem('Id')).toPromise()];
+                    case 2:
+                        member = _a.sent();
+                        this.errorMessage = "";
+                        this.new_project.sub_department_id = member['data']['sub_department_id'];
+                        return [3 /*break*/, 4];
+                    case 3:
+                        error_5 = _a.sent();
+                        this.errorMessage = error_5.message;
+                        return [3 /*break*/, 4];
+                    case 4:
+                        //We set seconds, minutes, hours to default value with this process
+                        this.new_project.project_start = new Date(this.new_project_start);
+                        this.new_project.project_end = new Date(this.new_project_end);
+                        this.new_project.project_start = new Date(this.new_project.project_start.getFullYear(), this.new_project.project_start.getMonth(), this.new_project.project_start.getDate());
+                        this.new_project.project_end = new Date(this.new_project.project_end.getFullYear(), this.new_project.project_end.getMonth(), this.new_project.project_end.getDate());
+                        _a.label = 5;
+                    case 5:
+                        _a.trys.push([5, 7, , 8]);
+                        return [4 /*yield*/, this._projectService.createProject(this.new_project).toPromise()];
+                    case 6:
+                        project_id = _a.sent();
+                        this.errorMessage = "";
+                        this.new_project.project_id = project_id['data']['project_id'];
+                        return [3 /*break*/, 8];
+                    case 7:
+                        error_6 = _a.sent();
+                        this.errorMessage = error_6.message;
+                        return [3 /*break*/, 8];
+                    case 8:
+                        _a.trys.push([8, 10, , 11]);
+                        this.errorMessage = "";
+                        vm_2 = this;
+                        return [4 /*yield*/, this.jobs_selected.forEach(function (value, key) {
+                                return __awaiter(this, void 0, void 0, function () {
+                                    return __generator(this, function (_a) {
+                                        switch (_a.label) {
+                                            case 0: return [4 /*yield*/, vm_2._projectService.bindProjectJob(vm_2.new_project.project_id, key).toPromise()];
+                                            case 1:
+                                                _a.sent();
+                                                return [2 /*return*/];
+                                        }
+                                    });
+                                });
+                            })];
+                    case 9:
+                        _a.sent();
+                        return [3 /*break*/, 11];
+                    case 10:
+                        error_7 = _a.sent();
+                        this.errorMessage = error_7.message;
+                        return [3 /*break*/, 11];
+                    case 11: 
+                    //We have the project id, now we can insert in member_unit_project and member_activity_project
+                    return [4 /*yield*/, this.bindMemberUnitProject()];
+                    case 12:
+                        //We have the project id, now we can insert in member_unit_project and member_activity_project
+                        _a.sent();
+                        return [4 /*yield*/, this.bindMemberActivityProject()];
+                    case 13:
+                        _a.sent();
+                        if (this.errorMessage == "") {
+                            this.router.navigate(['/project-list']);
+                        }
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    ProjectCreationComponent.prototype.bindMemberUnitProject = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var _i, _a, u, _b, _c, m, error_8;
+            return __generator(this, function (_d) {
+                switch (_d.label) {
+                    case 0:
+                        _d.trys.push([0, 7, , 8]);
+                        this.errorMessage = "";
+                        _i = 0, _a = this.elements;
+                        _d.label = 1;
+                    case 1:
+                        if (!(_i < _a.length)) return [3 /*break*/, 6];
+                        u = _a[_i];
+                        _b = 0, _c = u['detail']['members'];
+                        _d.label = 2;
+                    case 2:
+                        if (!(_b < _c.length)) return [3 /*break*/, 5];
+                        m = _c[_b];
+                        return [4 /*yield*/, this._projectService.bindMemberUnitProject(this.new_project.project_id, u['unit'].unit_id, m.member_id.toString()).toPromise()];
+                    case 3:
+                        _d.sent();
+                        _d.label = 4;
+                    case 4:
+                        _b++;
+                        return [3 /*break*/, 2];
+                    case 5:
+                        _i++;
+                        return [3 /*break*/, 1];
+                    case 6: return [3 /*break*/, 8];
+                    case 7:
+                        error_8 = _d.sent();
+                        this.errorMessage = error_8.message;
+                        return [3 /*break*/, 8];
+                    case 8: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    //We insert into the database : member_activity_project
+    ProjectCreationComponent.prototype.bindMemberActivityProject = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var _i, _a, element, activities, _b, _c, activity, _d, _e, member, m_a_p, error_9;
+            return __generator(this, function (_f) {
+                switch (_f.label) {
+                    case 0:
+                        _f.trys.push([0, 10, , 11]);
+                        this.errorMessage = "";
+                        console.log("Let's go for these elements : ", this.elements);
+                        _i = 0, _a = this.elements;
+                        _f.label = 1;
+                    case 1:
+                        if (!(_i < _a.length)) return [3 /*break*/, 9];
+                        element = _a[_i];
+                        return [4 /*yield*/, this._activityService.selectAllFromUnit(element['unit'].unit_id).toPromise()];
+                    case 2:
+                        activities = _f.sent();
+                        element['detail']['activities'] = activities['data'];
+                        console.log("Let's go for these activities : ", element['detail']['activities']);
+                        _b = 0, _c = element['detail']['activities'];
+                        _f.label = 3;
+                    case 3:
+                        if (!(_b < _c.length)) return [3 /*break*/, 8];
+                        activity = _c[_b];
+                        console.log("Let's go for these members : ", element['detail']['members']);
+                        _d = 0, _e = element['detail']['members'];
+                        _f.label = 4;
+                    case 4:
+                        if (!(_d < _e.length)) return [3 /*break*/, 7];
+                        member = _e[_d];
+                        m_a_p = new _objects_member_activity_project_member_activity_project__WEBPACK_IMPORTED_MODULE_10__["MemberActivityProject"]();
+                        m_a_p.project_id = parseInt(this.new_project.project_id);
+                        m_a_p.job_id = element['detail']['job'].job_id;
+                        m_a_p.member_id = member.member_id;
+                        m_a_p.activity_id = activity.activity_id;
+                        m_a_p.target_date = new Date().toString();
+                        m_a_p.date_begin = this.new_project.project_start.toString();
+                        m_a_p.evaluation = "on date";
+                        m_a_p.finished_date = null;
+                        m_a_p.sign = '';
+                        m_a_p.note = '';
+                        m_a_p.target_quantity = 0;
+                        m_a_p.finished_quantity = 0;
+                        m_a_p.finished_duration = 0;
+                        return [4 /*yield*/, this._projectService.bindMemberActivityProject(m_a_p).toPromise()];
+                    case 5:
+                        _f.sent();
+                        console.log(m_a_p.project_id, ' - ', m_a_p.member_id, ' - ', m_a_p.activity_id);
+                        _f.label = 6;
+                    case 6:
+                        _d++;
+                        return [3 /*break*/, 4];
+                    case 7:
+                        _b++;
+                        return [3 /*break*/, 3];
+                    case 8:
+                        _i++;
+                        return [3 /*break*/, 1];
+                    case 9: return [3 /*break*/, 11];
+                    case 10:
+                        error_9 = _f.sent();
+                        this.errorMessage = error_9.message;
+                        return [3 /*break*/, 11];
+                    case 11: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    ProjectCreationComponent.prototype.isFormReady = function () {
+        var answer = true;
+        for (var _i = 0, _a = this.elements; _i < _a.length; _i++) {
+            var element = _a[_i];
+            if (element['detail']['members'].length == 0) {
+                answer = false;
+            }
+        }
+        this.formReady = answer;
+    };
     ProjectCreationComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'app-project-creation',
@@ -3852,7 +4163,7 @@ var ProjectCreationComponent = /** @class */ (function () {
             _objects_member_member_service__WEBPACK_IMPORTED_MODULE_4__["MemberService"],
             _objects_activity_activity_service__WEBPACK_IMPORTED_MODULE_5__["ActivityService"],
             _objects_project_project_service__WEBPACK_IMPORTED_MODULE_6__["ProjectService"],
-            _angular_router__WEBPACK_IMPORTED_MODULE_7__["Router"]])
+            _angular_router__WEBPACK_IMPORTED_MODULE_8__["Router"]])
     ], ProjectCreationComponent);
     return ProjectCreationComponent;
 }());
@@ -4106,7 +4417,7 @@ var ProjectComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container\" *ngIf=\"!ready\">\r\n  <div class=\"row-first\">\r\n    <app-loader></app-loader>\r\n  </div>\r\n</div>\r\n\r\n<div class=\"container\" *ngIf=\"ready\">\r\n\r\n  <div class=\"row row-first\">\r\n    <div class=\"col\">\r\n      <button type=\"button\" class=\"btn btn-outline-danger waves-effect\" routerLink=\"/project-list\"><h6 class=\"no-margin-bottom\"><i class=\"fa fa-times mr-3\"></i>Back</h6></button>\r\n    </div>\r\n  </div>\r\n\r\n  <div class=\"row row-first\">\r\n    <div class=\" md-form\" id=\"search-bar\">\r\n      <input id=\"search\" (keyup)=\"search()\" class=\"form-control\" type=\"text\" placeholder=\"Search\" aria-label=\"Search\">\r\n    </div>\r\n  </div>\r\n\r\n  <div class=\"row justify-content-center\">\r\n\r\n    <table class=\"col-12 hoverable table table-borderless table-hover table-fixed\" id=\"gantt-table\">\r\n\r\n      <!--Table head-->\r\n      <thead class=\"\">\r\n      <tr class=\"text-white\">\r\n        <th><a>No</a></th>\r\n        <th class=\"text-small\"><a>Staff Names</a></th>\r\n        <th class=\"text-small\"><a>Total Target</a></th>\r\n        <th *ngIf=\"weeks[0] != null\">{{weeks[0][0]}}</th>\r\n        <th *ngIf=\"weeks[1] != null\">{{weeks[1][0]}}</th>\r\n        <th *ngIf=\"weeks[2] != null\">{{weeks[2][0]}}</th>\r\n        <th *ngIf=\"weeks[3] != null\">{{weeks[3][0]}}</th>\r\n        <th *ngIf=\"weeks[4] != null\">{{weeks[4][0]}}</th>\r\n        <th *ngIf=\"weeks[5] != null\">{{weeks[5][0]}}</th>\r\n      </tr>\r\n      </thead>\r\n      <!--Table head-->\r\n\r\n      <!--Table body-->\r\n      <tbody>\r\n      <!-- elements[0]: activity_id && elements[1]: activity && elements[2]: m_a_p && elements[3]: members linked -->\r\n      <tr *ngFor=\"let element of elements\">\r\n        <td>{{element['member']['member_id']}}</td>\r\n        <td class=\"text-small\">{{element['member']['member_name'].toUpperCase()}} {{element['member']['member_first_name']}}</td>\r\n        <td>{{element['total_target']}}</td>\r\n        <th *ngIf=\"weeks[0] != null\">{{targets.get(element['member']['member_id']).get(weeks[1][0])}}</th>\r\n        <th *ngIf=\"weeks[1] != null\">{{targets.get(element['member']['member_id']).get(weeks[1][1])}}</th>\r\n        <th *ngIf=\"weeks[2] != null\">{{targets.get(element['member']['member_id']).get(weeks[2][1])}}</th>\r\n        <th *ngIf=\"weeks[3] != null\">{{targets.get(element['member']['member_id']).get(weeks[3][1])}}</th>\r\n        <th *ngIf=\"weeks[4] != null\">{{targets.get(element['member']['member_id']).get(weeks[4][1])}}</th>\r\n        <th *ngIf=\"weeks[5] != null\">{{targets.get(element['member']['member_id']).get(weeks[5][1])}}</th>\r\n      </tr>\r\n      </tbody>\r\n      <!--Table body-->\r\n\r\n    </table>\r\n    <!--Table-->\r\n\r\n  </div>\r\n\r\n</div>\r\n\r\n"
+module.exports = "<div class=\"container\" *ngIf=\"!ready\">\r\n  <div class=\"row-first\">\r\n    <app-loader></app-loader>\r\n  </div>\r\n</div>\r\n\r\n<div class=\"container\" *ngIf=\"ready\">\r\n\r\n  <div class=\"row row-first\">\r\n    <div class=\"col\">\r\n      <button type=\"button\" class=\"btn btn-outline-danger waves-effect\" routerLink=\"/project-list\"><h6 class=\"no-margin-bottom\"><i class=\"fa fa-times mr-3\"></i>Back</h6></button>\r\n    </div>\r\n  </div>\r\n\r\n  <div class=\"row row-first input-group justify-content-between\">\r\n    <div class=\"md-form col-2\" id=\"search-bar\">\r\n      <input id=\"search\" (keyup)=\"search()\" class=\"form-control\" type=\"text\" placeholder=\"Search\" aria-label=\"Search\">\r\n    </div>\r\n    <div class=\"month-select col-2\">\r\n      <ul class=\"pagination pg-blue justify-content-center\" *ngIf=\"month_selected != null\" >\r\n        <li class=\"page-item text-middle\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"previous\" ><i class=\"page-link no-hover fa fa-arrow-left\" (click)=\"changeMonth(false)\"></i></li>\r\n\r\n        <!--Numbers-->\r\n        <li><h2><span class=\"badge badge-default\">{{month_selected['month_label']}}</span></h2></li>\r\n\r\n        <li class=\"page-item\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"next\" ><i id=\"nextArrow\" class=\"page-link no-hover fa fa-arrow-right\" (click)=\"changeMonth(true)\"></i></li>\r\n\r\n      </ul>\r\n    </div>\r\n  </div>\r\n\r\n  <div class=\"row justify-content-center\">\r\n\r\n    <table class=\"col-12 hoverable table table-borderless table-hover table-fixed\" id=\"volume-table\">\r\n\r\n      <!--Table head-->\r\n      <thead class=\"\">\r\n      <tr class=\"text-white\">\r\n        <th style=\"width: 5%\" (click)=\"sortTable(0)\"><a>No</a></th>\r\n        <th class=\"text-small\" (click)=\"sortTable(1)\"><a>Staff Names</a></th>\r\n        <th class=\"text-small\" (click)=\"sortTable(2)\"><a>Total Target</a></th>\r\n        <th *ngFor=\"let week of weeks\">{{week[0]}}</th>\r\n      </tr>\r\n      </thead>\r\n      <!--Table head-->\r\n\r\n      <!--Table body-->\r\n      <tbody>\r\n        <!-- elements[0]: activity_id && elements[1]: activity && elements[2]: m_a_p && elements[3]: members linked -->\r\n        <tr *ngFor=\"let element of elements\" id=\"{{element['member']['member_id']}}\">\r\n          <td (click)=\"selectMember(element)\"><a>{{element['member']['member_id']}}</a></td>\r\n          <td class=\"text-small\" (click)=\"selectMember(element)\"><a>{{element['member']['member_name'].toUpperCase()}} {{element['member']['member_first_name']}}</a></td>\r\n          <td>\r\n            <h6>\r\n              <span class=\"badge badge-default\">{{element['total_finished']}}</span>\r\n              <span class=\"badge badge-primary\">{{element['total_target']}}</span>\r\n              <span class=\"badge badge-danger\">{{calculPourcentage(element['total_finished'], element['total_target'])}}%</span>\r\n            </h6>\r\n          </td>\r\n\r\n          <th *ngFor=\"let week of weeks\">\r\n            <h6>\r\n              <span *ngIf=\"targets.get(element['member']['member_id']).get(week[1]) != null\" class=\"badge badge-default\">{{targets.get(element['member']['member_id']).get(week[1])['finished_quantity']}}</span>\r\n              <span *ngIf=\"targets.get(element['member']['member_id']).get(week[1]) != null\" class=\"badge badge-primary\">{{targets.get(element['member']['member_id']).get(week[1])['target_quantity']}}</span>\r\n              <span *ngIf=\"targets.get(element['member']['member_id']).get(week[1]) != null\" class=\"badge badge-danger\">{{calculPourcentage(targets.get(element['member']['member_id']).get(week[1])['finished_quantity'], targets.get(element['member']['member_id']).get(week[1])['target_quantity'])}}%</span>\r\n            </h6>\r\n          </th>\r\n        </tr>\r\n      </tbody>\r\n      <!--Table body-->\r\n\r\n    </table>\r\n    <!--Table-->\r\n\r\n    <table class=\"col-10 hoverable table table-borderless table-hover table-fixed\" id=\"activity-table\" *ngIf=\"element_selected != null\">\r\n\r\n      <!--Table head-->\r\n      <thead class=\"thead-secondary\">\r\n      <tr class=\"text-white\">\r\n        <th (click)=\"sortTable1(0)\"><a>No</a></th>\r\n        <th (click)=\"sortTable1(1)\"><a>Activity Name</a></th>\r\n        <th (click)=\"sortTable1(2)\"><a>Finished Quantity</a></th>\r\n        <th (click)=\"sortTable1(3)\"><a>Target Quantity</a></th>\r\n        <th (click)=\"sortTable1(4)\"><a>Finished Duration</a></th>\r\n      </tr>\r\n      </thead>\r\n      <!--Table head-->\r\n\r\n      <!--Table body-->\r\n      <tbody >\r\n      <tr *ngFor=\"let activity of element_selected['m_a_ps']\">\r\n        <td>{{activity['activity'].activity_id}}</td>\r\n        <td class=\"text-small\">{{activity['activity'].activity_title}}</td>\r\n        <td>\r\n          <input [(ngModel)]=\"activity['m_a_p'].finished_quantity\" type=\"number\" class=\"form-control\" max=\"{{activity['m_a_p'].target_quantity}}\" min=\"0\">\r\n        </td>\r\n        <td>{{activity['m_a_p'].target_quantity}}</td>\r\n        <td>\r\n          <input [(ngModel)]=\"activity['m_a_p'].finished_duration\" type=\"date\" class=\"form-control\">\r\n        </td>\r\n      </tr>\r\n      </tbody>\r\n      <!--Table body-->\r\n\r\n    </table>\r\n    <!--Table-->\r\n\r\n    <div class=\"col-2 text-center\" *ngIf=\"element_selected != null\">\r\n      <button class=\"btn btn-success waves-effect\" type=\"button\" data-toggle=\"modal\" data-target=\"#confirmationModal\">Save</button>\r\n      <br>\r\n      <!-- Error alert -->\r\n      <i class=\"error-text\" *ngIf=\"errorMessage && errorMessage != ''\">{{errorMessage}}</i>\r\n    </div>\r\n\r\n  </div>\r\n\r\n</div>\r\n\r\n<!-- Modal confirmation -->\r\n<app-confirmation title=\"Save finished quantities and duration\"\r\n                  text=\"Are you sure all informations provided are correct ?\"\r\n                  (success)=\"onSubmit(element_selected)\"\r\n                  [isLinkActive]=false\r\n                  link=\"project-list\">\r\n</app-confirmation>\r\n\r\n<script>\r\n  // Material Select Initialization\r\n  $(document).ready(function() {\r\n    $('.mdb-select').material_select();\r\n  });\r\n</script>\r\n\r\n"
 
 /***/ }),
 
@@ -4117,7 +4428,7 @@ module.exports = "<div class=\"container\" *ngIf=\"!ready\">\r\n  <div class=\"r
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".text-small {\n  font-size: 0.7em !important;\n  font-weight: 500 !important; }\n\n.text-medium {\n  font-size: 0.7em !important;\n  font-weight: 500 !important; }\n"
+module.exports = ".text-small {\n  font-size: 0.7em !important;\n  font-weight: 500 !important; }\n\n.text-medium {\n  font-size: 0.7em !important;\n  font-weight: 500 !important; }\n\n.month-select {\n  padding-bottom: 20px;\n  padding-top: 20px;\n  margin-left: 5%; }\n\n.input-group-addon.success {\n  color: white;\n  background-color: #ffa701;\n  border-color: #ffa701; }\n"
 
 /***/ }),
 
@@ -4204,6 +4515,7 @@ var VolumeProgressComponent = /** @class */ (function () {
         this.targets = new Map();
         this.ready = false;
         this.weeks = [];
+        this.months = [];
     }
     VolumeProgressComponent.prototype.ngOnInit = function () {
         return __awaiter(this, void 0, void 0, function () {
@@ -4216,9 +4528,16 @@ var VolumeProgressComponent = /** @class */ (function () {
                     case 2:
                         _a.sent();
                         console.log(this.elements);
-                        this.typeOfCalendar();
-                        this.calculTargetsPerWeek();
-                        this.calculWeeksPerMonth(2018, 7);
+                        /*this.typeOfCalendar();*/
+                        return [4 /*yield*/, this.calculTargetsPerWeek()];
+                    case 3:
+                        /*this.typeOfCalendar();*/
+                        _a.sent();
+                        return [4 /*yield*/, this.calculMonths()];
+                    case 4:
+                        _a.sent();
+                        this.ready = true;
+                        console.log(this.targets);
                         return [2 /*return*/];
                 }
             });
@@ -4290,45 +4609,472 @@ var VolumeProgressComponent = /** @class */ (function () {
                         error_3 = _b.sent();
                         this.errorMessage = error_3.error.message;
                         return [3 /*break*/, 16];
-                    case 16:
-                        this.ready = true;
-                        return [2 /*return*/];
+                    case 16: return [2 /*return*/];
                 }
             });
         });
     };
     /* For one member, we group all his m_a_p inside the elements array.It's like a distinct member request */
     VolumeProgressComponent.prototype.sortElements = function () {
-        this.sorted_workers = [];
-        var add;
-        //I CHECK EVERY WORKERS
-        for (var _i = 0, _a = this.workers; _i < _a.length; _i++) {
-            var w = _a[_i];
-            add = true;
-            for (var _b = 0, _c = this.sorted_workers; _b < _c.length; _b++) {
-                var s = _c[_b];
-                if (s.member_id == w.member_id) {
-                    add = false;
+        return __awaiter(this, void 0, void 0, function () {
+            var add, _i, _a, w, _b, _c, s, _d, _e, s, sorted_map, total_target, total_finished, _f, _g, m, a, e, error_4, element;
+            return __generator(this, function (_h) {
+                switch (_h.label) {
+                    case 0:
+                        this.sorted_workers = [];
+                        //I CHECK EVERY WORKERS
+                        for (_i = 0, _a = this.workers; _i < _a.length; _i++) {
+                            w = _a[_i];
+                            add = true;
+                            for (_b = 0, _c = this.sorted_workers; _b < _c.length; _b++) {
+                                s = _c[_b];
+                                if (s.member_id == w.member_id) {
+                                    add = false;
+                                }
+                            }
+                            if (add) {
+                                this.sorted_workers.push(w);
+                            }
+                        }
+                        _d = 0, _e = this.sorted_workers;
+                        _h.label = 1;
+                    case 1:
+                        if (!(_d < _e.length)) return [3 /*break*/, 9];
+                        s = _e[_d];
+                        sorted_map = [];
+                        total_target = 0;
+                        total_finished = 0;
+                        _f = 0, _g = this.m_a_p;
+                        _h.label = 2;
+                    case 2:
+                        if (!(_f < _g.length)) return [3 /*break*/, 7];
+                        m = _g[_f];
+                        if (!(s.member_id == m.member_id)) return [3 /*break*/, 6];
+                        _h.label = 3;
+                    case 3:
+                        _h.trys.push([3, 5, , 6]);
+                        return [4 /*yield*/, this._activityService.select(m.activity_id).toPromise()];
+                    case 4:
+                        a = _h.sent();
+                        e = {
+                            m_a_p: m,
+                            activity: a['data']
+                        };
+                        sorted_map.push(e);
+                        total_target += m.target_quantity;
+                        total_finished += m.finished_quantity;
+                        return [3 /*break*/, 6];
+                    case 5:
+                        error_4 = _h.sent();
+                        this.errorMessage = error_4.error.message;
+                        return [3 /*break*/, 6];
+                    case 6:
+                        _f++;
+                        return [3 /*break*/, 2];
+                    case 7:
+                        element = {
+                            member: s,
+                            m_a_ps: sorted_map,
+                            total_target: total_target,
+                            total_finished: total_finished
+                        };
+                        this.elements.push(element);
+                        _h.label = 8;
+                    case 8:
+                        _d++;
+                        return [3 /*break*/, 1];
+                    case 9: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    /* Give the number of days between 2 dates */
+    VolumeProgressComponent.prototype.intervalDate = function (d1, d2) {
+        var start = new Date(d1);
+        var end = new Date(d2);
+        var interval = Math.floor((Date.UTC(end.getFullYear(), end.getMonth(), end.getDate()) - Date.UTC(start.getFullYear(), start.getMonth(), start.getDate())) / (1000 * 60 * 60 * 24));
+        return interval;
+    };
+    /* Store every target of each m_a_ps in the good week of the period */
+    VolumeProgressComponent.prototype.calculTargetsPerWeek = function () {
+        //Map where MEMBER is the key, value : new MAP { Week date : quantity }
+        this.targets = new Map();
+        //We check every members
+        for (var _i = 0, _a = this.elements; _i < _a.length; _i++) {
+            var element = _a[_i];
+            this.targets.set(element['member'].member_id, new Map());
+            /* ----- We check every m_a_ps of the member ----- */
+            for (var _b = 0, _c = element['m_a_ps']; _b < _c.length; _b++) {
+                var map = _c[_b];
+                var start = new Date(map['m_a_p'].date_begin);
+                var end = new Date(map['m_a_p'].target_date);
+                //Interval in days & quantity per day
+                var interval = moment__WEBPACK_IMPORTED_MODULE_5__(end).diff(start) / (1000 * 60 * 60 * 24) + 1;
+                var one_quantity = Math.floor(map['m_a_p'].target_quantity / interval);
+                var one_quantity_finished = Math.floor(map['m_a_p'].finished_quantity / interval);
+                var quantity_given = 0;
+                var quantity_finished_given = 0;
+                var quantity = one_quantity;
+                var quantity_finished = one_quantity_finished;
+                var full_quantity = one_quantity * interval;
+                var full_quantity_finished = one_quantity_finished * interval;
+                if (one_quantity == 0) {
+                    one_quantity = parseFloat((map['m_a_p'].target_quantity / interval).toFixed(1));
+                    full_quantity = parseFloat((one_quantity * interval).toFixed(1));
+                }
+                if (one_quantity_finished == 0) {
+                    one_quantity_finished = parseFloat((map['m_a_p'].finished_quantity / interval).toFixed(1));
+                    full_quantity_finished = parseFloat((one_quantity_finished * interval).toFixed(1));
+                }
+                var w = void 0;
+                //The day that will be the key of the amount of quantity calculated
+                if (moment__WEBPACK_IMPORTED_MODULE_5__(start).format('dddd') == 'Monday') {
+                    w = new Date(start.getFullYear(), start.getMonth(), start.getDate()); //We do this process to have minutes, hours & seconds at default value
+                }
+                else {
+                    var fake_date = new Date(start);
+                    var first_day = moment__WEBPACK_IMPORTED_MODULE_5__(fake_date).format('dddd');
+                    while (first_day != 'Monday' && fake_date != start) {
+                        fake_date.setDate(fake_date.getDate() - 1);
+                        first_day = moment__WEBPACK_IMPORTED_MODULE_5__(fake_date).format('dddd');
+                    }
+                    //FIRST KEY
+                    w = new Date(fake_date.getFullYear(), fake_date.getMonth(), fake_date.getDate());
+                }
+                /* ----- We check every days ----- */
+                /* ----- We check every days ----- */
+                for (var i = new Date(start); i <= end; i.setDate(i.getDate() + 1)) {
+                    var day = moment__WEBPACK_IMPORTED_MODULE_5__(i).format('dddd');
+                    //If it's Monday, we store the previous quantity in a week, and continue in a new week
+                    if (day == 'Monday' && i.toString() != start.toString()) {
+                        //If it's the last day, we need to add the rest of the quantity
+                        if (i.toString() == end.toString()) {
+                            quantity = full_quantity - quantity_given;
+                            quantity_finished = full_quantity_finished - quantity_finished_given;
+                        }
+                        var previous_quantity = 0;
+                        var previous_quantity_finished = 0;
+                        if (this.targets.get(element['member'].member_id).get(w.toString()) != null) {
+                            //Yes, we need to increase with the existing quantity
+                            previous_quantity = this.targets.get(element['member'].member_id).get(w.toString())['target_quantity'];
+                            previous_quantity_finished = this.targets.get(element['member'].member_id).get(w.toString())['finished_quantity'];
+                        }
+                        var e = {
+                            finished_quantity: previous_quantity_finished + quantity_finished,
+                            target_quantity: previous_quantity + quantity
+                        };
+                        this.targets.get(element['member'].member_id).set(w.toString(), e);
+                        quantity_given += quantity;
+                        quantity_finished_given += quantity_finished;
+                        //We get the new Monday date for next quantities
+                        w = new Date(i.getFullYear(), i.getMonth(), i.getDate());
+                        quantity = 0;
+                        quantity_finished = 0;
+                    }
+                    else {
+                        quantity += one_quantity;
+                        quantity_finished += one_quantity_finished;
+                    }
+                }
+                /* ----- /We check every days ----- */
+                //If it's Monday, we have already add the quantity, so we add only if it's not monday
+                var last_day = moment__WEBPACK_IMPORTED_MODULE_5__(end).format('dddd');
+                if (last_day != 'Monday') {
+                    //Is the week already exist ?
+                    quantity = full_quantity - quantity_given;
+                    quantity_finished = full_quantity_finished - quantity_finished_given;
+                    var previous_quantity = 0;
+                    var previous_quantity_finished = 0;
+                    if (this.targets.get(element['member'].member_id).get(w.toString()) != null) {
+                        //Yes, we need to increase with the existing quantity
+                        previous_quantity = this.targets.get(element['member'].member_id).get(w.toString())['target_quantity'];
+                        previous_quantity_finished = this.targets.get(element['member'].member_id).get(w.toString())['finished_quantity'];
+                    }
+                    var e = {
+                        target_quantity: previous_quantity + quantity,
+                        finished_quantity: previous_quantity_finished + quantity_finished
+                    };
+                    this.targets.get(element['member'].member_id).set(w.toString(), e);
                 }
             }
-            if (add) {
-                this.sorted_workers.push(w);
+            /* ----- /We check every m_a_ps of the member ----- */
+        }
+    };
+    /* Give all weeks for a given month (used for the targets display data) */
+    VolumeProgressComponent.prototype.calculWeeksPerMonth = function (year, month) {
+        this.weeks = [];
+        var start = new Date(year, month);
+        var end = new Date(year, month + 1, 0);
+        var first_day = moment__WEBPACK_IMPORTED_MODULE_5__(start).format('dddd');
+        while (first_day != 'Monday') {
+            start.setDate(start.getDate() - 1);
+            first_day = moment__WEBPACK_IMPORTED_MODULE_5__(start).format('dddd');
+        }
+        var i = new Date(start);
+        var date_label = "";
+        var j = 0;
+        while (i <= end && j < 56) {
+            var key = new Date(i);
+            date_label = moment__WEBPACK_IMPORTED_MODULE_5__(i).format('M/D') + ' - ';
+            i.setDate(i.getDate() + 6);
+            date_label += moment__WEBPACK_IMPORTED_MODULE_5__(i).format('M/D');
+            this.weeks.push([date_label, key.toString()]);
+            i.setDate(i.getDate() + 1);
+            j++;
+        }
+    };
+    VolumeProgressComponent.prototype.calculPourcentage = function (value, total) {
+        return Math.ceil(value * 100 / total);
+    };
+    VolumeProgressComponent.prototype.calculMonths = function () {
+        var start = new Date(this.project.project_start);
+        var end = new Date(this.project.project_end);
+        start.setDate(1);
+        end.setMonth(end.getMonth() + 1);
+        end.setDate(0);
+        var i = new Date(start);
+        while (i < end) {
+            var m = {
+                month: new Date(i),
+                month_label: moment__WEBPACK_IMPORTED_MODULE_5__(i).format('MMMM Y')
+            };
+            this.months.push(m);
+            i.setMonth(i.getMonth() + 1);
+        }
+        this.month_selected = this.months[0];
+        this.calculWeeksPerMonth(start.getFullYear(), start.getMonth());
+    };
+    VolumeProgressComponent.prototype.changeMonth = function (next) {
+        var indice = this.months.indexOf(this.month_selected);
+        var changed = false;
+        if (next && indice < this.months.length - 1) {
+            this.month_selected = this.months[indice + 1];
+            changed = true;
+        }
+        else if (!next && indice > 0) {
+            this.month_selected = this.months[indice - 1];
+            changed = true;
+        }
+        if (changed) {
+            var date = new Date(this.month_selected['month']);
+            this.calculWeeksPerMonth(date.getFullYear(), date.getMonth());
+        }
+    };
+    VolumeProgressComponent.prototype.selectMember = function (element) {
+        if (this.element_selected != null) {
+            var oldCell = document.getElementById(this.element_selected['member']['member_id']);
+            oldCell.className = "";
+        }
+        this.element_selected = element;
+        var newCell = document.getElementById(element['member']['member_id']);
+        newCell.className += "selected";
+    };
+    VolumeProgressComponent.prototype.onSubmit = function (element) {
+        return __awaiter(this, void 0, void 0, function () {
+            var _i, _a, map, m, _b, _c, map, m, error_5;
+            return __generator(this, function (_d) {
+                switch (_d.label) {
+                    case 0:
+                        this.old_cell = element['member']['member_id'];
+                        _d.label = 1;
+                    case 1:
+                        _d.trys.push([1, 10, , 11]);
+                        for (_i = 0, _a = element['m_a_ps']; _i < _a.length; _i++) {
+                            map = _a[_i];
+                            m = map['m_a_p'];
+                            if (m.finished_quantity > m.target_quantity) {
+                                throw new Error('One or more finished quantities are greater than their target quantity');
+                            }
+                        }
+                        _b = 0, _c = element['m_a_ps'];
+                        _d.label = 2;
+                    case 2:
+                        if (!(_b < _c.length)) return [3 /*break*/, 5];
+                        map = _c[_b];
+                        m = map['m_a_p'];
+                        return [4 /*yield*/, this._memberActivityProjectService.update(m).toPromise()];
+                    case 3:
+                        _d.sent();
+                        _d.label = 4;
+                    case 4:
+                        _b++;
+                        return [3 /*break*/, 2];
+                    case 5:
+                        this.errorMessage = "";
+                        this.ready = false;
+                        return [4 /*yield*/, this.loadData()];
+                    case 6:
+                        _d.sent();
+                        return [4 /*yield*/, this.sortElements()];
+                    case 7:
+                        _d.sent();
+                        return [4 /*yield*/, this.calculTargetsPerWeek()];
+                    case 8:
+                        _d.sent();
+                        return [4 /*yield*/, this.calculMonths()];
+                    case 9:
+                        _d.sent();
+                        this.ready = true;
+                        return [3 /*break*/, 11];
+                    case 10:
+                        error_5 = _d.sent();
+                        this.errorMessage = error_5;
+                        return [3 /*break*/, 11];
+                    case 11: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    VolumeProgressComponent.prototype.sortTable = function (n) {
+        var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+        table = document.getElementById("volume-table");
+        switching = true;
+        // Set the sorting direction to ascending:
+        dir = "asc";
+        /* Make a loop that will continue until
+        no switching has been done: */
+        while (switching) {
+            // Start by saying: no switching is done:
+            switching = false;
+            rows = table.getElementsByTagName("TR");
+            /* Loop through all table rows (except the
+            first, which contains table headers): */
+            for (i = 1; i < (rows.length - 1); i++) {
+                // Start by saying there should be no switching:
+                shouldSwitch = false;
+                /* Get the two elements you want to compare,
+                one from current row and one from the next: */
+                x = rows[i].getElementsByTagName("TD")[n];
+                y = rows[i + 1].getElementsByTagName("TD")[n];
+                /* Check if the two rows should switch place,
+                based on the direction, asc or desc: */
+                if (dir == "asc") {
+                    if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                        // If so, mark as a switch and break the loop:
+                        shouldSwitch = true;
+                        break;
+                    }
+                }
+                else if (dir == "desc") {
+                    if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                        // If so, mark as a switch and break the loop:
+                        shouldSwitch = true;
+                        break;
+                    }
+                }
+            }
+            if (shouldSwitch) {
+                /* If a switch has been marked, make the switch
+                and mark that a switch has been done: */
+                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                switching = true;
+                // Each time a switch is done, increase this count by 1:
+                switchcount++;
+            }
+            else {
+                /* If no switching has been done AND the direction is "asc",
+                set the direction to "desc" and run the while loop again. */
+                if (switchcount == 0 && dir == "asc") {
+                    dir = "desc";
+                    switching = true;
+                }
             }
         }
-        //NOW I INSERT ALL M_A_P
-        for (var _d = 0, _e = this.sorted_workers; _d < _e.length; _d++) {
-            var s = _e[_d];
-            var sorted_map = [];
-            var total_target = 0;
-            for (var _f = 0, _g = this.m_a_p; _f < _g.length; _f++) {
-                var m = _g[_f];
-                if (s.member_id == m.member_id) {
-                    sorted_map.push(m);
-                    total_target += m.target_quantity;
+    };
+    VolumeProgressComponent.prototype.sortTable1 = function (n) {
+        var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+        table = document.getElementById("activity-table");
+        switching = true;
+        // Set the sorting direction to ascending:
+        dir = "asc";
+        /* Make a loop that will continue until
+        no switching has been done: */
+        while (switching) {
+            // Start by saying: no switching is done:
+            switching = false;
+            rows = table.getElementsByTagName("TR");
+            /* Loop through all table rows (except the
+            first, which contains table headers): */
+            for (i = 1; i < (rows.length - 1); i++) {
+                // Start by saying there should be no switching:
+                shouldSwitch = false;
+                /* Get the two elements you want to compare,
+                one from current row and one from the next: */
+                x = rows[i].getElementsByTagName("TD")[n];
+                y = rows[i + 1].getElementsByTagName("TD")[n];
+                /* Check if the two rows should switch place,
+                based on the direction, asc or desc: */
+                if (dir == "asc") {
+                    if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                        // If so, mark as a switch and break the loop:
+                        shouldSwitch = true;
+                        break;
+                    }
+                }
+                else if (dir == "desc") {
+                    if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                        // If so, mark as a switch and break the loop:
+                        shouldSwitch = true;
+                        break;
+                    }
                 }
             }
-            var element = { member: s, m_a_ps: sorted_map, total_target: total_target };
-            this.elements.push(element);
+            if (shouldSwitch) {
+                /* If a switch has been marked, make the switch
+                and mark that a switch has been done: */
+                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                switching = true;
+                // Each time a switch is done, increase this count by 1:
+                switchcount++;
+            }
+            else {
+                /* If no switching has been done AND the direction is "asc",
+                set the direction to "desc" and run the while loop again. */
+                if (switchcount == 0 && dir == "asc") {
+                    dir = "desc";
+                    switching = true;
+                }
+            }
+        }
+    };
+    VolumeProgressComponent.prototype.search = function () {
+        // Declare variables
+        var input, filter, table, tr, td, i;
+        input = document.getElementById("search");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("volume-table");
+        tr = table.getElementsByTagName("tr");
+        // Loop through all table rows, and hide those who don't match the search query
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[1];
+            if (td) {
+                if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                }
+                else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    };
+    /* Give the number of days between 2 dates */
+    VolumeProgressComponent.prototype.dateInterval = function (d1, d2) {
+        var nb = d2.getTime() - d1.getTime();
+        return Math.ceil(nb / (1000 * 60 * 60 * 24));
+    };
+    VolumeProgressComponent.prototype.typeOfCalendar = function () {
+        var interval = this.intervalDate(this.project.project_start, this.project.project_end);
+        if (interval < 8) {
+            this.calendarType = "1week";
+        }
+        else if (interval < 15) {
+            this.calendarType = "2week";
+        }
+        else if (interval < 22) {
+            this.calendarType = "3week";
+        }
+        else {
+            this.calendarType = "month";
         }
     };
     VolumeProgressComponent.prototype.calendarRange = function () {
@@ -4411,140 +5157,6 @@ var VolumeProgressComponent = /** @class */ (function () {
                 return [2 /*return*/];
             });
         });
-    };
-    VolumeProgressComponent.prototype.intervalDate = function (d1, d2) {
-        var start = new Date(d1);
-        var end = new Date(d2);
-        var interval = Math.floor((Date.UTC(end.getFullYear(), end.getMonth(), end.getDate()) - Date.UTC(start.getFullYear(), start.getMonth(), start.getDate())) / (1000 * 60 * 60 * 24));
-        return interval;
-    };
-    VolumeProgressComponent.prototype.typeOfCalendar = function () {
-        var interval = this.intervalDate(this.project.project_start, this.project.project_end);
-        if (interval < 8) {
-            this.calendarType = "1week";
-        }
-        else if (interval < 15) {
-            this.calendarType = "2week";
-        }
-        else if (interval < 22) {
-            this.calendarType = "3week";
-        }
-        else {
-            this.calendarType = "month";
-        }
-        console.log(this.calendarType);
-    };
-    VolumeProgressComponent.prototype.calculTargetsPerWeek = function () {
-        //Map where MEMBER is the key, value : new MAP { Week date : quantity }
-        this.targets = new Map();
-        //We check every members
-        for (var _i = 0, _a = this.elements; _i < _a.length; _i++) {
-            var element = _a[_i];
-            this.targets.set(element['member'].member_id, new Map());
-            /* ----- We check every m_a_ps of the member ----- */
-            for (var _b = 0, _c = element['m_a_ps']; _b < _c.length; _b++) {
-                var map = _c[_b];
-                console.log('\nNEW MAP');
-                var start = new Date(map.date_begin);
-                var end = new Date(map.target_date);
-                //Interval in days & quantity per day
-                var interval = moment__WEBPACK_IMPORTED_MODULE_5__(end).diff(start) / (1000 * 60 * 60 * 24) + 1;
-                var one_quantity = Math.floor(map.target_quantity / interval);
-                var full_quantity = map.target_quantity;
-                console.log("I will give : ", one_quantity, " for the global amount of : ", map.target_quantity, " - Interval : ", interval);
-                var quantity_given = 0;
-                var quantity = one_quantity;
-                var w = void 0;
-                //The day that will be the key of the amount of quantity calculated
-                if (moment__WEBPACK_IMPORTED_MODULE_5__(start).format('dddd') == 'Monday') {
-                    w = new Date(start.getFullYear(), start.getMonth(), start.getDate()); //We do this process to have minutes, hours & seconds at default value
-                }
-                else {
-                    var fake_date = new Date(start);
-                    var first_day = moment__WEBPACK_IMPORTED_MODULE_5__(fake_date).format('dddd');
-                    while (first_day != 'Monday' && fake_date != start) {
-                        fake_date.setDate(fake_date.getDate() - 1);
-                        first_day = moment__WEBPACK_IMPORTED_MODULE_5__(fake_date).format('dddd');
-                    }
-                    //FIRST KEY
-                    w = new Date(fake_date.getFullYear(), fake_date.getMonth(), fake_date.getDate());
-                }
-                /* ----- We check every days ----- */
-                /* ----- We check every days ----- */
-                for (var i = new Date(start); i <= end; i.setDate(i.getDate() + 1)) {
-                    var day = moment__WEBPACK_IMPORTED_MODULE_5__(i).format('dddd');
-                    //If it's Monday, we store the previous quantity in a week, and continue in a new week
-                    if (day == 'Monday' && i.toString() != start.toString()) {
-                        //If it's the last day, we need to add the rest of the quantity
-                        if (i.toString() == end.toString()) {
-                            quantity = full_quantity - quantity_given;
-                            console.log("It's the end : ", quantity);
-                        }
-                        var previous_quantity = 0;
-                        if (this.targets.get(element['member'].member_id).get(w.toString()) != null) {
-                            //Yes, we need to increase with the existing quantity
-                            previous_quantity = this.targets.get(element['member'].member_id).get(w.toString());
-                        }
-                        this.targets.get(element['member'].member_id).set(w.toString(), previous_quantity + quantity);
-                        quantity_given += quantity;
-                        console.log("I gave: ", quantity, " for this key ", moment__WEBPACK_IMPORTED_MODULE_5__(w));
-                        //We get the new Monday date for next quantities
-                        w = new Date(i.getFullYear(), i.getMonth(), i.getDate());
-                        quantity = 0;
-                    }
-                    else {
-                        quantity += one_quantity;
-                    }
-                }
-                /* ----- /We check every days ----- */
-                //If it's Monday, we have already add the quantity, so we add only if it's not monday
-                var last_day = moment__WEBPACK_IMPORTED_MODULE_5__(end).format('dddd');
-                if (last_day != 'Monday') {
-                    //Is the week already exist ?
-                    console.log('Quantity is like this : ', quantity);
-                    quantity = full_quantity - quantity_given;
-                    var previous_quantity = 0;
-                    if (this.targets.get(element['member'].member_id).get(w.toString()) != null) {
-                        //Yes, we need to increase with the existing quantity
-                        previous_quantity = this.targets.get(element['member'].member_id).get(w.toString());
-                    }
-                    console.log('Last quantity given : ', quantity, " Key : ", w);
-                    this.targets.get(element['member'].member_id).set(w.toString(), previous_quantity + quantity);
-                }
-            }
-            /* ----- /We check every m_a_ps of the member ----- */
-        }
-        console.log(this.targets);
-    };
-    VolumeProgressComponent.prototype.calculWeeksPerMonth = function (year, month) {
-        this.weeks = [];
-        var start = new Date(year, month);
-        var end = new Date(year, month + 1, 0);
-        var first_day = moment__WEBPACK_IMPORTED_MODULE_5__(start).format('dddd');
-        while (first_day != 'Monday') {
-            console.log("Day : ", start);
-            start.setDate(start.getDate() - 1);
-            first_day = moment__WEBPACK_IMPORTED_MODULE_5__(start).format('dddd');
-        }
-        var i = new Date(start);
-        var date_label = "";
-        var j = 0;
-        console.log("Iterator : ", i);
-        while (i <= end && j < 56) {
-            var key = new Date(i);
-            date_label = moment__WEBPACK_IMPORTED_MODULE_5__(i).format('M/D') + ' - ';
-            i.setDate(i.getDate() + 6);
-            date_label += moment__WEBPACK_IMPORTED_MODULE_5__(i).format('M/D');
-            this.weeks.push([date_label, key.toString()]);
-            i.setDate(i.getDate() + 1);
-            j++;
-        }
-        console.log(this.weeks);
-    };
-    /* Give the number of days between 2 dates */
-    VolumeProgressComponent.prototype.dateInterval = function (d1, d2) {
-        var nb = d2.getTime() - d1.getTime();
-        return Math.ceil(nb / (1000 * 60 * 60 * 24));
     };
     VolumeProgressComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -4960,7 +5572,7 @@ module.exports = ".md-form\r\n{\r\n  margin-bottom: 20px;\r\n  margin-top: 0;\r\
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container\">\r\n\r\n  <div class=\"row row-first\">\r\n    <div class=\"col\">\r\n      <button type=\"button\" class=\"btn btn-outline-default waves-effect\" [routerLink]=\"['/sop-creation']\"><h6 class=\"no-margin-bottom\"><i class=\"fa fa-plus mr-3\"></i>New SOP</h6></button>\r\n    </div>\r\n  </div>\r\n\r\n  <div class=\"row row-first justify-content-end\">\r\n    <div class=\" md-form\" id=\"search-bar\">\r\n      <input id=\"search\" (keyup)=\"search()\" class=\"form-control\" type=\"text\" placeholder=\"Search\" aria-label=\"Search\">\r\n    </div>\r\n  </div>\r\n\r\n  <div class=\"row justify-content-center\">\r\n\r\n    <div class=\"col-12 card card-cascade hoverable\">\r\n      <!--Table-->\r\n      <div class=\"card-body card-body-cascade\">\r\n        <table class=\"table table-borderless table-hover table-fixed\" id=\"sop-table\">\r\n\r\n          <!--Table head-->\r\n          <thead class=\"\">\r\n            <tr class=\"text-white\">\r\n              <th style=\"width:5%;\"></th>\r\n              <th style=\"width:10%;\"  (click)=\"sortTable(1)\"><a>Number</a></th>\r\n              <th style=\"width:40%;\" (click)=\"sortTable(2)\"><a>Name</a></th>\r\n              <th style=\"width:20%;\" (click)=\"sortTable(3)\"><a>Creation Date</a></th>\r\n              <th style=\"width:20%;\" (click)=\"sortTable(4)\"><a>Approved By</a></th>\r\n              <th style=\"width:5%;\"></th>\r\n            </tr>\r\n          </thead>\r\n          <!--Table head-->\r\n\r\n          <!--Table body-->\r\n          <tbody>\r\n            <tr *ngFor=\"let sop of sopList\">\r\n              <td scope=\"row\">\r\n                <a data-toggle=\"modal\" data-target=\"#actionModal\"><i class=\"fa fa-cog text-blue\" (click)=\"selectSop(sop)\"></i></a>\r\n              </td>\r\n              <td>{{sop.sop_id}}</td>\r\n              <td>{{sop.sop_title.substr(0,50)}}</td>\r\n              <td>{{sop.sop_creation | date:\"MM/dd/yyyy\"}}</td>\r\n              <td>{{sop.sop_approvment}}</td>\r\n              <td>\r\n                <a data-toggle=\"modal\" data-target=\"#warningModal\" (click)=\"selectSop(sop)\"><i class=\"fa fa-close text-red\"></i></a>\r\n              </td>\r\n            </tr>\r\n          </tbody>\r\n          <!--Table body-->\r\n\r\n        </table>\r\n        <!--Table-->\r\n      </div>\r\n    </div>\r\n\r\n  </div>\r\n</div>\r\n\r\n<app-action title={{sopSelected.sop_title}}\r\n            text=\"\"\r\n            buttons={{buttonsTitles}}\r\n            links={{buttonsLinks}}\r\n            [isLinkActive]=true\r\n>\r\n</app-action>\r\n\r\n<!-- Modal warning -->\r\n<app-warning title=\"Delete SOP {{sopSelected.sop_id}}\"\r\n             text=\"Are you sure you want to delete the SOP : {{sopSelected.sop_title}} from the SOP list ? All activities linked will be destroyed.\"\r\n             link=\"sop-list\"\r\n             (success)=\"deleteSop(sopSelected.sop_id)\"\r\n             [isLink]=false>\r\n</app-warning>\r\n"
+module.exports = "<div class=\"container\">\r\n\r\n  <div class=\"row row-first\">\r\n    <div class=\"col\">\r\n      <button type=\"button\" class=\"btn btn-outline-default waves-effect\" [routerLink]=\"['/sop-creation']\"><h6 class=\"no-margin-bottom\"><i class=\"fa fa-plus mr-3\"></i>New SOP</h6></button>\r\n    </div>\r\n  </div>\r\n\r\n  <div class=\"row row-first justify-content-end\">\r\n    <div class=\" md-form\" id=\"search-bar\">\r\n      <input id=\"search\" (keyup)=\"search()\" class=\"form-control\" type=\"text\" placeholder=\"Search\" aria-label=\"Search\">\r\n    </div>\r\n  </div>\r\n\r\n  <div class=\"row justify-content-center\">\r\n\r\n      <!--Table-->\r\n        <table class=\"col-12 table table-borderless table-hover table-fixed\" id=\"sop-table\">\r\n\r\n          <!--Table head-->\r\n          <thead class=\"\">\r\n            <tr class=\"text-white\">\r\n              <th style=\"width:5%;\"></th>\r\n              <th style=\"width:10%;\"  (click)=\"sortTable(1)\"><a>Number</a></th>\r\n              <th style=\"width:40%;\" (click)=\"sortTable(2)\"><a>Name</a></th>\r\n              <th style=\"width:20%;\" (click)=\"sortTable(3)\"><a>Creation Date</a></th>\r\n              <th style=\"width:20%;\" (click)=\"sortTable(4)\"><a>Approved By</a></th>\r\n              <th style=\"width:5%;\"></th>\r\n            </tr>\r\n          </thead>\r\n          <!--Table head-->\r\n\r\n          <!--Table body-->\r\n          <tbody>\r\n            <tr *ngFor=\"let sop of sopList\">\r\n              <td scope=\"row\">\r\n                <a data-toggle=\"modal\" data-target=\"#actionModal\"><i class=\"fa fa-cog text-blue\" (click)=\"selectSop(sop)\"></i></a>\r\n              </td>\r\n              <td>{{sop.sop_id}}</td>\r\n              <td>{{sop.sop_title.substr(0,50)}}</td>\r\n              <td>{{sop.sop_creation | date:\"MM/dd/yyyy\"}}</td>\r\n              <td>{{sop.sop_approvment}}</td>\r\n              <td>\r\n                <a data-toggle=\"modal\" data-target=\"#warningModal\" (click)=\"selectSop(sop)\"><i class=\"fa fa-close text-red\"></i></a>\r\n              </td>\r\n            </tr>\r\n          </tbody>\r\n          <!--Table body-->\r\n\r\n        </table>\r\n        <!--Table-->\r\n\r\n  </div>\r\n</div>\r\n\r\n<app-action title={{sopSelected.sop_title}}\r\n            text=\"\"\r\n            buttons={{buttonsTitles}}\r\n            links={{buttonsLinks}}\r\n            [isLinkActive]=true\r\n>\r\n</app-action>\r\n\r\n<!-- Modal warning -->\r\n<app-warning title=\"Delete SOP {{sopSelected.sop_id}}\"\r\n             text=\"Are you sure you want to delete the SOP : {{sopSelected.sop_title}} from the SOP list ? All activities linked will be destroyed.\"\r\n             link=\"sop-list\"\r\n             (success)=\"deleteSop(sopSelected.sop_id)\"\r\n             [isLink]=false>\r\n</app-warning>\r\n"
 
 /***/ }),
 
@@ -5406,6 +6018,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var jspdf_autotable__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! jspdf-autotable */ "./node_modules/jspdf-autotable/dist/jspdf.plugin.autotable.js");
 /* harmony import */ var jspdf_autotable__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(jspdf_autotable__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _objects_project_project_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../objects/project/project.service */ "./src/app/objects/project/project.service.ts");
+/* harmony import */ var _objects_member_activity_project_member_activity_project_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../objects/member_activity_project/member-activity-project.service */ "./src/app/objects/member_activity_project/member-activity-project.service.ts");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -5415,13 +6030,55 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 var __metadata = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __generator = (undefined && undefined.__generator) || function (thisArg, body) {
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    function verb(n) { return function (v) { return step([n, v]); }; }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) try {
+            if (f = 1, y && (t = y[op[0] & 2 ? "return" : op[0] ? "throw" : "next"]) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [0, t.value];
+            switch (op[0]) {
+                case 0: case 1: t = op; break;
+                case 4: _.label++; return { value: op[1], done: false };
+                case 5: _.label++; y = op[1]; op = [0]; continue;
+                case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                default:
+                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                    if (t[2]) _.ops.pop();
+                    _.trys.pop(); continue;
+            }
+            op = body.call(thisArg, _);
+        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
+
+
+
 
 
 var PdfGanttComponent = /** @class */ (function () {
-    function PdfGanttComponent() {
+    function PdfGanttComponent(_projectService, _memberActivityProjectService) {
+        this._projectService = _projectService;
+        this._memberActivityProjectService = _memberActivityProjectService;
+        this.idProject = "1";
     }
     PdfGanttComponent.prototype.ngOnInit = function () {
-        this.download();
+        this.getProject(this.idProject);
+        // this.download();
     };
     PdfGanttComponent.prototype.download = function () {
         var columns = [{ title: "0", dataKey: "0" },
@@ -5430,8 +6087,8 @@ var PdfGanttComponent = /** @class */ (function () {
             { title: "3", dataKey: "3" }
         ];
         var rows = [
-            ["Work Code", "00000000", "Project Code", "24200"],
-            ["Name of Project", "lumbuk tagagatum in ferne memonerisatum", "", ""],
+            ["Work Code", "0301000" + this.project.project_code, "Project Code", this.project.project_work_code],
+            ["Name of Project", this.project.project_title, "", ""],
         ];
         var doc = new jsPDF('l', 'pt');
         doc.autoTableSetDefaults({
@@ -5467,18 +6124,24 @@ var PdfGanttComponent = /** @class */ (function () {
             { title: "Sign", dataKey: "6" },
             { title: "Note", dataKey: "7" }
         ];
-        var rows2 = [
-            ["1", "Step I Process", "", "", "", "Staff 1", "", ""],
-            ["2", "Step II Process", "", "", "", "Staff 1, Staff 2", "", ""],
-            ["3", "Step III Process", "", "", "", "Staff 1", "", ""],
-            ["4", "Step IV Process", "", "", "", "Staff 1", "", ""],
-            ["5", "Step V Process", "", "", "", "Staff 1", "", ""],
-            ["6", "Step VI Process", "", "", "", "Staff 1", "", ""],
-            ["7", "Step VII Process", "", "", "", "Staff 1", "", ""],
-            ["8", "Step VIII Process", "", "", "", "Staff 1", "", ""],
-            ["9", "Step IX Process", "", "", "", "Staff 1", "", ""],
-            ["1", "Step X Process", "", "", "", "Staff 1", "", ""],
-        ];
+        var rows2 = [];
+        for (var i = 0; i < this.activities.length; i++) {
+            rows2.push([this.activities[i]["activity_id"], this.activities[i]["activity_title"], new _angular_common__WEBPACK_IMPORTED_MODULE_4__["DatePipe"]('en-US').transform(this.activities[i]["target_date"], 'dd-MM-yyyy'), new _angular_common__WEBPACK_IMPORTED_MODULE_4__["DatePipe"]('en-US').transform(this.activities[i]["finished_date"], 'dd-MM-yyyy'), this.activities[i]["evaluation"], "Staff 1", this.activities[i]["sign"], this.activities[i]["note"]]);
+        }
+        console.log(rows2);
+        /*
+      var rows2 = [
+        ["1", "Step I Process", "", "", "", "Staff 1", "", ""],
+        ["2", "Step II Process", "", "", "", "Staff 1, Staff 2", "", ""],
+        ["3", "Step III Process", "", "", "", "Staff 1", "", ""],
+        ["4", "Step IV Process", "", "", "", "Staff 1", "", ""],
+        ["5", "Step V Process", "", "", "", "Staff 1", "", ""],
+        ["6", "Step VI Process", "", "", "", "Staff 1", "", ""],
+        ["7", "Step VII Process", "", "", "", "Staff 1", "", ""],
+        ["8", "Step VIII Process", "", "", "", "Staff 1", "", ""],
+        ["9", "Step IX Process", "", "", "", "Staff 1", "", ""],
+        ["1", "Step X Process", "", "", "", "Staff 1", "", ""],
+      ];*/
         doc.autoTable(columns2, rows2, {
             theme: 'plain',
             styles: {
@@ -5498,13 +6161,63 @@ var PdfGanttComponent = /** @class */ (function () {
         });
         doc.save("Gantt-charts.pdf");
     };
+    PdfGanttComponent.prototype.selectAllFromProject = function (idProject) {
+        return __awaiter(this, void 0, void 0, function () {
+            var _this = this;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        console.log("ici : " + idProject);
+                        return [4 /*yield*/, this._memberActivityProjectService.selectAllFromProject(idProject)
+                                .subscribe(function (res) {
+                                console.log(res['data']);
+                                //this.res=res['data'];
+                                _this.activities = res['data'];
+                                console.log("res :");
+                                console.log(_this.project);
+                                console.log(_this.activities);
+                                _this.download();
+                            }, function (error) {
+                                console.log("ERREUR : ", error);
+                            })];
+                    case 1:
+                        _a.sent();
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    PdfGanttComponent.prototype.getProject = function (idProject) {
+        return __awaiter(this, void 0, void 0, function () {
+            var _this = this;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        console.log("ici projet id : " + idProject);
+                        return [4 /*yield*/, this._projectService.getProject(idProject)
+                                .subscribe(function (res) {
+                                console.log(res['data']);
+                                //this.res=res['data'];
+                                _this.project = res['data'];
+                                _this.selectAllFromProject(idProject);
+                            }, function (error) {
+                                console.log("ERREUR : ", error);
+                            })];
+                    case 1:
+                        _a.sent();
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
     PdfGanttComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'app-pdf-gantt',
             template: __webpack_require__(/*! ./pdf-gantt.component.html */ "./src/app/documents/pdf-gantt/pdf-gantt.component.html"),
             styles: [__webpack_require__(/*! ./pdf-gantt.component.scss */ "./src/app/documents/pdf-gantt/pdf-gantt.component.scss")]
         }),
-        __metadata("design:paramtypes", [])
+        __metadata("design:paramtypes", [_objects_project_project_service__WEBPACK_IMPORTED_MODULE_2__["ProjectService"],
+            _objects_member_activity_project_member_activity_project_service__WEBPACK_IMPORTED_MODULE_3__["MemberActivityProjectService"]])
     ], PdfGanttComponent);
     return PdfGanttComponent;
 }());
@@ -6405,7 +7118,7 @@ var PdfSopComponent = /** @class */ (function () {
                 console.log(_this.sop_title);
                 //console.log("date de creation : "+ );
                 console.log("fin");
-                //this.download(this.sop_title);
+                _this.download(_this.sop_title);
             }, 2000);
         }
     };
@@ -6462,11 +7175,11 @@ var PdfSopComponent = /** @class */ (function () {
                 }
             }
         });
-        var columns = [{ title: "0", dataKey: "0" },
+        columns = [{ title: "0", dataKey: "0" },
             { title: "1", dataKey: "1" },
             { title: "2", dataKey: "2" }
         ];
-        var rows = [
+        rows = [
             ["Base Rule/Regulation", "", "Staff Qualifications"],
             [this.sop_rules, "", this.sop_staff_qualification],
             ["Related Working Units", "", "Supporting tools"],
@@ -6516,7 +7229,7 @@ var PdfSopComponent = /** @class */ (function () {
             }
         });
         doc.addPage();
-        var columns = [{ title: "0", dataKey: "0" },
+        columns = [{ title: "0", dataKey: "0" },
             { title: "1", dataKey: "1" },
             { title: "2", dataKey: "2" },
             { title: "3", dataKey: "3" },
@@ -6526,18 +7239,25 @@ var PdfSopComponent = /** @class */ (function () {
             { title: "7", dataKey: "7" },
             { title: "8", dataKey: "8" }
         ];
-        var rows = [
-            ["No", "Activity", "Unit 1", "Unit 2", "Unit 3", "Unit 4", "Supporting \n Materials/input", "Duration", "Output"],
-            ["1", "description", "schema", "schema", "schema", "schema", "text", "time", "text"],
-            ["2", "description", "schema", "schema", "schema", "schema", "text", "time", "text"],
-            ["3", "description", "schema", "schema", "schema", "schema", "text", "time", "text"],
-            ["4", "description", "schema", "schema", "schema", "schema", "text", "time", "text"],
+        rows = [
+            ["No", "Activity", this.units[0], this.units[1], this.units[2], "Unit 4", "Supporting \n Materials/input", "Duration",
+                "Output"],
+            [this.activities[0][0], this.activities[0][1], this.activities[0][5], this.activities[0][6], this.activities[0][7],
+                "schema", this.activities[0][2], this.activities[0][3], this.activities[0][4]],
+            [this.activities[1][0], this.activities[1][1], this.activities[1][5], this.activities[1][6], this.activities[1][7],
+                "schema", this.activities[1][2], this.activities[1][3], this.activities[1][4]],
+            [this.activities[2][0], this.activities[2][1], this.activities[2][5], this.activities[2][6], this.activities[2][7],
+                "schema", this.activities[2][2], this.activities[2][3], this.activities[2][4]],
+            [this.activities[3][0], this.activities[3][1], this.activities[3][5], this.activities[3][6], this.activities[3][7],
+                "schema", this.activities[3][2], this.activities[3][3], this.activities[3][4]],
         ];
         doc.autoTable(columns, rows, {
             theme: 'plain',
             styles: {
+                overflow: 'linebreak',
                 lineColor: 0,
-                lineWidth: 1
+                lineWidth: 1,
+                columnWidth: [10, 40, 30, 30, 30, 30, 30, 30, 30]
             },
             showHeader: 'never',
             startY: 10,
@@ -6596,37 +7316,64 @@ var PdfSopComponent = /** @class */ (function () {
                             console.log("Tableau final 1 : " + _this.units);
                             //End unit tab filling up
                             var counter2 = 0;
+                            console.log("Tableau des jobs :");
+                            console.log(res['data']);
                             for (var _f = 0, _g = res['data']; _f < _g.length; _f++) {
                                 var job = _g[_f];
+                                console.log("Job " + counter2 + " :");
+                                console.log(job);
                                 for (var _h = 0, _j = job['activities']; _h < _j.length; _h++) {
                                     var activitie = _j[_h];
+                                    console.log("Activité :");
                                     console.log(activitie);
-                                    if (activitie['activity_is_father'] === null) {
+                                    if (activitie['activity_id_is_father'] == null) {
+                                        console.log("Est père car atribue est : ");
+                                        console.log(activitie['activity_id_is_father']);
                                         var temp = [];
                                         temp.push(activitie['activity_id']);
-                                        temp.push(activitie['activity_title']);
+                                        temp.push(activitie['activity_title'] + " : " + activitie['activity_description']);
+                                        temp.push(activitie['activity_type']);
+                                        temp.push(activitie['activity_duration'] + " " + activitie['activity_type_duration']);
+                                        temp.push(activitie['activity_type_output']);
                                         for (var _k = 0, _l = _this.units; _k < _l.length; _k++) {
                                             var i = _l[_k];
                                             temp.push("");
                                         }
-                                        _this.activities.push(temp);
+                                        if (_this.activities[0] == "") {
+                                            _this.activities[0] = temp;
+                                        }
+                                        else {
+                                            _this.activities.push(temp);
+                                        }
+                                        console.log("Is father :");
+                                        console.log(temp);
                                     }
                                     else {
                                         var pointeur = 0;
-                                        for (var j in _this.activities) {
-                                            if (j[0] === activitie['activity_id']) {
-                                                if (activitie['activity_unit'] == null) {
+                                        console.log("Père recherché :");
+                                        console.log(activitie['activity_id_is_father']);
+                                        console.log("dans le tableau d'acitivté suivant :");
+                                        console.log(_this.activities);
+                                        for (var j = 0; j < _this.activities.length; j++) {
+                                            console.log("j :");
+                                            console.log(_this.activities[j]);
+                                            console.log("j[0] :");
+                                            console.log(_this.activities[j][0]);
+                                            if (_this.activities[j][0] === activitie['activity_id_is_father']) {
+                                                console.log("J'y suis père trouvé");
+                                                if (activitie['activity_unit'] !== null) {
                                                     var points = 0;
                                                     var res_1 = void 0;
-                                                    for (var _m = 0, _o = _this.units; _m < _o.length; _m++) {
-                                                        var unit = _o[_m];
-                                                        if (unit == activitie['activity_unit'][0]) {
+                                                    for (var k = 0; k < _this.units.length; k++) {
+                                                        console.log("activitie['activity_unit'][0] :");
+                                                        console.log(activitie['activity_unit'][0]);
+                                                        if (_this.units[k] == activitie['activity_unit'][0]) {
                                                             res_1 = points;
                                                         }
                                                         points = points + 1;
                                                     }
                                                     if (res_1 !== null) {
-                                                        _this.activities[pointeur][res_1 + 2] = activitie['activity_title'];
+                                                        _this.activities[pointeur][res_1 + 5] = activitie['activity_title'] + " : " + activitie['activity_description'];
                                                     }
                                                 }
                                             }
@@ -6635,7 +7382,8 @@ var PdfSopComponent = /** @class */ (function () {
                                     }
                                 }
                             }
-                            console.log("Tableau final 2 : " + _this.activities);
+                            console.log("Tableau final 2 : ");
+                            console.log(_this.activities);
                         }, //end subscribe
                         function (//end subscribe
                         error) {
@@ -7496,6 +8244,7 @@ var MemberActivityProjectService = /** @class */ (function () {
     MemberActivityProjectService.prototype.update = function (m_a_p) {
         var body = {
             project_id: m_a_p.project_id,
+            job_id: m_a_p.job_id,
             member_id: m_a_p.member_id,
             activity_id: m_a_p.activity_id,
             target_date: m_a_p.target_date,
@@ -7536,6 +8285,26 @@ var MemberActivityProjectService = /** @class */ (function () {
             _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"]])
     ], MemberActivityProjectService);
     return MemberActivityProjectService;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/objects/member_activity_project/member-activity-project.ts":
+/*!****************************************************************************!*\
+  !*** ./src/app/objects/member_activity_project/member-activity-project.ts ***!
+  \****************************************************************************/
+/*! exports provided: MemberActivityProject */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MemberActivityProject", function() { return MemberActivityProject; });
+var MemberActivityProject = /** @class */ (function () {
+    function MemberActivityProject() {
+    }
+    return MemberActivityProject;
 }());
 
 
@@ -7662,16 +8431,15 @@ var ProjectService = /** @class */ (function () {
         this.generateHeaders();
         return this.http.get(this.domain + '/api/project/find_one/' + project_id, this.httpOptions);
     };
-    ProjectService.prototype.createProject = function (project_title, project_code, project_work_code, project_start, project_end, sub_department_id) {
+    ProjectService.prototype.createProject = function (project) {
         var body = {
-            project_title: project_title,
-            project_code: project_code,
-            project_work_code: project_work_code,
-            project_start: project_start,
-            project_end: project_end,
-            sub_department_id: sub_department_id
+            project_title: project.project_title,
+            project_code: project.project_code,
+            project_work_code: project.project_work_code,
+            project_start: project.project_start,
+            project_end: project.project_end,
+            sub_department_id: project.sub_department_id
         };
-        console.log(body);
         this.generateHeaders();
         return this.http.post(this.domain + '/api/project/create', body, this.httpOptions);
     };
@@ -7680,7 +8448,6 @@ var ProjectService = /** @class */ (function () {
             project_id: project_id,
             job_id: job_id
         };
-        console.log(body);
         this.generateHeaders();
         return this.http.post(this.domain + '/api/project/bind_project_job', body, this.httpOptions);
     };
@@ -7690,26 +8457,25 @@ var ProjectService = /** @class */ (function () {
             unit_id: unit_id,
             member_id: member_id
         };
-        console.log(body);
         this.generateHeaders();
         return this.http.post(this.domain + '/api/project/bind_member_unit_project', body, this.httpOptions);
     };
-    ProjectService.prototype.bindMemberActivityProject = function (project_id, member_id, activity_id, target_date, date_begin, evaluation, finished_date, sign, note, target_quantity, finished_quantity, finished_duration) {
+    ProjectService.prototype.bindMemberActivityProject = function (m_a_p) {
         var body = {
-            project_id: project_id,
-            member_id: member_id,
-            activity_id: activity_id,
-            target_date: target_date,
-            date_begin: date_begin,
-            evaluation: evaluation,
-            finished_date: finished_date,
-            sign: sign,
-            note: note,
-            target_quantity: target_quantity,
-            finished_quantity: finished_quantity,
-            finished_duration: finished_duration
+            project_id: m_a_p.project_id,
+            job_id: m_a_p.job_id,
+            member_id: m_a_p.member_id,
+            activity_id: m_a_p.activity_id,
+            target_date: m_a_p.target_date,
+            date_begin: m_a_p.date_begin,
+            evaluation: m_a_p.evaluation,
+            finished_date: m_a_p.finished_date,
+            sign: m_a_p.sign,
+            note: m_a_p.note,
+            target_quantity: m_a_p.target_quantity,
+            finished_quantity: m_a_p.finished_quantity,
+            finished_duration: m_a_p.finished_duration
         };
-        console.log(body);
         this.generateHeaders();
         return this.http.post(this.domain + '/api/project/bind_member_activity_project', body, this.httpOptions);
     };
@@ -7736,7 +8502,6 @@ var ProjectService = /** @class */ (function () {
     };
     ProjectService.prototype.getProject = function (project_id) {
         this.generateHeaders();
-        console.log(project_id);
         return this.http.get(this.domain + '/api/project/find_One/' + project_id, this.httpOptions);
     };
     ProjectService.prototype.selectAllFromProject = function (project_id) {
@@ -8038,6 +8803,14 @@ var UnitService = /** @class */ (function () {
     UnitService.prototype.selectAllFromSop = function (sop_id) {
         this.generateHeaders();
         return this.http.get(this.domain + '/api/unit/all_from_sop/' + sop_id, this.httpOptions);
+    };
+    UnitService.prototype.selectAllFromActivity = function (activity_id) {
+        this.generateHeaders();
+        return this.http.get(this.domain + '/api/unit/all_from_activity/' + activity_id, this.httpOptions);
+    };
+    UnitService.prototype.selectAllFromJob = function (job_id) {
+        this.generateHeaders();
+        return this.http.get(this.domain + '/api/unit/all_from_job/' + job_id, this.httpOptions);
     };
     UnitService.prototype.generateHeaders = function () {
         if (localStorage.getItem("Token") === null) {
