@@ -77,8 +77,8 @@
       <!--Table head-->
       <thead class="thead-secondary">
       <tr class="text-white">
-        <th (click)="sortTable1(0)"><a>No</a></th>
-        <th (click)="sortTable1(1)"><a>Activity Name</a></th>
+        <th (click)="sortTable1(0)"><a>Job</a></th>
+        <th (click)="sortTable1(1)"><a>Activity</a></th>
         <th (click)="sortTable1(2)"><a>Finished Quantity</a></th>
         <th (click)="sortTable1(3)"><a>Target Quantity</a></th>
         <th (click)="sortTable1(4)"><a>Finished Duration</a></th>
@@ -89,7 +89,7 @@
       <!--Table body-->
       <tbody >
       <tr *ngFor="let activity of element_selected['m_a_ps']">
-        <td>{{activity['activity'].activity_id}}</td>
+        <td>{{activity['job'].job_name}}</td>
         <td class="text-small">{{activity['activity'].activity_title}}</td>
         <td>
           <input [(ngModel)]="activity['m_a_p'].finished_quantity" type="number" class="form-control" max="{{activity['m_a_p'].target_quantity}}" min="0">

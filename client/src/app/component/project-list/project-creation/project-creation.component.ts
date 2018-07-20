@@ -340,7 +340,7 @@ export class ProjectCreationComponent implements OnInit {
       this.errorMessage = "";
       for (let u of this.elements) {
         for (let m of u['detail']['members']) {
-          await this._projectService.bindMemberUnitProject(this.new_project.project_id, u['unit'].unit_id, m.member_id.toString()).toPromise();
+          await this._projectService.bindMemberUnitProject(this.new_project.project_id, u['unit'].unit_id, m.member_id.toString(), u['detail']['job'].job_id).toPromise();
         }
       }
     }
@@ -362,6 +362,7 @@ export class ProjectCreationComponent implements OnInit {
         for (let activity of element['detail']['activities']){
           console.log("Let's go for these members : ", element['detail']['members']);
           for (let member of element['detail']['members']){
+            console.log('Job : ', element['detail']['job'].job_id);
             let m_a_p = new MemberActivityProject();
             m_a_p.project_id = parseInt(this.new_project.project_id);
             m_a_p.job_id = element['detail']['job'].job_id;
