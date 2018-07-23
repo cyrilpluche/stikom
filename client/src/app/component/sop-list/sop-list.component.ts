@@ -14,7 +14,7 @@ export class SopListComponent implements OnInit {
   sopList: [Sop];
   sopSelected: Sop = new Sop();
   buttonsTitles: string [] = ['Set up SOP informations', 'Set up activites', 'Set up jobs'];
-  buttonsLinks: string [] = ['', 'activity-creation', 'job-list'];
+  buttonsLinks: string [] = ['sop', 'activity-creation', 'job-list'];
 
   constructor(private _sopService: SopService) { }
 
