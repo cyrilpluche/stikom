@@ -130,6 +130,11 @@ export class MemberService {
     return this.http.get(this.domain + '/api/member/all',this.httpOptions);
   }
 
+  getAllRoles(idUser){
+    this.generateHeaders();
+    return this.http.get(this.domain + '/api/role/member_role/'+idUser,this.httpOptions);
+  }
+
   selectAllWaiting(){
     this.generateHeaders();
     return this.http.get(this.domain + '/api/member/waiting_member',this.httpOptions);
@@ -156,6 +161,16 @@ export class MemberService {
     console.log(localStorage.getItem("Mail"));
     this.generateHeaders();
     return this.http.put(this.domain + '/api/member/update_password',body,this.httpOptions);
+  }
+
+  grantMember(idUser,idRole){
+    let body = {
+      member:idUser,
+      role:idRole,
+    };
+
+    this.generateHeaders();
+    return this.http.post(this.domain + '/api/role/grant_member',body,this.httpOptions);
   }
 
 

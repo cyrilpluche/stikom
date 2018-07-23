@@ -553,6 +553,11 @@ INSERT INTO member (member_first_name, member_name, member_mail, member_password
     VALUES ('Enzo', 'Fabre', 'enzo.fabre@gmail.com', '$2b$10$MpXnAKMa9XpS65A1AoNEp.zzbFEjlIsPfc0oZnZnR.zFqkXaLUQOW', 1, 1, NULL, 3, 3);
 INSERT INTO member (member_first_name, member_name, member_mail, member_password, member_admin, member_valid, seed, sub_department_id, managment_level_id) VALUES ('Yudi', 'Agusta', 'yudi.agusta@gmail.com', '$2b$10$MpXnAKMa9XpS65A1AoNEp.zzbFEjlIsPfc0oZnZnR.zFqkXaLUQOW', 1, 1, NULL, 3, 3);
 INSERT INTO member (member_first_name, member_name, member_mail, member_password, member_admin, member_valid, seed, sub_department_id, managment_level_id) VALUES ('Benjamin', 'Pavard', 'benjamin.pavard@gmail.com', '$2b$10$MpXnAKMa9XpS65A1AoNEp.zzbFEjlIsPfc0oZnZnR.zFqkXaLUQOW', 1, 1, NULL, 3, 3);
+INSERT INTO member (member_first_name, member_name, member_mail, member_password, member_admin, member_valid, seed, sub_department_id, managment_level_id) VALUES ('Maurice', 'Pavard', 'maurice.pavard@gmail.com', '$2b$10$MpXnAKMa9XpS65A1AoNEp.zzbFEjlIsPfc0oZnZnR.zFqkXaLUQOW', 0, 1, NULL, 3, 3);
+
+INSERT INTO has_role (member_id, role_id) VALUES (6,1);
+INSERT INTO has_role (member_id, role_id) VALUES (6,2);
+
 
 INSERT INTO member_unit_project (unit_id, project_id, member_id, job_id) VALUES (1, 1, 1,1);
 INSERT INTO member_unit_project (unit_id, project_id, member_id, job_id) VALUES (2, 1, 2,1);

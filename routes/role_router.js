@@ -16,7 +16,7 @@ router.get('/member_role/:member', function (req, res, next) {
     }).catch(next);
 });
 
-router.post('/grant_member', policy.checkParameters(['member, role']),
+router.post('/grant_member', policy.checkParameters(['member', 'role']),
     function (req, res, next) {
         modelRole.insertHasRole(req.body.member, req.body.role).then(function (data) {
             res.json({data: data})
