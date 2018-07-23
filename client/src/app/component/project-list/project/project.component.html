@@ -1,3 +1,157 @@
-<p>
-  project works!
-</p>
+<div *ngIf="!displayEnd">
+  <div class="container" *ngIf="!updating">
+    <div class="row row-first" >
+      <div class="text-center mt-4">
+        <a class="btn btn-default" href="sop-list" >Back</a>
+        <a class="btn btn-primary" (click)="updateProject()" >Modifier</a>
+      </div>
+      <div class="col-12 card card-cascade hoverable" style="margin-top: 20px;">
+        <!--Table-->
+        <div class="card-body card-body-cascade">
+          {{project_title}}
+        </div>
+      </div>
+    </div>
+    <div class="row" style="margin-top: 25px;">
+      <div class="col-sm-12 col-lg-3">
+        <p class="font-weight-bold">Project Code</p>
+      </div>
+      <div class="col-sm-12 col-lg-9 ">
+        <p class="float-lg-left float-sm-right">{{project_code}}</p>
+      </div>
+    </div>
+    <div class="row" style="margin-top: 10px;">
+      <div class="col-sm-12 col-lg-3">
+        <p class="font-weight-bold">Project work code</p>
+      </div>
+      <div class="col-sm-12 col-lg-9 ">
+        <p class="float-lg-left float-sm-right">{{ project_work_code}}</p>
+      </div>
+    </div>
+    <div class="row" style="margin-top: 10px;">
+      <div class="col-sm-12 col-lg-3">
+        <p class="font-weight-bold">Start date</p>
+      </div>
+      <div class="col-sm-12 col-lg-9 ">
+        <p class="float-lg-left float-sm-right">{{ project_start | date:'medium' }}</p>
+      </div>
+    </div>
+    <div class="row" style="margin-top: 10px;">
+      <div class="col-sm-12 col-lg-3">
+        <p class="font-weight-bold">project end date</p>
+      </div>
+      <div class="col-sm-12 col-lg-9 ">
+        <p class="float-lg-left float-sm-right">{{ project_end | date:'medium' }}</p>
+      </div>
+    </div>
+    <div class="row" style="margin-top: 10px;">
+      <div class="col-sm-12 col-lg-3">
+        <p class="font-weight-bold">Organization / branch / department / sub-department</p>
+      </div>
+      <div class="col-sm-12 col-lg-9 ">
+        <p class="float-lg-left float-sm-right">{{organisation_name}} / {{branch_name}} / {{department_name}} / {{sub_department_name}}</p>
+      </div>
+    </div>
+
+
+
+  </div>
+
+
+  <div class="container" *ngIf="updating">
+    <form>
+    <div class="row row-first" >
+      <div class="text-center mt-4">
+        <a class="btn btn-danger" (click)="updateProject()">Cancel update</a>
+        <a class="btn btn-primary" (click)="sentProjectUpdate()">Save</a>
+      </div>
+      <div class="col-12 card card-cascade hoverable" style="margin-top: 20px;">
+        <!--Table-->
+        <div class="card-body card-body-cascade">
+          {{project_title}}
+        </div>
+      </div>
+    </div>
+    <div class="row" style="margin-top: 25px;">
+      <div class="col-sm-12 col-lg-3">
+        <p class="font-weight-bold">Project title</p>
+      </div>
+      <div class="col-sm-12 col-lg-9 ">
+        <input [(ngModel)]="new_project_title" name="new_project_title" type="text" id="new_project_title" class="form-control" value="{{project_title}}">
+      </div>
+    </div>
+    <div class="row" style="margin-top: 25px;">
+      <div class="col-sm-12 col-lg-3">
+        <p class="font-weight-bold">Project Code</p>
+      </div>
+      <div class="col-sm-12 col-lg-9 ">
+        <input [(ngModel)]="new_project_code" name="new_project_code" type="text" id="new_project_code" class="form-control" value="{{project_code}}">
+
+      </div>
+    </div>
+    <div class="row" style="margin-top: 10px;">
+      <div class="col-sm-12 col-lg-3">
+        <p class="font-weight-bold">Project work code</p>
+      </div>
+      <div class="col-sm-12 col-lg-9 ">
+        <input [(ngModel)]="new_project_work_code" name="new_project_work_code" type="text" id="new_project_work_code" class="form-control" value="{{project_work_code}}">
+
+      </div>
+    </div>
+    <div class="row" style="margin-top: 10px;">
+      <div class="col-sm-12 col-lg-3">
+        <p class="font-weight-bold">Start date</p>
+      </div>
+      <div class="col-sm-12 col-lg-9 ">
+        <input [(ngModel)]="new_project_start" name="new_project_start" type="date" id="new_project_start" class="form-control" value="{{project_start}}">
+      </div>
+    </div>
+    <div class="row" style="margin-top: 10px;">
+      <div class="col-sm-12 col-lg-3">
+        <p class="font-weight-bold">project end date</p>
+      </div>
+      <div class="col-sm-12 col-lg-9 ">
+        <input [(ngModel)]="new_project_end" name="new_project_end" type="date" id="new_project_end" class="form-control" value="{{project_end}}">
+      </div>
+    </div>
+    <div class="row" style="margin-top: 10px;">
+      <div class="col-sm-12 col-lg-3">
+        <p class="font-weight-bold">Organization / branch / department / sub-department</p>
+      </div>
+      <div class="col-sm-12 col-lg-9 ">
+        <p class="float-lg-left float-sm-right">{{organisation_name}} / {{branch_name}} / {{department_name}} / {{sub_department_name}}</p>
+      </div>
+    </div>
+
+
+      </form>
+  </div>
+</div>
+
+<div *ngIf="displayEnd" class="container">
+  <div class="row row-first justify-content-center">
+
+    <!-- Card -->
+    <div class="col-10 col-sm-8 col-md-6 col-xl-4 card card-cascade hoverable">
+
+      <!-- Card content -->
+      <div class="card-body card-body-cascade">
+
+        <p class="h4 text-center mb-4" >{{title}}</p>
+
+
+        <p class="text-center mb-4">
+          {{text}}
+        </p>
+
+        <div class="text-center mt-4">
+          <a class="btn btn-default" (click)="goBack()" >go Back</a>
+        </div>
+
+      </div>
+    </div>
+
+
+
+  </div>
+</div>

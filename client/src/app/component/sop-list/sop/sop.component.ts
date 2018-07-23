@@ -11,7 +11,7 @@ import {UnitService} from "../../../objects/unit/unit.service";
 export class SopComponent implements OnInit {
 
   sop_id:string="";
-  project_id:string="1";
+  project_id:string="";
 
   sop_title:string="NA";
   sop_creation:Date=new Date();

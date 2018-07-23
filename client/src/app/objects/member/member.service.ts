@@ -158,34 +158,6 @@ export class MemberService {
     return this.http.put(this.domain + '/api/member/update_password',body,this.httpOptions);
   }
 
-  /*
-  async isLoggedIn()  {
-    if(this.getToken() !== null)
-    {
-      let body = {
-      };
 
-      this.generateHeaders();
-      await this.http.post(this.domain + '/api/member/loggedIn',body,this.httpOptions).subscribe( (res) => {
-          console.log("ici");
-        if(res['data']=== null)
-          {
-            return false;
-          }else{
-            this.storeUserDataFull(res['data']);
-            return true;
-          }
-
-        },
-        error => {
-          return false;
-        });
-
-    }else{
-      return false;
-    }
-
-
-  }*/
 
 }
