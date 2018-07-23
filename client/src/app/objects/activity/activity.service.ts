@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { environment } from '../../../environments/environment';
 import {Router} from "@angular/router";
+import {Activity} from "./activity";
 
 @Injectable({
   providedIn: 'root'
@@ -14,19 +15,18 @@ export class ActivityService {
   constructor(private http:HttpClient,
               private router: Router) { }
 
-  createActivity(activity_title:string, activity_description:string, activity_type_duration:string, activity_duration:number, activity_type:string, activity_type_output:string, activity_shape:string,
-  activity_id_is_father:string, sop_id:string, managment_level_id:string){
+  createActivity(activity:Activity){
     let body = {
-      activity_description: activity_description,
-      activity_shape: activity_shape,
-      activity_title: activity_title,
-      activity_id_is_father: activity_id_is_father,
-      sop_id: sop_id,
-      activity_type_duration: activity_type_duration,
-      activity_duration: activity_duration,
-      activity_type: activity_type,
-      activity_type_output: activity_type_output,
-      managment_level_id: managment_level_id
+      activity_description: activity.activity_description,
+      activity_shape: activity.activity_shape,
+      activity_title: activity.activity_title,
+      activity_id_is_father: activity.activity_id_is_father,
+      sop_id: activity.sop_id,
+      activity_type_duration: activity.activity_type_duration,
+      activity_duration: activity.activity_duration,
+      activity_type: activity.activity_type,
+      activity_type_output: activity.activity_type_output,
+      managment_level_id: activity.managment_level_id
     };
     console.log(body);
     this.generateHeaders();
@@ -51,6 +51,25 @@ export class ActivityService {
   selectAllFromUnit(unit_id){
     this.generateHeaders();
     return this.http.get(this.domain + '/api/activity/all_from_unit/'+unit_id,this.httpOptions);
+  }
+
+  update(activity: Activity){
+    let body = {
+      activity_id: activity.activity_id,
+      activity_description: activity.activity_description,
+      activity_shape: activity.activity_shape,
+      activity_title: activity.activity_title,
+      activity_id_is_father: activity.activity_id_is_father,
+      sop_id: activity.sop_id,
+      activity_type_duration: activity.activity_type_duration,
+      activity_duration: activity.activity_duration,
+      activity_type: activity.activity_type,
+      activity_type_output: activity.activity_type_output,
+      managment_level_id: activity.managment_level_id
+    };
+    console.log(body);
+    this.generateHeaders();
+    return this.http.put(this.domain + '/api/activity/update',body,this.httpOptions);
   }
 
   delete(activity_id) {

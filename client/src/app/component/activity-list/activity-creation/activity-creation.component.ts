@@ -8,6 +8,7 @@ import { ManagmentLevelService} from "../../../objects/managment_level/managment
 import {Unit} from "../../../objects/unit/unit";
 import {UnitService} from "../../../objects/unit/unit.service";
 import {Sop} from "../../../objects/sop/sop";
+import {JobService} from "../../../objects/job/job.service";
 
 @Component({
   selector: 'app-activity-creation',
@@ -17,356 +18,312 @@ import {Sop} from "../../../objects/sop/sop";
 export class ActivityCreationComponent implements OnInit {
 
   /* ----- Data ----- */
-  step1: boolean;
-  step2: boolean;
+  step: number;
 
-  activityArray: Activity[];
-  subActivityArray: Activity[][];
-  managmentLevelsArray: ManagmentLevel[] = [];
   units: Unit[] = [];
-  unit_id_selected: string = "";
-
-  activitySelected: Activity;
-  isCheckboxChecked: boolean = false;
-  activity_index: number;
-
-  newActivityTitle: string = "";
-  newActivityDescription: string = "";
-  newActivityTypeDuration: string = "";
-  newActivityDuration: number;
-  newActivityType: string = "";
-  newActivityTypeOutput: string = "";
-  newActivityLevelId: string = "";
-
-  newSubActivityTitle: string = "";
-  newSubActivityDescription: string = "";
-  newSubActivityTypeDuration: string = "";
-  newSubActivityDuration: number;
-  newSubActivityType: string = "";
-  newSubActivityTypeOutput: string = "";
-  newSubActivityLevelId: string = "";
 
   errorMessage: string = "";
 
-  sopId: string = "";
+  sop_id: string = "";
+  activities = new Map();
+  management_levels: ManagmentLevel[];
+  activity_selected: Activity;
+  nb_new_a: number = 0; //The number of new activities
+  activity_sop;
+
+  ready = false;
+
+  new_activity: Activity = new Activity();
+  new_sub_activity: Activity;
+  new_unit_id;
+
+  isNewSop = false;
+  fieldsReady = true;
 
   constructor(private router: Router,
               private _sopService: SopService,
               private _activityService: ActivityService,
               private _managmentService: ManagmentLevelService,
-              private _unitService: UnitService) { }
+              private _unitService: UnitService,
+              private _jobService: JobService) { }
 
-  ngOnInit() {
-    this.sopId = this._sopService.getSopIdLocal();
-    this.step1 = true;
-    this.step2 = false;
-    this.activityArray = [];
-    this.subActivityArray = [[]];
-    this.loadActivity();
-    this.loadManagmentLevels();
-    this.loadUnitsFromSop();
+  async ngOnInit() {
+    this.sop_id = this._sopService.getSopIdLocal();
+    this.step = 1;
+    await this.loadData();
+    this.isNewSop = this.activities.size == 0;
+    await this.initializeActivity(false);
+    this.ready = true;
   }
 
-  onSubmit(isSubmitted) {
-    this.router.navigate(["/sop-list"]);
+  //Set the fields to the right value
+  initializeActivity(isChild:boolean){
+    if(!isChild){
+      this.new_activity.activity_type_duration = "days";
+      this.new_activity.managment_level_id = this.management_levels[0].managment_level_id.toString();
+      this.new_unit_id = this.units[0].unit_id;
+      this.new_activity.activity_id_is_father = null;
+    }else{
+      this.new_activity.activity_type_duration = this.activity_selected['activity'].activity_type_duration;
+      this.new_activity.managment_level_id = this.activity_selected['activity'].managment_level_id;
+      this.new_unit_id = this.activity_selected['unit'];
+      console.log('unit : ', this.activity_selected['unit'])
+      this.new_activity.activity_id_is_father = this.activity_selected['activity'].activity_id;
+    }
+    this.new_activity.activity_title = "";
+    this.new_activity.activity_type_output = "";
+    this.new_activity.activity_type = "";
+    this.new_activity.activity_shape = "";
+    this.new_activity.activity_duration = null;
+    this.new_activity.activity_description = "";
+    this.new_activity.sop_id = this.sop_id;
   }
 
-  loadUnitsFromSop() {
-    this._unitService.selectAllFromSop(this.sopId).subscribe((res) => {
-        this.errorMessage = "";
-        this.units = res['data'] as Unit[];
-      },
-      error => {
-        this.errorMessage = error.error.message;
-      });
-  }
+  async onSubmit() {
+    //We are going to add every element that have been changed
+    try {
+      //this.errorMessage = "";
+      this.ready = false;
+      console.log(this.activities);
+      for (let element of this.convertMap(this.activities)) {
+        if (element['state'] == 'new_activity') {
 
-  loadActivity() {
-    this.activityArray = [];
-    this.subActivityArray = [[]];
-    this._activityService.selectAllFromSop(this.sopId).subscribe((res) => {
-        this.errorMessage = "";
-        for (let element of res['data']) {
-          let activity = element as Activity;
-          if (activity.activity_id_is_father == null || activity.activity_id_is_father == ""){
-            this.activityArray.push(activity);
-            this.subActivityArray.push([]);
+          //We have the father activity, we create a job and like it to everybody
+          /* ACTIVITY CREATION */
+          let id = await this._activityService.createActivity(element['activity']).toPromise();
+          let job_id = await this._jobService.createJob(element['activity'].activity_title, id['data']['activity_id'], this.sop_id).toPromise();
+          await this._unitService.bindUnitActivity(element['unit'], id['data']['activity_id']).toPromise();
+          await this._jobService.bind_job_activity(job_id['data']['job_id'], id['data']['activity_id']).toPromise();
+
+          //We add every children
+          for (let sub_a of element['children']){
+            /* SUB ACTIVITY CREATION */
+            sub_a['activity'].activity_id_is_father = id['data']['activity_id'];
+            let ids = await this._activityService.createActivity(sub_a['activity']).toPromise();
+            await this._unitService.bindUnitActivity(sub_a['unit'], ids['data']['activity_id']).toPromise();
+            await this._jobService.bind_job_activity(job_id['data']['job_id'], ids['data']['activity_id']).toPromise();
+          }
+
+          //We generate the super activity linked
+          /* SUPER ACTIVITY CREATION */
+          this.generateSuperActivity(element, id['data']['activity_id']);
+          let id2 = await this._activityService.createActivity(element['activity']).toPromise();
+          await this._unitService.bindUnitActivity(element['unit'], id2['data']['activity_id']).toPromise();
+
+        }
+        else{
+          //We have old activity
+          if(element['action'] == 'delete'){
+            /* ACTIVITY DELETE */
+            element['state'] = 'new_activity';
+            this.deleteActivity(element);
+            await this._activityService.delete(element['super'].activity_id).toPromise();
+            await this._activityService.delete(element['activity'].activity_id).toPromise();
+          }
+          else{
+            //We check its children
+            let isChanged = false;
+            for (let sub_a of element['children']){
+              //We need to delete sub activity if it's changed
+              if (sub_a['action'] == 'delete' && element['action'] != 'delete'){
+                /* SUB ACTIVITY DELETE */
+                await this._activityService.delete(sub_a['activity'].activity_id).toPromise();
+                sub_a['state']='new_sub_activity';
+                this.deleteSubActivity(sub_a);
+                this.generateSuperActivity(element, -1);
+                await this._activityService.update(element['super']).toPromise();
+              }
+              else if (sub_a['state'] == 'new_sub_activity') {
+                /* SUB ACTIVITY CREATION */
+                console.log('New child : ', sub_a);
+                //We add every new sub_activities
+                isChanged = true;
+                let ids = await this._activityService.createActivity(sub_a['activity']).toPromise();
+                await this._unitService.bindUnitActivity(sub_a['unit'], ids['data']['activity_id']).toPromise();
+                console.log('added !');
+              }
+            }
+            if (isChanged){
+              /* SUPER ACTIVITY UPDATE */
+              //We generate the super activity linked
+              this.generateSuperActivity(element, -1);
+              await this._activityService.update(element['super']).toPromise();
+            }
           }
         }
-        console.log(this.activityArray);
-        for (let element of res['data']) {
-          let activity = element as Activity;
-          if (activity.activity_id_is_father != null || activity.activity_id_is_father != ""){
-            let i = 0;
-            while (i<this.activityArray.length && this.activityArray[i].activity_id != element.activity_id_is_father ) {
-              i++;
-            }
-            if(i<this.activityArray.length){
-              this.subActivityArray[i].push(activity);
-            }
+      }
+      await this.generateSopActivity();
+      this.router.navigate(["/sop-list"]);
+    }
+    catch (error) {
+      this.errorMessage = error.message;
+      this.ready = true;
+    }
+  }
+
+  //Load every data
+  async loadData(){
+    //We select all units from the database
+    try {
+      this.errorMessage = "";
+      let u = await this._unitService.selectAllFromSop(this.sop_id).toPromise();
+      this.units = u['data'];
+    }
+    catch (error) {
+      this.errorMessage = error.message;
+    }
+
+    //We select all management levels from the database
+    try {
+      this.errorMessage = "";
+      let m = await this._managmentService.selectAll().toPromise();
+      this.management_levels = m['data'];
+    }
+    catch (error) {
+      this.errorMessage = error.message;
+    }
+
+    //We select all activities from the sop
+    try {
+      this.errorMessage = "";
+      let activities = await this._activityService.selectAllFromSop(this.sop_id).toPromise();
+
+      //We sort the data
+      for (let activity of activities['data']){
+        console.log('activity : ', activity)
+        if (activity.activity_id_is_father == null || activity.activity_id_is_father == ""){
+          if (activity.activity_type != 'super_activity' && activity.activity_type != 'sop'){
+            let unit = await this._unitService.selectAllFromActivity(activity.activity_id).toPromise();
+            let e ={
+              activity: activity,
+              unit: unit['data'][0].unit_id,
+              state: "old_activity",
+              children: [],
+              action: "",
+              super: null
+            };
+            this.activities.set(activity.activity_id, e);
+          }
+          else if(activity.activity_type == 'sop'){
+            console.log('oui');
+            this.activity_sop = activity as Activity;
           }
         }
-      },
-      error => {
-        this.errorMessage = error.error.message;
-      });
+      }
+
+      for (let activity of activities['data']) {
+        if (activity.activity_id_is_father != null || activity.activity_id_is_father != ""){
+          if (activity.activity_type == 'super_activity'){
+            this.activities.get(activity.activity_id_is_father)['super']=activity;
+          }
+        }
+      }
+
+      for (let activity of activities['data']) {
+        if (activity.activity_id_is_father != null && activity.activity_id_is_father != "" && activity.activity_type != "super_activity") {
+          let unit = await this._unitService.selectAllFromActivity(activity.activity_id).toPromise();
+          let e ={
+            activity: activity,
+            unit: unit['data'][0],
+            state: "old_sub_activity",
+          };
+          this.activities.get(activity.activity_id_is_father)['children'].push(e);
+        }
+      }
+    }
+    catch (error) {
+      this.errorMessage = error.message;
+    }
+    console.log('element : ', this.activities);
   }
 
-  loadManagmentLevels() {
-    this._managmentService.selectAll().subscribe((res) => {
-        this.errorMessage = "";
-        this.managmentLevelsArray = res['data'] as ManagmentLevel[];
-      },
-      error => {
-        this.errorMessage = error.error.message;
-      });
+  //Convert map to array to use it in the view
+  convertMap(map){
+    return Array.from(map.values());
   }
 
-  changeStep(step1) {
-    this.step1 = step1;
-    this.step2 = !step1;
+  //Select the activity clicked and go to its children
+  selectActivity(activity){
+    this.activity_selected = activity;
+    this.initializeActivity(true);
+    this.step = 2;
+
   }
 
-  //Give the activity checked to the activitySelected attribut
-  checkActivity(activity) {
-    this.activitySelected = activity;
-    this.activity_index = this.activityArray.indexOf(activity);
+  //Change the view between activity and sub activities
+  changeStep(next){
+    if (next && this.step<2){
+      this.step++;
+      this.initializeActivity(true);
+    }
+    else if (!next && this.step>1){
+      this.step--;
+      this.initializeActivity(false);
+    }
   }
 
-  checkboxActive(activity) {
-    if (this.activitySelected != null){
-      return this.activitySelected.activity_id==activity.activity_id
+  addActivity(){
+    //We set a fictive id and store the element;
+    this.new_activity.activity_id = 'n'+this.nb_new_a;
+    this.nb_new_a++;
+
+    //We copie the element to make it unique
+    let activity = JSON.parse(JSON.stringify(this.new_activity)) as Activity;
+    let unit = JSON.parse(JSON.stringify(this.new_unit_id));
+
+    //We store it as others
+    let e = {
+      activity: activity,
+      unit: unit,
+      state: "new_activity",
+      children: [],
+      action: ""
+    };
+    this.activities.set(activity.activity_id, e);
+    this.initializeActivity(false);
+  }
+
+  addSubActivity(){
+    //We set a fictive id and store the element;
+    this.new_activity.activity_id = 'n'+this.nb_new_a;
+    this.nb_new_a++;
+
+    //We copie the element to make it unique
+    let activity = JSON.parse(JSON.stringify(this.new_activity)) as Activity;
+    let unit = JSON.parse(JSON.stringify(this.new_unit_id));
+
+    //We store it as others
+    let e = {
+      activity: activity,
+      unit: unit,
+      state: "new_sub_activity",
+      action: ""
+    };
+    this.activities.get(this.activity_selected['activity'].activity_id)['children'].push(e);
+    this.initializeActivity(true);
+  }
+
+  deleteActivity(activity) {
+    if (activity['state'] == 'new_activity'){
+      this.activities.delete(activity['activity'].activity_id);
     }
     else {
-      return false;
+      activity['action']='delete'
     }
-
+    console.log(this.activities);
   }
 
-  isCheckboxActive(){
-    let elements = document.querySelectorAll(".form-check-input");
-    let isChecked: boolean = false;
-
-    for (let i = 0; i<elements.length; i++){
-      if (elements[i]['checked']) {
-        isChecked = true;
-      }
+  deleteSubActivity(activity){
+    if (activity['state'] == 'new_sub_activity'){
+      let i = this.activity_selected['children'].indexOf(activity);
+      this.activity_selected['children'].splice(i, 1)
     }
-    this.isCheckboxChecked = isChecked;
-  }
-
-  addNewActivity() {
-    let newActivity: Activity;
-
-    //We check if all fields are filled
-    let verificationTrue = this.fieldsVerification();
-
-    if (verificationTrue) {
-      //We create the activity that may will be added
-      newActivity = new Activity();
-      newActivity.sop_id = this.sopId;
-      newActivity.activity_title = this.newActivityTitle;
-      newActivity.activity_description = this.newActivityDescription;
-      newActivity.activity_type_duration = this.newActivityTypeDuration;
-      newActivity.activity_duration = this.newActivityDuration;
-      newActivity.activity_type_output = this.newActivityTypeOutput;
-      newActivity.activity_id_is_father = null;
-      newActivity.activity_shape = 'shape of you';
-      newActivity.activity_type = null;
-      newActivity.managment_level_id = this.newActivityLevelId;
-
-      //We check for all activity added, if the new one already exist
-      let activityExist: boolean = false;
-      for (let a of this.activityArray) {
-        activityExist = (a.activity_title == newActivity.activity_title &&
-          a.activity_description == newActivity.activity_description &&
-          a.activity_type_duration == newActivity.activity_type_duration &&
-          a.activity_duration == newActivity.activity_duration &&
-          a.activity_type_output == newActivity.activity_type_output &&
-          a.managment_level_id == newActivity.managment_level_id);
-      }
-
-      if (activityExist) {
-        this.errorMessage = "This activity already exists.";
-      }
-      else {
-        this.errorMessage = "";
-        console.log("the id : "+newActivity.managment_level_id)
-        //Database insert
-        this._activityService.createActivity(newActivity.activity_title, newActivity.activity_description, newActivity.activity_type_duration, newActivity.activity_duration, newActivity.activity_type,
-          newActivity.activity_type_output, newActivity.activity_shape, newActivity.activity_id_is_father, newActivity.sop_id, newActivity.managment_level_id).subscribe((res) => {
-            this.errorMessage = "";
-
-            //We get the id of the new activity
-            newActivity.activity_id = res['data'];
-            newActivity.activity_id = newActivity.activity_id['activity_id'];
-
-            //We link the unit and the activity
-            this._unitService.bindUnitActivity(this.unit_id_selected, newActivity.activity_id)
-              .subscribe( (res) => {
-                this.errorMessage = "";
-              },
-              error => {
-                this.errorMessage = error;
-              });
-
-            //View insert
-            this.activityArray.push(newActivity);
-            this.subActivityArray.push([]);
-
-            //Set the fields blank
-            this.newActivityTitle = "";
-            this.newActivityDescription = "";
-            this.newActivityTypeDuration = "";
-            this.newActivityDuration = null;
-            this.newActivityType = "";
-            this.newActivityTypeOutput = "";
-            this.newActivityLevelId = "";
-          },
-          error => {
-            this.errorMessage = error.error.message;
-          });
-      }
+    else {
+      activity['action']='delete'
     }
   }
 
-  addNewSubActivity() {
-    let newSubActivity: Activity;
-    //We check if all fields are filled
-    let verificationTrue = this.subFieldsVerification();
-
-    if (verificationTrue) {
-      //We create the activity that may will be added
-      newSubActivity = new Activity();
-      newSubActivity.activity_id_is_father = this.activitySelected.activity_id;
-      newSubActivity.sop_id = this.sopId;
-      newSubActivity.activity_title = this.newSubActivityTitle;
-      newSubActivity.activity_description = this.newSubActivityDescription;
-      newSubActivity.activity_type_duration = this.newSubActivityTypeDuration;
-      newSubActivity.activity_duration = this.newSubActivityDuration;
-      newSubActivity.activity_type_output = this.newSubActivityTypeOutput;
-      newSubActivity.activity_shape = 'body';
-      newSubActivity.activity_type = null;
-      newSubActivity.managment_level_id = this. newSubActivityLevelId;
-
-      //We check for all activity added, if the new one already exist
-      let activityExist: boolean = false;
-      console.log("The Index is : ", this.activity_index);
-      console.log("The sub array index give : ", this.subActivityArray);
-      for (let a of this.subActivityArray[this.activity_index]) {
-        activityExist = (a.activity_title == newSubActivity.activity_title &&
-          a.activity_description == newSubActivity.activity_description &&
-          a.activity_type_duration == newSubActivity.activity_type_duration &&
-          a.activity_duration == newSubActivity.activity_duration &&
-          a.activity_type_output == newSubActivity.activity_type_output &&
-          a.managment_level_id == newSubActivity.managment_level_id);
-      }
-
-      if (activityExist) {
-        this.errorMessage = "This activity already exists.";
-      }
-      else {
-        this.errorMessage = "";
-
-        //Database insert
-        this._activityService.createActivity(newSubActivity.activity_title, newSubActivity.activity_description, newSubActivity.activity_type_duration, newSubActivity.activity_duration, newSubActivity.activity_type,
-          newSubActivity.activity_type_output, newSubActivity.activity_shape, newSubActivity.activity_id_is_father, newSubActivity.sop_id, newSubActivity.managment_level_id).subscribe((res) => {
-            this.errorMessage = "";
-
-            //We get the id of the new activity
-            newSubActivity.activity_id = res['data'];
-            newSubActivity.activity_id = newSubActivity.activity_id['activity_id'];
-
-            //We link the unit and the activity
-            this._unitService.bindUnitActivity(this.unit_id_selected, newSubActivity.activity_id)
-              .subscribe( (res) => {
-                  this.errorMessage = "";
-                },
-                error => {
-                  this.errorMessage = error;
-                });
-
-            //View insert
-            this.subActivityArray[this.activity_index].push(newSubActivity);
-
-            //Set the fields blank
-            this.newSubActivityTitle = "";
-            this.newSubActivityDescription = "";
-            this.newSubActivityTypeDuration = "";
-            this.newSubActivityDuration = null;
-            this.newSubActivityType = "";
-            this.newSubActivityTypeOutput = "";
-            this.newSubActivityLevelId = "";
-          },
-          error => {
-            this.errorMessage = error.error.message;
-          });
-
-
-      }
-    }
-  }
-
-  fieldsVerification() {
-    this.errorMessage = "";
-    if (this.newActivityTitle == "") {
-      console.log("Title");
-      this.errorMessage = "Title is required.";
-    }
-    else if (this.newActivityDescription == "") {
-      console.log("Description");
-      this.errorMessage = "Description is required.";
-    }
-    else if (this.newActivityTypeDuration == "") {
-      console.log("Type duration");
-      this.errorMessage = "Type duration is required.";
-    }
-    else if (this.newActivityDuration == 0) {
-      console.log("Duration");
-      this.errorMessage = "Duration time is required.";
-    }
-    else if (this.newActivityTypeOutput == "") {
-      console.log("Output");
-      this.errorMessage = "Output type is required.";
-    }
-    return this.errorMessage == "";
-  }
-
-  subFieldsVerification() {
-    this.errorMessage = "";
-    if (this.newSubActivityTitle == "") {
-      console.log("Title");
-      this.errorMessage = "Title is required.";
-    }
-    else if (this.newSubActivityDescription == "") {
-      console.log("Description");
-      this.errorMessage = "Description is required.";
-    }
-    else if (this.newSubActivityTypeDuration == "") {
-      console.log("Type duration");
-      this.errorMessage = "Type duration is required.";
-    }
-    else if (this.newSubActivityDuration == 0) {
-      console.log("Duration");
-      this.errorMessage = "Duration time is required.";
-    }
-    else if (this.newSubActivityTypeOutput == "") {
-      console.log("Output");
-      this.errorMessage = "Output type is required.";
-    }
-    return this.errorMessage == "";
-  }
-
-  deleteActivity(activity_id){
-    this._activityService.delete(activity_id).subscribe((res) => {
-        this.errorMessage = "";
-        this.loadActivity();
-      },
-      error => {
-        this.errorMessage = error.error.message;
-      });
-  }
-
+  //Sort tables
   sortTable(n) {
     var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
     table = document.getElementById("activiy-table");
@@ -419,6 +376,233 @@ export class ActivityCreationComponent implements OnInit {
           switching = true;
         }
       }
+    }
+  }
+
+  sortTable1(n) {
+    var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+    table = document.getElementById("sub_activity-table");
+    switching = true;
+    // Set the sorting direction to ascending:
+    dir = "asc";
+    /* Make a loop that will continue until
+    no switching has been done: */
+    while (switching) {
+      // Start by saying: no switching is done:
+      switching = false;
+      rows = table.getElementsByTagName("TR");
+      /* Loop through all table rows (except the
+      first, which contains table headers): */
+      for (i = 1; i < (rows.length - 1); i++) {
+        // Start by saying there should be no switching:
+        shouldSwitch = false;
+        /* Get the two elements you want to compare,
+        one from current row and one from the next: */
+        x = rows[i].getElementsByTagName("TD")[n];
+        y = rows[i + 1].getElementsByTagName("TD")[n];
+        /* Check if the two rows should switch place,
+        based on the direction, asc or desc: */
+        if (dir == "asc") {
+          if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+            // If so, mark as a switch and break the loop:
+            shouldSwitch = true;
+            break;
+          }
+        } else if (dir == "desc") {
+          if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+            // If so, mark as a switch and break the loop:
+            shouldSwitch = true;
+            break;
+          }
+        }
+      }
+      if (shouldSwitch) {
+        /* If a switch has been marked, make the switch
+        and mark that a switch has been done: */
+        rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+        switching = true;
+        // Each time a switch is done, increase this count by 1:
+        switchcount ++;
+      } else {
+        /* If no switching has been done AND the direction is "asc",
+        set the direction to "desc" and run the while loop again. */
+        if (switchcount == 0 && dir == "asc") {
+          dir = "desc";
+          switching = true;
+        }
+      }
+    }
+  }
+
+  generateSuperActivity(element, id){
+    if (id != -1){
+      element['activity'].activity_type = "super_activity";
+      element['activity'].activity_id_is_father = id;
+    }
+
+    console.log('element : ', element)
+
+    for (let sub_a of element['children']){
+      if (id == -1) {
+        element['super'].activity_duration += sub_a['activity'].activity_duration;
+      }
+      else{
+        element['activity'].activity_duration += sub_a['activity'].activity_duration;
+      }
+    }
+  }
+
+  async generateSopActivity(){
+
+    let activity;
+    if (this.isNewSop){
+      //We get the SOP
+      activity = new Activity();
+      let s = await this._sopService.getSop(this.sop_id).toPromise();
+      let sop = s['data'] as Sop;
+
+      //Automatic
+      activity.activity_type = "sop";
+      activity.sop_id = this.sop_id;
+      activity.activity_id_is_father = null;
+
+      //Can be choosen
+      activity.activity_title = sop.sop_title;
+      activity.activity_description = sop.sop_objectives;
+
+      //Calculated
+      activity.activity_duration = null;
+
+      //Need to be choosen
+      activity.activity_type_output = "";
+      activity.activity_shape = "";
+      activity.managment_level_id = this.management_levels[0].managment_level_id.toString();
+    }else{
+      console.log(this.activity_sop);
+      activity = this.activity_sop;
+    }
+
+
+    let type_duration_array = [0, 0, 0, 0];
+
+    //We get the sort duration inside an array
+    for (let element of this.convertMap(this.activities)) {
+      let i;
+      if(element['activity'].activity_type_duration == 'months'){
+        i=3;
+      }
+      else if(element['activity'].activity_type_duration == 'days'){
+        i=2;
+      }
+      else if(element['activity'].activity_type_duration == 'hours'){
+        i=1;
+      }
+      if(element['activity'].activity_type_duration == 'minutes'){
+        i=0;
+      }
+      console.log('i = ', i);
+      type_duration_array[i] += element['activity'].activity_duration;
+
+      for (let sub_a of element['children']){
+        if(sub_a['activity'].activity_type_duration == 'months'){
+          i=3;
+        }
+        else if(sub_a['activity'].activity_type_duration == 'days'){
+          i=2;
+        }
+        else if(sub_a['activity'].activity_type_duration == 'hours'){
+          i=1;
+        }
+        if(sub_a['activity'].activity_type_duration == 'minutes'){
+          i=0;
+        }
+        type_duration_array[i] += sub_a['activity'].activity_duration;
+      }
+
+    }
+
+    console.log('The array : ', type_duration_array)
+    if(type_duration_array[3]>0 || type_duration_array[2]>30){
+      activity.activity_type_duration = 'months';
+
+      activity.activity_duration = type_duration_array[3]+1;
+      let more = Math.ceil(type_duration_array[2]/30);
+      activity.activity_duration += more;
+    }
+    else if(((type_duration_array[2]>0 && type_duration_array[2]<30) || type_duration_array[1]>24) && type_duration_array[3]==0){
+      activity.activity_type_duration = 'days';
+
+      activity.activity_duration = type_duration_array[2]+1;
+      let more = Math.ceil(type_duration_array[1]/24);
+      activity.activity_duration += more;
+    }
+    else if(((type_duration_array[1]>0 && type_duration_array[1]<24) || type_duration_array[0]>60) && type_duration_array[2]==0 && type_duration_array[3]==0){
+      activity.activity_type_duration = 'hours';
+
+      activity.activity_duration = type_duration_array[1]+1;
+      let more = Math.ceil(type_duration_array[0]/1440);
+      activity.activity_duration += more;
+    }
+    else if(type_duration_array[0]<1440){
+      activity.activity_type_duration = 'minutes';
+
+      activity.activity_duration = type_duration_array[0];
+    }
+    else{
+      activity.activity_type_duration = 'hours';
+
+      let more = Math.ceil(type_duration_array[0]/1440);
+      activity.activity_duration = more+1;
+    }
+
+    //now we create the activity
+    if(this.isNewSop){
+      try {
+        let unit_id= this.units[0].unit_id;
+        let id = await this._activityService.createActivity(activity).toPromise();
+        let job_id = await this._jobService.createJob(activity.activity_title,id['data']['activity_id'], this.sop_id).toPromise();
+        await this._unitService.bindUnitActivity(unit_id, id['data']['activity_id']).toPromise();
+        await this._jobService.bind_job_activity(job_id['data']['job_id'], id['data']['activity_id']).toPromise();
+      }
+      catch (error){
+        this.errorMessage = error.message;
+      }
+    }
+    else{
+      try {
+        await this._activityService.update(activity).toPromise();
+      }
+      catch (error){
+        this.errorMessage = error.message;
+      }
+    }
+
+
+  }
+
+  verification(){
+    if (this.new_activity.activity_title == ""){
+      this.fieldsReady = false;
+      //this.errorMessage = 'Title is required.'
+    }
+    else if (this.new_activity.activity_description == ""){
+      this.fieldsReady = false;
+      //this.errorMessage = 'Description is required.'
+    }
+    else if (this.new_activity.activity_type_duration == ""){
+      this.fieldsReady = false;
+      //this.errorMessage = 'Type duration is required.'
+    }
+    else if (this.new_activity.activity_duration == null){
+      this.fieldsReady = false;
+      //this.errorMessage = 'Duration is required.'
+    }
+    else if (this.new_activity.activity_type_output == ""){
+      this.fieldsReady = false;
+      //this.errorMessage = 'Type output is required.'
+    }
+    else{
+      this.fieldsReady = true;
     }
   }
 }

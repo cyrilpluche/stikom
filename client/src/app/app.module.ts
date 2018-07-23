@@ -61,6 +61,7 @@ const routes: Routes = [
   {path: 'project-list', component: ProjectListComponent, canActivate: [AuthGuard]},
   {path: 'sop-creation', component: SopCreationComponent, canActivate: [AuthGuard]},
   {path: 'sop-list', component: SopListComponent, canActivate: [AuthGuard]},
+  {path: 'sop', component: SopComponent, canActivate: [AuthGuard]},
   {path: 'activity-creation', component: ActivityCreationComponent, canActivate: [AuthGuard]},
   {path: 'project-creation', component: ProjectCreationComponent, canActivate: [AuthGuard]},
   {path: 'admin-users', component: AdminUsersComponent , canActivate: [AuthGuard]},

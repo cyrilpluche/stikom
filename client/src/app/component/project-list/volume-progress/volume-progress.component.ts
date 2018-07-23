@@ -9,6 +9,8 @@ import {Project} from "../../../objects/project/project";
 import {ProjectService} from "../../../objects/project/project.service";
 import * as moment from 'moment';
 import {first} from "rxjs/internal/operators";
+import {JobService} from "../../../objects/job/job.service";
+import {Job} from "../../../objects/job/job";
 
 @Component({
   selector: 'app-volume-progress',
@@ -22,7 +24,7 @@ export class VolumeProgressComponent implements OnInit {
   project: Project;
   m_a_p: MemberActivityProject[] = [];
   workers: Member[] = [];
-  activities: Activity[] = [];
+  activities: Object[] = [];
   elements: Object[] = [];
   sorted_workers = [];
   targets = new Map();
@@ -40,7 +42,8 @@ export class VolumeProgressComponent implements OnInit {
   constructor(private _memberActivityProjectService: MemberActivityProjectService,
               private _memberService: MemberService,
               private _activityService: ActivityService,
-              private _projectService: ProjectService) { }
+              private _projectService: ProjectService,
+              private _jobService: JobService) { }
 
   async ngOnInit() {
     await this.loadData();
@@ -87,8 +90,13 @@ export class VolumeProgressComponent implements OnInit {
       for (let m of this.m_a_p) {
         let worker = await this._memberService.select(m.member_id).toPromise();
         let activity = await this._activityService.select(m.activity_id).toPromise();
+        let job = await this._jobService.select(m.job_id).toPromise();
         this.workers.push(worker['data'] as Member);
-        this.activities.push(activity['data'] as Activity);
+        let e = {
+          activity: activity['data'],
+          job: job['data']
+        };
+        this.activities.push(e);
       }
     }
     catch (error) {
@@ -123,9 +131,11 @@ export class VolumeProgressComponent implements OnInit {
         if (s.member_id == m.member_id){
           try{
             let a = await this._activityService.select(m.activity_id).toPromise();
+            let j = await this._jobService.select(m.job_id).toPromise();
             let e = {
               m_a_p: m,
-              activity: a['data'] as Activity
+              activity: a['data'] as Activity,
+              job: j['data'] as Job
             };
             sorted_map.push(e);
             total_target += m.target_quantity;

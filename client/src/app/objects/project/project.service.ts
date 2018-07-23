@@ -48,10 +48,11 @@ export class ProjectService {
     return this.http.post(this.domain + '/api/project/bind_project_job',body,this.httpOptions);
   }
 
-  bindMemberUnitProject(project_id:string, unit_id:string, member_id:string) {
+  bindMemberUnitProject(project_id:string, unit_id:string, member_id:string, job_id:string) {
     let body = {
       project_id: project_id,
       unit_id: unit_id,
+      job_id: job_id,
       member_id: member_id
     };
     this.generateHeaders();
@@ -74,6 +75,7 @@ export class ProjectService {
       finished_quantity: m_a_p.finished_quantity,
       finished_duration: m_a_p.finished_duration
     };
+    console.log('body : ', body);
     this.generateHeaders();
     return this.http.post(this.domain + '/api/project/bind_member_activity_project',body,this.httpOptions);
   }

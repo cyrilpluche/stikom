@@ -1,3 +1,116 @@
-<p>
-  sop works!
-</p>
+<div class="container">
+  <div class="row row-first">
+    <div class="text-center mt-4">
+      <a class="btn btn-default" href="sop-list" >Back</a>
+    </div>
+    <div class="col-12 card card-cascade hoverable" style="margin-top: 20px;">
+      <!--Table-->
+      <div class="card-body card-body-cascade">
+        {{sop_title}}
+      </div>
+    </div>
+  </div>
+  <div class="row" style="margin-top: 25px;">
+    <div class="col-sm-12 col-lg-3">
+      <p class="font-weight-bold">SOP number</p>
+    </div>
+    <div class="col-sm-12 col-lg-9 ">
+      <p class="float-lg-left float-sm-right">{{sop_id}}</p>
+    </div>
+  </div>
+  <div class="row" style="margin-top: 10px;">
+    <div class="col-sm-12 col-lg-3">
+      <p class="font-weight-bold">Creation date</p>
+    </div>
+    <div class="col-sm-12 col-lg-9 ">
+      <p class="float-lg-left float-sm-right">{{ sop_creation | date:'medium' }}</p>
+    </div>
+  </div>
+  <div class="row" style="margin-top: 10px;">
+    <div class="col-sm-12 col-lg-3">
+      <p class="font-weight-bold">Revision date</p>
+    </div>
+    <div class="col-sm-12 col-lg-9 ">
+      <p class="float-lg-left float-sm-right">{{ sop_revision | date:'medium' }}</p>
+    </div>
+  </div>
+  <div class="row" style="margin-top: 10px;">
+    <div class="col-sm-12 col-lg-3">
+      <p class="font-weight-bold">Published date</p>
+    </div>
+    <div class="col-sm-12 col-lg-9 ">
+      <p class="float-lg-left float-sm-right">{{ sop_published | date:'medium' }}</p>
+    </div>
+  </div>
+  <div class="row" style="margin-top: 10px;">
+    <div class="col-sm-12 col-lg-3">
+      <p class="font-weight-bold">Approved by</p>
+    </div>
+    <div class="col-sm-12 col-lg-9 ">
+      <p class="float-lg-left float-sm-right">{{ sop_approvment }}</p>
+    </div>
+  </div>
+  <div class="row" style="margin-top: 10px;">
+    <div class="col-sm-12 col-lg-3">
+      <p class="font-weight-bold">Base Rule / Regulation</p>
+    </div>
+    <div class="col-sm-12 col-lg-9 ">
+      <p class="float-lg-left float-sm-right">{{ sop_rules }}</p>
+    </div>
+  </div>
+  <div class="row" style="margin-top: 10px;">
+    <div class="col-sm-12 col-lg-3">
+      <p class="font-weight-bold">Staff qualifications</p>
+    </div>
+    <div class="col-sm-12 col-lg-9 ">
+      <p class="float-lg-left float-sm-right">{{ sop_staff_qualification }}</p>
+    </div>
+  </div>
+  <div class="row" style="margin-top: 10px;">
+    <div class="col-sm-12 col-lg-3">
+      <p class="font-weight-bold">Supporting tools</p>
+    </div>
+    <div class="col-sm-12 col-lg-9 ">
+      <p class="float-lg-left float-sm-right">{{ sop_tools }}</p>
+    </div>
+  </div>
+  <div class="row" style="margin-top: 10px;">
+    <div class="col-sm-12 col-lg-3">
+      <p class="font-weight-bold">Warning</p>
+    </div>
+    <div class="col-sm-12 col-lg-9 ">
+      <p class="float-lg-left float-sm-right">{{ sop_warning }}</p>
+    </div>
+  </div>
+  <div class="row" style="margin-top: 10px;">
+    <div class="col-sm-12 col-lg-3">
+      <p class="font-weight-bold">Types of forms and reports</p>
+    </div>
+    <div class="col-sm-12 col-lg-9 ">
+      <p class="float-lg-left float-sm-right">{{ sop_type_reports }}</p>
+    </div>
+  </div>
+  <div class="row" style="margin-top: 10px;">
+    <div class="col-sm-12 col-lg-3">
+      <p class="font-weight-bold">Objective by</p>
+    </div>
+    <div class="col-sm-12 col-lg-9 ">
+      <p class="float-lg-left float-sm-right">{{ sop_objectives }}</p>
+    </div>
+  </div>
+  <div class="row" style="margin-top: 10px;">
+    <div class="col-sm-12 col-lg-3">
+      <p class="font-weight-bold">Related units</p>
+    </div>
+    <div class="col-sm-12 col-lg-9 ">
+      <ul class="list-group">
+        <li class="list-group-item" *ngFor="let unit of units">{{unit['unit_name']}}</li>
+      </ul>
+    </div>
+  </div>
+
+
+
+
+
+</div>
