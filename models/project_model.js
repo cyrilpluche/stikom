@@ -32,10 +32,10 @@ let project = {
         })
     },
 
-    insertMemberUnitProject (unit_id, project_id, member_id) {
-        return db.any('INSERT INTO public.member_unit_project(unit_id, project_id, member_id)\n' +
-            'VALUES (${unit}, ${project}, ${member}) returning unit_id, project_id, member_id;',
-            {unit: unit_id, project: project_id, member: member_id}) .then(function (data) {
+    insertMemberUnitProject (unit_id, project_id, member_id, job_id) {
+        return db.any('INSERT INTO public.member_unit_project(unit_id, project_id, member_id, job_id)\n' +
+            'VALUES (${unit}, ${project}, ${member}, ${job}) returning unit_id, project_id, member_id;',
+            {unit: unit_id, project: project_id, member: member_id, job: job_id}) .then(function (data) {
             if (data.length === 0) {
                 return false
             } else {
@@ -106,7 +106,8 @@ let project = {
     },
 
     selectAllIdMemberActivityProjectByProject_id (project_id) {
-        return db.any('SELECT DISTINCT activity_id FROM public.member_activity_project WHERE project_id = $1', project_id)
+        return db.any('SELECT DISTINCT activity_id, job_id FROM public.member_activity_project WHERE project_id = $1',
+            project_id)
             .then(function (data) {
                 if (data.length === 0) {
                     return false

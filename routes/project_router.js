@@ -87,12 +87,13 @@ router.post('/create',
 );
 
 router.post('/bind_member_unit_project',
-    policy.checkParameters(['unit_id', 'project_id', 'member_id']),
+    policy.checkParameters(['unit_id', 'project_id', 'member_id', 'job_id']),
     function (req, res, next) {
         let unit_id = req.body.unit_id
         let project_id = req.body.project_id
         let member_id = req.body.member_id
-        modelProject.insertMemberUnitProject(unit_id, project_id, member_id)
+        let job_id = req.body.job_id
+        modelProject.insertMemberUnitProject(unit_id, project_id, member_id, job_id)
             .then(function (data) {
                 if (!data) {
                     throw ERRORTYPE.INTERNAL_ERROR

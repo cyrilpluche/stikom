@@ -9,6 +9,7 @@ import {Member} from "../../../objects/member/member";
 import {MemberService} from "../../../objects/member/member.service";
 import {Router} from "@angular/router";
 import {DatePipe} from "@angular/common";
+import {JobService} from "../../../objects/job/job.service";
 
 
 
@@ -26,9 +27,9 @@ export class GanttCreationComponent implements OnInit {
 
   /* NEW */
   project: Project;
-  activities_id_distinct: MemberActivityProject[];
+  activities_jobs_id_distinct: MemberActivityProject[];
   m_a_ps: MemberActivityProject[];
-  activities: Activity[];
+  activitiesJobs: Object[];
   m_a_ps_members: Object[];
   elements: Object[];
   element_selected;
@@ -37,6 +38,7 @@ export class GanttCreationComponent implements OnInit {
               private _activityService: ActivityService,
               private _projectService: ProjectService,
               private _memberService: MemberService,
+              private _jobService: JobService,
               private router: Router) { }
 
   async ngOnInit() {
@@ -76,9 +78,9 @@ export class GanttCreationComponent implements OnInit {
 
     //We select all id activities DISTINCT
     try {
-      this.activities_id_distinct = [];
+      this.activities_jobs_id_distinct = [];
       let maps = await this._memberActivityProjectService.selectAllFromProjectDistinct(this.project.project_id).toPromise();
-      this.activities_id_distinct = maps['data'] as MemberActivityProject[];
+      this.activities_jobs_id_distinct = maps['data'] as MemberActivityProject[];
     }
     catch (error) {
       this.errorMessage = error.error.message;
@@ -86,10 +88,15 @@ export class GanttCreationComponent implements OnInit {
 
     //Now that we have all id activity distinct of the project, we select information of each activity
     try {
-      this.activities = [];
-      for (let a of this.activities_id_distinct) {
+      this.activitiesJobs = [];
+      for (let a of this.activities_jobs_id_distinct) {
         let activity = await this._activityService.select(a.activity_id).toPromise();
-        this.activities.push(activity['data'] as Activity);
+        let job = await this._jobService.select(a.job_id).toPromise();
+        let e = {
+          activity: activity['data'],
+          job: job['data']
+        };
+        this.activitiesJobs.push(e);
       }
     }
     catch (error) {
@@ -124,15 +131,16 @@ export class GanttCreationComponent implements OnInit {
 
     //Now we insert all inside the element array to use it in the view
     this.elements = [];
-    for (let a of this.activities){
+    for (let a of this.activitiesJobs){
       let element = {
-        activity: a
+        activity: a['activity'],
+        job: a['job']
       };
 
       //We group all map linked to this activity
       let mm_linked = [];
       for (let m of this.m_a_ps_members){
-        if (a.activity_id == m['m_a_p'].activity_id){
+        if (a['activity'].activity_id == m['m_a_p'].activity_id && a['job'].job_id == m['m_a_p'].job_id){
           mm_linked.push(m);
         }
       }

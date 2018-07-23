@@ -36,6 +36,7 @@ export class UnitService {
       unit_id: unit_id,
       activity_id: activity_id
     };
+    console.log('bind : ', body);
     this.generateHeaders();
     return this.http.post(this.domain + '/api/unit/execute_activity',body,this.httpOptions);
   }

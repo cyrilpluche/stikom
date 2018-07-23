@@ -193,13 +193,7 @@
   <!-- Member Unit Binding Display -->
   <div class="row row-last justify-content-center" [hidden]="stepSelected != 3">
 
-    <!-- Card -->
-    <div class="col card card-cascade hoverable">
-
-      <!-- Card content -->
-      <div class="card-body card-body-cascade">
-
-        <table class="table table-borderless table-hover table-fixed" id="member-table">
+        <table class="col table table-borderless table-hover table-fixed" id="member-table">
 
           <!--Table head-->
           <thead class="">
@@ -215,16 +209,12 @@
             <td>{{member.member_name}}</td>
             <td>{{member.member_first_name}}</td>
             <td>
-              <a (click)="removeMember(member)"><i class="fa fa-close text-red"></i></a>
+              <a (click)="removeMember(member); isFormReady()"><i class="fa fa-close text-red"></i></a>
             </td>
           </tr>
 
           </tbody>
         </table>
-      </div>
-      <!-- Card content -->
-    </div>
-    <!-- Card -->
 
   </div>
   <!-- Activity Display -->
