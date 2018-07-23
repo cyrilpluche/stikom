@@ -200,7 +200,29 @@ router.put('/update_member_activity_project',
                 res.json({data: data})
             }
         }).catch(next)
-});
+}
+);
+
+router.put('/update',
+    function (req, res, next) {
+        let project = {
+            project_id: req.body.project_id,
+            project_title: req.body.project_title,
+            project_code: req.body.project_code,
+            project_work_code: req.body.project_work_code,
+            sub_department_id: req.body.sub_department_id,
+            project_start: new Date(req.body.project_start),
+            project_end: new Date(req.body.project_end)
+        }
+        modelProject.update(project).then(function (data) {
+            if (!data) {
+                throw ERRORTYPE.INTERNAL_ERROR
+            } else {
+                res.json({data: data})
+            }
+        }).catch(next)
+    }
+);
 
 /*
 ========================================== ROUTER DELETE =========================================

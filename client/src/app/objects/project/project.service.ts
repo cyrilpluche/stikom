@@ -114,4 +114,18 @@ export class ProjectService {
     this.generateHeaders();
     return this.http.get(this.domain + '/api/activity/all_from_all_job_from_project/'+project_id,this.httpOptions);
   }
+
+  updateProject(project:Project) {
+    let body = {
+      project_id: project.project_id,
+      project_title: project.project_title,
+      project_code: project.project_code,
+      project_work_code: project.project_work_code,
+      project_start: project.project_start,
+      project_end: project.project_end,
+      sub_department_id: project.sub_department_id
+    };
+    this.generateHeaders();
+    return this.http.put(this.domain + '/api/project/update',body,this.httpOptions);
+  }
 }
