@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {MemberService} from "../../objects/member/member.service";
 import {Member} from "../../objects/member/member";
+import {Role} from "../../objects/role/role";
+import {RoleService} from '../../objects/role/role.service';
 
 @Component({
   selector: 'app-admin-users',
@@ -14,11 +16,24 @@ export class AdminUsersComponent implements OnInit {
   title:string;
   text:string;
 
-  constructor(private _memberService: MemberService) { }
+  roles:Role[]=[];
+
+  mdlSampleIsOpen:boolean=false;
+
+  user:string = "error";
+  user_id:string;
+  user_admin:number;
+  user_roles:Role[]=[];
+
+  roleChossen:string = "";
+
+  constructor(private _memberService: MemberService,
+              private _roleService: RoleService) { }
 
   ngOnInit() {
 
    this.getAllUsers();
+   this.getAllRoles();
   }
 
   async getAllUsers(){
@@ -33,6 +48,20 @@ export class AdminUsersComponent implements OnInit {
 
         });
   }
+
+  async getAllRoles(){
+    await this._roleService.selectAll()
+      .subscribe( (res) => {
+          console.log(res['data']);
+          this.roles=res['data'];
+
+        },
+        error => {
+          console.log("ERREUR : ",error);
+
+        });
+  }
+
   async validateUser(idUser:string)
   {
 
@@ -57,6 +86,48 @@ export class AdminUsersComponent implements OnInit {
     this.title="";
     this.text=""
     this.actionFinished=false;
+  }
+
+
+
+  async manageRoles(user_id,user_admin)
+  {
+    this.user_id=user_id;
+
+    await this._memberService.getAllRoles(user_id)
+    .subscribe( (res) => {
+       console.log(res['data']);
+       this.user_roles=res['data']['member_role'];
+       this.user_admin=res['data']['member_admin'];
+       this.mdlSampleIsOpen=true;
+      },
+      error => {
+      console.log(error.message);
+      });
+
+
+  }
+
+
+  async grantUser()
+  {
+
+    await this._memberService.grantMember(this.user_id, this.roleChossen)
+      .subscribe( (res) => {
+          console.log(res['data']);
+          this.mdlSampleIsOpen=false;
+          this.mdlSampleIsOpen=true;
+        },
+        error => {
+          console.log(error.message);
+        });
+
+
+  }
+
+  closeModal()
+  {
+    this.mdlSampleIsOpen=false;
   }
 
 }
