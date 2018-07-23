@@ -156,6 +156,23 @@ let project = {
             })
     },
 
+    update (project) {
+        return db.any('UPDATE public.project\n' +
+            'SET project_title=${project_title}, project_code=${project_code}, project_work_code=${project_work_code},\n' +
+            'project_start=${project_start}, \n' +
+            'project_end=${project_end}, sub_department_id=${sub_department_id}\n' +
+            'WHERE project_id = ${project_id} returning project_id;', project)
+            .then(function (data) {
+                if (data.length === 0) {
+                    return false
+                } else {
+                    return data[0]
+                }
+            }).catch(function (err) {
+                throw ERRORTYPE.customError('The server has encountred an internal error\n ' + err.toString());
+            })
+    },
+
     delete (project_id) {
         return db.any('DELETE from public.project CASCADE WHERE project_id = $1 returning project_id', project_id)
             .then(function (data) {
