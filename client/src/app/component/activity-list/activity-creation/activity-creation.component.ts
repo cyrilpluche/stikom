@@ -213,6 +213,7 @@ export class ActivityCreationComponent implements OnInit {
             console.log("This one.");
             let j = await this._jobService.selectFromActivity(activity.activity_id).toPromise();
             this.job_sop = j['data']['sop_job'];
+            console.log('job : ', j)
           }
         }
       }
