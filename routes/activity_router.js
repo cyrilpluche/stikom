@@ -70,7 +70,7 @@ router.get('/all_from_all_job_from_project/:project',
             if (!jobs) {
                 throw ERRORTYPE.NOT_FOUND
             } else {
-                console.log('Job', jobs)
+
                 let promises = [] // array of promises
                 for (let i = 0; i < jobs.length; i++) {
                     promises.push(modelActivity.selectAllByJobId(jobs[i].job_id))

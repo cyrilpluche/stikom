@@ -74,8 +74,61 @@
             </div>
           </div>
 
+          <!-- Department selection -->
+          <div class="form-group" [hidden]="stepSelected != 2">
+
+            <!-- Organisation -->
+            <div class="row md-form">
+              <div class="offset-2 col-8">
+              <select class="form-control" multiple>
+                <option name="organisation" value="" disabled selected>Choose organisation</option>
+                <option *ngFor="let o of organisation_elements" (click)="pickOrganisation(o)">{{o['organisation'].organisation_name}}</option>
+              </select>
+              </div>
+            </div>
+
+            <!-- Branch -->
+            <div class="row md-form">
+              <div class="offset-2 col-8">
+              <select class="form-control" [hidden]="pick_level<2" multiple>
+                <option value="" disabled selected>Choose a branch</option>
+                <option *ngFor="let b of branchs" (click)="pickBranch(b)">{{b['branch'].branch_name}}</option>
+              </select>
+              </div>
+            </div>
+
+            <!-- Department -->
+            <div class="row md-form">
+              <div class="offset-2 col-8">
+              <select class="form-control" [hidden]="pick_level<3" multiple>
+                <option value="" disabled selected>Choose a branch</option>
+                <option *ngFor="let d of departments" (click)="pickDepartment(d)">{{d['department'].department_name}}</option>
+              </select>
+              </div>
+            </div>
+
+            <!-- SubDepartment -->
+            <div class="row md-form">
+              <div class="offset-2 col-8">
+              <select class="form-control" [hidden]="pick_level<4" multiple>
+                <option value="" disabled selected>Choose a branch</option>
+                <option *ngFor="let s of sub_departments" (click)="pickSubDepartment(s)">{{s.sub_department_name}}</option>
+              </select>
+              </div>
+            </div>
+
+            <div class="row justify-content-center">
+              <div>
+                <button class="btn btn-danger waves-effect" type="button" (click)="changeStep(false)">Back</button>
+              </div>
+              <div>
+                <button [disabled]="pick_level == 1" class="btn btn-primary waves-effect" type="button" (click)="changeStep(true)">Next</button>
+              </div>
+            </div>
+          </div>
+
           <!-- Job selection -->
-          <div [hidden]="stepSelected != 2">
+          <div [hidden]="stepSelected != 3">
 
             <div class="row md-form">
               <p class="col-12 text-center mb-4 text-description"> Please choose one or more jobs </p>
@@ -137,7 +190,7 @@
           <!-- Job selection -->
 
           <!-- Unit affectation -->
-          <div [hidden]="stepSelected != 3">
+          <div [hidden]="stepSelected != 4">
             <div class="row md-form">
               <div class="offset-2 col-8">
                 <p class="text-center mb-4 text-description"> Choose an unit and pick members you want to add into </p>
@@ -180,7 +233,7 @@
 
 
   <!--Title of the unit-->
-  <div class="row row-first" [hidden]="stepSelected != 3" >
+  <div class="row row-first" [hidden]="stepSelected != 4" >
     <h4>
       <span class="badge badge-pill badge-primary" *ngIf="unit_selected != null">{{unit_selected['unit'].unit_name}} - {{unit_selected['detail']['job'].job_name}}</span>
     </h4>
@@ -191,7 +244,7 @@
   </div>
 
   <!-- Member Unit Binding Display -->
-  <div class="row row-last justify-content-center" [hidden]="stepSelected != 3">
+  <div class="row row-last justify-content-center" [hidden]="stepSelected != 4">
 
         <table class="col table table-borderless table-hover table-fixed" id="member-table">
 

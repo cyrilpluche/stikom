@@ -14,6 +14,15 @@ import {Project} from "../../../objects/project/project";
 import {Router} from "@angular/router";
 import * as moment from 'moment';
 import {MemberActivityProject} from "../../../objects/member_activity_project/member-activity-project";
+import {Organisation} from "../../../objects/organisation/organisation";
+import {Branch} from "../../../objects/branch/branch";
+import {Department} from "../../../objects/department/department";
+import {SubDepartment} from "../../../objects/sub_department/sub-department";
+import {ManagmentLevelService} from "../../../objects/managment_level/managment-level.service";
+import {OrganisationService} from "../../../objects/organisation/organisation.service";
+import {SubDepartmentService} from "../../../objects/sub_department/sub-department.service";
+import {BranchService} from "../../../objects/branch/branch.service";
+import {DepartmentService} from "../../../objects/department/department.service";
 
 @Component({
   selector: 'app-project-creation',
@@ -50,13 +59,26 @@ export class ProjectCreationComponent implements OnInit {
 
   new_project_id: string = "";
 
+  organisation_elements: Object[] = [];
+
+  //Manage the disabled function of organisations selects
+  pick_level: number = 1;
+  branchs: Branch[];
+  departments: Department[];
+  sub_departments: SubDepartment[];
+  new_sub_department: SubDepartment;
+
   constructor(private _sopService: SopService,
               private _jobService: JobService,
               private _unitService: UnitService,
               private _memberService: MemberService,
               private _activityService: ActivityService,
               private _projectService: ProjectService,
-              private router: Router) {
+              private router: Router,
+              private _organisationService: OrganisationService,
+              private _branchService: BranchService,
+              private _departmentService: DepartmentService,
+              private _subDepartmentService: SubDepartmentService,) {
   }
 
   async ngOnInit() {
@@ -64,7 +86,10 @@ export class ProjectCreationComponent implements OnInit {
     this.initializeProject();
 
     await this.loadSops();
+    await this.loadOrganisations();
     await this.loadMembers();
+
+    console.log(this.organisation_elements);
   }
 
   //We create the new project with the right date end
@@ -86,6 +111,60 @@ export class ProjectCreationComponent implements OnInit {
     }
     catch (error) {
       this.errorMessage = error.error.message;
+    }
+  }
+
+  //We get all Organisations, branchs, departements and sub departements from database
+  async loadOrganisations(){
+    try {
+      this.errorMessage = "";
+      let o = await this._organisationService.selectAll().toPromise();
+      let organisations = o['data'] as Organisation[];
+
+      for (let organisation of organisations){
+        let b = await this._branchService.selectAllFromOrganisation(organisation.organisation_id.toString()).toPromise();
+        let branchs = b['data'] as Branch[];
+
+        //We generate one element
+        let e0 = {
+          organisation: organisation,
+          branchs: []
+        };
+
+        for (let branch of branchs){
+          let d = await this._departmentService.selectAllFromBranch(branch.branch_id.toString()).toPromise();
+          let departments = d['data'] as Department[];
+
+          //We generate one sub element
+          let e1 = {
+            branch: branch,
+            departments: []
+          };
+
+          for (let department of departments){
+            let s = await this._subDepartmentService.selectAllFromDepartment(department.department_id.toString()).toPromise();
+            let sub_departments = s['data'] as SubDepartment[];
+
+            //We generate lasts elements of the schema
+            let e2 = {
+              department: department,
+              sub_departments: sub_departments
+            };
+            e1['departments'].push(e2);
+          }
+          e0['branchs'].push(e1);
+        }
+        this.organisation_elements.push(e0);
+      }
+
+      this.branchs = [this.organisation_elements[0]['branchs'][0]];
+      this.departments = [this.branchs[0]['departments'][0]];
+      this.sub_departments = [this.departments[0]['sub_departments'][0]];
+      this.new_sub_department = this.departments[0]['sub_departments'][0];
+
+    }
+    catch (error) {
+      this.errorMessage = error.message;
     }
   }
 
@@ -152,6 +231,7 @@ export class ProjectCreationComponent implements OnInit {
         //If we want a grouped job, then we take the single activity instance that correspond, and look at the unit concerned
         if(value['grouped']){
           let activity = await vm.groupJob(key);
+          console.log(activity);
           units = await vm._unitService.selectAllFromActivity(activity.activity_id).toPromise();
           e = {
             activities: [activity],
@@ -191,12 +271,12 @@ export class ProjectCreationComponent implements OnInit {
     let activity;
     //we search for the one that group all activities in one instance
     for (let a of activities){
-      if (a.activity_type == 'grouped'){
+      if (a.activity_type == 'super_activity' || a.activity_type == 'sop'){
         //we add it to the array
-        activity = await this._unitService.selectAllFromActivity(a.activity_id).toPromise();
+        activity = a;
       }
     }
-    return activity
+    return activity;
   }
 
   pickUnit(unit) {
@@ -208,6 +288,42 @@ export class ProjectCreationComponent implements OnInit {
     if(!this.unit_selected['detail']['members'].includes(member)) {
       this.unit_selected['detail']['members'].push(member);
     }
+  }
+
+  pickOrganisation(organisation){
+    this.branchs = organisation['branchs'];
+    this.departments = [this.branchs[0]['departments'][0]];
+    this.sub_departments = [this.departments[0]['sub_departments'][0]];
+    this.new_sub_department = this.departments[0]['sub_departments'][0];
+    this.pick_level = 2;
+  }
+
+  pickBranch(branch){
+    this.departments = branch['departments'];
+    this.sub_departments = [this.departments[0]['sub_departments'][0]];
+    this.new_sub_department = this.departments[0]['sub_departments'][0];
+    if(branch['branch'].branch_name != 'No branch'){
+      this.pick_level = 3;
+    }
+    else{
+      this.pick_level = 2;
+    }
+  }
+
+  pickDepartment(department){
+    this.sub_departments = department['sub_departments'];
+    this.new_sub_department = department['sub_departments'][0];
+    if(department['department'].department_name != 'No department'){
+      this.pick_level = 4;
+    }
+    else{
+      this.pick_level = 3;
+    }
+  }
+
+  pickSubDepartment(sub_department){
+    this.new_sub_department = sub_department;
+    this.pick_level = 5;
   }
 
   removeMember(member){
@@ -289,9 +405,8 @@ export class ProjectCreationComponent implements OnInit {
 
      // Temporary
     try {
-      let member = await this._memberService.select(localStorage.getItem('Id')).toPromise();
       this.errorMessage = "";
-      this.new_project.sub_department_id = member['data']['sub_department_id'];
+      this.new_project.sub_department_id = this.new_sub_department.department_id.toString();
     }
     catch (error) {
       this.errorMessage = error.message;
@@ -354,21 +469,19 @@ export class ProjectCreationComponent implements OnInit {
   async bindMemberActivityProject(){
     try {
       this.errorMessage = "";
-      console.log("Let's go for these elements : ", this.elements);
       for (let element of this.elements) {
-        let activities = await this._activityService.selectAllFromUnit(element['unit'].unit_id).toPromise();
-        element['detail']['activities'] = activities['data'] as Activity[];
-        console.log("Let's go for these activities : ", element['detail']['activities']);
+        if(element['detail']['grouped'] == false){
+          let activities = await this._activityService.selectAllFromUnit(element['unit'].unit_id).toPromise();
+          element['detail']['activities'] = activities['data'] as Activity[];
+        }
         for (let activity of element['detail']['activities']){
-          console.log("Let's go for these members : ", element['detail']['members']);
           for (let member of element['detail']['members']){
-            console.log('Job : ', element['detail']['job'].job_id);
             let m_a_p = new MemberActivityProject();
             m_a_p.project_id = parseInt(this.new_project.project_id);
             m_a_p.job_id = element['detail']['job'].job_id;
             m_a_p.member_id = member.member_id;
             m_a_p.activity_id = activity.activity_id;
-            m_a_p.target_date = new Date().toString();
+            m_a_p.target_date = this.new_project.project_end.toString();
             m_a_p.date_begin = this.new_project.project_start.toString();
             m_a_p.evaluation = "on date";
             m_a_p.finished_date = null;
@@ -378,7 +491,6 @@ export class ProjectCreationComponent implements OnInit {
             m_a_p.finished_quantity = 0;
             m_a_p.finished_duration = 0;
             await this._projectService.bindMemberActivityProject(m_a_p).toPromise();
-            console.log(m_a_p.project_id, ' - ', m_a_p.member_id, ' - ', m_a_p.activity_id);
           }
         }
       }

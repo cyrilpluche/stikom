@@ -73,6 +73,21 @@ let job = {
             })
     },
 
+    selectAllByActivityId (activity_id) {
+        return db.any('SELECT * \F' +
+            'ROM public.job J, public.activity_is_job AIS\n' +
+            'WHERE J.job_id = AIS.job_id AND AIS.activity_id = $1',
+            activity_id).then(function (data) {
+            if (data.length === 0) {
+                return false
+            } else {
+                return data
+            }
+        }).catch(function (err) {
+            throw ERRORTYPE.customError('The server has encountred an internal error: ' + err.toString())
+        })
+    },
+
     update (job) {
         return db.any('UPDATE public.job\n' +
             'SET job_id=${job_id}, job_name=${job_name}, job_code=${job_code}\n' +
