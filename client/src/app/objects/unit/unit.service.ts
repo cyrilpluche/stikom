@@ -48,6 +48,7 @@ export class UnitService {
 
   selectAllFromActivity(activity_id:string){
     this.generateHeaders();
+    console.log('Object : ', activity_id);
     return this.http.get(this.domain + '/api/unit/all_from_activity/'+activity_id,this.httpOptions);
   }
 
