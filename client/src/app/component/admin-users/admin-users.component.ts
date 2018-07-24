@@ -125,6 +125,22 @@ export class AdminUsersComponent implements OnInit {
 
   }
 
+  async unGrantUser(roleChossen)
+  {
+
+    await this._memberService.unGrantMember(this.user_id, roleChossen)
+      .subscribe( (res) => {
+          console.log(res['data']);
+          this.mdlSampleIsOpen=false;
+          this.mdlSampleIsOpen=true;
+        },
+        error => {
+          console.log(error.message);
+        });
+
+
+  }
+
   closeModal()
   {
     this.mdlSampleIsOpen=false;

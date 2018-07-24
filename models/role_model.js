@@ -33,9 +33,9 @@ let role = {
         return db.any('DELETE FROM public.has_role HR \n' +
             'WHERE EXISTS (\n' +
             'SELECT * FROM public.role R\n' +
-            'WHERE HR.member_id = $1 AND HR.role_id = R.role_id AND R.role_title = $2\n' +
+            'WHERE HR.member_id = ${member} AND HR.role_id = R.role_id AND R.role_title = ${role}\n' +
             ') returning HR.member_id',
-            member_id, role_title)
+            {member:member_id, role:role_title})
             .then(function (data) {
                 return data.length !== 0
             }).catch(function (err) {

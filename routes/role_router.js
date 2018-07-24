@@ -30,6 +30,8 @@ router.post('/grant_member',
 router.delete('/ungrant_member',
     policy.requireAdmin,
     function (req, res, next) {
+    console.log(req.query.member);
+    console.log(req.query.role);
         modelRole.deleteMemberRoleByRoleTitle(req.query.member, req.query.role)
             .then(function (data) {
                 if (!data) {

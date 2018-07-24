@@ -173,6 +173,12 @@ export class MemberService {
     return this.http.post(this.domain + '/api/role/grant_member',body,this.httpOptions);
   }
 
+  unGrantMember(idUser,idRole){
+
+    this.generateHeaders();
+    return this.http.delete(this.domain + '/api/role/ungrant_member?member='+idUser+'&role='+idRole,this.httpOptions);
+  }
+
 
 
 }
