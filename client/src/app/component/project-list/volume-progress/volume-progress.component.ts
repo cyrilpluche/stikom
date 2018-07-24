@@ -188,8 +188,8 @@ export class VolumeProgressComponent implements OnInit {
         let quantity_finished_given = 0;
         let quantity = one_quantity;
         let quantity_finished = one_quantity_finished;
-        let full_quantity = one_quantity * interval;
-        let full_quantity_finished = one_quantity_finished * interval;
+        let full_quantity = parseFloat((one_quantity * interval).toFixed(1));
+        let full_quantity_finished = parseFloat((one_quantity_finished * interval).toFixed(1));
 
         if (one_quantity == 0){
           one_quantity = parseFloat((map['m_a_p'].target_quantity / interval).toFixed(1));
@@ -230,8 +230,9 @@ export class VolumeProgressComponent implements OnInit {
             if(i.toString() == end.toString()){
               quantity = full_quantity - quantity_given;
               quantity_finished = full_quantity_finished - quantity_finished_given;
+              quantity = parseFloat(quantity.toFixed(1));
+              quantity_finished = parseFloat(quantity_finished.toFixed(1));
             }
-
             let previous_quantity = 0;
             let previous_quantity_finished = 0;
               if (this.targets.get(element['member'].member_id).get(w.toString()) != null){
@@ -242,7 +243,7 @@ export class VolumeProgressComponent implements OnInit {
             let e = {
                 finished_quantity: previous_quantity_finished+quantity_finished,
                 target_quantity: previous_quantity+quantity
-            }
+            };
             this.targets.get(element['member'].member_id).set(w.toString(), e);
             quantity_given += quantity;
             quantity_finished_given += quantity_finished;
@@ -255,6 +256,9 @@ export class VolumeProgressComponent implements OnInit {
           else {
             quantity += one_quantity;
             quantity_finished += one_quantity_finished;
+
+            quantity = parseFloat(quantity.toFixed(1));
+            quantity_finished = parseFloat(quantity_finished.toFixed(1));
           }
         }
         /* ----- /We check every days ----- */
@@ -265,6 +269,8 @@ export class VolumeProgressComponent implements OnInit {
           //Is the week already exist ?
           quantity = full_quantity - quantity_given;
           quantity_finished = full_quantity_finished - quantity_finished_given;
+          quantity = parseFloat(quantity.toFixed(1));
+          quantity_finished = parseFloat(quantity_finished.toFixed(1));
           let previous_quantity = 0;
           let previous_quantity_finished = 0;
 
@@ -524,124 +530,6 @@ export class VolumeProgressComponent implements OnInit {
         }
       }
     }
-  }
-
-  /* Give the number of days between 2 dates */
-  dateInterval (d1,d2){
-    var nb = d2.getTime() - d1.getTime();
-    return Math.ceil(nb/(1000*60*60*24));
-  }
-
-  typeOfCalendar(){
-
-    let interval = this.intervalDate(this.project.project_start, this.project.project_end);
-
-    if (interval<8){
-      this.calendarType = "1week";
-    }
-    else if (interval<15){
-      this.calendarType = "2week";
-    }
-    else if (interval<22){
-      this.calendarType = "3week";
-    }
-    else {
-      this.calendarType = "month";
-    }
-  }
-
-  async calendarRange() {
-
-    let start = new Date(this.project.project_start);
-    let end = new Date (this.project.project_end);
-    let fake_start = new Date(this.project.project_start);
-    let fake_end = new Date(this.project.project_end);
-
-    this.calendar = [];
-
-    // We prepare var for month's label
-    var locale = "en-us";
-    let date = new Date(start);
-
-    /* ----- We get each days ----- */
-    /* ----- We get each days ----- */
-    for (let i = start.getFullYear(); i<=end.getFullYear(); i++){
-      let element = {
-        year: i,
-        months: []
-      };
-
-      fake_start.setFullYear(i);
-      fake_end.setFullYear(i);
-
-      /* ----- We check first and last month of the loop ----- */
-
-      //If it's not the first year, we need to begin at January
-      if(i != start.getFullYear()){
-        fake_start.setMonth(0);
-      }
-
-      //If it's the last year, we need to finish at the right Month
-      if(i == end.getFullYear()){
-        fake_end.setMonth(end.getMonth());
-      }
-      else {
-        fake_end.setMonth(11);
-      }
-
-      /* ----- We get each months ----- */
-      /* ----- We get each months ----- */
-
-      for (let j = fake_start.getMonth(); j<=fake_end.getMonth(); j++){
-
-        let fake_start_2 = new Date(fake_start);
-        let fake_end_2 = new Date(fake_end);
-        fake_start_2.setMonth(j);
-        fake_end_2.setMonth(j);
-
-        date.setMonth(j);
-        let month = {
-          month: j,
-          month_label: date.toLocaleDateString(locale, { month: "long"}),
-          days: []
-        };
-        /* ----- We check first and last day of the loop ----- */
-
-        //if it's not the first month of the first year, we need to begin the 1st
-        if( !(i == start.getFullYear() && j ==start.getMonth()) ){
-          fake_start_2.setDate(1);
-        }
-        //If it's the last month of the last year, we need to finish at the right day
-        if(i == end.getFullYear() && j == end.getMonth()){
-          fake_end_2.setDate(end.getDate());
-        }
-        else {
-          fake_end_2.setMonth(j+1);
-          fake_end_2.setDate(0);
-        }
-
-        /* ----- We get each days ----- */
-        /* ----- We get each days ----- */
-        for (let k = fake_start_2.getDate(); k <= fake_end_2.getDate(); k++){
-          date.setDate(k);
-          let day = {
-            day: k,
-            target_quantity: 0,
-            quantity_finished: 0
-          };
-          month['days'].push(day);
-        }
-        /* ----- /We get each days ----- */
-
-        element['months'].push(month);
-      }
-      /* ----- /We get each months ----- */
-
-      this.calendar.push(element);
-
-    }
-    /* ----- /We get each years ----- */
-    console.log(this.calendar);
   }
 
 }

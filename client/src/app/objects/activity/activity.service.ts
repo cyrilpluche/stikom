@@ -28,7 +28,7 @@ export class ActivityService {
       activity_type_output: activity.activity_type_output,
       managment_level_id: activity.managment_level_id
     };
-    console.log(body);
+    console.log('Create activity : ', body);
     this.generateHeaders();
     return this.http.post(this.domain + '/api/activity/create',body,this.httpOptions);
   }
@@ -67,7 +67,7 @@ export class ActivityService {
       activity_type_output: activity.activity_type_output,
       managment_level_id: activity.managment_level_id
     };
-    console.log(body);
+    console.log('Update activity : ', body);
     this.generateHeaders();
     return this.http.put(this.domain + '/api/activity/update',body,this.httpOptions);
   }
