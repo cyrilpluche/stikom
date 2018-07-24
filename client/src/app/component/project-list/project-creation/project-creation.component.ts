@@ -472,7 +472,12 @@ export class ProjectCreationComponent implements OnInit {
       for (let element of this.elements) {
         if(element['detail']['grouped'] == false){
           let activities = await this._activityService.selectAllFromUnit(element['unit'].unit_id).toPromise();
-          element['detail']['activities'] = activities['data'] as Activity[];
+          element['detail']['activities'] = [];
+          for (let a of activities['data']){
+            if(a.activity_type != 'sop' && a.activity_type != 'super_activity'){
+              element['detail']['activities'].push(a);
+            }
+          }
         }
         for (let activity of element['detail']['activities']){
           for (let member of element['detail']['members']){

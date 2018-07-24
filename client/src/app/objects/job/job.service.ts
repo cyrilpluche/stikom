@@ -20,6 +20,7 @@ export class JobService {
       job_code: jobe_code,
       sop_id: sop_id
     };
+    console.log('create job : ', body);
     this.generateHeaders();
 
     return this.http.post(this.domain + '/api/job/create',body,this.httpOptions);
@@ -46,6 +47,7 @@ export class JobService {
       activity_id: activity_id,
       job_id: job_id
     };
+    console.log('bind_job_activity : ', body);
     return this.http.post(this.domain + '/api/job/bind_job_activity/',body,this.httpOptions);
   }
 

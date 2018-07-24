@@ -9,6 +9,7 @@ import {Unit} from "../../../objects/unit/unit";
 import {UnitService} from "../../../objects/unit/unit.service";
 import {Sop} from "../../../objects/sop/sop";
 import {JobService} from "../../../objects/job/job.service";
+import {Job} from "../../../objects/job/job";
 
 @Component({
   selector: 'app-activity-creation',
@@ -111,7 +112,8 @@ export class ActivityCreationComponent implements OnInit {
           this.generateSuperActivity(element, id['data']['activity_id']);
           let id2 = await this._activityService.createActivity(element['activity']).toPromise();
           await this._unitService.bindUnitActivity(element['unit'], id2['data']['activity_id']).toPromise();
-
+          await this._jobService.bind_job_activity(this.job_sop.job_id, id2['data']['activity_id']);
+          console.log('Super activity created no problem.');
         }
         else{
           //We have old activity
@@ -126,6 +128,7 @@ export class ActivityCreationComponent implements OnInit {
             //We check its children
             let isChanged = false;
             let old_job = await this._jobService.selectFromActivity(element['activity'].activity_id).toPromise();
+            console.log('Old job : ', old_job);
 
             for (let sub_a of element['children']){
               //We need to delete sub activity if it's changed
@@ -143,7 +146,7 @@ export class ActivityCreationComponent implements OnInit {
                 isChanged = true;
                 let ids = await this._activityService.createActivity(sub_a['activity']).toPromise();
                 await this._unitService.bindUnitActivity(sub_a['unit'], ids['data']['activity_id']).toPromise();
-                await this._jobService.bind_job_activity(old_job['data']['job_id'], ids['data']['activity_id']).toPromise();
+                await this._jobService.bind_job_activity(old_job['data']['simple_jobs'][0]['job_id'], ids['data']['activity_id']).toPromise();
                 await this._jobService.bind_job_activity(this.job_sop.job_id, ids['data']['activity_id']).toPromise();
               }
             }
@@ -151,12 +154,16 @@ export class ActivityCreationComponent implements OnInit {
               /* SUPER ACTIVITY UPDATE */
               //We generate the super activity linked, -1 means that we already have the good idea
               this.generateSuperActivity(element, -1);
+              console.log('Ok super activity now : ', element['super']);
+              console.log('with this element : ', element);
               await this._activityService.update(element['super']).toPromise();
             }
           }
         }
       }
+      console.log("Let's try");
       await this.generateSopActivity();
+      console.log("done");
       this.router.navigate(["/sop-list"]);
     }
     catch (error) {
@@ -208,12 +215,10 @@ export class ActivityCreationComponent implements OnInit {
             this.activities.set(activity.activity_id, e);
           }
           else if(activity.activity_type == 'sop'){
-            console.log("ok : ", activity);
             this.activity_sop = activity as Activity;
-            console.log("This one.");
+            this.isNewSop = false;
             let j = await this._jobService.selectFromActivity(activity.activity_id).toPromise();
             this.job_sop = j['data']['sop_job'];
-            console.log('job : ', j)
           }
         }
       }
@@ -239,7 +244,7 @@ export class ActivityCreationComponent implements OnInit {
       }
     }
     catch (error) {
-      this.errorMessage = error.message;
+      this.errorMessage = "No activity yet";
     }
   }
 
@@ -482,6 +487,7 @@ export class ActivityCreationComponent implements OnInit {
       activity.managment_level_id = this.management_levels[0].managment_level_id.toString();
     }else{
       activity = this.activity_sop;
+      console.log('act : ', this.activity_sop);
     }
 
 
@@ -564,6 +570,10 @@ export class ActivityCreationComponent implements OnInit {
         await this._unitService.bindUnitActivity(unit_id, id['data']['activity_id']).toPromise();
         await this._jobService.bind_job_activity(job_id['data']['job_id'], id['data']['activity_id']).toPromise();
         this.isNewSop = false;
+        this.job_sop = new Job();
+        this.job_sop.job_id = job_id['data']['job_id'];
+        activity.activity_id = id['data']['activity_id'];
+        this.activity_sop = activity;
       }
       catch (error){
         this.errorMessage = error.message;
@@ -578,19 +588,6 @@ export class ActivityCreationComponent implements OnInit {
       }
     }
   }
-
-  /*async generateJob(){
-    if(this.isNewSop){
-      try{
-        let s = await this._sopService.getSop(this.sop_id).toPromise();
-        let sop = s['data'] as Sop;
-        let job_id = await this._jobService.createJob(sop.sop_title, sop.sop_id, this.sop_id).toPromise();
-      }
-      catch (error){
-        this.errorMessage = error.message;
-      }
-    }
-  }*/
 
   verification(){
     if (this.new_activity.activity_title == ""){
