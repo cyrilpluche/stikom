@@ -164,7 +164,7 @@ router.delete('/delete/:activity',
                     res.json({data: data})
                 }
             }).catch(next)
-}, deleteJobById
+    }, deleteJobById
 );
 
 

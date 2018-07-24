@@ -131,7 +131,7 @@ let activity = {
             })
     },
     delete (activity_id) {
-        return db.any('DELETE from public.activity CASCADE \n' +
+        return db.any('DELETE FROM public.activity CASCADE \n' +
             'WHERE activity_id = $1 returning activity_id, activity_id_is_father',
             activity_id)
             .then(function (data) {
