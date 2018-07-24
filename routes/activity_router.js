@@ -151,32 +151,51 @@ router.put('/update',
     });
 
 router.delete('/delete/:activity',
+    function (req, res, next) { // get the activity
+        modelActivity.selectById(req.params.activity_id).then(function (data) {
+            if (!data){
+                throw ERRORTYPE.NOT_FOUND;
+            }
+            else if (data.activity_id_is_father == null) {
+                req.activity_id = data.activity_id;
+                req.deleteJob = true;
+                next()
+            } else {
+                req.deleteJob = false;
+                next ()
+            }
+        })
+    },
+    deleteJobById, // try to delete the job
     function (req, res, next) {
         modelActivity.delete(req.params.activity)
             .then(function (data) {
                 if (!data){
                     throw ERRORTYPE.NOT_FOUND;
-                }
-                else if (data.activity_id_is_father == null) {
-                    req.activity_id = data.activity_id
-                    next()
                 } else {
+                    data.job_id = req.job_id;
                     res.json({data: data})
                 }
             }).catch(next)
-    }, deleteJobById
+    }
 );
 
 
 function deleteJobById (req, res, next) {
-    require('../models/job_model').deleteByActivityId(req.activity_id)
-        .then(function (data) {
-            if (!data){
-                throw ERRORTYPE.NOT_FOUND;
-            } else {
-                res.json({data: data})
-            }
-        }).catch(next)
+    if (req.deleteJob) {
+        require('../models/job_model').deleteByActivityId(req.activity_id)
+            .then(function (data) {
+                if (!data){
+                    throw ERRORTYPE.NOT_FOUND;
+                } else {
+                    req.job_id = data.job_id;
+                    next()
+                }
+            }).catch(next)
+    } else {
+        next()
+    }
+
 }
 module.exports = router;
 
