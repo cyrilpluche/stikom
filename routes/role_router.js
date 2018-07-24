@@ -26,7 +26,7 @@ router.post('/grant_member',
     }
 );
 
-// ungrant_member?member=member_id&role=role_id
+// ungrant_member?member=member_id&role=role_title
 router.delete('/ungrant_member',
     policy.requireAdmin,
     function (req, res, next) {

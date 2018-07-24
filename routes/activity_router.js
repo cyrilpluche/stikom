@@ -157,7 +157,7 @@ router.delete('/delete/:activity',
                 if (!data){
                     throw ERRORTYPE.NOT_FOUND;
                 }
-                else if (data.activity_id_is_father != null) {
+                else if (data.activity_id_is_father == null) {
                     req.activity_id = data.activity_id
                     next()
                 } else {
