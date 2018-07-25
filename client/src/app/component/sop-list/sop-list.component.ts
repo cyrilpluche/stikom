@@ -13,8 +13,8 @@ export class SopListComponent implements OnInit {
   errorMessage: string = "";
   sopList: [Sop];
   sopSelected: Sop = new Sop();
-  buttonsTitles: string [] = ['Set up SOP informations', 'Set up activites', 'Set up jobs'];
-  buttonsLinks: string [] = ['sop', 'activity-creation', 'job-list'];
+  buttonsTitles: string [] = ['SOP informations', 'Set up activites'];
+  buttonsLinks: string [] = ['sop', 'activity-creation'];
 
   constructor(private _sopService: SopService) { }
 
@@ -23,7 +23,6 @@ export class SopListComponent implements OnInit {
   ngOnInit() {
     this.getAllSop();
     this._sopService.removeSopIdLocal();
-    console.log(this.buttonsTitles)
   }
 
   getAllSop(){

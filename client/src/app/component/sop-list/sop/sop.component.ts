@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import {SopService} from "../../../objects/sop/sop.service";
 import {DatePipe} from "@angular/common";
 import {UnitService} from "../../../objects/unit/unit.service";
+import {Sop} from "../../../objects/sop/sop";
+import {Unit} from "../../../objects/unit/unit";
+import {Activity} from "../../../objects/activity/activity";
+import {ActivityService} from "../../../objects/activity/activity.service";
 
 @Component({
   selector: 'app-sop',
@@ -10,84 +14,79 @@ import {UnitService} from "../../../objects/unit/unit.service";
 })
 export class SopComponent implements OnInit {
 
-  sop_id:string="";
-  project_id:string="";
+  /* ----- Data ----- */
+  errorMessage: string;
+  ready: boolean = false;
+  sop_id: string="";
+  project_id: string="";
+  sop: Sop;
 
-  sop_title:string="NA";
-  sop_creation:Date=new Date();
-  sop_revision:Date=new Date();
-  sop_published:Date=new Date();
-  sop_approvment:string="NA";
-  sop_rules:string="NA";
-  sop_warning:string="NA";
-  sop_staff_qualification:string="NA";
-  sop_tools:string="NA";
-  sop_type_reports:string="NA";
-  sop_objectives:string="NA";
-
-  units:[string]=[""];
+  units: Unit[] = [];
+  activities = new Map;
 
   constructor( private _sopService: SopService,
-               private _unitService: UnitService) { }
+               private _unitService: UnitService,
+               private _activityService: ActivityService) { }
 
-  ngOnInit() {
+  async ngOnInit() {
 
-    this.sop_id=localStorage.getItem("Sop_id");
-    //localStorage.removeItem("Sop_id");
-
-    this.getSOP(this.sop_id);
-    setTimeout(() => {
-      console.log(this.sop_title);
-      //console.log("date de creation : "+ );
-      console.log("fin");
-      //this.download(this.sop_title);
-
-    }, 400);
+    this.sop_id = this._sopService.getSopIdLocal();
+    await this.loadSop();
+    await this.loadUnit();
+    await this.loadActivities();
+    console.log(this.activities);
+    this.ready = true;
 
   }
 
-  async getSOP(idSop: string){
-    console.log("ici : "+idSop);
-    await this._sopService.getSop(idSop)
-      .subscribe( (res) => {
-          console.log(res['data']);
-          //this.res=res['data'];
-          this.sop_creation=new Date(res['data']['sop_creation']);
-          this.sop_revision=new Date(res['data']['sop_revision']);
-          this.sop_published=new Date(res['data']['sop_published']);
-          this.sop_approvment=res['data']['sop_approvment'];
-          this.sop_rules=res['data']['sop_rules'];
-          this.sop_warning=res['data']['sop_warning'];
-          this.sop_staff_qualification=res['data']['sop_staff_qualification'];
-          this.sop_tools=res['data']['sop_tools'];
-          this.sop_type_reports=res['data']['sop_type_reports'];
-          this.sop_objectives=res['data']['sop_objectives'];
-          this.sop_title="STANDARD OPERATION PROCEDURE \n "+res['data']['sop_title'];
-          console.log(res['data']['sop_title']);
-          this.getUnits(this.sop_id);
+  async loadSop () {
+    try{
+      let s = await this._sopService.getSop(this.sop_id).toPromise();
+      this.sop = s['data'];
+    }
+    catch (error){
+      this.errorMessage = error.message;
+    }
+  }
+  async loadUnit () {
+    try {
+      let u = await this._unitService.selectAllFromSop(this.sop_id).toPromise();
+      this.units = u['data'];
+    }
+    catch (error){
+      this.errorMessage = error.message;
+    }
+  }
+  async loadActivities() {
+    let activities = [];
+    try{
+      let a = await this._activityService.selectAllFromSop(this.sop_id).toPromise();
+      activities = a['data'] as Activity[];
+    }
+    catch (error) {
+      this.errorMessage = error.message;
+    }
 
+    for (let activity of activities) {
+      if ((activity.activity_id_is_father == null || activity.activity_id_is_father == "") && activity.activity_type != 'sop'){
+        let e = {
+          activity: activity,
+          sub_activities: []
+        };
+        this.activities.set(activity.activity_id, e)
+      }
+    }
 
-
-        },
-        error => {
-          console.log("ERREUR : ",error);
-
-        });
+    for (let activity of activities) {
+      if ((activity.activity_id_is_father != null && activity.activity_id_is_father != "") && activity.activity_type != 'super_activity'){
+        this.activities.get(activity.activity_id_is_father)['sub_activities'].push(activity);
+      }
+    }
   }
 
-  async getUnits(idSop: string){
-    console.log("ici : "+idSop);
-    await this._unitService.selectAllFromSop(idSop)
-      .subscribe( (res) => {
-          console.log(res['data']);
-          this.units=res['data'];
-          //this.res=res['data']
-
-        },
-        error => {
-          console.log("ERREUR : ",error);
-
-        });
+  //Convert map to array to use it in the view
+  convertMap(map){
+    return Array.from(map.values());
   }
 
 }

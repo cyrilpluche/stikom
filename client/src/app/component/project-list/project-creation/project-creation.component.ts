@@ -270,6 +270,7 @@ export class ProjectCreationComponent implements OnInit {
     let activities = activitiesData['data'] as Activity[];
     let activity;
     //we search for the one that group all activities in one instance
+    console.log(activities);
     for (let a of activities){
       if (a.activity_type == 'super_activity' || a.activity_type == 'sop'){
         //we add it to the array

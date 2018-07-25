@@ -76,7 +76,7 @@ export class ActivityService {
   delete(activity_id, job_id) {
     this.generateHeaders();
     console.log("activity id : ", activity_id)
-    return this.http.delete(this.domain + '/api/activity/delete?super_activity='+job_id+'&'+'/'+activity_id,this.httpOptions);
+    return this.http.delete(this.domain + '/api/activity/delete?job_id='+job_id+'&activity_id='+activity_id,this.httpOptions);
   }
 
   generateHeaders()

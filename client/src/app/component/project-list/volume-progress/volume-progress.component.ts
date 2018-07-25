@@ -132,10 +132,11 @@ export class VolumeProgressComponent implements OnInit {
           try{
             let a = await this._activityService.select(m.activity_id).toPromise();
             let j = await this._jobService.select(m.job_id).toPromise();
+            this.calculState(m);
             let e = {
               m_a_p: m,
               activity: a['data'] as Activity,
-              job: j['data'] as Job
+              job: j['data'] as Job,
             };
             sorted_map.push(e);
             total_target += m.target_quantity;
@@ -153,6 +154,57 @@ export class VolumeProgressComponent implements OnInit {
         total_finished: total_finished
       };
       this.elements.push(element);
+    }
+  }
+
+  /* Calcul if the member activity project is late, on date or something else */
+  async calculState(m_a_p){
+    let target = new Date(m_a_p.target_date);
+    let finished_date = new Date(m_a_p.finished_date);
+    let now = new Date();
+    let isChanged: boolean = false;
+
+
+    //The activity is finished
+    if (m_a_p.target_quantity == m_a_p.finished_quantity){
+      if(m_a_p.evaluation == 'on date'){
+        if(target.getTime()<finished_date.getTime()){
+          m_a_p.evaluation = 'finished late';
+        }
+        else{
+          m_a_p.evaluation = 'finished on date';
+        }
+        isChanged = true;
+      }
+      else if(m_a_p.evaluation == 'late'){
+        m_a_p.evaluation = 'finished late';
+        isChanged = true;
+      }
+    }
+    //The activity is still running
+    else if (m_a_p.evaluation == 'finished late' || m_a_p.evaluation == 'finished on date'){
+      m_a_p.finished_date = new Date();
+      m_a_p.finished_date = moment(m_a_p.finished_date).format('Y-MM-D');
+      if(target.getTime()<now.getTime()){
+        m_a_p.evaluation = 'late';
+      }
+      else{
+        m_a_p.evaluation = 'on date';
+      }
+      isChanged = true;
+    }
+    else if (target.getTime()<now.getTime()){
+      m_a_p.evaluation = 'late';
+      isChanged = true;
+    }
+    else {
+      m_a_p.finished_date = new Date();
+      m_a_p.finished_date = moment(m_a_p.finished_date).format('Y-MM-D');
+      isChanged = true;
+    }
+
+    if (isChanged) {
+      await this._memberActivityProjectService.update(m_a_p).toPromise();
     }
   }
 
@@ -341,6 +393,7 @@ export class VolumeProgressComponent implements OnInit {
 
   changeMonth(next){
     let indice = this.months.indexOf(this.month_selected);
+
     let changed: boolean = false;
     if (next &&  indice < this.months.length-1){
       this.month_selected = this.months[indice+1];
@@ -391,6 +444,7 @@ export class VolumeProgressComponent implements OnInit {
       await this.sortElements();
       await this.calculTargetsPerWeek();
       await this.calculMonths();
+      this.element_selected = null;
 
       this.ready = true;
 

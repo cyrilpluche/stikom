@@ -1,115 +1,183 @@
-<div class="container">
-  <div class="row row-first">
-    <div class="text-center mt-4">
-      <a class="btn btn-default" href="sop-list" >Back</a>
-    </div>
-    <div class="col-12 card card-cascade hoverable" style="margin-top: 20px;">
-      <!--Table-->
-      <div class="card-body card-body-cascade">
-        {{sop_title}}
-      </div>
-    </div>
+<div class="container" *ngIf="!ready">
+  <div class="row-first">
+    <app-loader></app-loader>
   </div>
-  <div class="row" style="margin-top: 25px;">
-    <div class="col-sm-12 col-lg-3">
-      <p class="font-weight-bold">SOP number</p>
-    </div>
-    <div class="col-sm-12 col-lg-9 ">
-      <p class="float-lg-left float-sm-right">{{sop_id}}</p>
-    </div>
+</div>
+
+<div class="container" *ngIf="ready">
+
+  <!-- SOP List back button -->
+  <div class="row-first">
+      <button type="button" class="btn btn-outline-danger waves-effect" routerLink="/sop-list"><h6 class="no-margin-bottom"><i class="fa fa-times mr-3"></i>Back</h6></button>
   </div>
-  <div class="row" style="margin-top: 10px;">
-    <div class="col-sm-12 col-lg-3">
-      <p class="font-weight-bold">Creation date</p>
+
+  <div class="row-first">
+
+    <!-- Error alert -->
+    <div *ngIf="errorMessage" class="row justify-content-end error-text">
+      <i>{{errorMessage}}</i>
     </div>
-    <div class="col-sm-12 col-lg-9 ">
-      <p class="float-lg-left float-sm-right">{{ sop_creation | date:'medium' }}</p>
+
+    <div class="card card-cascade hoverable">
+        <div class="row card-body card-body-cascade">
+          <a class="col-12 text-center">
+            <ng-controller data-toggle="collapse" data-target="#sop" aria-expanded="false" aria-controls="sop">STANDARD OPERATIONAL PROCEDURE - {{sop.sop_title.toUpperCase()}}</ng-controller>
+          </a>
+
+          <ng-controller class="col-12 collapse" id="sop">
+            <div class="row row-first">
+              <div class="col-sm-12 col-lg-3">
+                <p class="font-weight-bold">SOP number</p>
+              </div>
+              <div class="col-sm-12 col-lg-9 ">
+                <p class="float-lg-left float-sm-right">{{sop.sop_id}}</p>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-sm-12 col-lg-3">
+                <p class="font-weight-bold">Creation date</p>
+              </div>
+              <div class="col-sm-12 col-lg-9 ">
+                <p class="float-lg-left float-sm-right">{{ sop.sop_creation | date:'medium' }}</p>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-sm-12 col-lg-3">
+                <p class="font-weight-bold">Revision date</p>
+              </div>
+              <div class="col-sm-12 col-lg-9 ">
+                <p class="float-lg-left float-sm-right">{{ sop.sop_revision | date:'medium' }}</p>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-sm-12 col-lg-3">
+                <p class="font-weight-bold">Published date</p>
+              </div>
+              <div class="col-sm-12 col-lg-9 ">
+                <p class="float-lg-left float-sm-right">{{ sop.sop_published | date:'medium' }}</p>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-sm-12 col-lg-3">
+                <p class="font-weight-bold">Approved by</p>
+              </div>
+              <div class="col-sm-12 col-lg-9 ">
+                <p class="float-lg-left float-sm-right">{{ sop.sop_approvment }}</p>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-sm-12 col-lg-3">
+                <p class="font-weight-bold">Base Rule / Regulation</p>
+              </div>
+              <div class="col-sm-12 col-lg-9 ">
+                <p class="float-lg-left float-sm-right">{{ sop.sop_rules }}</p>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-sm-12 col-lg-3">
+                <p class="font-weight-bold">Staff qualifications</p>
+              </div>
+              <div class="col-sm-12 col-lg-9 ">
+                <p class="float-lg-left float-sm-right">{{ sop.sop_staff_qualification }}</p>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-sm-12 col-lg-3">
+                <p class="font-weight-bold">Supporting tools</p>
+              </div>
+              <div class="col-sm-12 col-lg-9 ">
+                <p class="float-lg-left float-sm-right">{{ sop.sop_tools }}</p>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-sm-12 col-lg-3">
+                <p class="font-weight-bold">Warning</p>
+              </div>
+              <div class="col-sm-12 col-lg-9 ">
+                <p class="float-lg-left float-sm-right">{{ sop.sop_warning }}</p>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-sm-12 col-lg-3">
+                <p class="font-weight-bold">Types of forms and reports</p>
+              </div>
+              <div class="col-sm-12 col-lg-9 ">
+                <p class="float-lg-left float-sm-right">{{ sop.sop_type_reports }}</p>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-sm-12 col-lg-3">
+                <p class="font-weight-bold">Objective by</p>
+              </div>
+              <div class="col-sm-12 col-lg-9 ">
+                <p class="float-lg-left float-sm-right">{{ sop.sop_objectives }}</p>
+              </div>
+            </div>
+          </ng-controller>
+        </div>
     </div>
-  </div>
-  <div class="row" style="margin-top: 10px;">
-    <div class="col-sm-12 col-lg-3">
-      <p class="font-weight-bold">Revision date</p>
-    </div>
-    <div class="col-sm-12 col-lg-9 ">
-      <p class="float-lg-left float-sm-right">{{ sop_revision | date:'medium' }}</p>
-    </div>
-  </div>
-  <div class="row" style="margin-top: 10px;">
-    <div class="col-sm-12 col-lg-3">
-      <p class="font-weight-bold">Published date</p>
-    </div>
-    <div class="col-sm-12 col-lg-9 ">
-      <p class="float-lg-left float-sm-right">{{ sop_published | date:'medium' }}</p>
-    </div>
-  </div>
-  <div class="row" style="margin-top: 10px;">
-    <div class="col-sm-12 col-lg-3">
-      <p class="font-weight-bold">Approved by</p>
-    </div>
-    <div class="col-sm-12 col-lg-9 ">
-      <p class="float-lg-left float-sm-right">{{ sop_approvment }}</p>
-    </div>
-  </div>
-  <div class="row" style="margin-top: 10px;">
-    <div class="col-sm-12 col-lg-3">
-      <p class="font-weight-bold">Base Rule / Regulation</p>
-    </div>
-    <div class="col-sm-12 col-lg-9 ">
-      <p class="float-lg-left float-sm-right">{{ sop_rules }}</p>
-    </div>
-  </div>
-  <div class="row" style="margin-top: 10px;">
-    <div class="col-sm-12 col-lg-3">
-      <p class="font-weight-bold">Staff qualifications</p>
-    </div>
-    <div class="col-sm-12 col-lg-9 ">
-      <p class="float-lg-left float-sm-right">{{ sop_staff_qualification }}</p>
-    </div>
-  </div>
-  <div class="row" style="margin-top: 10px;">
-    <div class="col-sm-12 col-lg-3">
-      <p class="font-weight-bold">Supporting tools</p>
-    </div>
-    <div class="col-sm-12 col-lg-9 ">
-      <p class="float-lg-left float-sm-right">{{ sop_tools }}</p>
-    </div>
-  </div>
-  <div class="row" style="margin-top: 10px;">
-    <div class="col-sm-12 col-lg-3">
-      <p class="font-weight-bold">Warning</p>
-    </div>
-    <div class="col-sm-12 col-lg-9 ">
-      <p class="float-lg-left float-sm-right">{{ sop_warning }}</p>
-    </div>
-  </div>
-  <div class="row" style="margin-top: 10px;">
-    <div class="col-sm-12 col-lg-3">
-      <p class="font-weight-bold">Types of forms and reports</p>
-    </div>
-    <div class="col-sm-12 col-lg-9 ">
-      <p class="float-lg-left float-sm-right">{{ sop_type_reports }}</p>
-    </div>
-  </div>
-  <div class="row" style="margin-top: 10px;">
-    <div class="col-sm-12 col-lg-3">
-      <p class="font-weight-bold">Objective by</p>
-    </div>
-    <div class="col-sm-12 col-lg-9 ">
-      <p class="float-lg-left float-sm-right">{{ sop_objectives }}</p>
-    </div>
-  </div>
-  <div class="row" style="margin-top: 10px;">
-    <div class="col-sm-12 col-lg-3">
-      <p class="font-weight-bold">Related units</p>
-    </div>
-    <div class="col-sm-12 col-lg-9 ">
-      <ul class="list-group">
-        <li class="list-group-item" *ngFor="let unit of units">{{unit['unit_name']}}</li>
-      </ul>
-    </div>
+
   </div>
 
 
+
+  <div class="row-first">
+
+    <div class="card card-cascade hoverable" data-toggle="collapse" data-target="#units" aria-expanded="false" aria-controls="units">
+      <a>
+        <div class="row card-body card-body-cascade text-center">
+          <ng-controller class="col-12">UNITS</ng-controller>
+
+          <ng-controller class="collapse" id="units">
+            <div *ngFor="let unit of units" class="col-12">
+              {{unit.unit_name}}
+            </div>
+          </ng-controller>
+        </div>
+      </a>
+    </div>
+
+  </div>
+
+  <div class="row-first">
+
+    <div class="card card-cascade hoverable">
+        <div class="row card-body card-body-cascade">
+          <a class="col-12 row" data-toggle="collapse" data-target="#activities" aria-expanded="false" aria-controls="activities">
+            <ng-controller class="col-12 text-center">ACTIVITIES</ng-controller>
+          </a>
+          <div class="collapse col-12 row" id="activities" *ngFor="let activity of convertMap(activities)">
+            <hr class="col-12">
+
+            <div class="col-1">({{activity['sub_activities'].length}})</div>
+            <div class="col-9">{{activity['activity'].activity_title}}</div>
+            <div class="col-2 text-center">
+              <a *ngIf="activity['sub_activities'].length != 0">
+                <i class="fa fa-eye text-blue" data-toggle="collapse" [attr.data-target]="'#'+activity['activity'].activity_id" aria-expanded="false" aria-controls="{{activity['activity'].activity_id}}"></i>
+              </a>
+            </div>
+            <!-- Collapsible element -->
+            <div class="col-12 row collapse" id="{{activity['activity'].activity_id}}">
+              <div class="offset-2 col-10" *ngFor="let sub_activity of activity['sub_activities']">
+                {{sub_activity.activity_title}}
+              </div>
+            </div>
+            <!-- / Collapsible element -->
+          </div>
+        </div>
+    </div>
+
+  </div>
 
 
 

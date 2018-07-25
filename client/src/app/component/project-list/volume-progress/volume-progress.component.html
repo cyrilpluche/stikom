@@ -16,6 +16,11 @@
     <div class="md-form col-2" id="search-bar">
       <input id="search" (keyup)="search()" class="form-control" type="text" placeholder="Search" aria-label="Search">
     </div>
+    <div class="md-form col text-center">
+      <h5><span class="badge badge-default">Finished</span>
+      <span class="badge badge-primary">Target</span>
+      <span class="badge badge-danger">Pourcentage</span></h5>
+    </div>
     <div class="month-select col-2">
       <ul class="pagination pg-blue justify-content-center" *ngIf="month_selected != null" >
         <li class="page-item text-middle" data-toggle="tooltip" data-placement="top" title="previous" ><i class="page-link no-hover fa fa-arrow-left" (click)="changeMonth(false)"></i></li>
@@ -77,11 +82,13 @@
       <!--Table head-->
       <thead class="thead-secondary">
       <tr class="text-white">
-        <th (click)="sortTable1(0)"><a>Job</a></th>
-        <th (click)="sortTable1(1)"><a>Activity</a></th>
-        <th (click)="sortTable1(2)"><a>Finished Quantity</a></th>
-        <th (click)="sortTable1(3)"><a>Target Quantity</a></th>
-        <th (click)="sortTable1(4)"><a>Finished Duration</a></th>
+        <th class="text-small" style="width: 7%" (click)="sortTable1(0)"><a>Job</a></th>
+        <th class="text-small" (click)="sortTable1(1)"><a>Activity</a></th>
+        <th class="text-small" (click)="sortTable1(2)"><a>Finished Quantity</a></th>
+        <th class="text-small" (click)="sortTable1(3)"><a>Target Quantity</a></th>
+        <th class="text-small" style="width: 20%" (click)="sortTable1(4)"><a>Finished Date</a></th>
+        <th class="text-small" (click)="sortTable1(5)"><a>Target Date</a></th>
+        <th class="text-small" (click)="sortTable1(6)"><a>State</a></th>
       </tr>
       </thead>
       <!--Table head-->
@@ -89,15 +96,17 @@
       <!--Table body-->
       <tbody >
       <tr *ngFor="let activity of element_selected['m_a_ps']">
-        <td>{{activity['job'].job_name}}</td>
+        <td class="text-small">{{activity['job'].job_name}}</td>
         <td class="text-small">{{activity['activity'].activity_title}}</td>
         <td>
           <input [(ngModel)]="activity['m_a_p'].finished_quantity" type="number" class="form-control" max="{{activity['m_a_p'].target_quantity}}" min="0">
         </td>
         <td>{{activity['m_a_p'].target_quantity}}</td>
         <td>
-          <input [(ngModel)]="activity['m_a_p'].finished_duration" type="date" class="form-control">
+          <input *ngIf="activity['m_a_p'].target_quantity == activity['m_a_p'].finished_quantity" [disabled]="activity['m_a_p'].evaluation == 'finished on date' || activity['m_a_p'].evaluation == 'finished late'" [(ngModel)]="activity['m_a_p'].finished_date" type="date" class="form-control">
         </td>
+        <td class="text-small">{{activity['m_a_p'].target_date | date: 'dd/MM/yyyy'}}</td>
+        <td class="text-small">{{activity['m_a_p'].evaluation}}</td>
       </tr>
       </tbody>
       <!--Table body-->

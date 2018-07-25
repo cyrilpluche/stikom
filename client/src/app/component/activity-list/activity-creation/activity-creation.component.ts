@@ -53,7 +53,7 @@ export class ActivityCreationComponent implements OnInit {
     this.sop_id = this._sopService.getSopIdLocal();
     this.step = 1;
     await this.loadData();
-    this.isNewSop = this.activities.size == 0;
+    this.isNewSop = this.activity_sop == null;
     this.generateSopActivity();
     await this.initializeActivity(false);
     this.ready = true;
@@ -112,7 +112,7 @@ export class ActivityCreationComponent implements OnInit {
           this.generateSuperActivity(element, id['data']['activity_id']);
           let id2 = await this._activityService.createActivity(element['activity']).toPromise();
           await this._unitService.bindUnitActivity(element['unit'], id2['data']['activity_id']).toPromise();
-          await this._jobService.bind_job_activity(this.job_sop.job_id, id2['data']['activity_id']);
+          await this._jobService.bind_job_activity(job_id['data']['job_id'], id2['data']['activity_id']).toPromise();
           console.log('Super activity created no problem.');
         }
         else{
@@ -135,7 +135,7 @@ export class ActivityCreationComponent implements OnInit {
               if (sub_a['action'] == 'delete' && element['action'] != 'delete'){
                 /* SUB ACTIVITY DELETE */
                 isChanged = true;
-                await this._activityService.delete(sub_a['activity'].activity_id, "").toPromise();
+                await this._activityService.delete(sub_a['activity'].activity_id, null).toPromise();
                 sub_a['state']='new_sub_activity';
                 this.deleteSubActivity(sub_a);
                 this.generateSuperActivity(element, -1);
@@ -216,6 +216,7 @@ export class ActivityCreationComponent implements OnInit {
             this.activities.set(activity.activity_id, e);
           }
           else if(activity.activity_type == 'sop'){
+            console.log('activity : ', activity);
             this.activity_sop = activity as Activity;
             this.isNewSop = false;
             let j = await this._jobService.selectFromActivity(activity.activity_id).toPromise();
@@ -531,6 +532,7 @@ export class ActivityCreationComponent implements OnInit {
       }
 
     }
+    console.log(type_duration_array);
 
     if(type_duration_array[3]>0 || type_duration_array[2]>30){
       activity.activity_type_duration = 'months';
@@ -538,31 +540,36 @@ export class ActivityCreationComponent implements OnInit {
       activity.activity_duration = type_duration_array[3]+1;
       let more = Math.ceil(type_duration_array[2]/30);
       activity.activity_duration += more;
+      console.log("yeah");
     }
-    else if(((type_duration_array[2]>0 && type_duration_array[2]<30) || type_duration_array[1]>24) && type_duration_array[3]==0){
+    else if(((type_duration_array[2]>0 && type_duration_array[2]<=30) || type_duration_array[1]>=24) && type_duration_array[3]==0){
       activity.activity_type_duration = 'days';
 
       activity.activity_duration = type_duration_array[2]+1;
       let more = Math.ceil(type_duration_array[1]/24);
       activity.activity_duration += more;
+      console.log("yeah 2");
     }
-    else if(((type_duration_array[1]>0 && type_duration_array[1]<24) || type_duration_array[0]>60) && type_duration_array[2]==0 && type_duration_array[3]==0){
+    else if(((type_duration_array[1]>0 && type_duration_array[1]<24) || type_duration_array[0]>=60) && type_duration_array[2]==0 && type_duration_array[3]==0){
       activity.activity_type_duration = 'hours';
 
       activity.activity_duration = type_duration_array[1]+1;
       let more = Math.ceil(type_duration_array[0]/1440);
       activity.activity_duration += more;
+      console.log("yeah 3");
     }
-    else if(type_duration_array[0]<1440){
+    else if(type_duration_array[0]<=1440){
       activity.activity_type_duration = 'minutes';
 
       activity.activity_duration = type_duration_array[0];
+      console.log("yeah 4");
     }
     else{
       activity.activity_type_duration = 'hours';
 
       let more = Math.ceil(type_duration_array[0]/1440);
       activity.activity_duration = more+1;
+      console.log("yeah 5");
     }
 
     //now we create the activity if it's a new Job
@@ -585,6 +592,7 @@ export class ActivityCreationComponent implements OnInit {
     }
     else{
       try {
+        console.log('up + : ', activity);
         await this._activityService.update(activity).toPromise();
       }
       catch (error){
