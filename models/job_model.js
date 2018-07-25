@@ -125,7 +125,7 @@ let job = {
     },
 
     deletebyJobId (job_id) {
-        return db.any('DELETE FROM public.job\n' +
+        return db.any('DELETE FROM public.job CASCADE\n' +
             'WHERE job_id = $1 returning job_id',
             job_id)
             .then(function (data) {

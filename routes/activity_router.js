@@ -156,7 +156,7 @@ router.delete('/delete',
             if (!data){
                 throw ERRORTYPE.NOT_FOUND;
             }
-            else if (data.activity_id_is_father == null && req.query.job_id.length > 0) {
+            else if (data.activity_id_is_father == null && req.query.job_id != null) {
                 req.deleteJob = true;
                 next()
             } else {
