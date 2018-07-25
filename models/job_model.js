@@ -125,8 +125,8 @@ let job = {
     },
 
     deletebyJobIdAndActivityId (job_id, activity_id) {
-        return db.any('DELETE FROM public.job J CASCADE\n' +
-            'WHERE J.job_id != $1 AND  EXISTS (\n' +
+        return db.any('DELETE FROM public.job J\n' +
+            'WHERE J.job_id != $1 AND EXISTS (\n' +
                 'SELECT * FROM public.activity_is_job AIJ\n' +
                 'WHERE AIJ.activity_id = $2 AND AIJ.job_id = J.job_id\n' +
             ')returning J.job_id;',
