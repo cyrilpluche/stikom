@@ -109,7 +109,7 @@ let job = {
             'WHERE EXISTS (\n' +
                 'SELECT * FROM public.activity_is_job AIJ, public.activity A\n' +
                 'WHERE AIJ.activity_id = $1 AND AIJ.job_id = J.job_id AND \n' +
-                'A.activity = AIJ.activity_id AND A.activity_type != $2 \n' +
+                'A.activity_id = AIJ.activity_id AND A.activity_type != $2 \n' +
             ')\n' +
             'returning J.job_id;',
             [activity_id, 'sop'])
