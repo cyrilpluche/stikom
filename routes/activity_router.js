@@ -182,7 +182,7 @@ router.delete('/delete/:activity',
 
 function deleteJobById (req, res, next) {
     if (req.deleteJob) {
-        require('../models/job_model').deleteByActivityId(req.params.activity)
+        require('../models/job_model').deleteNoneSuperJobByActivityId(req.params.activity)
             .then(function (data) {
                 if (!data){
                     throw ERRORTYPE.NOT_FOUND;
