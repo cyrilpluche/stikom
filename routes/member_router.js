@@ -14,14 +14,16 @@ const jwtHelpers  = require('../helpers/jwtHelpers');
 ===========================================  ROUTER GET ============================================
  */
 
-router.get('/all', function (req, res, next) {
-    modelMember.selectAll().then(function (data) {
-        for (let i = 0; i < data.length; i++) {
-            data[i].member_password = undefined
-        }
-        res.send({data: data})
-    }).catch(next)
-});
+router.get('/all',
+    function (req, res, next) {
+        modelMember.selectAll().then(function (data) {
+            for (let i = 0; i < data.length; i++) {
+                data[i].member_password = undefined
+            }
+            res.send({data: data})
+        }).catch(next)
+    }
+);
 
 router.get('/waiting_member',
     policy.requireAdmin,
@@ -35,12 +37,15 @@ router.get('/waiting_member',
     }
 );
 
-router.get('/find_one/:member', function (req, res, next) {
-    modelMember.selectById(req.params.member)
-        .then(function (data) {
-            res.json({data: data})
-        }).catch(next)
-});
+router.get('/find_one/:member',
+    function (req, res, next) {
+        modelMember.selectById(req.params.member)
+            .then(function (data) {
+                res.json({data: data})
+            }).catch(next)
+    }
+);
+
 /*
 =========================================== ROUTER POST =============================================
  */
@@ -62,7 +67,7 @@ router.post('/register',
                 seed: seed,
                 sub_department_id: req.body.sub_department_id,
                 managment_level_id: req.body.managment_level_id
-            }
+            };
             modelMember.insert(member).then(function (data) {
                 let generateLink = `${process.env.SERVER_URL}:${process.env.CLIENT_PORT}/account-validation/${seed}`;
                 console.log(generateLink);
@@ -81,7 +86,8 @@ router.post('/register',
         }).catch(function (e) {
             next(ERRORTYPE.customError(e));
         });
-    });
+    }
+);
 
 router.post('/create_admin',
     policy.requireAdmin,
@@ -143,38 +149,40 @@ router.post('/login', policy.requiresNoAuthenticateUser,// the user is already l
                 }
             }
         }).catch(next)
-    });
+    }
+);
 
 // verify the token before
-router.post('/loggedIn', function (req, res, next) {
-    jwtHelpers.jwtDecode(req, function (err, decode) {
-        if (err) {
-            next(ERRORTYPE.FORBIDDEN)
-        }
-        let member = {
-            member_id: decode.member_id,
-            member_first_name: decode.member_first_name,
-            member_name: decode.member_name,
-            member_mail: decode.member_mail,
-            member_admin: decode.member_admin,
-            member_valid: decode.member_valid,
-            sub_department_id: decode.sub_department_id,
-            managment_level_id: decode.managment_level_id,
-            seed: decode.seed
-        }
-        modelMember.exists(member).then(function (data) {
-            if (!data) {
-                throw (ERRORTYPE.FORBIDDEN);
-            } else {
-                data.member_password = undefined;
-                data.member_admin = undefined;
-                data.seed = undefined
+router.post('/loggedIn',
+    function (req, res, next) {
+        jwtHelpers.jwtDecode(req, function (err, decode) {
+            if (err) {
+                next(ERRORTYPE.FORBIDDEN)
             }
-            res.send({data: data});
-        }).catch(next);
-    })
-
-});
+            let member = {
+                member_id: decode.member_id,
+                member_first_name: decode.member_first_name,
+                member_name: decode.member_name,
+                member_mail: decode.member_mail,
+                member_admin: decode.member_admin,
+                member_valid: decode.member_valid,
+                sub_department_id: decode.sub_department_id,
+                managment_level_id: decode.managment_level_id,
+                seed: decode.seed
+            };
+            modelMember.exists(member).then(function (data) {
+                if (!data) {
+                    throw (ERRORTYPE.FORBIDDEN);
+                } else {
+                    data.member_password = undefined;
+                    data.member_admin = undefined;
+                    data.seed = undefined
+                }
+                res.send({data: data});
+            }).catch(next);
+        })
+    }
+);
 
 
 /*
@@ -187,20 +195,21 @@ router.put('/validate_member',
     policy.checkParameters(['member_id']),
     requireNullSeeder,
     function (req, res, next) {
-    modelMember.validate_login(req.body.member_id).then(function (data) {
-        let loginUrl = `${process.env.SERVER_URL}:${process.env.CLIENT_PORT}/authentification`
-        mailSender.send(data.member_mail, 'Account available',
-            `<h3 style="color: blue">An admin has validate your account !</h3>
+        modelMember.validate_login(req.body.member_id).then(function (data) {
+            let loginUrl = `${process.env.SERVER_URL}:${process.env.CLIENT_PORT}/authentification`
+            mailSender.send(data.member_mail, 'Account available',
+                `<h3 style="color: blue">An admin has validate your account !</h3>
                <br> You can now connect on the website <br>
                 <a href="${loginUrl}">login on the website</a>`,
-            [], function (err, resultat) {
-                res.json({
-                    data: data,
-                    success: true
-                })
-            });
-    }).catch(next)
-});
+                [], function (err, resultat) {
+                    res.json({
+                        data: data,
+                        success: true
+                    })
+                });
+        }).catch(next)
+    }
+);
 
 router.put('/update_password',
     policy.checkParameters(['member_mail', 'old_password', 'new_password1', 'new_password2']),
@@ -217,7 +226,8 @@ router.put('/update_password',
             if (!e.type) next(ERRORTYPE.customError(e));
             else next(e)
         });
-    });
+    }
+);
 
 router.put('/validate_registration',
     policy.requiresNoAuthenticateUser,
@@ -225,26 +235,27 @@ router.put('/validate_registration',
     requireSeed,
     function (req, res, next) {
         let validationLink = `${process.env.SERVER_URL}:${process.env.CLIENT_PORT}/admin/users`
-    modelMember.validate_seed(req.body.seed).then(function (data) {
-        return modelMember.selectAllAdmin().then(function (admins) {
-            admins.forEach(function (admin) {
-                mailSender.send(admin.member_mail,'New member created',`A new member has validate his account and 
+        modelMember.validate_seed(req.body.seed).then(function (data) {
+            return modelMember.selectAllAdmin().then(function (admins) {
+                admins.forEach(function (admin) {
+                    mailSender.send(admin.member_mail,'New member created',`A new member has validate his account and 
                 requires your validation <br>
                 <img src="cid:aaa@aa.eee" width="8%"/>
                 <p><b>mail: ${data.member_mail}</b></p><br>
                 Go on the <a href="${validationLink}">validation page </a> to validate this member`,
-                    [{filename: 'account.png', path: 'public/images/account.png', cid: 'aaa@aa.eee'}],
-                    function (err, resultat) {
-                    if (err) console.log(err)
-                        else console.log(resultat)
-                })
-            });
-            res.json({data: data});
-        }).catch(function (e) {
-            throw e
-        })
-    }).catch(next)
-});
+                        [{filename: 'account.png', path: 'public/images/account.png', cid: 'aaa@aa.eee'}],
+                        function (err, resultat) {
+                            if (err) console.log(err)
+                            else console.log(resultat)
+                        })
+                });
+                res.json({data: data});
+            }).catch(function (e) {
+                throw e
+            })
+        }).catch(next)
+    }
+);
 
 router.put('/reset_password');
 /*

@@ -5,13 +5,15 @@ const policy = require('../policy/policy_middleware');
 const ERRORTYPE = require('../policy/errorType');
 
 
-router.get('/all', function (req, res, next) {
-    modelOrganisation.selectAll().then(function (data) {
-        res.json({data: data});
-    }).catch(function (er) {
-        next(er)
-    })
-});
+router.get('/all',
+    function (req, res, next) {
+        modelOrganisation.selectAll().then(function (data) {
+            res.json({data: data});
+        }).catch(function (er) {
+            next(er)
+        })
+    }
+);
 
 router.post('/create', policy.requireAdmin,
     policy.checkParameters(['organisation_name']),
@@ -26,15 +28,17 @@ router.post('/create', policy.requireAdmin,
                 res.json ({data: data})
             }
         }).catch(next)
-    });
+    }
+);
 
 router.delete('/delete/:organisation',
     policy.requireAdmin,
     function (req, res, next) {
-    modelOrganisation.delete(req.params.organisation)
-        .then(function (data) {
-            if (!data) throw ERRORTYPE.NOT_FOUND;
-            else res.json({data: data})
-        }).catch(next)
-});
+        modelOrganisation.delete(req.params.organisation)
+            .then(function (data) {
+                if (!data) throw ERRORTYPE.NOT_FOUND;
+                else res.json({data: data})
+            }).catch(next)
+    }
+);
 module.exports = router;

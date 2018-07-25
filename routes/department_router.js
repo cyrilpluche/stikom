@@ -6,13 +6,14 @@ const ERRORTYPE = require('../policy/errorType');
 
 
 router.get('/all', policy.checkParameters(['branch']), function (req, res, next) {
-    let branch_id = req.query.branch
-    modelDepartment.selectAllByBranchId(branch_id).then(function (data) {
-        res.json({data: data});
-    }).catch(function (er) {
-        next(er);
-    })
-});
+        let branch_id = req.query.branch
+        modelDepartment.selectAllByBranchId(branch_id).then(function (data) {
+            res.json({data: data});
+        }).catch(function (er) {
+            next(er);
+        })
+    }
+);
 
 router.post('/create', 
     policy.requireAdmin,
@@ -30,16 +31,17 @@ router.post('/create',
             }
         }).catch(next)
     }
-    );
+);
 
 router.delete('/delete/:department',
     policy.requireAdmin,
     function (req, res, next) {
-    modelDepartment.delete(req.params.department)
-        .then(function (data) {
-            if (!data) throw ERRORTYPE.NOT_FOUND;
-            else res.json({data: data})
-        }).catch(next)
-});
+        modelDepartment.delete(req.params.department)
+            .then(function (data) {
+                if (!data) throw ERRORTYPE.NOT_FOUND;
+                else res.json({data: data})
+            }).catch(next)
+    }
+);
 
 module.exports = router;

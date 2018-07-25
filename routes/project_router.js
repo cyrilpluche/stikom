@@ -9,18 +9,22 @@ const ERRORTYPE = require('../policy/errorType');
 ===========================================  ROUTER GET ============================================
  */
 
-router.get('/all', function (req, res, next) {
-    modelProject.selectAll().then(function (data) {
-        res.json({data: data})
-    }).catch(next)
-});
-
-router.get('/all_from_sop/:sop', function (req, res, next) {
-    modelProject.selectAllBySopId(req.params.sop)
-        .then(function (data) {
+router.get('/all',
+    function (req, res, next) {
+        modelProject.selectAll().then(function (data) {
             res.json({data: data})
         }).catch(next)
-});
+    }
+);
+
+router.get('/all_from_sop/:sop',
+    function (req, res, next) {
+        modelProject.selectAllBySopId(req.params.sop)
+            .then(function (data) {
+                res.json({data: data})
+            }).catch(next)
+    }
+);
 
 router.get('/all_member_activity_project/:project',
     function (req, res, next) {
@@ -35,16 +39,18 @@ router.get('/all_member_activity_project/:project',
     }
 );
 
-router.get('/find_one/:project', function (req, res, next) {
-    modelProject.selectById(req.params.project)
-        .then(function (data) {
-            if (!data) {
-                throw ERRORTYPE.NOT_FOUND
-            } else {
-                res.json({data: data})
-            }
-        }).catch(next)
-});
+router.get('/find_one/:project',
+    function (req, res, next) {
+        modelProject.selectById(req.params.project)
+            .then(function (data) {
+                if (!data) {
+                    throw ERRORTYPE.NOT_FOUND
+                } else {
+                    res.json({data: data})
+                }
+            }).catch(next)
+    }
+);
 
 router.get('/all_member_activity_project_distinct/:project',
     function (req, res, next) {
@@ -153,21 +159,22 @@ router.post('/create_activity_member',
     policy.checkParameters(['member_id', 'activity_id', 'target_date', 'date_begin', 'evaluation', 'finished_date',
         'sign', 'note', 'target_quantity', 'finished_quantity', 'finished_duration']),
     function (req, res, next) {
-    let project = {
-        member_id: req.body.member_id,
-        activity_id: req.body.activity_id,
-        target_date: req.body.target_date,
-        date_begin: req.body.date_begin,
-        evaluation: req.body.evaluation ,
-        finished_date: req.body.finished_date,
-        sign: req.body.sign,
-        note: req.body.note,
-        target_quantity: req.body.target_quantity,
-        finished_quantity: req.body.finished_date,
-        finished_duration: req.body.finished_duration
-    };
+        let project = {
+            member_id: req.body.member_id,
+            activity_id: req.body.activity_id,
+            target_date: req.body.target_date,
+            date_begin: req.body.date_begin,
+            evaluation: req.body.evaluation ,
+            finished_date: req.body.finished_date,
+            sign: req.body.sign,
+            note: req.body.note,
+            target_quantity: req.body.target_quantity,
+            finished_quantity: req.body.finished_date,
+            finished_duration: req.body.finished_duration
+        };
 
-});
+    }
+);
 
 
 /*
@@ -200,7 +207,7 @@ router.put('/update_member_activity_project',
                 res.json({data: data})
             }
         }).catch(next)
-}
+    }
 );
 
 router.put('/update',

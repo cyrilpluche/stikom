@@ -4,6 +4,9 @@ const modelActivity = require('../models/activity_model');
 const policy = require('../policy/policy_middleware');
 const ERRORTYPE = require('../policy/errorType');
 
+/*
+===========================================  ROUTER GET ============================================
+ */
 
 router.get('/find_one/:activity',
     function (req, res, next) {
@@ -26,7 +29,8 @@ router.get('/all_from_sop/:sop',
                 res.json({data: data})
             }
         }).catch(next)
-});
+    }
+);
 
 router.get('/all_from_job/:job',
     function (req, res, next) {
@@ -37,7 +41,8 @@ router.get('/all_from_job/:job',
                 res.json({data: data})
             }
         }).catch(next)
-});
+    }
+);
 
 router.get('/all_from_unit/:unit',
     function (req, res, next) {
@@ -52,16 +57,18 @@ router.get('/all_from_unit/:unit',
     }
 );
 
-router.get('/all_from_project/:project', function (req, res, next) {
-    modelActivity.selectAllByProjectId(req.params.project)
-        .then(function (data) {
-            if (!data) {
-                throw ERRORTYPE.NOT_FOUND
-            } else {
-                res.json({data: data})
-            }
-        }).catch(next)
-});
+router.get('/all_from_project/:project',
+    function (req, res, next) {
+        modelActivity.selectAllByProjectId(req.params.project)
+            .then(function (data) {
+                if (!data) {
+                    throw ERRORTYPE.NOT_FOUND
+                } else {
+                    res.json({data: data})
+                }
+            }).catch(next)
+    }
+);
 
 // select every activities from every job from a projet (with units)
 router.get('/all_from_all_job_from_project/:project',
@@ -94,35 +101,44 @@ router.get('/all_from_all_job_from_project/:project',
 );
 
 
+/*
+=========================================== ROUTER POST =============================================
+ */
+
 router.post('/create',
     policy.checkParameters(['activity_title', 'activity_type_duration', 'activity_duration', 'activity_type',
         'activity_type_output', 'activity_description', 'activity_shape', 'activity_id_is_father', 'sop_id',
         'managment_level_id']),
     function (req, res, next) {
-    let isFather = req.body.activity_id_is_father;
-    if (req.body.activity_id_is_father === 'NULL') {
-        isFather = null
-    }
-    let activity = {
-        activity_title: req.body.activity_title,
-        activity_type_duration : req.body.activity_type_duration,
-        activity_duration: req.body.activity_duration,
-        activity_type: req.body.activity_type,
-        activity_type_output: req.body.activity_type_output,
-        activity_description: req.body.activity_description,
-        activity_shape: req.body.activity_shape,
-        activity_id_is_father: isFather,
-        sop_id: req.body.sop_id,
-        managment_level_id: req.body.managment_level_id
-    };
-    modelActivity.insert(activity).then(function (data) {
-        if (!data) {
-            throw ERRORTYPE.INTERNAL_ERROR
-        } else {
-            res.json({data: data});
+        let isFather = req.body.activity_id_is_father;
+        if (req.body.activity_id_is_father === 'NULL') {
+            isFather = null
         }
-    }).catch(next)
-});
+        let activity = {
+            activity_title: req.body.activity_title,
+            activity_type_duration : req.body.activity_type_duration,
+            activity_duration: req.body.activity_duration,
+            activity_type: req.body.activity_type,
+            activity_type_output: req.body.activity_type_output,
+            activity_description: req.body.activity_description,
+            activity_shape: req.body.activity_shape,
+            activity_id_is_father: isFather,
+            sop_id: req.body.sop_id,
+            managment_level_id: req.body.managment_level_id
+        };
+        modelActivity.insert(activity).then(function (data) {
+            if (!data) {
+                throw ERRORTYPE.INTERNAL_ERROR
+            } else {
+                res.json({data: data});
+            }
+        }).catch(next)
+    }
+);
+
+/*
+=========================================== ROUTER PUT ==============================================
+ */
 
 router.put('/update',
     policy.checkParameters(['activity_title', 'activity_type_duration', 'activity_duration', 'activity_type',
@@ -148,7 +164,14 @@ router.put('/update',
                 res.json({data: data});
             }
         }).catch(next)
-    });
+    }
+);
+
+
+/*
+=========================================== ROUTER DELETE ==============================================
+ */
+
 
 router.delete('/delete',
     function (req, res, next) { // get the activity
@@ -179,6 +202,10 @@ router.delete('/delete',
     }
 );
 
+
+/*
+=========================================== FUNCTION ==============================================
+ */
 
 function deleteJobById (req, res, next) {
     if (req.deleteJob) {

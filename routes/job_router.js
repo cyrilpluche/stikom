@@ -105,10 +105,10 @@ router.post('/bind_job_activity',
 router.post('/compute_end_date',
     policy.checkParameters(['jobs', 'date_begin']),
     function (req, res, next) {
-        let promises = []
-        let end_date = new Date(req.body.date_begin)
-        let jobs = req.body.jobs
-        const modelActivity = require('../models/activity_model')
+        let promises = []; // will contains an array of promises
+        let end_date = new Date(req.body.date_begin);
+        let jobs = req.body.jobs;
+        const modelActivity = require('../models/activity_model');
         for(let i = 0; i < jobs.length; i++) {
             promises.push( // get all activity with the job_id 
                 modelActivity.selectAllByJobId(jobs[i]).then(function (data) {
@@ -119,28 +119,29 @@ router.post('/compute_end_date',
 
         Promise.all(promises).then(
             function (activites) {
-                let activity_duration = 0
-                let activity_duration_MAX = 0
+                let activity_duration = 0;
+                let activity_duration_MAX = 0;
                 for (let i = 0; i < activites.length ++;) {
                     if (activites[i] !== false) {
                         for (let j = 0; j < activites[i].length; j++) {
                             // convert every times in minutes
                             switch (activites[i][j].activity_type_duration.toLowerCase())  {
                                 case 'minutes':
-                                    activity_duration = activites[i][j].activity_duration
+                                    activity_duration = activites[i][j].activity_duration;
                                     break;
                                 case 'hours':
-                                    activity_duration = activites[i][j].activity_duration * 60 // 60 minutes
+                                    activity_duration = activites[i][j].activity_duration * 60; // 60 minutes
                                     break;
                                 case 'days':
-                                    activity_duration = activites[i][j].activity_duration * 60 * 24 // 24 hours
+                                    activity_duration = activites[i][j].activity_duration * 60 * 24; // 24 hours
                                     break;
                                 case 'months':
-                                    activity_duration = activites[i][j].activity_duration * 60 * 24 * 30 // 30 days
+                                    activity_duration = activites[i][j].activity_duration * 60 * 24 * 30; // 30 days
                                     break;
                             }
 
                             if (activity_duration > activity_duration_MAX) {
+                                // if the computed duration is greater than the previous greater one
                                 activity_duration_MAX = activity_duration
                             }
                         }
@@ -149,13 +150,14 @@ router.post('/compute_end_date',
                 end_date.setMinutes(end_date.getMinutes() +  activity_duration_MAX); // add on the max duration
                 res.json({data: {end_date: end_date}})
             }
-        )
+        ).catch(next)
     }
 );
 
 /*
 =========================================== ROUTER PUT ==============================================
  */
+
 router.put('/update',
     policy.checkParameters(['job_id', 'job_name', 'job_code', 'sop_id']),
     function (req, res, next) {
