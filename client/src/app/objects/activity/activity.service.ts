@@ -72,10 +72,11 @@ export class ActivityService {
     return this.http.put(this.domain + '/api/activity/update',body,this.httpOptions);
   }
 
-  delete(activity_id) {
+  //If job_id is null => We delete only the activity. Else => we delete the activity, its sub activities, and the job linked to all of them.
+  delete(activity_id, job_id) {
     this.generateHeaders();
     console.log("activity id : ", activity_id)
-    return this.http.delete(this.domain + '/api/activity/delete/'+activity_id,this.httpOptions);
+    return this.http.delete(this.domain + '/api/activity/delete?super_activity='+job_id+'&'+'/'+activity_id,this.httpOptions);
   }
 
   generateHeaders()

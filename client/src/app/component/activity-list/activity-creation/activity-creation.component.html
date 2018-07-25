@@ -48,7 +48,7 @@
           <div class="row md-form">
             <div class="offset-1 col-10">
               <p class="text-center mb-4 text-description"> Please select a management level </p>
-              <select (change)="verification()" [(ngModel)]="new_activity.managment_level_id" name="newActivityLevelId" class="form-control">
+              <select [disabled]="step==2" (change)="verification()" [(ngModel)]="new_activity.managment_level_id" name="newActivityLevelId" class="form-control">
                 <option value="" disabled selected>Choose your management level</option>
                 <option *ngFor="let m of management_levels" value="{{m.managment_level_id}}">{{m.managment_level_label}}</option>
               </select>
@@ -59,7 +59,7 @@
           <div class="row md-form">
             <div class="offset-1 col-10">
               <p class="text-center mb-4 text-description"> Please select a unit</p>
-              <select (change)="verification()" [(ngModel)]="new_unit_id" name="unit_id_selected" class="form-control">
+              <select [disabled]="step==2" (change)="verification()" [(ngModel)]="new_unit_id" name="unit_id_selected" class="form-control">
                 <option value="" disabled selected>Choose an unit</option>
                 <option *ngFor="let u of units" value="{{u.unit_id}}">{{u.unit_name}}</option>
               </select>
@@ -70,7 +70,7 @@
           <div class="row md-form">
             <div class="offset-1 col-10">
               <p class="text-center mb-4 text-description"> Please select a duration type </p>
-              <select (change)="verification()" [(ngModel)]="new_activity.activity_type_duration" name="newActivityTypeDuration" class="form-control">
+              <select [disabled]="step==2" (change)="verification()" [(ngModel)]="new_activity.activity_type_duration" name="newActivityTypeDuration" class="form-control">
                 <option value="" disabled selected>Choose your duration type</option>
                 <option value="minutes">Minute</option>
                 <option value="hours">Hour</option>

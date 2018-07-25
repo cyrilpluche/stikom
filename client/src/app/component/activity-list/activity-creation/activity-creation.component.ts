@@ -121,8 +121,8 @@ export class ActivityCreationComponent implements OnInit {
             /* ACTIVITY DELETE */
             element['state'] = 'new_activity';
             this.deleteActivity(element);
-            await this._activityService.delete(element['super'].activity_id).toPromise();
-            await this._activityService.delete(element['activity'].activity_id).toPromise();
+            await this._activityService.delete(element['super'].activity_id, null).toPromise();
+            await this._activityService.delete(element['activity'].activity_id, this.job_sop.job_id).toPromise();
           }
           else{
             //We check its children
@@ -134,7 +134,8 @@ export class ActivityCreationComponent implements OnInit {
               //We need to delete sub activity if it's changed
               if (sub_a['action'] == 'delete' && element['action'] != 'delete'){
                 /* SUB ACTIVITY DELETE */
-                await this._activityService.delete(sub_a['activity'].activity_id).toPromise();
+                isChanged = true;
+                await this._activityService.delete(sub_a['activity'].activity_id, "").toPromise();
                 sub_a['state']='new_sub_activity';
                 this.deleteSubActivity(sub_a);
                 this.generateSuperActivity(element, -1);
@@ -448,6 +449,9 @@ export class ActivityCreationComponent implements OnInit {
     if (id != -1){
       element['activity'].activity_type = "super_activity";
       element['activity'].activity_id_is_father = id;
+    }
+    else{
+      element['super'].activity_duration = element['activity'].activity_duration;
     }
 
     for (let sub_a of element['children']){
