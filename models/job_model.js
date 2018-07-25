@@ -124,10 +124,13 @@ let job = {
             });
     },
 
-    deletebyJobId (job_id) {
-        return db.any('DELETE FROM public.job CASCADE\n' +
-            'WHERE job_id = $1 returning job_id',
-            job_id)
+    deletebyJobIdAndActivityId (job_id, activity_id) {
+        return db.any('DELETE FROM public.job J CASCADE\n' +
+            'WHERE J.job_id != $1 AND  EXISTS (\n' +
+                'SELECT * FROM public.activity_is_job AIJ\n' +
+                'WHERE AIJ.activity_id = $2 AND AIJ.job_id = J.job_id\n' +
+            ')returning job_id',
+            [job_id, activity_id])
             .then(function (data) {
                 if (data.length === 0) {
                     return false
