@@ -152,12 +152,11 @@ router.put('/update',
 
 router.delete('/delete/:activity',
     function (req, res, next) { // get the activity
-        modelActivity.selectById(req.params.activity_id).then(function (data) {
+        modelActivity.selectById(req.params.activity).then(function (data) {
             if (!data){
                 throw ERRORTYPE.NOT_FOUND;
             }
             else if (data.activity_id_is_father == null) {
-                req.activity_id = data.activity_id;
                 req.deleteJob = true;
                 next()
             } else {
@@ -183,7 +182,7 @@ router.delete('/delete/:activity',
 
 function deleteJobById (req, res, next) {
     if (req.deleteJob) {
-        require('../models/job_model').deleteByActivityId(req.activity_id)
+        require('../models/job_model').deleteByActivityId(req.params.activity)
             .then(function (data) {
                 if (!data){
                     throw ERRORTYPE.NOT_FOUND;
