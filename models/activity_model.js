@@ -135,7 +135,11 @@ let activity = {
             'WHERE activity_id = $1 returning activity_id, activity_id_is_father',
             activity_id)
             .then(function (data) {
-                return data.length !== 0
+                if (data.length === 0) {
+                    return false
+                } else {
+                    return data[0]
+                }
             }).catch(function (err) {
                 throw ERRORTYPE.customError('The server has encountred an internal error\n ' + err.toString())
             })

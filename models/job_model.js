@@ -129,7 +129,7 @@ let job = {
             'WHERE J.job_id != $1 AND  EXISTS (\n' +
                 'SELECT * FROM public.activity_is_job AIJ\n' +
                 'WHERE AIJ.activity_id = $2 AND AIJ.job_id = J.job_id\n' +
-            ')returning job_id',
+            ')returning J.job_id;',
             [job_id, activity_id])
             .then(function (data) {
                 if (data.length === 0) {
