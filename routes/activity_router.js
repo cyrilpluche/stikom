@@ -164,10 +164,10 @@ router.delete('/delete/:activity',
                 req.deleteJob = false;
                 next ()
             }
-        })
+        }).catch(next)
     },
     deleteJobById, // try to delete the job
-    function (req, res, next) {
+    function (req, res, next) { // delete the activity
         modelActivity.delete(req.params.activity)
             .then(function (data) {
                 if (!data){
