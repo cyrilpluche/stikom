@@ -122,6 +122,21 @@ let job = {
             }).catch(function (err) {
                 throw ERRORTYPE.customError('The server has encountred an internal error\n ' + err.toString());
             });
+    },
+
+    deletebyJobId (job_id) {
+        return db.any('DELETE FROM public.job\n' +
+            'WHERE job_id = $1 returning job_id',
+            job_id)
+            .then(function (data) {
+                if (data.length === 0) {
+                    return false
+                } else {
+                    return data[0]
+                }
+            }).catch(function (err) {
+                throw ERRORTYPE.customError('The server has encountred an internal error\n ' + err.toString());
+            });
     }
 };
 
