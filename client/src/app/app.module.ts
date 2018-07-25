@@ -81,7 +81,7 @@ const routes: Routes = [
   {path: 'pdf-performance-report', component: PdfPerformanceReportComponent},
   {path: 'volume-progress', component: VolumeProgressComponent},
   {path: '404', component: NotFoundComponent},
-  {path: '**', redirectTo: '/404'}
+  {path: '**', component: NotFoundComponent}
 ];
 
 @NgModule({
