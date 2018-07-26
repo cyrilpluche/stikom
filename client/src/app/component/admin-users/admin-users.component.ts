@@ -116,7 +116,7 @@ export class AdminUsersComponent implements OnInit {
       .subscribe( (res) => {
           console.log(res['data']);
           this.mdlSampleIsOpen=false;
-          this.mdlSampleIsOpen=true;
+          this.manageRoles(this.user_id,this.user_admin);
         },
         error => {
           console.log(error.message);
@@ -132,7 +132,7 @@ export class AdminUsersComponent implements OnInit {
       .subscribe( (res) => {
           console.log(res['data']);
           this.mdlSampleIsOpen=false;
-          this.mdlSampleIsOpen=true;
+          this.manageRoles(this.user_id,this.user_admin);
         },
         error => {
           console.log(error.message);

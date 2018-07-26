@@ -166,7 +166,7 @@ export class MemberService {
   grantMember(idUser,idRole){
     let body = {
       member:idUser,
-      role:idRole,
+      role_id:idRole,
     };
 
     this.generateHeaders();
