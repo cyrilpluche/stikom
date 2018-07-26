@@ -46,6 +46,7 @@ app.use('/api/managment_level', require('./routes/managment_level_router'));
 app.use('/api/project', require('./routes/project_router'));
 app.use('/api/job', require('./routes/job_router'));
 app.use('/api/unit', require('./routes/unit_router'));
+app.use('/api/pdf', require('./routes/project_router'));
 
 
 /*

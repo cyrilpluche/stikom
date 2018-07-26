@@ -13,6 +13,7 @@ client.connect().then(function () {
     console.log('Connection failed')
 })
 */
+
 let promise = require('bluebird');
 
 let options = {

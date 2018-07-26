@@ -1,0 +1,1 @@
+Folder that will contain the temporary pdf before senting it to the client
