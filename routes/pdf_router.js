@@ -17,11 +17,14 @@ function deleteFile (file) {
 
 router.post('/create', function (req, res, next) {
     let assetPath = path.join(__dirname+ '/../public/').replace(new RegExp(/\\/g), '/');
+    console.log(req.body);
     pdf.create(req.body.html,
         {
             directory: 'public/pdf/',
             format: 'Letter',
-            base: 'file:///' + assetPath //path.join(__dirname+ '/../public/images')
+            base: 'file:///' + assetPath, //path.join(__dirname+ '/../public/images')
+            orientation: 'landscape'
+
         }
     ).toStream(function (err, stream) {
         if (!err) {
