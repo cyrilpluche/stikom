@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Project} from "../../objects/project/project";
 import {ProjectService} from "../../objects/project/project.service";
+import {TextHelperComponent} from "../../helpers/text-helper/text-helper.component";
 
 @Component({
   selector: 'app-project-list',
@@ -11,10 +12,11 @@ export class ProjectListComponent implements OnInit {
 
   /* ----- Data ----- */
   errorMessage: string = "";
+  textHelper: TextHelperComponent = new TextHelperComponent();
   projects: Project[];
   project_selected: Project = new Project();
-  buttonsTitles: string [] = ['Set up project informations', 'Master of work', 'Set up Gantt', 'Volume Progress'];
-  buttonsLinks: string [] = ['', '', 'gantt-creation', 'volume-progress'];
+  buttonsTitles: string [] = ['Project information', 'Master of work', 'Gantt', 'Volume Progress'];
+  buttonsLinks: string [] = ['project', '', 'gantt-creation', 'volume-progress'];
 
   constructor(private _projectService: ProjectService) { }
 

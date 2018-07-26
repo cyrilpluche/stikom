@@ -14,6 +14,4 @@ export class GanttComponent implements OnInit {
   ngOnInit() {
   }
 
-  load
-
 }

@@ -215,23 +215,23 @@ export class SopCreationComponent implements OnInit {
 
       let sop_rules = "";
       for (let r of this.rules) {
-        sop_rules += r;
+        sop_rules += r+', ';
       }
       let sop_warning = "";
       for (let w of this.warnings) {
-        sop_rules += w;
+        sop_warning += w+', ';
       }
       let sop_staff_qualification = "";
       for (let s of this.staffQualifications) {
-        sop_staff_qualification += s;
+        sop_staff_qualification += s+', ';
       }
       let sop_tools = "";
       for (let t of this.supportingTools) {
-        sop_tools += t;
+        sop_tools += t+', ';
       }
       let sop_type_reports = "";
       for (let t of this.typesFormsReports) {
-        sop_type_reports += t;
+        sop_type_reports += t+', ';
       }
 
       await this._sopService.createSop(

@@ -38,7 +38,7 @@
           <tbody>
           <!-- elements[0]: activity_id && elements[1]: activity && elements[2]: m_a_p && elements[3]: members linked -->
             <tr *ngFor="let element of elements">
-              <td (click)="selectRow(element)"><a>{{element['job'].job_name}}</a></td>
+              <td (click)="selectRow(element)"><a>{{element['job'].job_id}}</a></td>
               <td (click)="selectRow(element)"><a>{{element['activity'].activity_title}}</a></td>
               <td>
                 <input (change)="minMaxBeginDates(element)" [(ngModel)]="elements[elements.indexOf(element)]['date_target']" min="{{element['min_date_target'] | date:'yyyy-MM-dd'}}" max="{{element['max_date_target'] | date:'yyyy-MM-dd'}}" type="date" class="form-control">

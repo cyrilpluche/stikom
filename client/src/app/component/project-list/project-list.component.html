@@ -6,7 +6,10 @@
     </div>
   </div>
 
-  <div class="row row-first justify-content-end">
+  <div class="row row-first justify-content-between">
+
+    <ng-controller class="row ">
+    </ng-controller>
     <div class=" md-form" id="search-bar">
       <input id="search" (keyup)="search()" class="form-control" type="text" placeholder="Search" aria-label="Search">
     </div>
@@ -15,7 +18,7 @@
   <div class="row justify-content-center">
 
   <!--Table-->
-    <table class="col-12 table table-borderless table-hover table-fixed" id="project-table">
+    <table class="col-12 table hoverable table-borderless table-hover table-fixed" id="project-table">
 
       <!--Table head-->
       <thead class="">
@@ -36,8 +39,8 @@
         <td scope="row">
           <a data-toggle="modal" data-target="#actionModal"><i class="fa fa-cog text-blue"></i></a>
         </td>
-        <td>{{project.project_code}}</td>
-        <td>{{project.project_title.substr(0,50)}}</td>
+        <td>{{project.project_id}}</td>
+        <td>{{textHelper.firstLetterUpperCase(project.project_title.substr(0,50))}}</td>
         <td>{{project.project_start | date:"MM/dd/yyyy"}}</td>
         <td>{{project.project_end | date:"MM/dd/yyyy"}}</td>
         <td>
