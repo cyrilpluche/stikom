@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const path = require('path');
+const ERRORTYPE = require('../policy/errorType');
 // const fs = require('fs');
 const pdf = require('html-pdf');
 
@@ -14,7 +15,7 @@ function deleteFile (file) {
     });
 }
 
-router.post('/create', function (req, res) {
+router.post('/create', function (req, res, next) {
     let assetPath = path.join(__dirname+ '/../public/').replace(new RegExp(/\\/g), '/');
     pdf.create(req.body.html,
         {
@@ -32,7 +33,8 @@ router.post('/create', function (req, res) {
                 deleteFile(pdfName);
             }) */
         } else {
-            res.status(400).send({error: err.toString()});
+            next(ERRORTYPE.customError(err.toString(), 'Error', 400));
+            // res.status(400).send({error: err.toString()});
         }
     })
     /*pdf.create(req.body.html).toFile(pdfName, function (err, r) {
