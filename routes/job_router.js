@@ -121,7 +121,7 @@ router.post('/compute_end_date',
             function (activites) {
                 let activity_duration = 0;
                 let activity_duration_MAX = 0;
-                for (let i = 0; i < activites.length ++;) {
+                for (let i = 0; i < activites.length; i++) {
                     if (activites[i] !== false) {
                         for (let j = 0; j < activites[i].length; j++) {
                             // convert every times in minutes

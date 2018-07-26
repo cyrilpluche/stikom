@@ -59,7 +59,7 @@ router.get('/findOne/:sopId',
         }).catch(next)
     });
 
-router.put('/verification',
+router.put('/update',
     policy.requireSpecificRight(ROLE.Planner),
     policy.checkParameters(['sop_title', 'sop_approvment', 'sop_rules', 'sop_warning', 'sop_staff_qualification',
     'sop_tools', 'sop_type_reports', 'sop_objectives']),
