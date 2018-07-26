@@ -111,7 +111,7 @@ router.post('/compute_end_date',
         const modelActivity = require('../models/activity_model');
         for(let i = 0; i < jobs.length; i++) {
             promises.push( // get all activity with the job_id 
-                modelActivity.selectAllByJobId(jobs[i]).then(function (data) {
+                modelActivity.selectAllByJobId(jobs[i].job_id).then(function (data) {
                     return data
                 })
             )
