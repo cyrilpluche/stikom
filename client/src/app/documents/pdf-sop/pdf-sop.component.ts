@@ -51,35 +51,7 @@ export class PdfSopComponent implements OnInit {
   activities = [];
 
 
-  htmlPDF:string = `<html>
-<head>
-<style>
-table, th, td {
-    border: 1px solid black;
-}
-</style>
-</head>
-<body>
-
-<table>
-  <tr>
-    <th>Month</th>
-    <th>Savings</th>
-    <th>Savings for holiday!</th>
-  </tr>
-  <tr>
-    <td>January</td>
-    <td>$100</td>
-    <td rowspan="2">$50</td>
-  </tr>
-  <tr>
-    <td>February</td>
-    <td>$80</td>
-  </tr>
-</table>
-
-</body>
-</html>`;
+  htmlPDF:string;
 
 
 
@@ -106,7 +78,7 @@ table, th, td {
         console.log(this.sop_title);
         //console.log("date de creation : "+ );
         console.log("fin");
-        //this.download(this.sop_title);
+        this.download(`sop.pdf`);
 
       }, 1000);
 
@@ -120,13 +92,55 @@ table, th, td {
         console.log(this.sop_title);
         //console.log("date de creation : "+ );
         console.log("fin project");
-        this.download();
+        this.filupPDF();
+        this.download(`projet.pdf`);
 
       }, 2000);
     }
   }
 
-  async download()
+  filupPDF()
+  {
+    this.htmlPDF  = `<html>
+<head>
+<style>
+ td {
+    border: 1px solid black;
+}
+</style>
+</head>
+<body>
+
+<table style="width: 90%; margin-left: 5%;margin-top: 15mm;">
+  <tr>
+    <td style="width: 20%" rowspan="4"> Photo</td>
+    <td style="width: 40%">`+this.organisation_name+`</td>
+    <td style="width: 20%">SOP Number</td>
+    <td style="width: 20%">`+this.sop_id+`</td>
+  </tr>
+  <tr>
+    <td>`+this.branch_name+`</td>
+    <td>Creation Date</td>
+    <td>`+new DatePipe('en-US').transform(this.sop_creation, 'dd-MM-yyyy')+`</td>
+  </tr>
+  <tr>
+    <td>`+this.department_name+`</td>
+    <td>Revision Date</td>
+    <td>`+new DatePipe('en-US').transform(this.sop_revision, 'dd-MM-yyyy')+`</td>
+  </tr>
+  <tr>
+    <td>`+this.sub_department_name+`</td>
+    <td>Published Date</td>
+    <td>`+new DatePipe('en-US').transform(this.sop_published, 'dd-MM-yyyy')+`</td>
+  </tr>
+ 
+</table>
+
+</body>
+</html>`;
+  }
+
+  async download(nom)
   {
     await this._pdfService.generatePdf(this.htmlPDF)
       .subscribe( (res) => {
