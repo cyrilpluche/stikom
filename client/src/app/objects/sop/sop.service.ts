@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { environment } from '../../../environments/environment';
 import {Router} from "@angular/router";
+import {Project} from "../project/project";
+import {Sop} from "./sop";
 
 @Injectable({
   providedIn: 'root'
@@ -31,6 +33,25 @@ export class SopService {
     this.generateHeaders();
 
     return this.http.post(this.domain + '/api/sop/create',body,this.httpOptions);
+  }
+
+  updateSop(sop: Sop) {
+    let body = {
+      sop_id: sop.sop_id,
+      sop_title: sop.sop_title,
+      sop_approvment: sop.sop_approvment,
+      sop_creation: sop.sop_creation,
+      sop_objectives: sop.sop_objectives,
+      sop_published: sop.sop_published,
+      sop_revision: sop.sop_revision,
+      sop_rules: sop.sop_rules,
+      sop_staff_qualification: sop.sop_staff_qualification,
+      sop_tools: sop.sop_tools,
+      sop_type_reports: sop.sop_type_reports,
+      sop_warning: sop.sop_warning
+    };
+    this.generateHeaders();
+    return this.http.put(this.domain + '/api/sop/update',body,this.httpOptions);
   }
 
   selectAll(){

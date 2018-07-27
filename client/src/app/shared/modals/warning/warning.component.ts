@@ -27,7 +27,6 @@ export class WarningComponent implements OnInit {
       this.router.navigate(['/',this.link]);
     }
     else {
-      console.log("Get out");
       this.success.emit(true);
     }
   }

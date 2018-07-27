@@ -50,6 +50,7 @@ import { LoaderComponent } from './shared/Loader/loader/loader.component';
 import { VolumeProgressComponent } from './component/project-list/volume-progress/volume-progress.component';
 import { NotFoundComponent } from './component/not-found/not-found/not-found.component';
 import { TextHelperComponent } from './helpers/text-helper/text-helper.component';
+import { ActivityUpdateComponent } from './shared/modals/activity-update/activity-update.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -130,7 +131,8 @@ const routes: Routes = [
     LoaderComponent,
     VolumeProgressComponent,
     NotFoundComponent,
-    TextHelperComponent
+    TextHelperComponent,
+    ActivityUpdateComponent
   ],
   imports: [
     HttpClientModule,
