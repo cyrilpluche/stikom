@@ -148,7 +148,7 @@ router.post('/compute_end_date',
                     }
                 }
                 end_date.setMinutes(end_date.getMinutes() +  activity_duration_MAX); // add on the max duration
-                res.json({data: {end_date: end_date}})
+                res.json({data: {end_date: end_date}});
             }
         ).catch(next)
     }
@@ -200,5 +200,19 @@ function containsActivitySop (activities) {
         }
         return resultat
     }
+}
+
+
+function numberOfSunder (dateBegin, dateEnd) {
+    let totalSundays = 0;
+    let date = dateBegin;
+    while (date <= dateEnd){
+        if (date.getDay() === 0){
+            totalSundays++;
+        }
+        date.setDate(date.getDate() + 1); // add A day
+    }
+
+    return totalSundays
 }
 module.exports = router;
