@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { SopService } from "../../objects/sop/sop.service";
 import { Sop } from "../../objects/sop/sop";
+import {TextHelperComponent} from "../../helpers/text-helper/text-helper.component";
+
 
 @Component({
   selector: 'app-sop-list',
@@ -11,6 +13,7 @@ export class SopListComponent implements OnInit {
 
   /* ----- Data ----- */
   errorMessage: string = "";
+  textHelper: TextHelperComponent = new TextHelperComponent();
   sopList: [Sop];
   sopSelected: Sop = new Sop();
   buttonsTitles: string [] = ['SOP informations', 'Set up activites'];

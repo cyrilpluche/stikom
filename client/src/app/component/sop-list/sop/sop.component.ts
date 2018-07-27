@@ -20,6 +20,7 @@ export class SopComponent implements OnInit {
   sop_id: string="";
   project_id: string="";
   sop: Sop;
+  isEditable: boolean = false;
 
   units: Unit[] = [];
   activities = new Map;
@@ -87,6 +88,10 @@ export class SopComponent implements OnInit {
   //Convert map to array to use it in the view
   convertMap(map){
     return Array.from(map.values());
+  }
+
+  makeEditable() {
+    this.isEditable = !this.isEditable;
   }
 
 }

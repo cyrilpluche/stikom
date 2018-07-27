@@ -20,107 +20,115 @@
 
     <div class="card card-cascade hoverable">
         <div class="row card-body card-body-cascade">
-          <a class="col-12 text-center">
-            <ng-controller data-toggle="collapse" data-target="#sop" aria-expanded="false" aria-controls="sop">STANDARD OPERATIONAL PROCEDURE - {{sop.sop_title.toUpperCase()}}</ng-controller>
+          <a class="col-12 text-center " data-toggle="collapse" data-target="#sop" aria-expanded="false" aria-controls="sop">
+            <ng-controller>STANDARD OPERATIONAL PROCEDURE - {{sop.sop_title.toUpperCase()}}</ng-controller>
           </a>
 
           <ng-controller class="col-12 collapse" id="sop">
-            <div class="row row-first">
-              <div class="col-sm-12 col-lg-3">
-                <p class="font-weight-bold">SOP number</p>
-              </div>
-              <div class="col-sm-12 col-lg-9 ">
-                <p class="float-lg-left float-sm-right">{{sop.sop_id}}</p>
-              </div>
-            </div>
-
-            <div class="row">
-              <div class="col-sm-12 col-lg-3">
-                <p class="font-weight-bold">Creation date</p>
-              </div>
-              <div class="col-sm-12 col-lg-9 ">
-                <p class="float-lg-left float-sm-right">{{ sop.sop_creation | date:'medium' }}</p>
+            <div class="row justify-content-center">
+              <div class="col-12 center-block anil_nepal">
+                <label class="switch switch-left-right">
+                  <input class="switch-input" type="checkbox" (click)="makeEditable()">
+                  <span class="switch-label" data-on="Editable" data-off="OFF"></span> <span class="switch-handle"></span> </label>
               </div>
             </div>
 
             <div class="row">
-              <div class="col-sm-12 col-lg-3">
-                <p class="font-weight-bold">Revision date</p>
+              <div class="col-3 font-weight-bold">
+                <p>SOP number</p>
               </div>
-              <div class="col-sm-12 col-lg-9 ">
-                <p class="float-lg-left float-sm-right">{{ sop.sop_revision | date:'medium' }}</p>
-              </div>
-            </div>
-
-            <div class="row">
-              <div class="col-sm-12 col-lg-3">
-                <p class="font-weight-bold">Published date</p>
-              </div>
-              <div class="col-sm-12 col-lg-9 ">
-                <p class="float-lg-left float-sm-right">{{ sop.sop_published | date:'medium' }}</p>
+              <div class="col-8">
+                <input [disabled]="true" [(ngModel)]="sop.sop_id" type="text" class="form-control">
               </div>
             </div>
 
             <div class="row">
-              <div class="col-sm-12 col-lg-3">
-                <p class="font-weight-bold">Approved by</p>
+              <div class="col-3 font-weight-bold">
+                <p>Creation date</p>
               </div>
-              <div class="col-sm-12 col-lg-9 ">
-                <p class="float-lg-left float-sm-right">{{ sop.sop_approvment }}</p>
-              </div>
-            </div>
-
-            <div class="row">
-              <div class="col-sm-12 col-lg-3">
-                <p class="font-weight-bold">Base Rule / Regulation</p>
-              </div>
-              <div class="col-sm-12 col-lg-9 ">
-                <p class="float-lg-left float-sm-right">{{ sop.sop_rules }}</p>
+              <div class="col-8">
+                <input [disabled]="true" [(ngModel)]="sop.sop_creation" type="date" class="form-control">
               </div>
             </div>
 
             <div class="row">
-              <div class="col-sm-12 col-lg-3">
-                <p class="font-weight-bold">Staff qualifications</p>
+              <div class="col-3 font-weight-bold">
+                <p>Revision date</p>
               </div>
-              <div class="col-sm-12 col-lg-9 ">
-                <p class="float-lg-left float-sm-right">{{ sop.sop_staff_qualification }}</p>
-              </div>
-            </div>
-
-            <div class="row">
-              <div class="col-sm-12 col-lg-3">
-                <p class="font-weight-bold">Supporting tools</p>
-              </div>
-              <div class="col-sm-12 col-lg-9 ">
-                <p class="float-lg-left float-sm-right">{{ sop.sop_tools }}</p>
+              <div class="col-8">
+                <input [disabled]="!isEditable" [(ngModel)]="sop.sop_revision" type="date" class="form-control">
               </div>
             </div>
 
             <div class="row">
-              <div class="col-sm-12 col-lg-3">
-                <p class="font-weight-bold">Warning</p>
+              <div class="col-3 font-weight-bold">
+                <p>Published date</p>
               </div>
-              <div class="col-sm-12 col-lg-9 ">
-                <p class="float-lg-left float-sm-right">{{ sop.sop_warning }}</p>
-              </div>
-            </div>
-
-            <div class="row">
-              <div class="col-sm-12 col-lg-3">
-                <p class="font-weight-bold">Types of forms and reports</p>
-              </div>
-              <div class="col-sm-12 col-lg-9 ">
-                <p class="float-lg-left float-sm-right">{{ sop.sop_type_reports }}</p>
+              <div class="col-8">
+                <input [disabled]="!isEditable" [(ngModel)]="sop.sop_published" type="date" class="form-control">
               </div>
             </div>
 
             <div class="row">
-              <div class="col-sm-12 col-lg-3">
-                <p class="font-weight-bold">Objective by</p>
+              <div class="col-3 font-weight-bold">
+                <p>Approved by</p>
               </div>
-              <div class="col-sm-12 col-lg-9 ">
-                <p class="float-lg-left float-sm-right">{{ sop.sop_objectives }}</p>
+              <div class="col-8">
+                <input [disabled]="!isEditable" [(ngModel)]="sop.sop_approvment" type="text" class="form-control">
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-3 font-weight-bold">
+                <p>Base Rule / Regulation</p>
+              </div>
+              <div class="col-8">
+                <input [disabled]="!isEditable" [(ngModel)]="sop.sop_rules" type="text" class="form-control">
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-3 font-weight-bold">
+                <p>Staff qualifications</p>
+              </div>
+              <div class="col-8">
+                <input [disabled]="!isEditable" [(ngModel)]="sop.sop_staff_qualification" type="text" class="form-control">
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-3 font-weight-bold">
+                <p>Supporting tools</p>
+              </div>
+              <div class="col-8">
+                <input [disabled]="!isEditable" [(ngModel)]="sop.sop_tools" type="text" class="form-control">
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-3 font-weight-bold">
+                <p>Warning</p>
+              </div>
+              <div class="col-8">
+                <input [disabled]="!isEditable" [(ngModel)]="sop.sop_warning" type="text" class="form-control">
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-3 font-weight-bold">
+                <p>Types of forms and reports</p>
+              </div>
+              <div class="col-8">
+                <input [disabled]="!isEditable" [(ngModel)]="sop.sop_type_reports" type="text" class="form-control">
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-3 font-weight-bold">
+                <p>Objective</p>
+              </div>
+              <div class="col-8">
+                <input [disabled]="!isEditable" [(ngModel)]="sop.sop_objectives" type="text" class="form-control">
               </div>
             </div>
           </ng-controller>
