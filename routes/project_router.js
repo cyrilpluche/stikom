@@ -9,6 +9,19 @@ const ERRORTYPE = require('../policy/errorType');
 ===========================================  ROUTER GET ============================================
  */
 
+router.get('/find_one/:project',
+    function (req, res, next) {
+        modelProject.selectById(req.params.project)
+            .then(function (data) {
+                if (!data) {
+                    throw ERRORTYPE.NOT_FOUND
+                } else {
+                    res.json({data: data})
+                }
+            }).catch(next)
+    }
+);
+
 router.get('/all',
     function (req, res, next) {
         modelProject.selectAll().then(function (data) {
@@ -28,7 +41,7 @@ router.get('/all_from_sop/:sop',
 
 router.get('/all_member_activity_project/:project',
     function (req, res, next) {
-        modelProject.selectAllMemberActivityProjectByProject_id(req.params.project)
+        modelProject.selectAllMemberActivityProjectByProjectId(req.params.project)
             .then(function (data) {
                 if (!data) {
                     throw ERRORTYPE.NOT_FOUND
@@ -39,9 +52,9 @@ router.get('/all_member_activity_project/:project',
     }
 );
 
-router.get('/find_one/:project',
+router.get('/all_member_activity_project_full/:project',
     function (req, res, next) {
-        modelProject.selectById(req.params.project)
+        modelProject.selectAllMemberActivityProjectByProjectIdFull(req.params.project)
             .then(function (data) {
                 if (!data) {
                     throw ERRORTYPE.NOT_FOUND
@@ -51,10 +64,11 @@ router.get('/find_one/:project',
             }).catch(next)
     }
 );
+
 
 router.get('/all_member_activity_project_distinct/:project',
     function (req, res, next) {
-        modelProject.selectAllIdMemberActivityProjectByProject_id(req.params.project)
+        modelProject.selectAllIdMemberActivityProjectByProjectId(req.params.project)
             .then(function (data) {
                 if (!data) {
                     throw ERRORTYPE.NOT_FOUND
@@ -65,6 +79,20 @@ router.get('/all_member_activity_project_distinct/:project',
     }
 );
 
+
+router.get('/volume_progress_days/:project',
+    function (req, res, next) {
+        modelProject.selectById(req.params.project)
+            .then(function (project) {
+                if (!project) {
+                    throw ERRORTYPE.NOT_FOUND
+                } else {
+                    let date_begin = new Date(project.project_start)
+                    let date_end = new Date(project.project_end)
+                }
+            }).catch(next)
+    }
+);
 /*
 =========================================== ROUTER POST =============================================
  */
