@@ -49,6 +49,7 @@ import { GanttCreationComponent } from './component/gantt/gantt-creation/gantt-c
 import { LoaderComponent } from './shared/Loader/loader/loader.component';
 import { VolumeProgressComponent } from './component/project-list/volume-progress/volume-progress.component';
 import { NotFoundComponent } from './component/not-found/not-found/not-found.component';
+import { TextHelperComponent } from './helpers/text-helper/text-helper.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -128,7 +129,8 @@ const routes: Routes = [
     GanttCreationComponent,
     LoaderComponent,
     VolumeProgressComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    TextHelperComponent
   ],
   imports: [
     HttpClientModule,

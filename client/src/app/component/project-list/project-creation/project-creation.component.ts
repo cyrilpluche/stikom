@@ -23,6 +23,7 @@ import {OrganisationService} from "../../../objects/organisation/organisation.se
 import {SubDepartmentService} from "../../../objects/sub_department/sub-department.service";
 import {BranchService} from "../../../objects/branch/branch.service";
 import {DepartmentService} from "../../../objects/department/department.service";
+import {TextHelperComponent} from "../../../helpers/text-helper/text-helper.component";
 
 @Component({
   selector: 'app-project-creation',
@@ -33,6 +34,7 @@ export class ProjectCreationComponent implements OnInit {
 
   /* ----- Data ----- */
   errorMessage: string = "";
+  unitsReady = false;
   formReady = false;
 
   // {unit:Unit, detail: {activities [Activities], grouped:boolean, job: Job} }
@@ -41,6 +43,8 @@ export class ProjectCreationComponent implements OnInit {
   new_project: Project;
   new_project_start: any;
   new_project_end: any;
+  minimum_project_end: any;
+  minimum_project_start: any;
 
   sop_selected: Sop;
   jobs_selected = new Map();
@@ -67,6 +71,7 @@ export class ProjectCreationComponent implements OnInit {
   departments: Department[];
   sub_departments: SubDepartment[];
   new_sub_department: SubDepartment;
+  textHelper: TextHelperComponent = new TextHelperComponent();
 
   constructor(private _sopService: SopService,
               private _jobService: JobService,
@@ -78,13 +83,12 @@ export class ProjectCreationComponent implements OnInit {
               private _organisationService: OrganisationService,
               private _branchService: BranchService,
               private _departmentService: DepartmentService,
-              private _subDepartmentService: SubDepartmentService,) {
+              private _subDepartmentService: SubDepartmentService) {
   }
 
   async ngOnInit() {
     this.stepSelected = 0 ;
-    this.initializeProject();
-
+    this.new_project = new Project();
     await this.loadSops();
     await this.loadOrganisations();
     await this.loadMembers();
@@ -92,14 +96,24 @@ export class ProjectCreationComponent implements OnInit {
     console.log(this.organisation_elements);
   }
 
-  //We create the new project with the right date end
-  initializeProject(){
-    this.new_project = new Project();
+  //We set the right dates to the new project
+  async initializeProject(){
     let start = new Date();
+    this.minimum_project_start = moment(start).format('YYYY-MM-DD');
+    start = new Date();
     this.new_project_start = moment(start).format('YYYY-MM-DD');
-    let end = new Date();
-    end.setMonth(end.getMonth()+1);
-    this.new_project_end = moment(end).format('YYYY-MM-DD');
+
+    let jobs = Array.from(this.jobs_selected.values());
+    let jobs_selected = [];
+    for (let j of jobs){
+      jobs_selected.push(j['job']);
+    }
+    let p = await this._jobService.computeDateEnd(jobs_selected, this.new_project_start).toPromise();
+    let p2 = new Date(p['data']['end_date']);
+
+    //We get the minimum date
+    this.new_project_end = moment(p2).format('YYYY-MM-DD');
+    this.checkEndDate();
   }
 
   //We get all SOP from database
@@ -404,51 +418,50 @@ export class ProjectCreationComponent implements OnInit {
      this.new_project.project_work_code = project_work_code;
      this.new_project.project_code = project_code;
 
-     // Temporary
-    try {
-      this.errorMessage = "";
-      this.new_project.sub_department_id = this.new_sub_department.department_id.toString();
-    }
-    catch (error) {
-      this.errorMessage = error.message;
-    }
+     try {
+       this.errorMessage = "";
+       this.new_project.sub_department_id = this.new_sub_department.department_id.toString();
+     }
+     catch (error) {
+       this.errorMessage = error.message;
+     }
 
-    //We set seconds, minutes, hours to default value with this process
-    this.new_project.project_start = new Date (this.new_project_start);
-    this.new_project.project_end = new Date (this.new_project_end);
-    this.new_project.project_start = new Date(this.new_project.project_start.getFullYear(), this.new_project.project_start.getMonth(), this.new_project.project_start.getDate());
-    this.new_project.project_end = new Date(this.new_project.project_end.getFullYear(), this.new_project.project_end.getMonth(), this.new_project.project_end.getDate());
+     //We set seconds, minutes, hours to default value with this process
+     this.new_project.project_start = new Date (this.new_project_start);
+     this.new_project.project_end = new Date (this.new_project_end);
+     this.new_project.project_start = new Date(this.new_project.project_start.getFullYear(), this.new_project.project_start.getMonth(), this.new_project.project_start.getDate());
+     this.new_project.project_end = new Date(this.new_project.project_end.getFullYear(), this.new_project.project_end.getMonth(), this.new_project.project_end.getDate());
 
-    //We insert the project
-    try {
-      let project_id = await this._projectService.createProject(this.new_project).toPromise();
-      this.errorMessage = "";
-      this.new_project.project_id = project_id['data']['project_id'];
-    }
-    catch (error) {
-      this.errorMessage = error.message;
-    }
+     //We insert the project
+     try {
+       let project_id = await this._projectService.createProject(this.new_project).toPromise();
+       this.errorMessage = "";
+       this.new_project.project_id = project_id['data']['project_id'];
+     }
+     catch (error) {
+       this.errorMessage = error.message;
+     }
 
-    //We have the project id, now we can insert into project_has_job
-    try {
-      this.errorMessage = "";
-      let vm = this;
-      await this.jobs_selected.forEach(async function(value, key){
-        await vm._projectService.bindProjectJob(vm.new_project.project_id, key).toPromise();
-      });
-    }
-    catch (error) {
-      this.errorMessage = error.message;
-    }
+     //We have the project id, now we can insert into project_has_job
+     try {
+       this.errorMessage = "";
+       let vm = this;
+       await this.jobs_selected.forEach(async function(value, key){
+         await vm._projectService.bindProjectJob(vm.new_project.project_id, key).toPromise();
+       });
+     }
+     catch (error) {
+       this.errorMessage = error.message;
+     }
 
-    //We have the project id, now we can insert in member_unit_project and member_activity_project
-    await this.bindMemberUnitProject();
+     //We have the project id, now we can insert in member_unit_project and member_activity_project
+     await this.bindMemberUnitProject();
 
-    await this.bindMemberActivityProject();
+     await this.bindMemberActivityProject();
 
-    if (this.errorMessage == ""){
-      this.router.navigate(['/project-list']);
-    }
+     if (this.errorMessage == ""){
+       this.router.navigate(['/project-list']);
+     }
    }
 
   async bindMemberUnitProject(){
@@ -506,13 +519,57 @@ export class ProjectCreationComponent implements OnInit {
     }
   }
 
-  isFormReady(){
+  isUnitsReady(){
     let answer = true;
     for (let element of this.elements){
       if (element['detail']['members'].length == 0){
         answer = false;
       }
     }
-    this.formReady = answer;
+    this.unitsReady = answer;
   }
+
+  async checkEndDate(){
+    let jobs = Array.from(this.jobs_selected.values());
+    let jobs_selected = [];
+    for (let j of jobs){
+      jobs_selected.push(j['job']);
+    }
+    let p = await this._jobService.computeDateEnd(jobs_selected, this.new_project_start).toPromise();
+    let p2 = new Date(p['data']['end_date']);
+
+    //We get the minimum date
+    this.minimum_project_end = moment(p2).format('YYYY-MM-DD');
+
+    //We change the end date if needed
+    let d1 = new Date(this.new_project_end);
+    let d2 = new Date(this.minimum_project_end);
+    if(d1<d2){
+      let d = new Date(this.minimum_project_end)
+      this.new_project_end = moment(d).format('YYYY-MM-DD');
+    }
+    console.log('mini : ', this.minimum_project_end);
+  }
+
+  search() {
+    // Declare variables
+    var input, filter, select, option, option1, option2, i;
+    input = document.getElementById("search");
+    filter = input.value.toUpperCase();
+    select = document.getElementById("select-member");
+    option = select.getElementsByTagName("option");
+
+    // Loop through all table rows, and hide those who don't match the search query
+    for (i = 0; i < option.length; i++) {
+      option1 = option[i];
+      if (option1) {
+        if (option1.innerHTML.toUpperCase().indexOf(filter) > -1) {
+          option1.style.display = "";
+        } else {
+          option1.style.display = "none";
+        }
+      }
+    }
+  }
+
 }

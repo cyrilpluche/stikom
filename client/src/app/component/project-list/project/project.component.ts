@@ -2,6 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import {ProjectService} from "../../../objects/project/project.service";
 import {OrganisationService} from "../../../objects/organisation/organisation.service";
 import {Project} from "../../../objects/project/project";
+import {Organisation} from "../../../objects/organisation/organisation";
+import {Branch} from "../../../objects/branch/branch";
+import {Department} from "../../../objects/department/department";
+import {SubDepartment} from "../../../objects/sub_department/sub-department";
+import {Router} from "@angular/router";
+import {BranchService} from "../../../objects/branch/branch.service";
+import {SubDepartmentService} from "../../../objects/sub_department/sub-department.service";
+import {DepartmentService} from "../../../objects/department/department.service";
 
 @Component({
   selector: 'app-project',
@@ -10,146 +18,188 @@ import {Project} from "../../../objects/project/project";
 })
 export class ProjectComponent implements OnInit {
 
-  project_id:string;
-
-  updating:boolean=false;
-
-  project_title:string;
-  project_code:string;
-  project_work_code:string;
-  project_start:Date;
-  project_end:Date;
-  sub_department_id:string;
-
-  organisation_name:string="unknown";
-  branch_name:string="unknown";
-  department_name:string="unknown";
-  sub_department_name:string="unknown";
-
-  new_project_title:string;
-  new_project_code:string;
-  new_project_work_code:string;
-  new_project_start:Date;
-  new_project_end:Date;
-
-
+  /* ----- Data ----- */
   errorMessage: string = "";
-  displayEnd: boolean = false;
-  title:string;
-  text:string;
+  project_id: string;
+  project: Project;
+  isEditable: boolean = false;
+  ready: boolean = false;
 
+  //Manage the disabled function of organisations selects
+  pick_level: number = 1;
+  organisation_elements: Object[] = [];
+  branchs: Branch[];
+  departments: Department[];
+  sub_departments: SubDepartment[];
 
+  organisation: Object;
+  branch: Object;
+  department: Object;
+  sub_department: SubDepartment;
 
   constructor(private _projectService: ProjectService,
-              private _organisationService: OrganisationService) { }
+              private _organisationService: OrganisationService,
+              private router: Router,
+              private _branchService: BranchService,
+              private _departmentService: DepartmentService,
+              private _subDepartmentService: SubDepartmentService) { }
 
-  ngOnInit() {
-
+  async ngOnInit() {
     this.project_id=localStorage.getItem("Project_id");
-    //localStorage.removeItem("Sop_id");
-
-    this.getProject(this.project_id);
-    setTimeout(() => {
-      console.log(this.project_id);
-
-
-    }, 400);
-
+    await this.loadProject();
+    await this.loadOrganisations();
+    await this.loadOrganisationFromProject();
+    this.ready = true;
+    console.log(this.organisation_elements);
+    console.log(this.organisation, this.branch, this.department, this.sub_department);
   }
 
-  async getProject(idProject: string){
-
-    await this._projectService.getProject(idProject)
-      .subscribe( (res) => {
-          console.log(res['data']);
-          //this.res=res['data'];
-
-          this.project_title=res['data']['project_title'];
-          this.project_code=res['data']['project_code'];
-          this.project_work_code=res['data']['project_work_code'];
-          this.project_start=res['data']['project_start'];
-          this.project_end=res['data']['project_end'];
-          this.sub_department_id=res['data']['sub_department_id'];
-
-          this.getOrganisation(res['data']['sub_department_id']);
-
-
-
-
-        },
-        error => {
-          console.log("ERREUR : ",error);
-
-        });
+  async loadProject(){
+    try{
+      let s = await this._projectService.getProject(this.project_id).toPromise();
+      this.project = s['data'] as Project;
+    }
+    catch(error){
+      this.errorMessage = error.message;
+    }
   }
 
-
-  async getOrganisation(idSubDepartment: string){
-    await this._organisationService.selectSchema(idSubDepartment)
-      .subscribe( (res) => {
-          console.log(res['data']);
-          this.sub_department_name=res['data'][0]['sub_department_name'];
-          this.department_name=res['data'][0]['department_name'];
-          this.branch_name=res['data'][0]['branch_name'];
-          this.organisation_name=res['data'][0]['organisation_name'];
-
-        },
-        error => {
-          console.log("ERREUR : ",error);
-
-        });
+  async loadOrganisationFromProject(){
+    try{
+      let res = await this._organisationService.selectSchema(this.project.sub_department_id).toPromise();
+      let elements = res['data'][0];
+      this.organisation = this.findElement(elements['organisation_id'], 1);
+      this.branch = this.findElement(elements['branch_id'], 2);
+      this.department = this.findElement(elements['department_id'], 3);
+      this.sub_department = this.findElement(elements['sub_department_id'], 4);
+    }
+    catch(error){
+      this.errorMessage = error.message;
+    }
   }
 
-  updateProject()
-  {
-    this.updating=!this.updating;
-    this.new_project_title=this.project_title;
-    this.new_project_code=this.project_code;
-    this.new_project_work_code=this.project_work_code;
-    this.new_project_start=this.project_start;
-    this.new_project_end=this.project_end;
+  makeEditable() {
+    this.isEditable = !this.isEditable;
   }
 
-  async sentProjectUpdate()
-  {
+  async onSubmit() {
+    try{
+      this.project.sub_department_id = this.sub_department.sub_department_id.toString();
+      await this._projectService.updateProject(this.project).toPromise();
+      this.router.navigate(['/project-list']);
+    }
+    catch (error){
+      this.errorMessage = error.message;
+    }
+  }
 
-    let project:Project = new Project;
+  /*  ----------------- ORGANISATIONS / BRANCHS / DEPARTMENTS / SUB_DEPARTMENTS ----------------- */
 
-    console.log(this.new_project_title);
-    project.project_title=this.new_project_title;
-    project.project_code=this.new_project_code;
-    project.project_work_code=this.new_project_work_code;
-    project.project_id=this.project_id;
-    project.sub_department_id=this.sub_department_id;
-    project.project_start = new Date (this.new_project_start);
-    project.project_end = new Date (this.new_project_end);
-
+  //We get all Organisations, branchs, departements and sub departements from database
+  async loadOrganisations(){
     try {
-      let project_id = await this._projectService.updateProject(project).toPromise();
-      this.title="Succes";
-      this.text="The project has been updated";
-      this.displayEnd = true;
+      this.errorMessage = "";
+      let o = await this._organisationService.selectAll().toPromise();
+      let organisations = o['data'] as Organisation[];
 
+      for (let organisation of organisations){
+        let b = await this._branchService.selectAllFromOrganisation(organisation.organisation_id.toString()).toPromise();
+        let branchs = b['data'] as Branch[];
+
+        //We generate one element
+        let e0 = {
+          organisation: organisation,
+          branchs: []
+        };
+
+        for (let branch of branchs){
+          let d = await this._departmentService.selectAllFromBranch(branch.branch_id.toString()).toPromise();
+          let departments = d['data'] as Department[];
+
+          //We generate one sub element
+          let e1 = {
+            branch: branch,
+            departments: []
+          };
+
+          for (let department of departments){
+            let s = await this._subDepartmentService.selectAllFromDepartment(department.department_id.toString()).toPromise();
+            let sub_departments = s['data'] as SubDepartment[];
+
+            //We generate lasts elements of the schema
+            let e2 = {
+              department: department,
+              sub_departments: sub_departments
+            };
+            e1['departments'].push(e2);
+          }
+          e0['branchs'].push(e1);
+        }
+        this.organisation_elements.push(e0);
+      }
     }
     catch (error) {
-      console.log(error.message);
-      this.title="ERROR";
-      this.text=error.message;
-      this.displayEnd = true;
+      this.errorMessage = error.message;
     }
-
   }
 
-
-  goBack(){
-    this.title="";
-    this.text="";
-    this.getProject(this.project_id);
-    this.updateProject();
-    this.displayEnd=false;
+  /* element is an id of organisation, branch or department. Level 1 = We search for organisation, level 2 = we search for departments.
+   * Return : the element of organisation_elements wanted */
+  findElement(element: number, level: number){
+    console.log('element : ', element, ' - level : ', level);
+    if ( level == 1){
+      //We search for an organisation
+      for (let e of this.organisation_elements){
+        if (e['organisation'].organisation_id == element){
+          return e;
+        }
+      }
+    }
+    else if ( level == 2 ){
+      for (let e of this.organisation['branchs']){
+        if (e['branch'].branch_id == element){
+          return e;
+        }
+      }
+    }
+    else if ( level == 3 ){
+      for (let e of this.branch['departments']){
+        if (e['department'].department_id == element){
+          return e;
+        }
+      }
+    }
+    else if ( level == 4 ){
+      for (let e of this.department['sub_departments']){
+        if (e.department_id == element){
+          return e;
+        }
+      }
+    }
   }
 
+  pickOrganisation(){
+    // I have picked my new organisation, I need to set my new array for other levels
+    this.branch = this.organisation['branchs'][0];
+    this.department = this.branch['departments'][0];
+    this.sub_department = this.department['sub_departments'][0];
+    console.log(this.organisation, this.branch, this.department, this.sub_department);
+  }
 
+  pickBranch(){
+    // I have picked my new organisation, I need to set my new array for other levels
+    this.department = this.branch['departments'][0];
+    this.sub_department = this.department['sub_departments'][0];
+    console.log(this.organisation, this.branch, this.department, this.sub_department);
+  }
+
+  pickDepartment(){
+    this.sub_department = this.department['sub_departments'][0];
+    console.log(this.organisation, this.branch, this.department, this.sub_department);
+    //
+  }
+
+  //  ----------------- ORGANISATIONS / BRANCHS / DEPARTMENTS / SUB_DEPARTMENTS ----------------- //
 
 }
 

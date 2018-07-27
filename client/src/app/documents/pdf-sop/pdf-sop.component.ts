@@ -20,7 +20,7 @@ declare var jsPDF: any;
 export class PdfSopComponent implements OnInit {
 
   sop_id:string="";
-  project_id:string="1";
+  project_id:string="3";
 
 
   organisation_id:string;
@@ -104,39 +104,275 @@ export class PdfSopComponent implements OnInit {
     this.htmlPDF  = `<html>
 <head>
 <style>
+table{
+  border-collapse: collapse;
+}
  td {
-    border: 1px solid black;
+    border: 0.5mm solid black;
+    margin: 0;
+    padding: 2mm;
+    font-size: 4.5mm;
+    
+}
+tr{
+  margin: 0;
+  padding: 0;
+}
+.text-bold{
+    font-weight: bold;
+}
+.saut-page
+{
+    page-break-after: always;
 }
 </style>
 </head>
 <body>
+  <table style="width: 90%; margin-left: 5%;margin-top: 15mm;"> 
+    <tr>
+      <td style="width: 20%" rowspan="5"> <img src="images/logo-stikom.png" style="width: 20mm;margin-left: 20mm;"></td>
+      <td style="width: 40%"><strong>`+this.organisation_name+`</strong></td>
+      <td style="width: 20%"><strong>SOP Number</strong></td>
+      <td style="width: 20%">`+this.sop_id+`</td>
+    </tr>
+    <tr>
+      <td><strong>`+this.branch_name+`</strong></td>
+      <td><strong>Creation Date</strong></td>
+      <td>`+new DatePipe('en-US').transform(this.sop_creation, 'dd-MM-yyyy')+`</td>
+    </tr>
+    <tr>
+      <td><strong>`+this.department_name+`</strong></td>
+      <td><strong>Revision Date</strong></td>
+      <td>`+new DatePipe('en-US').transform(this.sop_revision, 'dd-MM-yyyy')+`</td>
+    </tr>
+    <tr>
+      <td><strong>`+this.sub_department_name+`</strong></td>
+      <td><strong>Published Date</strong></td>
+      <td>`+new DatePipe('en-US').transform(this.sop_published, 'dd-MM-yyyy')+`</td>
+    </tr>
+    <tr>
+      <td></td>
+      <td><strong>Approved by</strong></td>
+      <td>`+this.sop_approvment+`</td>
+    </tr>
+    <tr>
+      <td colspan="4" style="text-align: center;font-size: 6mm; padding: 2mm;line-height: 8mm"><strong>STANDARD OPERATIONAL PROCEDURE <br> `+this.sop_title+`</strong></td>
+    </tr>
+  </table>
+  
+  <table  style="width: 90%; margin-left: 5%;margin-top: 8mm;">
+    <tr>
+      <td style="width: 45%"><strong>Base Rule/Regulation</strong></td>
+      <td style="width: 10%" rowspan="6"></td>
+      <td style="width: 45%"><strong>Staff Qualification</strong></td>
+    </tr>
+    <tr>
+      <td>`+this.sop_rules+`</td>
+      <td>`+this.sop_staff_qualification+`</td>
+    </tr>
+    <tr>
+      <td><strong>Related Working Units</strong></td>
+      <td><strong>Supporting Tools</strong></td>
+    </tr>
+     <tr>
+      <td>to add</td>
+      <td>`+this.sop_tools+`</td>
+    </tr>
+    <tr>
+      <td><strong>Warning</strong></td>
+      <td><strong>Types of Forms and Reports</strong></td>
+    </tr>
+    <tr>
+      <td>`+this.sop_warning+`</td>
+      <td>`+this.sop_type_reports+`</td>
+    </tr>
+    <tr>
+    <td colspan="3" style="padding-top: 10mm; line-height: 8mm; padding-left: 30mm;"><strong>Objectives : </strong><br> `+this.sop_objectives+`<br> </td>
+  </tr>
+  
+  </table>
 
-<table style="width: 90%; margin-left: 5%;margin-top: 15mm;">
-  <tr>
-    <td style="width: 20%" rowspan="4"> Photo</td>
-    <td style="width: 40%">`+this.organisation_name+`</td>
-    <td style="width: 20%">SOP Number</td>
-    <td style="width: 20%">`+this.sop_id+`</td>
-  </tr>
-  <tr>
-    <td>`+this.branch_name+`</td>
-    <td>Creation Date</td>
-    <td>`+new DatePipe('en-US').transform(this.sop_creation, 'dd-MM-yyyy')+`</td>
-  </tr>
-  <tr>
-    <td>`+this.department_name+`</td>
-    <td>Revision Date</td>
-    <td>`+new DatePipe('en-US').transform(this.sop_revision, 'dd-MM-yyyy')+`</td>
-  </tr>
-  <tr>
-    <td>`+this.sub_department_name+`</td>
-    <td>Published Date</td>
-    <td>`+new DatePipe('en-US').transform(this.sop_published, 'dd-MM-yyyy')+`</td>
-  </tr>
- 
-</table>
+  <div class="saut-page">
+  
+  </div>
+  
+  <table style="width: 90%; margin-left: 5%;margin-top: 15mm;"> 
+    <tr>
+       <td style="width: 4%" rowspan="2"><strong>No</strong></td>
+       <td style="width: 18%" rowspan="2"><strong>Activity</strong></td>`;
 
+for (let i=0;i<this.units.length;i++)
+{
+  if(i<4)
+  {
+    this.htmlPDF  +=` <td style="width: 12%" rowspan="2"><strong>`+this.units[i]+`</strong></td>`;
+  }
+
+}
+
+this.htmlPDF  +=`
+       
+       <td style="width: 30%" colspan="3"><strong>Quality Standard</strong></td>
+       
+    </tr>
+    <tr>
+        <td style="width: 10%; font-size: 3.5mm"><strong>Supporting<br>Materials/Inputs</strong></td>
+        <td style="width: 10%; font-size: 3.5mm"><strong>Duration</strong></td>
+        <td style="width: 10%; font-size: 3.5mm"><strong>Output</strong></td>
+    </tr>`;
+
+for (let i=0;i<this.activities.length;i++)
+{
+  console.log("là :");
+  console.log(this.activities[i]);
+  this.htmlPDF += ` <tr>`;
+  for (let j=0;j<this.activities[i].length;j++) {
+    console.log(this.activities[i][j]);
+    if(j<9) //Have just the 4 first unit
+    {
+      this.htmlPDF += ` <td>`+this.activities[i][j]+`</td>`;
+      if(j==1) //Jump because of the activities table disposition put the unit at the end
+      {
+        j=4;
+      }
+    }
+
+  }
+  for (let j=2;j<5;j++) { //add the quality standards collum because of the jump in the last for
+    this.htmlPDF += ` <td>`+this.activities[i][j]+`</td>`;
+  }
+
+  this.htmlPDF += ` </tr>`;
+}
+
+this.htmlPDF  +=`
+  </table>`
+
+  if(this.units.length>3) // if more than 4 units
+  {
+    this.htmlPDF  +=`<div class="saut-page">
+
+      </div>
+
+      <table style="width: 90%; margin-left: 5%;margin-top: 15mm;">
+  <tr>
+    <td style="width: 4%" rowspan="2"><strong>No</strong></td>
+  <td style="width: 18%" rowspan="2"><strong>Activity</strong></td>`;
+
+for (let i=0;i<this.units.length;i++)
+{
+  if(i>3 && i<8)
+  {
+    this.htmlPDF  +=` <td style="width: 12%" rowspan="2"><strong>`+this.units[i]+`</strong></td>`;
+  }
+
+}
+
+this.htmlPDF  +=`
+
+  <td style="width: 30%" colspan="3"><strong>Quality Standard</strong></td>
+
+  </tr>
+  <tr>
+  <td style="width: 10%; font-size: 3.5mm"><strong>Supporting<br>Materials/Inputs</strong></td>
+  <td style="width: 10%; font-size: 3.5mm"><strong>Duration</strong></td>
+  <td style="width: 10%; font-size: 3.5mm"><strong>Output</strong></td>
+  </tr>`;
+
+    for (let i=0;i<this.activities.length;i++)
+    {
+      console.log("là :");
+      console.log(this.activities[i]);
+      this.htmlPDF += ` <tr>`;
+      for (let j=0;j<this.activities[i].length;j++) {
+        console.log(this.activities[i][j]);
+        if(j<5 || (j>8 && j<13)) //Have just the 4 first unit
+        {
+          this.htmlPDF += ` <td>`+this.activities[i][j]+`</td>`;
+          if(j==1) //Jump because of the activities table disposition put the unit at the end
+          {
+            j=4;
+          }
+        }
+
+      }
+      for (let j=2;j<5;j++) { //add the quality standards collum because of the jump in the last for
+        this.htmlPDF += ` <td>`+this.activities[i][j]+`</td>`;
+      }
+
+      this.htmlPDF += ` </tr>`;
+    }
+
+    this.htmlPDF  +=`
+  </table>`;
+
+  }
+
+
+    if(this.units.length>7) // if more than 8 units
+    {
+      this.htmlPDF  +=`<div class="saut-page">
+
+      </div>
+
+      <table style="width: 90%; margin-left: 5%;margin-top: 15mm;">
+  <tr>
+    <td style="width: 4%" rowspan="2"><strong>No</strong></td>
+  <td style="width: 18%" rowspan="2"><strong>Activity</strong></td>`;
+
+      for (let i=0;i<this.units.length;i++)
+      {
+        if(i>7 && i<12)
+        {
+          this.htmlPDF  +=` <td style="width: 12%" rowspan="2"><strong>`+this.units[i]+`</strong></td>`;
+        }
+
+      }
+
+      this.htmlPDF  +=`
+
+  <td style="width: 30%" colspan="3"><strong>Quality Standard</strong></td>
+
+  </tr>
+  <tr>
+  <td style="width: 10%; font-size: 3.5mm"><strong>Supporting<br>Materials/Inputs</strong></td>
+  <td style="width: 10%; font-size: 3.5mm"><strong>Duration</strong></td>
+  <td style="width: 10%; font-size: 3.5mm"><strong>Output</strong></td>
+  </tr>`;
+
+      for (let i=0;i<this.activities.length;i++)
+      {
+        console.log("là :");
+        console.log(this.activities[i]);
+        this.htmlPDF += ` <tr>`;
+        for (let j=0;j<this.activities[i].length;j++) {
+          console.log(this.activities[i][j]);
+          if(j<5 || (j>12 && j<17)) //Have just the 4 first unit
+          {
+            this.htmlPDF += ` <td>`+this.activities[i][j]+`</td>`;
+            if(j==1) //Jump because of the activities table disposition put the unit at the end
+            {
+              j=4;
+            }
+          }
+
+        }
+        for (let j=2;j<5;j++) { //add the quality standards collum because of the jump in the last for
+          this.htmlPDF += ` <td>`+this.activities[i][j]+`</td>`;
+        }
+
+        this.htmlPDF += ` </tr>`;
+      }
+
+      this.htmlPDF  +=`
+  </table>`;
+
+    }
+
+  this.htmlPDF +=`
+  
 </body>
+
 </html>`;
   }
 
@@ -172,9 +408,11 @@ export class PdfSopComponent implements OnInit {
   async getAllSopFromProject(idProject: string){
     await this._projectService.selectAllFromProject(idProject)
       .subscribe( (res) => {
+          console.log("Sop Data :");
           console.log(res['data']);
 
           // Take all the sop informations and preparing them for display in the var
+          this.sop_id=res['data'][0]['sop_id'];
           this.sop_creation=new Date(res['data'][0]['sop_creation']);
           this.sop_revision=new Date(res['data'][0]['sop_revision']);
           this.sop_published=new Date(res['data'][0]['sop_published']);
@@ -185,7 +423,7 @@ export class PdfSopComponent implements OnInit {
           this.sop_tools=res['data'][0]['sop_tools'];
           this.sop_type_reports=res['data'][0]['sop_type_reports'];
           this.sop_objectives=res['data'][0]['sop_objectives'];
-          this.sop_title="STANDARD OPERATION PROCEDURE \n "+res['data'][0]['sop_title'];
+          this.sop_title=res['data'][0]['sop_title'];
 
           //creating a table of the units working for this project
           let counter=0;
@@ -339,7 +577,7 @@ export class PdfSopComponent implements OnInit {
           this.sop_tools=res['data']['sop_tools'];
           this.sop_type_reports=res['data']['sop_type_reports'];
           this.sop_objectives=res['data']['sop_objectives'];
-          this.sop_title="STANDARD OPERATION PROCEDURE \n "+res['data']['sop_title'];
+          this.sop_title=res['data']['sop_title'];
           console.log(res['data']['sop_title']);
 
 

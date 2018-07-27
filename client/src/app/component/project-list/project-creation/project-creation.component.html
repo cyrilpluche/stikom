@@ -29,7 +29,7 @@
                 <p class="text-center mb-4 text-description"> Please select a SOP model to begin your project </p>
                 <select name="sop_selected" class="form-control" multiple>
                   <option value="" disabled selected>Choose your model</option>
-                  <option *ngFor="let sop of sops" (click)="selectSop(sop)">{{sop.sop_title}}</option>
+                  <option *ngFor="let sop of sops" (click)="selectSop(sop)">{{textHelper.firstLetterUpperCase(sop.sop_title)}}</option>
                 </select>
               </div>
             </div>
@@ -40,46 +40,13 @@
             </div>
           </div>
 
-          <!-- Project name -->
-          <div [hidden]="stepSelected != 1">
-            <div class="row md-form">
-              <p class="col-12 text-center mb-4 text-description"> Please choose a project name </p>
-              <div class="offset-2 col-8">
-                <input [(ngModel)]="new_project.project_title" name="new_project.project_title" type="text" id="newTitle" class="form-control">
-                <label for="newTitle">Project name</label>
-              </div>
-            </div>
-
-            <div class="row md-form">
-              <p class="col-12 text-center mb-4 text-description"> Project date start </p>
-              <div class="offset-2 col-8">
-                <input [(ngModel)]="new_project_start" name="new_project_start" type="date" id="new_project_start" class="form-control">
-              </div>
-            </div>
-
-            <div class="row md-form">
-              <p class="col-12 text-center mb-4 text-description"> Project date start </p>
-              <div class="offset-2 col-8">
-                <input [(ngModel)]="new_project_end" name="new_project_project_end" type="date" id="new_project_end" class="form-control">
-              </div>
-            </div>
-
-            <div class="row justify-content-center">
-              <div>
-                <button class="btn btn-danger waves-effect" type="button" (click)="changeStep(false)">Back</button>
-              </div>
-              <div>
-                <button [disabled]="new_project.project_title == null || new_project.project_title == ''" class="btn btn-primary waves-effect" type="button" (click)="changeStep(true)">Next</button>
-              </div>
-            </div>
-          </div>
-
           <!-- Department selection -->
-          <div class="form-group" [hidden]="stepSelected != 2">
+          <div class="form-group" [hidden]="stepSelected != 1">
 
             <!-- Organisation -->
             <div class="row md-form">
               <div class="offset-2 col-8">
+                <p class="text-center mb-4 text-description"> Please choose your organisation</p>
               <select class="form-control" multiple>
                 <option name="organisation" value="" disabled selected>Choose organisation</option>
                 <option *ngFor="let o of organisation_elements" (click)="pickOrganisation(o)">{{o['organisation'].organisation_name}}</option>
@@ -128,7 +95,7 @@
           </div>
 
           <!-- Job selection -->
-          <div [hidden]="stepSelected != 3">
+          <div [hidden]="stepSelected != 2">
 
             <div class="row md-form">
               <p class="col-12 text-center mb-4 text-description"> Please choose one or more jobs </p>
@@ -183,28 +150,37 @@
                 <button class="btn btn-danger waves-effect" type="button" (click)="changeStep(false)">Back</button>
               </div>
               <div>
-                <button [disabled]="jobs_selected.size == 0" class="btn btn-primary waves-effect" type="button" (click)="changeStep(true); loadUnitsFromJobs();">Next</button>
+                <button [disabled]="jobs_selected.size == 0" class="btn btn-primary waves-effect" type="button" (click)="changeStep(true); loadUnitsFromJobs(); initializeProject();">Next</button>
               </div>
             </div>
           </div>
           <!-- Job selection -->
 
           <!-- Unit affectation -->
-          <div [hidden]="stepSelected != 4">
+          <div [hidden]="stepSelected != 3">
             <div class="row md-form">
               <div class="offset-2 col-8">
                 <p class="text-center mb-4 text-description"> Choose an unit and pick members you want to add into </p>
                 <select name="unit_id_selected" class="form-control" multiple>
                   <option value="" disabled selected>Choose an unit</option>
-                  <option *ngFor="let unit of elements" (click)="pickUnit(unit)">{{unit['unit'].unit_name}} - {{unit['detail']['job'].job_name}}</option>
+                  <option *ngFor="let unit of elements" (click)="pickUnit(unit)">
+                   ({{unit['detail']['members'].length}}){{unit['unit'].unit_name}} - {{unit['detail']['job'].job_name}}
+                  </option>
                 </select>
               </div>
             </div>
+
+            <div class="row justify-content-center">
+              <div class=" md-form" id="search-bar">
+                <input id="search" (keyup)="search()" class="form-control" type="text" placeholder="Search member" aria-label="Search">
+              </div>
+            </div>
+
             <div class="row md-form">
               <div class="offset-2 col-8">
-                <select (click)="isFormReady()" name="member_selected" class="form-control" multiple>
+                <select (click)="isUnitsReady()" name="member_selected" id="select-member" class="form-control" multiple>
                   <option value="" disabled selected>Add a member to the selected unit</option>
-                  <option *ngFor="let member of members" (click)="pickMember(member); ">{{member.member_name}} {{member.member_first_name}}</option>
+                  <option *ngFor="let member of members" (click)="pickMember(member); ">{{member.member_name.toUpperCase()}} {{member.member_first_name}}</option>
                 </select>
               </div>
             </div>
@@ -213,11 +189,45 @@
                 <button class="btn btn-danger waves-effect" type="button" (click)="changeStep(false)">Back</button>
               </div>
               <div>
-                <button class="btn btn-success waves-effect" type="button" data-toggle="modal" data-target="#confirmationModal" [disabled]="!formReady">Finish</button>
+                <button [disabled]="!unitsReady" class="btn btn-primary waves-effect" type="button" (click)="changeStep(true)">Next</button>
               </div>
             </div>
           </div>
           <!-- Unit affectation -->
+
+          <!-- Project name -->
+          <div [hidden]="stepSelected != 4">
+            <div class="row md-form">
+              <p class="col-12 text-center mb-4 text-description"> Please choose a project name </p>
+              <div class="offset-2 col-8">
+                <input [(ngModel)]="new_project.project_title" name="new_project.project_title" type="text" id="newTitle" class="form-control">
+                <label for="newTitle">Project name</label>
+              </div>
+            </div>
+
+            <div class="row md-form">
+              <p class="col-12 text-center mb-4 text-description"> Project date start </p>
+              <div class="offset-2 col-8">
+                <input (change)="checkEndDate()" [(ngModel)]="new_project_start" name="new_project_start" type="date" id="new_project_start" [min]="minimum_project_start" class="form-control">
+              </div>
+            </div>
+
+            <div class="row md-form">
+              <p class="col-12 text-center mb-4 text-description"> Project date start </p>
+              <div class="offset-2 col-8">
+                <input [(ngModel)]="new_project_end" name="new_project_project_end" type="date" id="new_project_end" [min]="minimum_project_end" class="form-control">
+              </div>
+            </div>
+
+            <div class="row justify-content-center">
+              <div>
+                <button class="btn btn-danger waves-effect" type="button" (click)="changeStep(false)">Back</button>
+              </div>
+              <div>
+                <button [disabled]="new_project.project_title == null || new_project.project_title == ''" class="btn btn-success waves-effect" type="button" data-toggle="modal" data-target="#confirmationModal">Finish</button>
+              </div>
+            </div>
+          </div>
 
         </form>
         <!-- Form -->
@@ -233,7 +243,7 @@
 
 
   <!--Title of the unit-->
-  <div class="row row-first" [hidden]="stepSelected != 4" >
+  <div class="row row-first" [hidden]="stepSelected != 3" >
     <h4>
       <span class="badge badge-pill badge-primary" *ngIf="unit_selected != null">{{unit_selected['unit'].unit_name}} - {{unit_selected['detail']['job'].job_name}}</span>
     </h4>
@@ -244,7 +254,7 @@
   </div>
 
   <!-- Member Unit Binding Display -->
-  <div class="row row-last justify-content-center" [hidden]="stepSelected != 4">
+  <div class="row row-last justify-content-center" [hidden]="stepSelected != 3">
 
         <table class="col table table-borderless table-hover table-fixed" id="member-table">
 
@@ -259,10 +269,10 @@
           <tbody *ngIf="unit_selected != null">
 
           <tr *ngFor="let member of unit_selected['detail']['members']">
-            <td>{{member.member_name}}</td>
+            <td>{{member.member_name.toUpperCase()}}</td>
             <td>{{member.member_first_name}}</td>
             <td>
-              <a (click)="removeMember(member); isFormReady()"><i class="fa fa-close text-red"></i></a>
+              <a (click)="removeMember(member); isUnitsReady()"><i class="fa fa-close text-red"></i></a>
             </td>
           </tr>
 

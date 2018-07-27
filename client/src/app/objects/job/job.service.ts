@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {environment} from "../../../environments/environment";
 import {Router} from "@angular/router";
+import {Job} from "./job";
 
 @Injectable({
   providedIn: 'root'
@@ -49,6 +50,17 @@ export class JobService {
     };
     console.log('bind_job_activity : ', body);
     return this.http.post(this.domain + '/api/job/bind_job_activity/',body,this.httpOptions);
+  }
+
+  computeDateEnd(jobs: Job[], date_begin: Date){
+    let body = {
+      jobs: jobs,
+      date_begin: date_begin
+    };
+    console.log('body : ', body)
+    this.generateHeaders();
+
+    return this.http.post(this.domain + '/api/job/compute_end_date',body,this.httpOptions);
   }
 
   generateHeaders()
