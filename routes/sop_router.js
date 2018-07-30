@@ -57,7 +57,16 @@ router.get('/findOne/:sopId',
         modelSop.selectById(req.params.sopId).then(function (data) {
             res.json({data: data})
         }).catch(next)
-    });
+    }
+);
+
+router.get('find_one_full/:sop',
+    function (req, res, next) {
+        modelSop.selectById(req.params.sop).then(function (data) {
+            res.json({data: data})
+        }).catch(next)
+    }
+);
 
 router.put('/update',
     policy.requireSpecificRight(ROLE.Planner),
@@ -91,6 +100,7 @@ router.delete('/delete/:sop',
                 res.json({data: data})
             }
         }).catch(next)
-    });
+    }
+);
 
 module.exports = router;

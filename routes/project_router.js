@@ -92,8 +92,8 @@ router.get('/volume_progress_days/:project',
                     let date_end = new Date(project.project_end);
 
                     // get an array with every single date between both date
-                   let dates = basicMethods.datesBetween(date_begin, date_end, 1);
-                   return {dates: dates}; // return an object that contains all date to the next promise
+                    let dates = basicMethods.datesBetween(date_begin, date_end, 1);
+                    return {dates: dates}; // return an object that contains all date to the next promise
 
                 }
             })
@@ -125,7 +125,7 @@ router.get('/volume_progress_days/:project',
                                             target_quantity: memberActivityProjects[i].target_quantity,
                                             finished_quantity: memberActivityProjects[i].finished_quantity,
                                             finished_quantity_tmp: memberActivityProjects[i].finished_quantity
-                                                // going update finish_quantity_tmp
+                                            // going update finish_quantity_tmp
                                         })
                                     }
                                 }
@@ -206,7 +206,7 @@ router.get('/volume_progress_days/:project',
                             if (object.dates[i] >= object.members[j].activities[k].date_begin &&
                                 object.dates[i] <= object.members[j].activities[k].target_date) {
                                 // if the date is between the targe Date and the begin Date
-                                numberOfDay = basicMethods.daysBetween(
+                                numberOfDay = basicMethods.numberOfDaysBetween(
                                     object.members[j].activities[k].date_begin,
                                     object.members[j].activities[k].target_date);
                                 if (numberOfDay <= 0) {
@@ -242,6 +242,174 @@ router.get('/volume_progress_days/:project',
             .catch(next)
     }
 );
+
+router.get('/volume_progress_weeks/:project',
+    function (req, res, next) {
+        modelProject.selectById(req.params.project)
+            .then(function (project) {
+                if (!project) {
+                    throw ERRORTYPE.NOT_FOUND
+                } else {
+                    let date_begin = new Date(project.project_start);
+                    let date_end = new Date(project.project_end);
+
+                    req.date_begin = date_begin;
+                    req.date_end = date_end;
+
+                    // get an array with every single date between both date
+                    let dates = basicMethods.datesBetween(date_begin, date_end, 1);
+                    return {dates: dates}; // return an object that contains all date to the next promise
+
+                }
+            })
+            .then(function (object) {
+                // object is equal to {dates : Array of Date}
+                return modelProject.selectAllMemberActivityProjectByProjectId(req.params.project)
+                    .then(function (memberActivityProjects) {
+                            let members = [];
+                            // foreach member id in memberActivityProjects
+                            for (let i = 0; i < memberActivityProjects.length; i++) {
+                                if (!basicMethods.arrayObjectContains(members, 'member_id',
+                                    memberActivityProjects[i].member_id)) {
+                                    // in order not to have twice the same member_id
+                                    members.push({
+                                        member_id: memberActivityProjects[i].member_id,
+                                        activities: []});
+                                }
+                            }
+
+                            /* each element of the array member has an activities array
+                                means all the activities the member will do
+                             */
+                            for(let i = 0; i < memberActivityProjects.length; i++) {
+                                for (let j = 0; j < members.length; j++) {
+                                    if (memberActivityProjects[i].member_id === members[j].member_id) {
+                                        members[j].activities.push({
+                                            date_begin: new Date(memberActivityProjects[i].date_begin),
+                                            target_date: new Date(memberActivityProjects[i].target_date),
+                                            target_quantity: memberActivityProjects[i].target_quantity,
+                                            finished_quantity: memberActivityProjects[i].finished_quantity,
+                                            finished_quantity_tmp: memberActivityProjects[i].finished_quantity
+                                            // going update finish_quantity_tmp
+                                        })
+                                    }
+                                }
+                            }
+                            object.members = members;
+                            return object;
+                        }
+                    ).catch(function (e) {
+                        throw e
+                    })
+            })
+            .then(function (object) {
+                let promises = [];
+                for (let i = 0; i < object.members.length; i++) {
+                    promises.push( // get data for members
+                        require('../models/member_model').selectById(object.members[i].member_id)
+                            .then(function (member) {
+                                if (member) {
+                                    member.member_password = undefined;
+                                    member.seed = undefined;
+                                }
+                                return member
+                            })
+                    )
+                }
+
+                return Promise.all(promises).then(function (members) {
+                    for (let i = 0; i < members.length; i++) {
+                        for (let j = 0; j < object.members.length; j++) {
+                            if (object.members[j].member_id === members[i].member_id) {
+                                object.members[j].member_id = undefined;
+                                object.members[j].member = members[i];
+                                // replace the propreties member_id by an object member that contains all the data
+                                // related to the member
+                            }
+                        }
+                    }
+                    return object
+                });
+            })
+            .then(function (object) {
+                /* split the data to have an object like
+                 [ {
+                 date: a Date,
+                 elements: {
+                    target_quantity: the member objective for the date,
+                    finished_quantity: what he has done,
+                    finished_rate: percentage of what he has done compare to what he should have done,
+                    member: {
+                        information on the member
+                    }
+                  }
+                ]
+                 */
+
+                let numberOfDay = 1; // number of day between a date_begin and a target_date
+                let workMax = 0; // the work max that a member can do for one day
+                let workDone = 0;
+
+                let element = {target_quantity: 0, finished_quantity: 0, finished_rate: 0};
+                let data = {
+                    date: null,
+                    elements: [] // array of element
+                };
+                let resultat = []; // array of data
+
+                for (let i = 0; i < object.dates.length; i++) {
+                    data = {
+                        date: object.dates[i],
+                        elements: []
+                    };
+
+                    for (let j = 0; j < object.members.length; j++) {
+                        element = {target_quantity: 0, finished_quantity: 0, finished_rate: 0};
+
+                        for (let k = 0; k < object.members[j].activities.length; k++) {
+
+                            if (object.dates[i] >= object.members[j].activities[k].date_begin &&
+                                object.dates[i] <= object.members[j].activities[k].target_date) {
+                                // if the date is between the targe Date and the begin Date
+                                numberOfDay = basicMethods.numberOfDaysBetween(
+                                    object.members[j].activities[k].date_begin,
+                                    object.members[j].activities[k].target_date);
+                                if (numberOfDay <= 0) {
+                                    numberOfDay = 1 // because we can't divide by 0
+                                }
+                                workMax =  basicMethods.round(
+                                    object.members[j].activities[k].target_quantity / numberOfDay, 1);
+                                element.target_quantity += workMax; // add quantity to what should be done by the member on the date
+                                element.target_quantity = basicMethods.round(element.target_quantity, 1);
+
+                                if (workMax <= object.members[j].activities[k].finished_quantity_tmp) {
+                                    object.members[j].activities[k].finished_quantity_tmp -= workMax;
+                                    element.finished_quantity += workMax
+                                } else {
+                                    workDone = object.members[j].activities[k].finished_quantity_tmp;
+                                    object.members[j].activities[k].finished_quantity_tmp = 0;
+                                    element.finished_quantity += workDone
+                                } // increment what he has done
+                            }
+                        }
+
+                        if (element.target_quantity !== 0) {
+                            element.finished_rate = basicMethods.round(
+                                element.finished_quantity * 100 / element.target_quantity, 2) // 2 numbers after coma
+                        }
+                        element.member = object.members[j].member;
+                        data.elements.push(element);
+                    }
+                    resultat.push(data)
+                }
+                return resultat
+            })
+            .then (function (object) {
+                let months = basicMethods.monthsBetween(req.date_begin, req.date_end);
+               res.json(months)
+            })
+            .catch(next)
+    });
 
 /*
 =========================================== ROUTER POST =============================================

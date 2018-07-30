@@ -106,7 +106,7 @@ let project = {
     },
 
     selectAllMemberActivityProjectByProjectIdFull (project_id) {
-        return db.any('SELECT * FROM public.member_activity_project MAP, public.activity A, public.member_id M\n' +
+        return db.any('SELECT * FROM public.member_activity_project MAP, public.activity A, public.member M\n' +
             'WHERE MAP.project_id = $1 AND MAP.activity_id = A.activity_id AND MAP.member_id = M.member_id',
             project_id)
             .then(function (data) {

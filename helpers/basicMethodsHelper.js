@@ -1,5 +1,10 @@
 const moment = require('moment');
-
+const MONTH = [
+    'January', 'February', 'March',
+    'April', 'May', 'June',
+    'July', 'August', 'September',
+    'October', 'November', 'December'
+];
 let basicMethods = {
     /**
      * Check if the array contains the element
@@ -57,13 +62,27 @@ let basicMethods = {
         return dates
     },
 
+    monthsBetween: function (date_begin, date_end) {
+        console.log(date_begin, date_end)
+        let dates = [];
+        let d = date_begin;
+        while (d <= date_end){
+            dates.push({
+                label: MONTH[d.getMonth()]+ '_' + d.getFullYear(),
+                date: d
+            });
+            d = new Date(d.setMonth(d.getMonth() + 1)) // a new month
+        }
+        return dates
+    },
+
     /**
      * gives the number of days between the two dates
      * @param date_begin
      * @param date_end
      * @returns {number}
      */
-    daysBetween: function (date_begin, date_end) {
+    numberOfDaysBetween: function (date_begin, date_end) {
         let start = moment(date_begin);
         let end = moment(date_end);
         return end.diff(start, 'days');
