@@ -21,12 +21,21 @@ export class PdfGanttComponent implements OnInit {
   htmlPDF:string;
   jobs:any[]=[];
 
+  display_pdf_gantt:boolean = false;
+
   constructor(private _projectService:ProjectService,
               private _memberActivityProjectService:MemberActivityProjectService,
               private _pdfService: PdfService) { }
 
   ngOnInit() {
-    this.getProject(this.idProject);
+    this.idProject=localStorage.getItem("Project_id");
+    if(this.idProject === null)
+    {
+      console.log("ERRROR : No project linked to charge informations !")
+    }else{
+      this.getProject(this.idProject);
+    }
+
 
 
   }
@@ -170,7 +179,7 @@ tr{
 </body>
 </html>`;
 
-    this.download("Gantt-charts.pdf");
+    this.display_pdf_gantt=true;
   }
 
 
@@ -189,7 +198,7 @@ tr{
             const url = window.URL.createObjectURL(new Blob([res]));
             const link = document.createElement('a');
             link.href = url;
-            link.setAttribute('download', nom);
+            link.setAttribute('download', `Gantt-charts-`+this.project.project_title+`.pdf`);
             document.body.appendChild(link);
             link.click();
           }else{
