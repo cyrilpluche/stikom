@@ -495,82 +495,25 @@ export class ActivityCreationComponent implements OnInit {
       console.log('act : ', this.activity_sop);
     }
 
-
-    let type_duration_array = [0, 0, 0, 0];
-
-    //We get the sorted duration inside an array
+    let minutes = 0;
     for (let element of this.convertMap(this.activities)) {
-      let i;
+      //We convert all durations into minutes
       if(element['activity'].activity_type_duration == 'months'){
-        i=3;
+        minutes += (element['activity'].activity_duration)*30*24*60;
       }
       else if(element['activity'].activity_type_duration == 'days'){
-        i=2;
+        minutes += (element['activity'].activity_duration)*24*60;
       }
       else if(element['activity'].activity_type_duration == 'hours'){
-        i=1;
+        minutes += (element['activity'].activity_duration)*60;
       }
       if(element['activity'].activity_type_duration == 'minutes'){
-        i=0;
+        minutes += element['activity'].activity_duration;
       }
-      type_duration_array[i] += element['activity'].activity_duration;
-
-      for (let sub_a of element['children']){
-        if(sub_a['activity'].activity_type_duration == 'months'){
-          i=3;
-        }
-        else if(sub_a['activity'].activity_type_duration == 'days'){
-          i=2;
-        }
-        else if(sub_a['activity'].activity_type_duration == 'hours'){
-          i=1;
-        }
-        if(sub_a['activity'].activity_type_duration == 'minutes'){
-          i=0;
-        }
-        type_duration_array[i] += sub_a['activity'].activity_duration;
-      }
-
     }
-    console.log(type_duration_array);
 
-    if(type_duration_array[3]>0 || type_duration_array[2]>30){
-      activity.activity_type_duration = 'months';
-
-      activity.activity_duration = type_duration_array[3]+1;
-      let more = Math.ceil(type_duration_array[2]/30);
-      activity.activity_duration += more;
-      console.log("yeah");
-    }
-    else if(((type_duration_array[2]>0 && type_duration_array[2]<=30) || type_duration_array[1]>=24) && type_duration_array[3]==0){
-      activity.activity_type_duration = 'days';
-
-      activity.activity_duration = type_duration_array[2]+1;
-      let more = Math.ceil(type_duration_array[1]/24);
-      activity.activity_duration += more;
-      console.log("yeah 2");
-    }
-    else if(((type_duration_array[1]>0 && type_duration_array[1]<24) || type_duration_array[0]>=60) && type_duration_array[2]==0 && type_duration_array[3]==0){
-      activity.activity_type_duration = 'hours';
-
-      activity.activity_duration = type_duration_array[1]+1;
-      let more = Math.ceil(type_duration_array[0]/1440);
-      activity.activity_duration += more;
-      console.log("yeah 3");
-    }
-    else if(type_duration_array[0]<=1440){
-      activity.activity_type_duration = 'minutes';
-
-      activity.activity_duration = type_duration_array[0];
-      console.log("yeah 4");
-    }
-    else{
-      activity.activity_type_duration = 'hours';
-
-      let more = Math.ceil(type_duration_array[0]/1440);
-      activity.activity_duration = more+1;
-      console.log("yeah 5");
-    }
+    activity.activity_type_duration = 'days';
+    activity.activity_duration = Math.ceil(minutes/60/24)+1;
 
     //now we create the activity if it's a new Job
     if(this.isNewSop){

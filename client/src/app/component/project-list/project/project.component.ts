@@ -28,9 +28,6 @@ export class ProjectComponent implements OnInit {
   //Manage the disabled function of organisations selects
   pick_level: number = 1;
   organisation_elements: Object[] = [];
-  branchs: Branch[];
-  departments: Department[];
-  sub_departments: SubDepartment[];
 
   organisation: Object;
   branch: Object;

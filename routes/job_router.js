@@ -3,6 +3,8 @@ const router = express.Router();
 const policy = require('../policy/policy_middleware');
 const modelJob = require('../models/job_model');
 const ERRORTYPE = require('../policy/errorType');
+const basicMethods =  require('../helpers/basicMethodsHelper');
+
 
 
 /*
@@ -100,7 +102,7 @@ router.post('/bind_job_activity',
                     res.json ({data: data})
                 }
             }).catch(next)
-});
+    });
 
 router.post('/compute_end_date',
     policy.checkParameters(['jobs', 'date_begin']),
@@ -148,6 +150,8 @@ router.post('/compute_end_date',
                     }
                 }
                 end_date.setMinutes(end_date.getMinutes() +  activity_duration_MAX); // add on the max duration
+                // TODO maybe take care of the number of sundays
+                //end_date.setDate(end.getDate() +  basicMethods.numberOfSunday(new Date(req.body.date_begin), end_date))
                 res.json({data: {end_date: end_date}});
             }
         ).catch(next)
@@ -203,16 +207,4 @@ function containsActivitySop (activities) {
 }
 
 
-function numberOfSunder (dateBegin, dateEnd) {
-    let totalSundays = 0;
-    let date = dateBegin;
-    while (date <= dateEnd){
-        if (date.getDay() === 0){
-            totalSundays++;
-        }
-        date.setDate(date.getDate() + 1); // add A day
-    }
-
-    return totalSundays
-}
 module.exports = router;

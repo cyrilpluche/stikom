@@ -37,9 +37,17 @@ export class ProjectListComponent implements OnInit {
         });
   }
 
-  sortTable(n) {
+  sortTable(n, t: number) {
     var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
-    table = document.getElementById("project-table");
+    if (t == 1){
+      table = document.getElementById("project-table");
+    }
+    else if (t == 2){
+      table = document.getElementById("project-table-2");
+    }
+    else{
+      table = document.getElementById("project-table-3");
+    }
     switching = true;
     // Set the sorting direction to ascending:
     dir = "asc";
@@ -92,12 +100,22 @@ export class ProjectListComponent implements OnInit {
     }
   }
 
-  search() {
+  search(t: number) {
     // Declare variables
     var input, filter, table, tr, td, td2, i;
-    input = document.getElementById("search");
     filter = input.value.toUpperCase();
-    table = document.getElementById("project-table");
+    if (t == 1){
+      input = document.getElementById("search");
+      table = document.getElementById("project-table");
+    }
+    else if (t == 2){
+      input = document.getElementById("search-2");
+      table = document.getElementById("project-table-2");
+    }
+    else{
+      input = document.getElementById("search-3");
+      table = document.getElementById("project-table-3");
+    }
     tr = table.getElementsByTagName("tr");
 
     // Loop through all table rows, and hide those who don't match the search query

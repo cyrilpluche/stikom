@@ -37,7 +37,7 @@
                 <a data-toggle="modal" data-target="#actionModal"><i class="fa fa-cog text-blue" (click)="selectSop(sop)"></i></a>
               </td>
               <td>{{sop.sop_id}}</td>
-              <td>{{sop.sop_title.substr(0,50)}}</td>
+              <td>{{textHelper.firstLetterUpperCase(sop.sop_title.substr(0,50))}}</td>
               <td>{{sop.sop_creation | date:"MM/dd/yyyy"}}</td>
               <td>{{sop.sop_approvment}}</td>
               <td>

@@ -62,7 +62,7 @@ router.get('/findOne/:sopId',
 router.put('/update',
     policy.requireSpecificRight(ROLE.Planner),
     policy.checkParameters(['sop_title', 'sop_approvment', 'sop_rules', 'sop_warning', 'sop_staff_qualification',
-    'sop_tools', 'sop_type_reports', 'sop_objectives']),
+        'sop_tools', 'sop_type_reports', 'sop_objectives']),
     function (req, res, next) {
         let sop = {
             sop_id: req.body.sop_id,
@@ -84,13 +84,13 @@ router.put('/update',
 router.delete('/delete/:sop',
     policy.requireSpecificRight(ROLE.Planner),
     function (req, res, next) {
-    modelSop.delete(req.params.sop).then(function (data) {
-        if (!data) {
-            next(ERRORTYPE.NOT_FOUND)
-        } else {
-            res.json({data: data})
-        }
-    }).catch(next)
-});
+        modelSop.delete(req.params.sop).then(function (data) {
+            if (!data) {
+                next(ERRORTYPE.NOT_FOUND)
+            } else {
+                res.json({data: data})
+            }
+        }).catch(next)
+    });
 
 module.exports = router;

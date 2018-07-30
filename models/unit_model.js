@@ -75,6 +75,38 @@ let unit = {
         }).catch(function (err) {
             throw ERRORTYPE.customError('The server has encountred an internal error\n ' + err.toString())
         })
+    },
+
+    update (unit_id, unit_name) {
+        return db.any('UPDATE public.unit\n' +
+            'SET unit_name=${unit_name}\n' +
+            'WHERE unit_id=${unit_id} returning unit_id;',
+            {unit_id: unit_id, unit_name: unit_name})
+            .then(function (data) {
+                if (data.length === 0) {
+                    return false
+                } else {
+                    return data[0]
+                }
+            }).catch(function (err) {
+                throw ERRORTYPE.customError('The server has encountred an internal error\n ' + err.toString())
+            })
+    },
+
+    updateExecute (unit_id, activity_id) {
+        return db.any('UPDATE public.execute\n' +
+            'SET activity_id=${activity_id}, \n' +
+            'WHERE unit_id=${unit_id};',
+            {unit_id, activity_id})
+            .then(function (data) {
+                if (data.length === 0) {
+                    return false
+                } else {
+                    return data[0]
+                }
+            }).catch(function (err) {
+                throw ERRORTYPE.customError('The server has encountred an internal error\n ' + err.toString())
+            })
     }
 };
 

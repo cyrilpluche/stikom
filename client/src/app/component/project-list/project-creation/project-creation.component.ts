@@ -34,6 +34,7 @@ export class ProjectCreationComponent implements OnInit {
 
   /* ----- Data ----- */
   errorMessage: string = "";
+  ready: boolean = false;
   unitsReady = false;
   formReady = false;
 
@@ -61,16 +62,15 @@ export class ProjectCreationComponent implements OnInit {
   member_selected: Member;
   new_project_title: string = "";
 
-  new_project_id: string = "";
-
-  organisation_elements: Object[] = [];
 
   //Manage the disabled function of organisations selects
-  pick_level: number = 1;
-  branchs: Branch[];
-  departments: Department[];
-  sub_departments: SubDepartment[];
-  new_sub_department: SubDepartment;
+  organisation_elements: Object[] = [];
+
+  organisation: Object = this.organisation_elements[0];
+  branch: Object;
+  department: Object;
+  sub_department: SubDepartment;
+
   textHelper: TextHelperComponent = new TextHelperComponent();
 
   constructor(private _sopService: SopService,
@@ -92,8 +92,8 @@ export class ProjectCreationComponent implements OnInit {
     await this.loadSops();
     await this.loadOrganisations();
     await this.loadMembers();
+    this.ready = true;
 
-    console.log(this.organisation_elements);
   }
 
   //We set the right dates to the new project
@@ -128,59 +128,6 @@ export class ProjectCreationComponent implements OnInit {
     }
   }
 
-  //We get all Organisations, branchs, departements and sub departements from database
-  async loadOrganisations(){
-    try {
-      this.errorMessage = "";
-      let o = await this._organisationService.selectAll().toPromise();
-      let organisations = o['data'] as Organisation[];
-
-      for (let organisation of organisations){
-        let b = await this._branchService.selectAllFromOrganisation(organisation.organisation_id.toString()).toPromise();
-        let branchs = b['data'] as Branch[];
-
-        //We generate one element
-        let e0 = {
-          organisation: organisation,
-          branchs: []
-        };
-
-        for (let branch of branchs){
-          let d = await this._departmentService.selectAllFromBranch(branch.branch_id.toString()).toPromise();
-          let departments = d['data'] as Department[];
-
-          //We generate one sub element
-          let e1 = {
-            branch: branch,
-            departments: []
-          };
-
-          for (let department of departments){
-            let s = await this._subDepartmentService.selectAllFromDepartment(department.department_id.toString()).toPromise();
-            let sub_departments = s['data'] as SubDepartment[];
-
-            //We generate lasts elements of the schema
-            let e2 = {
-              department: department,
-              sub_departments: sub_departments
-            };
-            e1['departments'].push(e2);
-          }
-          e0['branchs'].push(e1);
-        }
-        this.organisation_elements.push(e0);
-      }
-
-      this.branchs = [this.organisation_elements[0]['branchs'][0]];
-      this.departments = [this.branchs[0]['departments'][0]];
-      this.sub_departments = [this.departments[0]['sub_departments'][0]];
-      this.new_sub_department = this.departments[0]['sub_departments'][0];
-
-    }
-    catch (error) {
-      this.errorMessage = error.message;
-    }
-  }
 
   //We get every Members that can work on the project
   async loadMembers(){
@@ -305,6 +252,61 @@ export class ProjectCreationComponent implements OnInit {
     }
   }
 
+  /*
+  //We get all Organisations, branchs, departements and sub departements from database
+  async loadOrganisations(){
+    try {
+      this.errorMessage = "";
+      let o = await this._organisationService.selectAll().toPromise();
+      let organisations = o['data'] as Organisation[];
+
+      for (let organisation of organisations){
+        let b = await this._branchService.selectAllFromOrganisation(organisation.organisation_id.toString()).toPromise();
+        let branchs = b['data'] as Branch[];
+
+        //We generate one element
+        let e0 = {
+          organisation: organisation,
+          branchs: []
+        };
+
+        for (let branch of branchs){
+          let d = await this._departmentService.selectAllFromBranch(branch.branch_id.toString()).toPromise();
+          let departments = d['data'] as Department[];
+
+          //We generate one sub element
+          let e1 = {
+            branch: branch,
+            departments: []
+          };
+
+          for (let department of departments){
+            let s = await this._subDepartmentService.selectAllFromDepartment(department.department_id.toString()).toPromise();
+            let sub_departments = s['data'] as SubDepartment[];
+
+            //We generate lasts elements of the schema
+            let e2 = {
+              department: department,
+              sub_departments: sub_departments
+            };
+            e1['departments'].push(e2);
+          }
+          e0['branchs'].push(e1);
+        }
+        this.organisation_elements.push(e0);
+      }
+
+      this.branchs = [this.organisation_elements[0]['branchs'][0]];
+      this.departments = [this.branchs[0]['departments'][0]];
+      this.sub_departments = [this.departments[0]['sub_departments'][0]];
+      this.new_sub_department = this.departments[0]['sub_departments'][0];
+
+    }
+    catch (error) {
+      this.errorMessage = error.message;
+    }
+  }
+
   pickOrganisation(organisation){
     this.branchs = organisation['branchs'];
     this.departments = [this.branchs[0]['departments'][0]];
@@ -339,7 +341,7 @@ export class ProjectCreationComponent implements OnInit {
   pickSubDepartment(sub_department){
     this.new_sub_department = sub_department;
     this.pick_level = 5;
-  }
+  }*/
 
   removeMember(member){
     let indice = this.unit_selected['detail']['members'].indexOf(member);
@@ -420,7 +422,7 @@ export class ProjectCreationComponent implements OnInit {
 
      try {
        this.errorMessage = "";
-       this.new_project.sub_department_id = this.new_sub_department.department_id.toString();
+       this.new_project.sub_department_id = this.sub_department.department_id.toString();
      }
      catch (error) {
        this.errorMessage = error.message;
@@ -571,5 +573,119 @@ export class ProjectCreationComponent implements OnInit {
       }
     }
   }
+
+  /*  ----------------- ORGANISATIONS / BRANCHS / DEPARTMENTS / SUB_DEPARTMENTS ----------------- */
+
+  //We get all Organisations, branchs, departements and sub departements from database
+  async loadOrganisations(){
+    try {
+      this.errorMessage = "";
+      let o = await this._organisationService.selectAll().toPromise();
+      let organisations = o['data'] as Organisation[];
+
+      for (let organisation of organisations){
+        let b = await this._branchService.selectAllFromOrganisation(organisation.organisation_id.toString()).toPromise();
+        let branchs = b['data'] as Branch[];
+
+        //We generate one element
+        let e0 = {
+          organisation: organisation,
+          branchs: []
+        };
+
+        for (let branch of branchs){
+          let d = await this._departmentService.selectAllFromBranch(branch.branch_id.toString()).toPromise();
+          let departments = d['data'] as Department[];
+
+          //We generate one sub element
+          let e1 = {
+            branch: branch,
+            departments: []
+          };
+
+          for (let department of departments){
+            let s = await this._subDepartmentService.selectAllFromDepartment(department.department_id.toString()).toPromise();
+            let sub_departments = s['data'] as SubDepartment[];
+
+            //We generate lasts elements of the schema
+            let e2 = {
+              department: department,
+              sub_departments: sub_departments
+            };
+            e1['departments'].push(e2);
+          }
+          e0['branchs'].push(e1);
+        }
+        this.organisation_elements.push(e0);
+      }
+
+      this.organisation = this.organisation_elements[0];
+      this.branch = this.organisation['branchs'][0];
+      this.department = this.branch['departments'][0];
+      this.sub_department = this.department['sub_departments'][0];
+
+    }
+    catch (error) {
+      this.errorMessage = error.message;
+    }
+  }
+
+  /* element is an id of organisation, branch or department. Level 1 = We search for organisation, level 2 = we search for departments.
+   * Return : the element of organisation_elements wanted */
+  findElement(element: number, level: number){
+    console.log('element : ', element, ' - level : ', level);
+    if ( level == 1){
+      //We search for an organisation
+      for (let e of this.organisation_elements){
+        if (e['organisation'].organisation_id == element){
+          return e;
+        }
+      }
+    }
+    else if ( level == 2 ){
+      for (let e of this.organisation['branchs']){
+        if (e['branch'].branch_id == element){
+          return e;
+        }
+      }
+    }
+    else if ( level == 3 ){
+      for (let e of this.branch['departments']){
+        if (e['department'].department_id == element){
+          return e;
+        }
+      }
+    }
+    else if ( level == 4 ){
+      for (let e of this.department['sub_departments']){
+        if (e.department_id == element){
+          return e;
+        }
+      }
+    }
+  }
+
+  pickOrganisation(){
+    // I have picked my new organisation, I need to set my new array for other levels
+    this.branch = this.organisation['branchs'][0];
+    this.department = this.branch['departments'][0];
+    this.sub_department = this.department['sub_departments'][0];
+    console.log(this.organisation, this.branch, this.department, this.sub_department);
+  }
+
+  pickBranch(){
+    // I have picked my new organisation, I need to set my new array for other levels
+    this.department = this.branch['departments'][0];
+    this.sub_department = this.department['sub_departments'][0];
+    console.log(this.organisation, this.branch, this.department, this.sub_department);
+  }
+
+  pickDepartment(){
+    this.sub_department = this.department['sub_departments'][0];
+    console.log(this.organisation, this.branch, this.department, this.sub_department);
+    //
+  }
+
+  //  ----------------- ORGANISATIONS / BRANCHS / DEPARTMENTS / SUB_DEPARTMENTS ----------------- //
 
 }

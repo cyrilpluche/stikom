@@ -6,15 +6,18 @@
     </div>
   </div>
 
+  <!-- Project not started -->
   <div class="row row-first justify-content-between">
 
-    <ng-controller class="row ">
-    </ng-controller>
+    <div class=" ">
+      <h5><span class="badge badge-primary">Project started</span></h5>
+    </div>
     <div class=" md-form" id="search-bar">
-      <input id="search" (keyup)="search()" class="form-control" type="text" placeholder="Search" aria-label="Search">
+      <input id="search" (keyup)="search(1)" class="form-control" type="text" placeholder="Search" aria-label="Search">
     </div>
   </div>
 
+  <!-- TABLE -->
   <div class="row justify-content-center">
 
   <!--Table-->
@@ -24,10 +27,10 @@
       <thead class="">
       <tr class="text-white">
         <th style="width:5%;"></th>
-        <th style="width:10%;"  (click)="sortTable(1)"><a>Code</a></th>
-        <th style="width:40%;" (click)="sortTable(2)"><a>Title</a></th>
-        <th style="width:20%;" (click)="sortTable(3)"><a>Start Date</a></th>
-        <th style="width:20%;" (click)="sortTable(4)"><a>Finished Date</a></th>
+        <th style="width:10%;"  (click)="sortTable(1, 1)"><a>Code</a></th>
+        <th style="width:40%;" (click)="sortTable(2, 1)"><a>Title</a></th>
+        <th style="width:20%;" (click)="sortTable(3, 1)"><a>Start Date</a></th>
+        <th style="width:20%;" (click)="sortTable(4, 1)"><a>Finished Date</a></th>
         <th style="width:5%;"></th>
       </tr>
       </thead>
@@ -54,6 +57,111 @@
     <!--Table-->
 
   </div>
+
+  <!-- Project started -->
+  <div class="row row-first justify-content-between">
+
+    <div class=" ">
+      <h5><span class="badge badge-primary">Project finished</span></h5>
+    </div>
+    <div class=" md-form" id="search-bar-2">
+      <input id="search-2" (keyup)="search(2)" class="form-control" type="text" placeholder="Search" aria-label="Search">
+    </div>
+  </div>
+
+  <!-- TABLE -->
+  <div class="row justify-content-center">
+
+    <!--Table-->
+    <table class="col-12 table hoverable table-borderless table-hover table-fixed" id="project-table-2">
+
+      <!--Table head-->
+      <thead class="">
+      <tr class="text-white">
+        <th style="width:5%;"></th>
+        <th style="width:10%;"  (click)="sortTable(1, 2)"><a>Code</a></th>
+        <th style="width:40%;" (click)="sortTable(2, 2)"><a>Title</a></th>
+        <th style="width:20%;" (click)="sortTable(3, 2)"><a>Start Date</a></th>
+        <th style="width:20%;" (click)="sortTable(4, 2)"><a>Finished Date</a></th>
+        <th style="width:5%;"></th>
+      </tr>
+      </thead>
+      <!--Table head-->
+
+      <!--Table body-->
+      <tbody>
+      <tr *ngFor="let project of projects" (click)="selectProject(project)">
+        <td scope="row">
+          <a data-toggle="modal" data-target="#actionModal"><i class="fa fa-cog text-blue"></i></a>
+        </td>
+        <td>{{project.project_id}}</td>
+        <td>{{textHelper.firstLetterUpperCase(project.project_title.substr(0,50))}}</td>
+        <td>{{project.project_start | date:"MM/dd/yyyy"}}</td>
+        <td>{{project.project_end | date:"MM/dd/yyyy"}}</td>
+        <td>
+          <a data-toggle="modal" data-target="#warningModal"><i class="fa fa-close text-red"></i></a>
+        </td>
+      </tr>
+      </tbody>
+      <!--Table body-->
+
+    </table>
+    <!--Table-->
+
+  </div>
+
+  <!-- Project finished -->
+  <div class="row row-first justify-content-between">
+
+    <div class=" ">
+      <h5><span class="badge badge-primary">Project finished</span></h5>
+    </div>
+    <div class=" md-form" id="search-bar-3">
+      <input id="search-3" (keyup)="search(2)" class="form-control" type="text" placeholder="Search" aria-label="Search">
+    </div>
+  </div>
+
+  <!-- TABLE -->
+  <div class="row justify-content-center">
+
+    <!--Table-->
+    <table class="col-12 table hoverable table-borderless table-hover table-fixed" id="project-table-3">
+
+      <!--Table head-->
+      <thead class="">
+      <tr class="text-white">
+        <th style="width:5%;"></th>
+        <th style="width:10%;"  (click)="sortTable(1, 3)"><a>Code</a></th>
+        <th style="width:40%;" (click)="sortTable(2, 3)"><a>Title</a></th>
+        <th style="width:20%;" (click)="sortTable(3, 3)"><a>Start Date</a></th>
+        <th style="width:20%;" (click)="sortTable(4, 3)"><a>Finished Date</a></th>
+        <th style="width:5%;"></th>
+      </tr>
+      </thead>
+      <!--Table head-->
+
+      <!--Table body-->
+      <tbody>
+      <tr *ngFor="let project of projects" (click)="selectProject(project)">
+        <td scope="row">
+          <a data-toggle="modal" data-target="#actionModal"><i class="fa fa-cog text-blue"></i></a>
+        </td>
+        <td>{{project.project_id}}</td>
+        <td>{{textHelper.firstLetterUpperCase(project.project_title.substr(0,50))}}</td>
+        <td>{{project.project_start | date:"MM/dd/yyyy"}}</td>
+        <td>{{project.project_end | date:"MM/dd/yyyy"}}</td>
+        <td>
+          <a data-toggle="modal" data-target="#warningModal"><i class="fa fa-close text-red"></i></a>
+        </td>
+      </tr>
+      </tbody>
+      <!--Table body-->
+
+    </table>
+    <!--Table-->
+
+  </div>
+
 </div>
 
 <app-action title={{project_selected.project_title}}

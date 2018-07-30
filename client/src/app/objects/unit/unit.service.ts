@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import {environment} from "../../../environments/environment";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Router} from "@angular/router";
+import {Sop} from "../sop/sop";
+import {Unit} from "./unit";
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +22,15 @@ export class UnitService {
     };
     this.generateHeaders();
     return this.http.post(this.domain + '/api/unit/create',body,this.httpOptions);
+  }
+
+  updateUnit(unit: Unit) {
+    let body = {
+      unit_id: unit.unit_id,
+      unit_name: unit.unit_name
+    };
+    this.generateHeaders();
+    return this.http.put(this.domain + '/api/unit/update',body,this.httpOptions);
   }
 
   bindUnitSop(unit_id:string, sop_id:string){

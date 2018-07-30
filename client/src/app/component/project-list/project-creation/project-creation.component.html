@@ -1,4 +1,10 @@
-<div class="container">
+<div class="container" *ngIf="!ready">
+  <div class="row-first">
+    <app-loader></app-loader>
+  </div>
+</div>
+
+<div class="container" *ngIf="ready">
 
   <!-- SOP List back button -->
   <div class="row row-first">
@@ -43,53 +49,48 @@
           <!-- Department selection -->
           <div class="form-group" [hidden]="stepSelected != 1">
 
-            <!-- Organisation -->
-            <div class="row md-form">
+            <div class="row">
               <div class="offset-2 col-8">
-                <p class="text-center mb-4 text-description"> Please choose your organisation</p>
-              <select class="form-control" multiple>
-                <option name="organisation" value="" disabled selected>Choose organisation</option>
-                <option *ngFor="let o of organisation_elements" (click)="pickOrganisation(o)">{{o['organisation'].organisation_name}}</option>
-              </select>
+                <select (change)="pickOrganisation()" [(ngModel)]="organisation" name="organisation" class="form-control">
+                  <option name="organisation" value="" disabled selected>Choose organisation</option>
+                  <option *ngFor="let o of organisation_elements" [ngValue]="o">{{o['organisation'].organisation_name}}</option>
+                </select>
               </div>
             </div>
 
-            <!-- Branch -->
-            <div class="row md-form">
+            <div class="row">
               <div class="offset-2 col-8">
-              <select class="form-control" [hidden]="pick_level<2" multiple>
-                <option value="" disabled selected>Choose a branch</option>
-                <option *ngFor="let b of branchs" (click)="pickBranch(b)">{{b['branch'].branch_name}}</option>
-              </select>
+                <select (change)="pickBranch()" [disabled]="organisation == null" [(ngModel)]="branch" name="branch" class="form-control">
+                  <option name="organisation" value="" disabled selected>Choose branch</option>
+                  <option *ngFor="let b of organisation['branchs']" [ngValue]="b">{{b['branch'].branch_name}}</option>
+                </select>
               </div>
             </div>
 
-            <!-- Department -->
-            <div class="row md-form">
+            <div class="row">
               <div class="offset-2 col-8">
-              <select class="form-control" [hidden]="pick_level<3" multiple>
-                <option value="" disabled selected>Choose a branch</option>
-                <option *ngFor="let d of departments" (click)="pickDepartment(d)">{{d['department'].department_name}}</option>
-              </select>
+                <select (change)="pickDepartment()" [disabled]="branch['branch'].branch_name == 'No branch'" [(ngModel)]="department" name="department" class="form-control">
+                  <option name="organisation" value="" disabled selected>Choose department</option>
+                  <option *ngFor="let d of branch['departments']" [ngValue]="d">{{d['department'].department_name}}</option>
+                </select>
               </div>
             </div>
 
-            <!-- SubDepartment -->
-            <div class="row md-form">
+            <div class="row">
               <div class="offset-2 col-8">
-              <select class="form-control" [hidden]="pick_level<4" multiple>
-                <option value="" disabled selected>Choose a branch</option>
-                <option *ngFor="let s of sub_departments" (click)="pickSubDepartment(s)">{{s.sub_department_name}}</option>
-              </select>
+                <select [disabled]="department['department'].department_name == 'No department'" [(ngModel)]="sub_department" name="sub_department" class="form-control">
+                  <option name="organisation" value="" disabled selected>Choose organisation</option>
+                  <option *ngFor="let s of department['sub_departments']" [ngValue]="s">{{s.sub_department_name}}</option>
+                </select>
               </div>
             </div>
 
-            <div class="row justify-content-center">
+            <div class="row row-first justify-content-center">
               <div>
                 <button class="btn btn-danger waves-effect" type="button" (click)="changeStep(false)">Back</button>
               </div>
               <div>
-                <button [disabled]="pick_level == 1" class="btn btn-primary waves-effect" type="button" (click)="changeStep(true)">Next</button>
+                <button class="btn btn-primary waves-effect" type="button" (click)="changeStep(true)">Next</button>
               </div>
             </div>
           </div>
