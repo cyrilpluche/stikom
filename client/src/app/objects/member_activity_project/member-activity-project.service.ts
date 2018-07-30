@@ -20,6 +20,11 @@ export class MemberActivityProjectService {
     return this.http.get(this.domain + '/api/project/all_member_activity_project/'+project_id,this.httpOptions);
   }
 
+  selectAllFromProjectFull(project_id){
+    this.generateHeaders();
+    return this.http.get(this.domain + '/api/project/all_member_activity_project_full/'+project_id,this.httpOptions);
+  }
+
   selectAllFromProjectDistinct(project_id){
     this.generateHeaders();
     return this.http.get(this.domain + '/api/project/all_member_activity_project_distinct/'+project_id,this.httpOptions);
