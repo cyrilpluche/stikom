@@ -11,6 +11,7 @@
       <button type="button" class="btn btn-outline-danger waves-effect" routerLink="/sop-list"><h6 class="no-margin-bottom"><i class="fa fa-times mr-3"></i>Back</h6></button>
   </div>
 
+  <!-- SOP Informations -->
   <div class="row-first">
 
     <!-- Error alert -->
@@ -25,10 +26,10 @@
           </a>
 
           <ng-controller class="col-12 collapse" id="sop">
-            <div class="row justify-content-center">
+            <div class="row text-center">
               <div class="col-12 center-block anil_nepal">
                 <label class="switch switch-left-right">
-                  <input class="switch-input" type="checkbox" (click)="makeEditable()">
+                  <input class="switch-input" type="checkbox" (click)="makeEditable(1)">
                   <span class="switch-label" data-on="Editable" data-off="OFF"></span> <span class="switch-handle"></span> </label>
               </div>
             </div>
@@ -39,6 +40,15 @@
               </div>
               <div class="col-8">
                 <input [disabled]="true" [(ngModel)]="sop.sop_id" type="text" class="form-control">
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-3 font-weight-bold">
+                <p>SOP title</p>
+              </div>
+              <div class="col-8">
+                <input [disabled]="!isEditable" [(ngModel)]="sop.sop_title" type="text" class="form-control">
               </div>
             </div>
 
@@ -56,7 +66,7 @@
                 <p>Revision date</p>
               </div>
               <div class="col-8">
-                <input [disabled]="!isEditable" [(ngModel)]="sop.sop_revision" type="date" class="form-control">
+                <input [disabled]="true" [(ngModel)]="sop.sop_revision" type="date" class="form-control">
               </div>
             </div>
 
@@ -74,7 +84,7 @@
                 <p>Approved by</p>
               </div>
               <div class="col-8">
-                <input [disabled]="!isEditable" [(ngModel)]="sop.sop_approvment" type="text" class="form-control">
+                <input [disabled]="true" [(ngModel)]="sop.sop_approvment" type="text" class="form-control">
               </div>
             </div>
 
@@ -131,6 +141,12 @@
                 <input [disabled]="!isEditable" [(ngModel)]="sop.sop_objectives" type="text" class="form-control">
               </div>
             </div>
+
+            <div class="row row-first text-center">
+              <div class="col">
+                <button [disabled]="!isEditable" class="btn btn-success waves-effect" type="button" data-toggle="modal" data-target="#confirmationModal">Save</button>
+              </div>
+            </div>
           </ng-controller>
         </div>
     </div>
@@ -138,17 +154,35 @@
   </div>
 
 
-
+  <!-- UNITS -->
   <div class="row-first">
 
-    <div class="card card-cascade hoverable" data-toggle="collapse" data-target="#units" aria-expanded="false" aria-controls="units">
+    <div class="card card-cascade hoverable">
       <a>
         <div class="row card-body card-body-cascade text-center">
-          <ng-controller class="col-12">UNITS</ng-controller>
+          <a class="col-12 text-center " data-toggle="collapse" data-target="#units" aria-expanded="false" aria-controls="units">
+            <ng-controller class="col-12">UNITS</ng-controller>
+          </a>
 
-          <ng-controller class="collapse" id="units">
-            <div *ngFor="let unit of units" class="col-12">
-              {{unit.unit_name}}
+          <ng-controller class="col-12 collapse" id="units">
+            <div class="row text-center">
+              <div class="col-12 center-block anil_nepal">
+                <label class="switch switch-left-right">
+                  <input class="switch-input" type="checkbox" (click)="makeEditable(2)">
+                  <span class="switch-label" data-on="Editable" data-off="OFF"></span> <span class="switch-handle"></span> </label>
+              </div>
+            </div>
+
+            <div *ngFor="let unit of units" class="row text-center">
+                <div class="offset-2 col-8">
+                  <input [disabled]="!isEditableUnits" [(ngModel)]="unit.unit_name" type="text" class="form-control">
+                </div>
+            </div>
+
+            <div class="row row-first text-center">
+              <div class="col">
+                <button [disabled]="!isEditableUnits" class="btn btn-success waves-effect" type="button" data-toggle="modal" data-target="#confirmationModal">Save</button>
+              </div>
             </div>
           </ng-controller>
         </div>
@@ -157,36 +191,82 @@
 
   </div>
 
+  <!-- ACTIVITIES -->
   <div class="row-first">
 
     <div class="card card-cascade hoverable">
-        <div class="row card-body card-body-cascade">
+        <div class="row card-body card-body-cascade justify-content-center">
           <a class="col-12 row" data-toggle="collapse" data-target="#activities" aria-expanded="false" aria-controls="activities">
             <ng-controller class="col-12 text-center">ACTIVITIES</ng-controller>
           </a>
-          <div class="collapse col-12 row" id="activities" *ngFor="let activity of convertMap(activities)">
-            <hr class="col-12">
 
-            <div class="col-1">({{activity['sub_activities'].length}})</div>
-            <div class="col-9">{{activity['activity'].activity_title}}</div>
-            <div class="col-2 text-center">
-              <a *ngIf="activity['sub_activities'].length != 0">
-                <i class="fa fa-eye text-blue" data-toggle="collapse" [attr.data-target]="'#'+activity['activity'].activity_id" aria-expanded="false" aria-controls="{{activity['activity'].activity_id}}"></i>
-              </a>
-            </div>
-            <!-- Collapsible element -->
-            <div class="col-12 row collapse" id="{{activity['activity'].activity_id}}">
-              <div class="offset-2 col-10" *ngFor="let sub_activity of activity['sub_activities']">
-                {{sub_activity.activity_title}}
+          <ng-controller class="collapse col-12 row text-center justify-content-center" id="activities">
+
+            <div class="col-12 row text-center">
+              <div class="col-12 center-block anil_nepal">
+                <label class="switch switch-left-right">
+                  <input class="switch-input" type="checkbox" (click)="makeEditable(3)">
+                  <span class="switch-label" data-on="Editable" data-off="OFF"></span> <span class="switch-handle"></span> </label>
               </div>
             </div>
-            <!-- / Collapsible element -->
-          </div>
+
+            <div *ngFor="let activity of convertMap(activities)" class="col-12 row justify-content-center">
+
+              <hr class="col-12">
+
+              <div class="col-1">
+                <a (click)="pickActivity(activity, 1)" data-toggle="modal" data-target="#activityModal"><i class="fa fa-cog text-blue"></i></a>
+              </div>
+              <div class="col-1">({{activity['sub_activities'].length}})</div>
+              <div class="col-8 text-left">{{activity['activity'].activity_title}}</div>
+              <div class="col-2 text-center">
+                <a *ngIf="activity['sub_activities'].length != 0">
+                  <i class="fa fa-eye text-blue" data-toggle="collapse" [attr.data-target]="'#'+activity['activity'].activity_id" aria-expanded="false" aria-controls="{{activity['activity'].activity_id}}"></i>
+                </a>
+              </div>
+
+              <!-- Collapsible element -->
+              <ng-controller class="col-12 collapse" id="{{activity['activity'].activity_id}}">
+                <div class="row" *ngFor="let sub_activity of activity['sub_activities']">
+                  <div class="offset-1 col-1">
+                    <a (click)="pickActivity(sub_activity, 2)" data-toggle="modal" data-target="#activityModal"><i class="fa fa-cog text-link"></i></a>
+                  </div>
+                  <div class="col-10 text-left">
+                    {{sub_activity.activity_title}}
+                  </div>
+                </div>
+              </ng-controller>
+              <!-- / Collapsible element -->
+
+            </div>
+
+            <hr class="col-12">
+
+            <div class="row row-first text-center">
+              <div class="col">
+                <button [disabled]="!isEditableActivities" class="btn btn-success waves-effect" type="button" data-toggle="modal" data-target="#confirmationModal">Save</button>
+              </div>
+            </div>
+          </ng-controller>
         </div>
     </div>
 
   </div>
 
-
-
 </div>
+
+<!-- Modal confirmation -->
+<app-confirmation title="Update SOP informations"
+                  text="Are you sure you want to modify these informations ? If the SOP is used, this mights create some errors"
+                  (success)="onSubmit()"
+                  [isLinkActive]=false
+                  link="sop-list">
+</app-confirmation>
+
+<app-activity-update *ngIf="activity_selected != null"
+                     title={{title_modal_activity}}
+                     [units]=units
+                     [managment_levels]=management_levels
+                     [activityUpdate]=activity_selected
+                     [isLinkActive]=false>
+</app-activity-update>
