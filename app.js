@@ -56,9 +56,9 @@ app.use('/api/pdf', require('./routes/pdf_router'));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  // TODO rediriger l'erreur sur le dist
-   // console.log('Error')
-  // next(createError(404));
+    // TODO rediriger l'erreur sur le dist
+    // console.log('Error')
+    // next(createError(404));
     // res.sendFile(path.join(__dirname, 'dist/client/index.html'));
     res.sendFile(path.join(__dirname, 'dist/client/index.html'));
 
@@ -67,7 +67,7 @@ app.use(function(req, res, next) {
 // error handler
 // occurs when a middleware use next function with parameters
 app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
+    // set locals, only providing error in development
     res.locals.message = err.message;
     res.locals.error = req.app.get('env') === 'development' ? err : {};
 

@@ -65,11 +65,11 @@ let project = {
     },
 
     selectAll () {
-      return db.any('SELECT * FROM public.project').then(function (data) {
-          return data
-      }).catch(function (err) {
-          throw ERRORTYPE.customError('The server has encountred an internal error: ' + err.toString())
-      })
+        return db.any('SELECT * FROM public.project').then(function (data) {
+            return data
+        }).catch(function (err) {
+            throw ERRORTYPE.customError('The server has encountred an internal error: ' + err.toString())
+        })
     },
 
     selectAllBySopId (sop_id) {

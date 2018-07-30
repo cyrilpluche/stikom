@@ -4,17 +4,17 @@ const ERRORTYPE = require('../policy/errorType');
 
 let job = {
     insert (job) {
-      return db.any('INSERT INTO public.job(job_name, job_code, sop_id)\n' +
-          'VALUES (${job_name}, ${job_code}, ${sop_id}) returning job_id;', job)
-          .then(function (data) {
-              if (data.length === 0) {
-                  return false
-              } else {
-                  return data[0]
-              }
-          }).catch(function (err) {
-              throw ERRORTYPE.customError('The server has encountred an internal error: ' + err.toString())
-          })
+        return db.any('INSERT INTO public.job(job_name, job_code, sop_id)\n' +
+            'VALUES (${job_name}, ${job_code}, ${sop_id}) returning job_id;', job)
+            .then(function (data) {
+                if (data.length === 0) {
+                    return false
+                } else {
+                    return data[0]
+                }
+            }).catch(function (err) {
+                throw ERRORTYPE.customError('The server has encountred an internal error: ' + err.toString())
+            })
     },
 
     insertActivityIsJob (activity_id, job_id) {
@@ -107,9 +107,9 @@ let job = {
         return db.any(
             'DELETE FROM public.job J \n' +
             'WHERE EXISTS (\n' +
-                'SELECT * FROM public.activity_is_job AIJ, public.activity A\n' +
-                'WHERE AIJ.activity_id = $1 AND AIJ.job_id = J.job_id AND \n' +
-                'A.activity_id = AIJ.activity_id AND A.activity_type != $2 \n' +
+            'SELECT * FROM public.activity_is_job AIJ, public.activity A\n' +
+            'WHERE AIJ.activity_id = $1 AND AIJ.job_id = J.job_id AND \n' +
+            'A.activity_id = AIJ.activity_id AND A.activity_type != $2 \n' +
             ')\n' +
             'returning J.job_id;',
             [activity_id, 'sop'])
@@ -127,8 +127,8 @@ let job = {
     deletebyJobIdAndActivityId (job_id, activity_id) {
         return db.any('DELETE FROM public.job J\n' +
             'WHERE J.job_id != $1 AND EXISTS (\n' +
-                'SELECT * FROM public.activity_is_job AIJ\n' +
-                'WHERE AIJ.activity_id = $2 AND AIJ.job_id = J.job_id\n' +
+            'SELECT * FROM public.activity_is_job AIJ\n' +
+            'WHERE AIJ.activity_id = $2 AND AIJ.job_id = J.job_id\n' +
             ')returning J.job_id;',
             [job_id, activity_id])
             .then(function (data) {
