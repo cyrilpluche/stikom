@@ -42,6 +42,7 @@ export class ProjectComponent implements OnInit {
               private _subDepartmentService: SubDepartmentService) { }
 
   async ngOnInit() {
+    localStorage.removeItem("Sop_id");
     this.project_id=localStorage.getItem("Project_id");
     await this.loadProject();
     await this.loadOrganisations();

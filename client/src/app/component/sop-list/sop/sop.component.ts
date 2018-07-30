@@ -44,6 +44,7 @@ export class SopComponent implements OnInit {
   async ngOnInit() {
 
     this.sop_id = this._sopService.getSopIdLocal();
+    localStorage.removeItem("Project_id");
     await this.loadSop();
     await this.loadUnit();
     await this.loadActivities();
