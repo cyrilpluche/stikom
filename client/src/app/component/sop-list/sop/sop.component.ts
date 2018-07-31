@@ -38,7 +38,7 @@ export class SopComponent implements OnInit {
   /* ----- Modal Activity Update ----- */
   activity_selected: Activity;
   sub_activities_linked: Activity[];
-  title_modal_activity: string = 'Update activity ';
+  title_modal_activity: string = 'Update activity';
 
   constructor( private _sopService: SopService,
                private _unitService: UnitService,

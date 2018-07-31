@@ -1,3 +1,5 @@
 <button *ngIf="display_pdf_sop" type="button" class="btn btn-default" (click)="download()">Download Sop PDF</button>
+<button *ngIf="!display_pdf_sop && sop_pdf_button" type="button" class="btn btn-default" disabled (click)="download()">Download Sop PDF</button>
 <button *ngIf="display_pdf_project" type="button" class="btn btn-default" (click)="download()">Download Project PDF</button>
+<button *ngIf="!display_pdf_project && project_pdf_button" class="btn btn-default" disabled (click)="download()">Download Project PDF</button>
 
