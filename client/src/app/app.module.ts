@@ -136,7 +136,7 @@ const routes: Routes = [
     NotFoundComponent,
     TextHelperComponent,
     ActivityUpdateComponent,
-    FooterComponent
+    FooterComponent,
     ActivityUpdateComponent,
     DateHelperComponent,
     MasterOfWorkComponent
