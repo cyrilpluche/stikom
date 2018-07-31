@@ -85,6 +85,7 @@ const routes: Routes = [
   {path: 'pdf-performance-target', component: PdfPerformanceTargetComponent},
   {path: 'pdf-performance-report', component: PdfPerformanceReportComponent},
   {path: 'volume-progress', component: VolumeProgressComponent},
+  {path: 'master-of-work', component: MasterOfWorkComponent},
   {path: '404', component: NotFoundComponent},
   {path: '**', component: NotFoundComponent}
 ];

@@ -20,6 +20,7 @@ export class MasterOfWorkComponent implements OnInit {
 
   /* ----- Data ----- */
   errorMessage: string = "";
+  ready: boolean = false;
   textHelper: TextHelperComponent = new TextHelperComponent();
 
   project: Project;
@@ -44,6 +45,7 @@ export class MasterOfWorkComponent implements OnInit {
 
   async ngOnInit() {
     await this.loadData();
+    this.ready = true;
     console.log(this.units);
   }
 
