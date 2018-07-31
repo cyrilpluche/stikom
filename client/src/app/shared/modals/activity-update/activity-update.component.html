@@ -22,7 +22,7 @@
               <p>Title</p>
             </div>
             <div class="col-8">
-              <input [(ngModel)]="activityUpdate.activity_title" type="text" class="form-control">
+              <input [disabled]="!isActive" [(ngModel)]="activityUpdate.activity_title" type="text" class="form-control">
             </div>
           </div>
 
@@ -31,7 +31,7 @@
               <p>Description</p>
             </div>
             <div class="col-8">
-              <input [(ngModel)]="activityUpdate.activity_description" type="text" class="form-control">
+              <input [disabled]="!isActive" [(ngModel)]="activityUpdate.activity_description" type="text" class="form-control">
             </div>
           </div>
 
@@ -40,7 +40,7 @@
               <p>Management level</p>
             </div>
             <div class="col-8">
-              <select [(ngModel)]="new_management_level" class="form-control">
+              <select [disabled]="!isActive" [(ngModel)]="new_management_level" class="form-control">
                 <option name="organisation" value="" disabled selected>Choose organisation</option>
                 <option *ngFor="let m of managment_levels" [ngValue]="m">{{m.managment_level_label}}</option>
               </select>
@@ -52,14 +52,14 @@
               <p>Type duration</p>
             </div>
             <div class="col-8">
-              <select [(ngModel)]="activityUpdate.activity_type_duration" class="form-control">
+              <select [disabled]="!isActive" [(ngModel)]="activityUpdate.activity_type_duration" class="form-control">
                 <option name="organisation" value="" disabled selected>Choose organisation</option>
                 <option *ngFor="let d of type_durations" [ngValue]="d">{{d}}</option>
               </select>
             </div>
           </div>
 
-          <div class="row">
+          <div *ngIf="isActive" class="row">
             <div class="col-3 font-weight-bold">
               <p>Unit</p>
             </div>
@@ -76,7 +76,7 @@
               <p>Duration</p>
             </div>
             <div class="col-8">
-              <input [(ngModel)]="activityUpdate.activity_duration" type="number" class="form-control">
+              <input [disabled]="!isActive" [(ngModel)]="activityUpdate.activity_duration" type="number" class="form-control">
             </div>
           </div>
 
@@ -85,7 +85,7 @@
               <p>Type output</p>
             </div>
             <div class="col-8">
-              <input [(ngModel)]="activityUpdate.activity_type_output" type="text" class="form-control">
+              <input [disabled]="!isActive" [(ngModel)]="activityUpdate.activity_type_output" type="text" class="form-control">
             </div>
           </div>
 
@@ -94,8 +94,9 @@
 
       <!--Footer-->
       <div class="modal-footer justify-content-center">
-        <a type="button" class="btn btn-outline-danger waves-effect" data-dismiss="modal" (click)="reset();">Cancel</a>
-        <a type="button" class="btn btn-success waves-effect" (click)="goDestination();" data-dismiss="modal" >Save</a>
+        <a *ngIf="isActive" type="button" class="btn btn-outline-danger waves-effect" data-dismiss="modal" (click)="reset();">Cancel</a>
+        <a *ngIf="isActive" type="button" class="btn btn-success waves-effect" (click)="goDestination();" data-dismiss="modal" >Save</a>
+        <a *ngIf="!isActive" type="button" class="btn btn-default waves-effect" data-dismiss="modal" >Dismiss</a>
       </div>
     </div>
     <!--/.Content-->

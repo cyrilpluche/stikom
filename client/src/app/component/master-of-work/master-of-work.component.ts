@@ -10,6 +10,8 @@ import {MemberActivityProjectService} from "../../objects/member_activity_projec
 import {JobService} from "../../objects/job/job.service";
 import {UnitService} from "../../objects/unit/unit.service";
 import {Unit} from "../../objects/unit/unit";
+import {ManagmentLevel} from "../../objects/managment_level/managment_level";
+import {ManagmentLevelService} from "../../objects/managment_level/managment-level.service";
 
 @Component({
   selector: 'app-master-of-work',
@@ -36,17 +38,24 @@ export class MasterOfWorkComponent implements OnInit {
    */
   activities = new Map();
   units = new Map();
+  management_levels: ManagmentLevel[] = [];
+
+  /* ----- Modal Activity Update ----- */
+  activity_selected: Activity;
+  sub_activities_linked: Activity[];
+  title_modal_activity: string = 'Update activity ';
 
   constructor(private _projectService: ProjectService,
               private _activityService: ActivityService,
               private _jobService: JobService,
+              private _managmentLevel: ManagmentLevelService,
               private _unitService: UnitService,
               private _memberActivityProjectService: MemberActivityProjectService) { }
 
   async ngOnInit() {
     await this.loadData();
     this.ready = true;
-    console.log(this.units);
+    console.log(this.activities);
   }
 
 
@@ -56,6 +65,7 @@ export class MasterOfWorkComponent implements OnInit {
   async loadData() {
     await this.loadProject();
     await this.loadActivitiesFromProject();
+    await this.loadManagement();
   }
 
   async loadProject() {
@@ -83,7 +93,7 @@ export class MasterOfWorkComponent implements OnInit {
         let e = {
           activity: activity['data'],
           job: job['data'],
-          unit: unit['data']
+          unit: unit['data'][0]
         };
         activities.push(e);
         this.units.set(unit['data'][0].unit_id, unit['data'][0]);
@@ -92,6 +102,16 @@ export class MasterOfWorkComponent implements OnInit {
       this.sortActivities(activities);
     }
     catch (error) {
+      this.errorMessage = error.message;
+    }
+  }
+
+  async loadManagement () {
+    try {
+      let m = await this._managmentLevel.selectAll().toPromise();
+      this.management_levels = m['data'] as ManagmentLevel[];
+    }
+    catch (error){
       this.errorMessage = error.message;
     }
   }
@@ -120,6 +140,7 @@ export class MasterOfWorkComponent implements OnInit {
         let a = this.activities.get(activity['job'].job_id)['activities'];
         let e2 = {
           activity: activity['activity'],
+          job_id: activity['job'].job_id,
           unit: activity['unit'],
           sub_activities: []
         };
@@ -137,6 +158,21 @@ export class MasterOfWorkComponent implements OnInit {
     }
   }
 
+  /* ------------------ METHODS ------------------ */
+  /* ------------------ METHODS ------------------ */
+
+  /* Ask by the view, return the right sub activities for the right unit of a job */
+  pickActivity(activity: any, level: number) {
+    if ( level == 1 ){
+      this.activity_selected = activity['activity'];
+      this.title_modal_activity = 'Informations : '+activity['activity'].activity_title;
+    }
+    else{
+      this.activity_selected = activity;
+      this.title_modal_activity = 'Update activity '+activity.activity_title;
+    }
+    this.sub_activities_linked = null;
+  }
 
   /* ------------------ HELPER ------------------ */
   /* ------------------ HELPER ------------------ */

@@ -13,20 +13,30 @@
   </div>
 
   <div class="row row-first input-group justify-content-between">
+
     <div class="md-form col-2" id="search-bar">
       <input id="search" (keyup)="search()" class="form-control" type="text" placeholder="Search" aria-label="Search">
     </div>
+
+    <!-- LEGEND -->
     <div class="md-form col text-center">
       <h5><span class="badge badge-default">Finished</span>
       <span class="badge badge-primary">Target</span>
       <span class="badge badge-danger">Pourcentage</span></h5>
     </div>
+
+    <div *ngIf="isSwitchable" class="col center-block anil_nepal">
+      <label class="switch switch-left-right">
+        <input class="switch-input" type="checkbox"(click)="switchView()" [checked]="!isDay">
+        <span class="switch-label" data-on="Month" data-off="Day"></span> <span class="switch-handle"></span> </label>
+    </div>
+
     <div class="month-select col-2">
       <ul class="pagination pg-blue justify-content-center">
         <li class="page-item text-middle" data-toggle="tooltip" data-placement="top" title="previous" ><i class="page-link no-hover fa fa-arrow-left" (click)="previous()"></i></li>
 
-        <!--Numbers-->
-        <li><h2><span class="badge badge-default">{{dates_displayed[0] | date:'MMM yyyy'}}</span></h2></li>
+        <!--DATE SELECTOR-->
+        <li><h2><span class="badge badge-default">{{date_displayed}}</span></h2></li>
 
         <li class="page-item" data-toggle="tooltip" data-placement="top" title="next" ><i id="nextArrow" class="page-link no-hover fa fa-arrow-right" (click)="next()"></i></li>
 
@@ -44,7 +54,7 @@
         <th style="width: 5%" (click)="sortTable(0)"><a>No</a></th>
         <th class="text-small" (click)="sortTable(1)"><a>Staff Names</a></th>
         <th class="text-small" (click)="sortTable(2)"><a>Total Target</a></th>
-        <th *ngFor="let date of dates_displayed">{{date | date: 'MM/dd/yy'}}</th>
+        <th *ngFor="let date of dates_displayed">{{date}}</th>
       </tr>
       </thead>
       <!--Table head-->

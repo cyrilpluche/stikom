@@ -30,7 +30,7 @@
             <div class="row text-center">
               <div class="col-12 center-block anil_nepal">
                 <label class="switch switch-left-right">
-                  <input class="switch-input" type="checkbox" (click)="makeEditable(1)">
+                  <input class="switch-input" type="checkbox" [checked]="isEditable" (click)="makeEditable(1)">
                   <span class="switch-label" data-on="Editable" data-off="OFF"></span> <span class="switch-handle"></span> </label>
               </div>
             </div>
@@ -174,7 +174,7 @@
             <div class="row text-center">
               <div class="col-12 center-block anil_nepal">
                 <label class="switch switch-left-right">
-                  <input class="switch-input" type="checkbox" (click)="makeEditable(2)">
+                  <input class="switch-input" type="checkbox" [checked]="isEditableUnits" (click)="makeEditable(2)">
                   <span class="switch-label" data-on="Editable" data-off="OFF"></span> <span class="switch-handle"></span> </label>
               </div>
             </div>
@@ -211,7 +211,7 @@
             <div class="col-12 row text-center">
               <div class="col-12 center-block anil_nepal">
                 <label class="switch switch-left-right">
-                  <input class="switch-input" type="checkbox" (click)="makeEditable(3)">
+                  <input class="switch-input" type="checkbox" [checked]="isEditableActivities" (click)="makeEditable(3)">
                   <span class="switch-label" data-on="Editable" data-off="OFF"></span> <span class="switch-handle"></span> </label>
               </div>
             </div>

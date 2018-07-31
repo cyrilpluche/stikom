@@ -98,6 +98,7 @@ export class SopComponent implements OnInit {
             }
           }
           await this.loadActivities();
+          this.isEditableActivities = false;
         }catch (error){
           this.errorMessage = error.message;
         }
@@ -106,7 +107,7 @@ export class SopComponent implements OnInit {
 
     this.isEditable = false;
     this.isEditableUnits = false;
-    this.isEditableActivities = false;
+
     this.ready = true;
   }
 
@@ -204,7 +205,6 @@ export class SopComponent implements OnInit {
       this.isEditableActivities = !this.isEditableActivities;
     }
     this.formNumber = table;
-    console.log('activity editable ! ', this.formNumber);
   }
 
   //Unit verification label

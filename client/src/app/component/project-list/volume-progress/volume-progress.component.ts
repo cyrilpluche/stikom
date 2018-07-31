@@ -29,6 +29,8 @@ export class VolumeProgressComponent implements OnInit {
   activities: Object[] = [];
   sorted_workers = [];
 
+  test: boolean = true;
+
   old_cell;
 
   /*
@@ -57,6 +59,15 @@ export class VolumeProgressComponent implements OnInit {
   volumes_displayed = new Map();
   dates_displayed = [];
   volumes_displayed_iterator: number = 0;
+  date_displayed: string = "";
+
+  /* ----- Days or Month management ----- */
+
+  // Enable or not to switch between days & months or not
+  isSwitchable: boolean = true;
+
+  //Tells the view if we display days or months
+  isDay: boolean = true;
 
   members_activities = new Map();
 
@@ -70,8 +81,8 @@ export class VolumeProgressComponent implements OnInit {
     await this.loadData();
     await this.sortElements();
     await this.loadVolumePerDay();
+    this.isSwitchableProject();
     this.ready = true;
-    console.log(this.elements);
 
   }
 
@@ -107,6 +118,20 @@ export class VolumeProgressComponent implements OnInit {
   }
 
   /* ----------- METHODS ----------- */
+  async reloadView () {
+    if (this.isDay) {
+      await this.loadVolumePerDay();
+    }
+    else{
+      await this.loadVolumePerWeek();
+    }
+  }
+
+  switchView () {
+    this.isDay = !this.isDay;
+    this.reloadView();
+  }
+
 
   /* Load the project & all m_a_p data with the activity & member linked */
   async loadData() {
@@ -221,6 +246,15 @@ export class VolumeProgressComponent implements OnInit {
     }
   }
 
+  isSwitchableProject() {
+    let start = moment(this.project.project_start);
+    let end = moment(this.project.project_end);
+    let i = end.diff(start, 'days');
+    if (i<7) {
+      this.isSwitchable = false;
+    }
+  }
+
   async loadVolumePerWeek(){
     try {
       let v = await this._projectService.volume_per_weeks(this.project.project_id).toPromise();
@@ -234,11 +268,12 @@ export class VolumeProgressComponent implements OnInit {
   }
 
   selectVolumes(i:number) {
-    if (this.is_type_weeks){
-      this.selectVolumesWeeks(i);
+    if (this.isDay){
+      this.selectVolumesDays(i);
     }
     else {
-      this.selectVolumesDays(i);
+      this.selectVolumesWeeks(i);
+      console.log(this.volume_per_weeks);
     }
   }
 
@@ -248,8 +283,12 @@ export class VolumeProgressComponent implements OnInit {
     this.ready = false;
     this.volumes_displayed = new Map();
     this.dates_displayed = [];
+    console.log('i : ', i);
+    console.log(' : ', i);
+    this.date_displayed = moment(this.volume_per_days.slice(i, i+7)[0]['date']).format('MMM YYYY');
+
     for (let volume of this.volume_per_days.slice(i, i+7)){
-      this.dates_displayed.push(volume['date']);
+      this.dates_displayed.push(this.dateView([volume['date']]));
       for (let member of volume['elements']){
 
         //We initialize the map if needed
@@ -278,20 +317,26 @@ export class VolumeProgressComponent implements OnInit {
     this.ready = true;
   }
   /* Take all elements of a month, and store it in the array that is shown on the view */
+
   selectVolumesWeeks(i:number) {
     // We convert the volume_per_weeks array to fit with the ngFor view
     this.ready = false;
     this.volumes_displayed = new Map();
     this.dates_displayed = [];
+    this.date_displayed = this.volume_per_weeks[i]['shortcut'];
     for (let volume of this.volume_per_weeks[i]['weeks']){
-      this.dates_displayed.push(volume['date']);
+      this.dates_displayed.push(this.dateView([volume['startDate'], volume['endDate']]));
       for (let member of volume['elements']){
 
         //We initialize the map if needed
         if(this.volumes_displayed.get(member['member'].member_id) == null){
+          let quantities = this.foundQuantities(member['member'].member_id);
           let o = {
             member: member['member'],
-            volumes: []
+            volumes: [],
+            total_finished: quantities[0],
+            total_target: quantities[1],
+            total_rates: quantities[2]
           };
           this.volumes_displayed.set(member['member'].member_id, o);
         }
@@ -306,6 +351,15 @@ export class VolumeProgressComponent implements OnInit {
       }
     }
     this.ready = true;
+  }
+
+  dateView(dates: Date[]){
+    if(this.isDay){
+      return moment(dates[0]).format('MM/DD');
+    }
+    else{
+      return moment(dates[0]).format('MM/DD')+' - '+moment(dates[1]).format('MM/DD');
+    }
   }
 
   /* Found the total quantities inside the elements array */
@@ -325,8 +379,8 @@ export class VolumeProgressComponent implements OnInit {
 
   //Load the seven next days
   next(){
-    if (this.is_type_weeks){
-      if(this.volumes_displayed_iterator < this.volume_per_days.length-1){
+    if (!this.isDay){
+      if(this.volumes_displayed_iterator < this.volume_per_weeks.length-1){
         this.volumes_displayed_iterator += 1;
         let i = this.volumes_displayed_iterator;
         this.selectVolumes(i);
@@ -344,7 +398,7 @@ export class VolumeProgressComponent implements OnInit {
 
   //Load the seven previous days
   previous(){
-    if (this.is_type_weeks){
+    if (!this.isDay){
       if(this.volumes_displayed_iterator > 0){
         this.volumes_displayed_iterator -= 1;
         let i = this.volumes_displayed_iterator;

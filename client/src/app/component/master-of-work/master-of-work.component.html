@@ -12,5 +12,85 @@
     </div>
   </div>
 
+  <!-- Error alert -->
+  <div class="row row-first justify-content-end error-text">
+    <i>{{errorMessage}}</i>
+  </div>
+
+  <!-- MASTER OF WORK -->
+  <div *ngFor="let job of convertMap(activities)" class="row-first card card-cascade hoverable">
+    <div class="card-body card-body-cascade">
+      <!--Title-->
+      <h4 style="margin-bottom: 10px !important;" class="row justify-content-center card-title">
+        <div class="col-2 text-link">
+          {{job['job'].job_id}}
+        </div>
+        <div class="col">
+          {{job['job'].job_name}}
+        </div>
+        <div class="col text-right">
+          <a>
+            <i class="fa fa-eye text-blue" data-toggle="collapse" [attr.data-target]="'#'+job['job'].job_id" aria-expanded="false" aria-controls="{{job['job'].job_id}}"></i>
+          </a>
+        </div>
+      </h4>
+
+      <div class="collapse row justify-content-center" id="{{job['job'].job_id}}">
+        <div class="row row-first col-12">
+          <div class="offset-2 col-4">
+            ACTIVITY
+          </div>
+          <div class="col-4">
+            UNIT
+          </div>
+        </div>
+
+        <!-- JOB  -->
+        <div *ngFor="let father_activity of convertMap(job['activities'])" class="col-12 row justify-content-center">
+
+          <hr class="col-11">
+
+          <div class="col-1">
+            <a (click)="pickActivity(father_activity, 1)" data-toggle="modal" data-target="#activityModal"><i class="fa fa-cog text-blue"></i></a>
+          </div>
+          <div class="col-1">({{father_activity['sub_activities'].length}})</div>
+          <div class="col-4 text-left">{{father_activity['activity'].activity_title}}</div>
+          <div class="col-4 text-left">{{father_activity['unit'].unit_name}}</div>
+          <div class="col-2 text-center">
+            <a *ngIf="father_activity['sub_activities'].length != 0">
+              <i class="fa fa-eye text-blue" data-toggle="collapse" [attr.data-target]="'#'+father_activity['job_id']+'-'+father_activity['activity'].activity_id" aria-expanded="false" aria-controls="{{father_activity['activity'].activity_id}}"></i>
+            </a>
+          </div>
+
+          <!-- Collapsible element -->
+          <ng-controller class="col-12 collapse" id="{{father_activity['job_id']}}-{{father_activity['activity'].activity_id}}">
+            <div class="row" *ngFor="let sub_activity of father_activity['sub_activities']">
+              <div class="offset-1 col-1">
+                <a (click)="pickActivity(sub_activity, 2)" data-toggle="modal" data-target="#activityModal"><i class="fa fa-cog text-link"></i></a>
+              </div>
+              <div class="col-10 text-left">
+                {{sub_activity.activity_title}}
+              </div>
+            </div>
+          </ng-controller>
+          <!-- / Collapsible element -->
+
+        </div>
+
+      </div>
+    </div>
+  </div>
 
 </div>
+
+<app-activity-update *ngIf="activity_selected != null"
+                     title={{title_modal_activity}}
+                     [units]=convertMap(units)
+                     [managment_levels]=management_levels
+                     [activityUpdate]=activity_selected
+                     [isActive]=false
+                     [isLinkActive]=false>
+</app-activity-update>
+
+
+

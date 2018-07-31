@@ -19,6 +19,7 @@ export class ActivityUpdateComponent implements OnInit {
   @Input() managment_levels: ManagmentLevel[];
   @Input() link: string;
   @Input() isLinkActive: boolean;
+  @Input() isActive: boolean = true;
 
   new_unit: Unit = new Unit();
   new_management_level: ManagmentLevel = new ManagmentLevel();
@@ -30,7 +31,13 @@ export class ActivityUpdateComponent implements OnInit {
               private _unitService: UnitService) { }
 
   ngOnInit() {
-    this.new_unit.unit_name = this.activityUpdate['activity_unit'][0];
+    try{
+      this.new_unit.unit_name = this.activityUpdate['activity_unit'][0];
+    }
+    catch(error){
+      //nothing
+    }
+
     this.selectUnit();
     this.selectManagement();
     console.log(this.new_unit);
