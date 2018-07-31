@@ -4,6 +4,7 @@ const policy = require('../policy/policy_middleware');
 const modelProject = require('../models/project_model');
 const ERRORTYPE = require('../policy/errorType');
 const basicMethods =  require('../helpers/basicMethodsHelper');
+const moment = require('moment')
 
 
 /*
@@ -91,8 +92,10 @@ router.get('/volume_progress_days/:project',
                     let date_begin = new Date(project.project_start);
                     let date_end = new Date(project.project_end);
 
+                    let lastMonday = basicMethods.previousMonday(date_begin);
+                    // get the previous monday
                     // get an array with every single date between both date
-                    let dates = basicMethods.datesBetween(date_begin, date_end, 1);
+                    let dates = basicMethods.datesBetween(lastMonday, date_end, 1);
                     return {dates: dates}; // return an object that contains all date to the next promise
 
                 }
@@ -243,6 +246,8 @@ router.get('/volume_progress_days/:project',
     }
 );
 
+
+
 router.get('/volume_progress_weeks/:project',
     function (req, res, next) {
         modelProject.selectById(req.params.project)
@@ -255,6 +260,9 @@ router.get('/volume_progress_weeks/:project',
 
                     req.date_begin = date_begin;
                     req.date_end = date_end;
+
+                    let lastMonday = basicMethods.previousMonday(date_begin);
+                    // get the previous monday
 
                     // get an array with every single date between both date
                     let dates = basicMethods.datesBetween(date_begin, date_end, 1);
@@ -328,6 +336,7 @@ router.get('/volume_progress_weeks/:project',
                             }
                         }
                     }
+                    req.lastObjectVersion = object; // keep a track of the last state of the object
                     return object
                 });
             })
@@ -405,8 +414,106 @@ router.get('/volume_progress_weeks/:project',
                 return resultat
             })
             .then (function (object) {
+                /*
+                split to have an object like
+                Array: [
+                     {startDate: // monday on the week
+                      endDate: // monday of the next week,
+                      elements: [
+                         each members volume progress for the week
+                       ]
+                      }
+                ]
+                 */
+                let startDate = null;
+                let y = -1; // index
+                let element = {target_quantity: 0, finished_quantity: 0, finished_rate: 0};
+                let data = {startDate: startDate, endDate: null, elements: []};
+                let result = [];
+               for (let i = 0; i < object.length; i++) {
+                   moment(object[i].date).startOf('week');
+                   if (i === 0) {
+                       data = {startDate: object[i].date, endDate: null, elements: []};
+                   } else if (i === object.length - 1) {
+                       data.endDate = object[i].date; // set the end date
+                       result.push(data);
+                       data = {startDate: object[i].date, endDate: null, elements: []};
+                       // element = {target_quantity: 0, finished_quantity: 0, finished_rate: 0};
+                       // reset the data
+                   }
+                    else if (object[i].date.getDay() === 1) { // a monday
+                       data.endDate = object[i].date; // set the end date
+                       result.push(data);
+                       data = {startDate: object[i].date, endDate: null, elements: []};
+                       // element = {target_quantity: 0, finished_quantity: 0, finished_rate: 0};
+                       // reset the data
+                   }
+                   for (let j = 0; j < object[i].elements.length; j++) {
+                       y = memberExist(data.elements, object[i].elements[j].member.member_id);
+                       if (y > -1) {
+                           // the member exist in the array
+                           data.elements[y].target_quantity += object[i].elements[j].target_quantity;
+                           data.elements[y].finished_quantity += object[i].elements[j].finished_quantity;
+
+                           if (data.elements[y].target_quantity !== 0) {
+                               data.elements[y].finished_rate = basicMethods.round(
+                                   data.elements[y].finished_quantity * 100 / data.elements[y].target_quantity, 2
+                               )
+                           } else {
+                               data.elements[y].finished_rate = 0
+                           }
+                       } else {
+                           /* element.target_quantity = object[i].elements[j].target_quantity;
+                           element.finished_quantity = object[i].elements[j].finished_quantity;
+                           element.finished_rate = object[i].elements[j].finished_rate;
+                           element.member = object[i].elements[j].member; */
+                           data.elements.push({
+                               target_quantity: object[i].elements[j].target_quantity,
+                               finished_quantity: object[i].elements[j].finished_quantity,
+                               finished_rate: object[i].elements[j].finished_rate,
+                               member: object[i].elements[j].member
+                           })
+                       }
+                   }
+
+               }
+               return result
+            })
+            .then(function (object) {
+                /*
+                    split data to have an object like
+                    [
+                        month: month
+                        weeks: [
+                            startDate: // monday on the week
+                            endDate: // monday of the next week,
+                            elements: [
+                            eahc members
+                            ]
+                        ]
+                    ]
+                 */
+                let result = [];
                 let months = basicMethods.monthsBetween(req.date_begin, req.date_end);
-               res.json(months)
+                let data = {month: '', shortcut: '', weeks: []};
+                for (let i = 0; i < months.length; i++) {
+                    data.month = months[i].label;
+                    data.shortcut = months[i].shortcut;
+                    for (let j = 0; j < object.length; j++) {
+                        if (basicMethods.equalDate(object[j].endDate,req.date_end) &&
+                            object[j].startDate.getMonth() === months[i].date.getMonth() &&
+                            object[j].startDate.getFullYear() === months[i].date.getFullYear()) {
+                            data.weeks.push(object[j])
+                        }
+                        else if (object[j].endDate.getMonth() === months[i].date.getMonth() &&
+                            object[j].endDate.getFullYear() === months[i].date.getFullYear()) {
+                            data.weeks.push(object[j])
+                        }
+                    }
+                    result.push(data);
+                    data = {month: '', shortcut: '', weeks: []};
+                }
+                res.json({data: result})
             })
             .catch(next)
     });
@@ -588,4 +695,27 @@ router.delete('/delete/:project', function (req, res, next) {
             else res.json({data: data})
         }).catch(next)
 });
+
+/*
+========================================== FUNCTION =========================================
+ */
+
+/**
+ * check if member_id exists in elements if it does return the index
+ * otherwise return -1
+ * @param elements
+ * @param member_id
+ * @returns {number}
+ */
+function memberExist(elements, member_id) {
+    let i = 0;
+    let index = -1;
+    while(i < elements.length && index === -1) {
+        if (elements[i].member.member_id === member_id) {
+            index = i;
+        }
+        i++
+    }
+   return index
+}
 module.exports = router;

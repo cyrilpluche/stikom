@@ -63,7 +63,7 @@ router.get('/findOne/:sopId',
 router.get('find_one_full/:sop',
     function (req, res, next) {
         modelSop.selectById(req.params.sop).then(function (data) {
-            res.json({data: data})
+           // TODO finir
         }).catch(next)
     }
 );

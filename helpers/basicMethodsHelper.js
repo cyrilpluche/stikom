@@ -55,25 +55,42 @@ let basicMethods = {
     datesBetween: function (date_begin, date_end, step) {
         let dates = [];
         let d = date_begin;
+        let d_tmp = null;
         while (d <= date_end){
             dates.push(d);
-            d = new Date(d.setDate(d.getDate() + step)); // add A day
+            d_tmp = d;
+            d = new Date(d); // add A day
+            d.setDate(d.getDate() + step)
         }
         return dates
     },
 
     monthsBetween: function (date_begin, date_end) {
-        console.log(date_begin, date_end)
         let dates = [];
         let d = date_begin;
         while (d <= date_end){
             dates.push({
-                label: MONTH[d.getMonth()]+ '_' + d.getFullYear(),
-                date: d
+                label: MONTH[d.getMonth()] + ' ' + d.getFullYear(),
+                date: d,
+                shortcut: MONTH[d.getMonth()].substr(0, 3) + ' ' + d.getFullYear()
             });
             d = new Date(d.setMonth(d.getMonth() + 1)) // a new month
         }
         return dates
+    },
+
+    /**
+     * get the last monday starting of the startDate
+     * @param startDate
+     * @returns {Date}
+     */
+    previousMonday: function (startDate) {
+        let d = startDate
+        moment(d).startOf('week')
+        while (d.getDay() !== 1) {
+            d.setDate(d.getDate() - 1);
+        }
+        return d
     },
 
     /**
@@ -115,7 +132,21 @@ let basicMethods = {
      */
     round (number, accuracy) {
         const factor = Math.pow(10, accuracy);
-        return Math.round(number * factor + Number.EPSILON) / factor;
+        return Math.round(number * factor) / factor;
+    },
+
+    /**
+     * return true if the 2 date are equals
+     * @param date1
+     * @param date2
+     * @returns {boolean}
+     */
+    equalDate (date1, date2) {
+        let d1 = new Date(date1);
+        let d2 = new Date(date2);
+
+        return d1.getDate() === d2.getDate() && d1.getMonth() === d2.getMonth()
+            && d1.getFullYear() === d2.getFullYear();
     }
 };
 

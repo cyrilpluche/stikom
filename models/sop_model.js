@@ -62,23 +62,6 @@ let sop = {
             })
     },
 
-    selectByIdFull (sop_id) {
-        return db.any('SELECT * FROM public.sop S, public.unit U, public.job where S.sop_id = $1', sop_id)
-            .then(function (data) {
-                if (data.length === 0) {
-                    throw ERRORTYPE.NOT_FOUND
-                } else {
-                    return data[0]
-                }
-            }).catch(function (err) {
-                if (err.type) { // means that it comes from a then
-                    throw err
-                } else {
-                    throw ERRORTYPE.customError('The server has encountred an internal error\n ' + err.toString());
-                }
-            })
-    },
-
     /**
      * Require an object that contains all champ even those who doesn't change
      * @param sop
