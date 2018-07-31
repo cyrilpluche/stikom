@@ -89,7 +89,7 @@ let activity = {
     selectAllByProjectId (project_id) {
         return db.any('SELECT * \n' +
             'FROM public.activity A, public.member_activity_project MAP\n' +
-            'WHERE A.activity_id = MAP.activity_id AND MAP.activity_project = $1', project_id)
+            'WHERE A.activity_id = MAP.activity_id AND MAP.project_id = $1', project_id)
             .then(function (data) {
                 if (data.length === 0) {
                     return false
