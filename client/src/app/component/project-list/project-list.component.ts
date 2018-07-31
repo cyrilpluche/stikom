@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {Project} from "../../objects/project/project";
 import {ProjectService} from "../../objects/project/project.service";
 import {TextHelperComponent} from "../../helpers/text-helper/text-helper.component";
+import {DateHelperComponent} from "../../helpers/date-helper/date-helper.component";
+import {SopService} from "../../objects/sop/sop.service";
 
 @Component({
   selector: 'app-project-list',
@@ -13,16 +15,19 @@ export class ProjectListComponent implements OnInit {
   /* ----- Data ----- */
   errorMessage: string = "";
   textHelper: TextHelperComponent = new TextHelperComponent();
+  dateHelper: DateHelperComponent = new DateHelperComponent();
+
   projects: Project[];
   project_selected: Project = new Project();
   buttonsTitles: string [] = ['Project information', 'Master of work', 'Gantt', 'Volume Progress'];
-  buttonsLinks: string [] = ['project', '', 'gantt-creation', 'volume-progress'];
+  buttonsLinks: string [] = ['project', 'master-of-work', 'gantt-creation', 'volume-progress'];
 
-  constructor(private _projectService: ProjectService) { }
+  constructor(private _projectService: ProjectService,
+              private _sopService: SopService) { }
 
   ngOnInit() {
+    this._sopService.removeSopIdLocal();
     this.loadProjects();
-
   }
 
   loadProjects(){

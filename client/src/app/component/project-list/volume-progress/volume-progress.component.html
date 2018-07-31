@@ -22,13 +22,13 @@
       <span class="badge badge-danger">Pourcentage</span></h5>
     </div>
     <div class="month-select col-2">
-      <ul class="pagination pg-blue justify-content-center" *ngIf="month_selected != null" >
-        <li class="page-item text-middle" data-toggle="tooltip" data-placement="top" title="previous" ><i class="page-link no-hover fa fa-arrow-left" (click)="changeMonth(false)"></i></li>
+      <ul class="pagination pg-blue justify-content-center">
+        <li class="page-item text-middle" data-toggle="tooltip" data-placement="top" title="previous" ><i class="page-link no-hover fa fa-arrow-left" (click)="previous()"></i></li>
 
         <!--Numbers-->
-        <li><h2><span class="badge badge-default">{{month_selected['month_label']}}</span></h2></li>
+        <li><h2><span class="badge badge-default">{{dates_displayed[0] | date:'MMM yyyy'}}</span></h2></li>
 
-        <li class="page-item" data-toggle="tooltip" data-placement="top" title="next" ><i id="nextArrow" class="page-link no-hover fa fa-arrow-right" (click)="changeMonth(true)"></i></li>
+        <li class="page-item" data-toggle="tooltip" data-placement="top" title="next" ><i id="nextArrow" class="page-link no-hover fa fa-arrow-right" (click)="next()"></i></li>
 
       </ul>
     </div>
@@ -36,7 +36,7 @@
 
   <div class="row justify-content-center">
 
-    <table class="col-12 hoverable table table-borderless table-hover table-fixed" id="volume-table">
+    <table *ngIf="volumes_displayed.size != 0" class="col-12 hoverable table table-borderless table-hover table-fixed" id="volume-table">
 
       <!--Table head-->
       <thead class="">
@@ -44,32 +44,42 @@
         <th style="width: 5%" (click)="sortTable(0)"><a>No</a></th>
         <th class="text-small" (click)="sortTable(1)"><a>Staff Names</a></th>
         <th class="text-small" (click)="sortTable(2)"><a>Total Target</a></th>
-        <th *ngFor="let week of weeks">{{week[0]}}</th>
+        <th *ngFor="let date of dates_displayed">{{date | date: 'MM/dd/yy'}}</th>
       </tr>
       </thead>
       <!--Table head-->
 
       <!--Table body-->
       <tbody>
-        <!-- elements[0]: activity_id && elements[1]: activity && elements[2]: m_a_p && elements[3]: members linked -->
-        <tr *ngFor="let element of elements" id="{{element['member']['member_id']}}">
-          <td (click)="selectMember(element)"><a>{{element['member']['member_id']}}</a></td>
-          <td class="text-small" (click)="selectMember(element)"><a>{{element['member']['member_name'].toUpperCase()}} {{element['member']['member_first_name']}}</a></td>
+        <!-- /*
+              * [{date: Date,
+              *   elements: [{target_quantity: number,
+              *               finished_quantity: number,
+              *               finished_rate: number,
+              *               member: Member
+              *              }]
+              *  }]
+              * */
+        -->
+        <tr *ngFor="let member of convertMap(volumes_displayed)" id="{{member['member'].member_id}}"> <!-- ONE ROW -->
+          <td ><a (click)="selectMember(member['member'].member_id)">{{member['member'].member_id}}</a></td>
+          <td class="text-small"><a (click)="selectMember(member['member'].member_id)">{{member['member'].member_name.toUpperCase()}} {{member['member'].member_first_name}}</a></td>
           <td>
             <h6>
-              <span class="badge badge-default">{{element['total_finished']}}</span>
-              <span class="badge badge-primary">{{element['total_target']}}</span>
-              <span class="badge badge-danger">{{calculPourcentage(element['total_finished'], element['total_target'])}}%</span>
+              <span class="badge badge-default">{{member['total_finished']}}</span>
+              <span class="badge badge-primary">{{member['total_target']}}</span>
+              <span class="badge badge-danger">{{member['total_rates']}}%</span>
             </h6>
           </td>
 
-          <th *ngFor="let week of weeks">
-            <h6>
-              <span *ngIf="targets.get(element['member']['member_id']).get(week[1]) != null" class="badge badge-default">{{targets.get(element['member']['member_id']).get(week[1])['finished_quantity']}}</span>
-              <span *ngIf="targets.get(element['member']['member_id']).get(week[1]) != null" class="badge badge-primary">{{targets.get(element['member']['member_id']).get(week[1])['target_quantity']}}</span>
-              <span *ngIf="targets.get(element['member']['member_id']).get(week[1]) != null" class="badge badge-danger">{{calculPourcentage(targets.get(element['member']['member_id']).get(week[1])['finished_quantity'], targets.get(element['member']['member_id']).get(week[1])['target_quantity'])}}%</span>
-            </h6>
-          </th>
+            <td *ngFor="let volume of member['volumes']"> <!-- SAME MEMBERS -->
+              <h6 *ngIf="volume['target_quantity'] != 0">
+                <span class="badge badge-default">{{volume['finished_quantity']}}</span>
+                <span class="badge badge-primary">{{volume['target_quantity']}}</span>
+                <span class="badge badge-danger">{{volume['finished_rate']}}%</span>
+              </h6>
+            </td>
+
         </tr>
       </tbody>
       <!--Table body-->
@@ -99,11 +109,11 @@
         <td class="text-small">{{activity['job'].job_name}}</td>
         <td class="text-small">{{activity['activity'].activity_title}}</td>
         <td>
-          <input [(ngModel)]="activity['m_a_p'].finished_quantity" type="number" class="form-control" max="{{activity['m_a_p'].target_quantity}}" min="0">
+          <input [hidden]="activity['m_a_p'].target_quantity==0" [(ngModel)]="activity['m_a_p'].finished_quantity" type="number" class="form-control" max="{{activity['m_a_p'].target_quantity}}" min="0">
         </td>
-        <td>{{activity['m_a_p'].target_quantity}}</td>
+        <td >{{activity['m_a_p'].target_quantity}}</td>
         <td>
-          <input *ngIf="activity['m_a_p'].target_quantity == activity['m_a_p'].finished_quantity" [disabled]="activity['m_a_p'].evaluation == 'finished on date' || activity['m_a_p'].evaluation == 'finished late'" [(ngModel)]="activity['m_a_p'].finished_date" type="date" class="form-control">
+          <input *ngIf="activity['m_a_p'].target_quantity == activity['m_a_p'].finished_quantity" [(ngModel)]="activity['m_a_p'].finished_date" type="date" class="form-control">
         </td>
         <td class="text-small">{{activity['m_a_p'].target_date | date: 'dd/MM/yyyy'}}</td>
         <td class="text-small">{{activity['m_a_p'].evaluation}}</td>

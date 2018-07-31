@@ -1,0 +1,16 @@
+<div class="container" *ngIf="!ready">
+  <div class="row-first">
+    <app-loader></app-loader>
+  </div>
+</div>
+
+<div class="container" *ngIf="ready">
+
+  <div class="row row-first">
+    <div class="col">
+      <button type="button" class="btn btn-outline-danger waves-effect" [routerLink]="['/project-list']"><h6 class="no-margin-bottom"><i class="fa fa-times mr-3"></i>Back</h6></button>
+    </div>
+  </div>
+
+
+</div>

@@ -8,6 +8,7 @@ import {Activity} from "../../../objects/activity/activity";
 import {ActivityService} from "../../../objects/activity/activity.service";
 import {ManagmentLevel} from "../../../objects/managment_level/managment_level";
 import {ManagmentLevelService} from "../../../objects/managment_level/managment-level.service";
+import {ExecuteService} from "../../../objects/execute/execute.service";
 
 @Component({
   selector: 'app-sop',
@@ -26,6 +27,9 @@ export class SopComponent implements OnInit {
   isEditableUnits: boolean = false;
   isEditableActivities: boolean = false;
 
+  isUnitsValide: boolean = true;
+  isSopValid: boolean = true;
+
   units: Unit[] = [];
   management_levels: ManagmentLevel[] = [];
   activities = new Map;
@@ -39,7 +43,8 @@ export class SopComponent implements OnInit {
   constructor( private _sopService: SopService,
                private _unitService: UnitService,
                private _activityService: ActivityService,
-               private _managmentLevel: ManagmentLevelService) { }
+               private _managmentLevel: ManagmentLevelService,
+               private _executeService: ExecuteService) { }
 
   async ngOnInit() {
 
@@ -54,7 +59,8 @@ export class SopComponent implements OnInit {
 
   }
 
-  async onSubmit(){
+  async onSubmit(event){
+    console.log('submit !');
     this.ready = false;
     this.errorMessage = "";
     if (this.formNumber == 1){
@@ -71,7 +77,6 @@ export class SopComponent implements OnInit {
       try{
         for (let u of this.units){
           await this._unitService.updateUnit(u).toPromise();
-          this.loadUnit();
         }
         await this.loadUnit();
       }
@@ -80,7 +85,23 @@ export class SopComponent implements OnInit {
       }
     }
     else if (this.formNumber == 3){
-
+      if(event){
+        try{
+          await this._activityService.update(this.activity_selected).toPromise();
+          await this._executeService.update(this.selectUnit().unit_id, this.activity_selected.activity_id).toPromise();
+          console.log(this.sub_activities_linked);
+          if (this.sub_activities_linked != null){
+            for (let s of this.sub_activities_linked){
+              s.activity_type_duration = this.activity_selected.activity_type_duration;
+              await this._activityService.update(s).toPromise();
+              await this._executeService.update(this.selectUnit().unit_id, s.activity_id).toPromise();
+            }
+          }
+          await this.loadActivities();
+        }catch (error){
+          this.errorMessage = error.message;
+        }
+      }
     }
 
     this.isEditable = false;
@@ -152,7 +173,16 @@ export class SopComponent implements OnInit {
     }
     else{
       this.activity_selected = activity;
+      this.sub_activities_linked = null;
       this.title_modal_activity = 'Update activity '+activity.activity_title;
+    }
+  }
+
+  selectUnit(){
+    for (let u of this.units){
+      if (u.unit_name == this.activity_selected['activity_unit'][0]){
+        return u;
+      }
     }
   }
 
@@ -162,8 +192,10 @@ export class SopComponent implements OnInit {
   }
 
   makeEditable(table: number) {
+    this.errorMessage = "";
     if (table == 1){
       this.isEditable = !this.isEditable;
+      this.checkSop();
     }
     else if (table == 2){
       this.isEditableUnits = !this.isEditableUnits;
@@ -172,5 +204,38 @@ export class SopComponent implements OnInit {
       this.isEditableActivities = !this.isEditableActivities;
     }
     this.formNumber = table;
+    console.log('activity editable ! ', this.formNumber);
+  }
+
+  //Unit verification label
+  checkUnits(unit){
+    this.errorMessage = "";
+    let check = true;
+    for (let u of this.units){
+      if (u.unit_name.toUpperCase() == unit.unit_name.toUpperCase() && this.units.indexOf(u) != this.units.indexOf(unit)){
+        check =false;
+        this.errorMessage = "Two or more units have the same name.";
+      }
+      if(u.unit_name == ""){
+        check = false;
+        this.errorMessage = "Unit name is required.";
+      }
+    }
+    this.isUnitsValide = check;
+  }
+
+  //Sop verification
+  checkSop(){
+    this.errorMessage = "";
+    let check = true;
+    if(this.sop.sop_title == ""){
+      this.errorMessage = "SOP name is required.";
+      check = false;
+    }
+    else if (this.sop.sop_objectives == ""){
+      this.errorMessage = "SOP objective is required.";
+      check = false;
+    }
+    this.isSopValid = check
   }
 }

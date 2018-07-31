@@ -51,6 +51,9 @@ import { VolumeProgressComponent } from './component/project-list/volume-progres
 import { NotFoundComponent } from './component/not-found/not-found/not-found.component';
 import { TextHelperComponent } from './helpers/text-helper/text-helper.component';
 import { ActivityUpdateComponent } from './shared/modals/activity-update/activity-update.component';
+import { DateHelperComponent } from './helpers/date-helper/date-helper.component';
+import { MasterOfWorkComponent } from './component/master-of-work/master-of-work.component';
+import { FooterComponent } from './shared/footer/footer.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -82,6 +85,7 @@ const routes: Routes = [
   {path: 'pdf-performance-target', component: PdfPerformanceTargetComponent},
   {path: 'pdf-performance-report', component: PdfPerformanceReportComponent},
   {path: 'volume-progress', component: VolumeProgressComponent},
+  {path: 'master-of-work', component: MasterOfWorkComponent},
   {path: '404', component: NotFoundComponent},
   {path: '**', component: NotFoundComponent}
 ];
@@ -132,7 +136,11 @@ const routes: Routes = [
     VolumeProgressComponent,
     NotFoundComponent,
     TextHelperComponent,
-    ActivityUpdateComponent
+    ActivityUpdateComponent,
+    FooterComponent,
+    ActivityUpdateComponent,
+    DateHelperComponent,
+    MasterOfWorkComponent
   ],
   imports: [
     HttpClientModule,

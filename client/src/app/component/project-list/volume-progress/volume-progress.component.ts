@@ -21,23 +21,44 @@ export class VolumeProgressComponent implements OnInit {
 
   /* ----- Data ----- */
   errorMessage: string = "";
+  ready:boolean = false;
+
   project: Project;
   m_a_p: MemberActivityProject[] = [];
   workers: Member[] = [];
   activities: Object[] = [];
-  elements: Object[] = [];
   sorted_workers = [];
-  targets = new Map();
+
+  old_cell;
+
+  /*
+  * [{date: Date,
+  *   elements: [{target_quantity: number,
+  *               finished_quantity: number,
+  *               finished_rate: number,
+  *               member: Member
+  *              }]
+  *  }]
+  * */
+  volume_per_days: Object[] = [];
+  volume_per_weeks: Object[] = [];
+  is_type_weeks: boolean = false;
+
+  /* [{member: Member,
+  *    m_a_ps: MemberActivityProject[],
+  *    total_target: number,
+  *    total_finished: number
+  *  }}
+  *  */
+  elements: Object[] = [];
   element_selected: Object;
 
-  ready:boolean = false;
+  // Volumes that are displayed on the main table
+  volumes_displayed = new Map();
+  dates_displayed = [];
+  volumes_displayed_iterator: number = 0;
 
-  calendar:Object[];
-  calendarType: string;
-  weeks = [];
-  month_selected: string;
-  months = [];
-  old_cell;
+  members_activities = new Map();
 
   constructor(private _memberActivityProjectService: MemberActivityProjectService,
               private _memberService: MemberService,
@@ -48,14 +69,44 @@ export class VolumeProgressComponent implements OnInit {
   async ngOnInit() {
     await this.loadData();
     await this.sortElements();
-    console.log(this.elements);
-    /*this.typeOfCalendar();*/
-    await this.calculTargetsPerWeek();
-
-    await this.calculMonths();
+    await this.loadVolumePerDay();
     this.ready = true;
-    console.log(this.targets);
+    console.log(this.elements);
+
   }
+
+  async onSubmit(element){
+    this.old_cell = element['member']['member_id'];
+    try{
+      for (let map of element['m_a_ps']){
+        let m = map['m_a_p'] as MemberActivityProject;
+        if(m.finished_quantity>m.target_quantity){
+          throw new Error('One or more finished quantities are greater than their target quantity');
+        }
+      }
+
+      for(let map of element['m_a_ps']){
+        let m = map['m_a_p'] as MemberActivityProject;
+        await this._memberActivityProjectService.update(m).toPromise();
+      }
+      this.errorMessage = "";
+      this.ready = false;
+
+      await this.loadData();
+      await this.sortElements();
+      await this.loadVolumePerDay();
+      this.element_selected = null;
+
+      this.ready = true;
+
+    }
+    catch (error){
+      this.errorMessage = error;
+    }
+
+  }
+
+  /* ----------- METHODS ----------- */
 
   /* Load the project & all m_a_p data with the activity & member linked */
   async loadData() {
@@ -157,6 +208,177 @@ export class VolumeProgressComponent implements OnInit {
     }
   }
 
+  /* Ask to the server side to compute every target quantity, quantity finished, rates and store it in an array per days */
+  async loadVolumePerDay(){
+    try {
+      let v = await this._projectService.volume_per_days(this.project.project_id).toPromise();
+      this.volume_per_days = v['data'];
+      this.volumes_displayed_iterator = 0;
+      await this.selectVolumes(0);
+    }
+    catch(error){
+      this.errorMessage = error.message;
+    }
+  }
+
+  async loadVolumePerWeek(){
+    try {
+      let v = await this._projectService.volume_per_weeks(this.project.project_id).toPromise();
+      this.volume_per_weeks = v['data'];
+      this.volumes_displayed_iterator = 0;
+      await this.selectVolumes(0);
+    }
+    catch(error){
+      this.errorMessage = error.message;
+    }
+  }
+
+  selectVolumes(i:number) {
+    if (this.is_type_weeks){
+      this.selectVolumesWeeks(i);
+    }
+    else {
+      this.selectVolumesDays(i);
+    }
+  }
+
+  /* Take 7 elements from Monday to Sunday, and store it in the array that is shown on the view */
+  selectVolumesDays(i:number) {
+    // We convert the volume_per_days array to fit with the ngFor view
+    this.ready = false;
+    this.volumes_displayed = new Map();
+    this.dates_displayed = [];
+    for (let volume of this.volume_per_days.slice(i, i+7)){
+      this.dates_displayed.push(volume['date']);
+      for (let member of volume['elements']){
+
+        //We initialize the map if needed
+        if(this.volumes_displayed.get(member['member'].member_id) == null){
+          let quantities = this.foundQuantities(member['member'].member_id);
+          let o = {
+            member: member['member'],
+            volumes: [],
+            total_finished: quantities[0],
+            total_target: quantities[1],
+            total_rates: quantities[2]
+          };
+          this.volumes_displayed.set(member['member'].member_id, o);
+        }
+
+        //We store quantity
+        let e = {
+          target_quantity: member['target_quantity'],
+          finished_quantity: member['finished_quantity'],
+          finished_rate: member['finished_rate']
+        };
+
+        this.volumes_displayed.get(member['member'].member_id)['volumes'].push(e);
+      }
+    }
+    this.ready = true;
+  }
+  /* Take all elements of a month, and store it in the array that is shown on the view */
+  selectVolumesWeeks(i:number) {
+    // We convert the volume_per_weeks array to fit with the ngFor view
+    this.ready = false;
+    this.volumes_displayed = new Map();
+    this.dates_displayed = [];
+    for (let volume of this.volume_per_weeks[i]['weeks']){
+      this.dates_displayed.push(volume['date']);
+      for (let member of volume['elements']){
+
+        //We initialize the map if needed
+        if(this.volumes_displayed.get(member['member'].member_id) == null){
+          let o = {
+            member: member['member'],
+            volumes: []
+          };
+          this.volumes_displayed.set(member['member'].member_id, o);
+        }
+        //We store quantity
+        let e = {
+          target_quantity: member['target_quantity'],
+          finished_quantity: member['finished_quantity'],
+          finished_rate: member['finished_rate']
+        };
+
+        this.volumes_displayed.get(member['member'].member_id)['volumes'].push(e);
+      }
+    }
+    this.ready = true;
+  }
+
+  /* Found the total quantities inside the elements array */
+  foundQuantities(member_id){
+    for (let e of this.elements){
+      if(e['member'].member_id == member_id){
+        let total_rates = Math.round(100*e['total_finished']/e['total_target']);
+        return [e['total_finished'], e['total_target'], total_rates]
+      }
+    }
+  }
+
+  //Convert map to array to use it in the view
+  convertMap(map){
+    return Array.from(map.values());
+  }
+
+  //Load the seven next days
+  next(){
+    if (this.is_type_weeks){
+      if(this.volumes_displayed_iterator < this.volume_per_days.length-1){
+        this.volumes_displayed_iterator += 1;
+        let i = this.volumes_displayed_iterator;
+        this.selectVolumes(i);
+      }
+    }
+    else {
+      //We do next only if we don't have the last portion of the array
+      if(this.volumes_displayed_iterator <= this.volume_per_days.length-7){
+        this.volumes_displayed_iterator += 7;
+        let i = this.volumes_displayed_iterator;
+        this.selectVolumes(i);
+      }
+    }
+  }
+
+  //Load the seven previous days
+  previous(){
+    if (this.is_type_weeks){
+      if(this.volumes_displayed_iterator > 0){
+        this.volumes_displayed_iterator -= 1;
+        let i = this.volumes_displayed_iterator;
+        this.selectVolumes(i);
+      }
+    }
+    else {
+      //We do next only if we don't have the last portion of the array
+      if(this.volumes_displayed_iterator != 0){
+        this.volumes_displayed_iterator -= 7;
+        let i = this.volumes_displayed_iterator;
+        this.selectVolumes(i);
+      }
+    }
+  }
+
+  /* Show all activities of the member selected */
+  selectMember(member_id){
+    if(this.element_selected != null){
+      let oldCell = document.getElementById(this.element_selected['member']['member_id']);
+      oldCell.className = "";
+    }
+
+    /* We search for the right element of the array */
+    for (let e of this.elements){
+      if(e['member'].member_id == member_id){
+        this.element_selected = e;
+      }
+    }
+
+    let newCell = document.getElementById(member_id);
+    newCell.className += "selected";
+  }
+
   /* Calcul if the member activity project is late, on date or something else */
   async calculState(m_a_p){
     let target = new Date(m_a_p.target_date);
@@ -167,7 +389,7 @@ export class VolumeProgressComponent implements OnInit {
 
     //The activity is finished
     if (m_a_p.target_quantity == m_a_p.finished_quantity){
-      if(m_a_p.evaluation == 'on date'){
+      if(m_a_p.evaluation == 'on date' || m_a_p.evaluation == 'finished on date'){
         if(target.getTime()<finished_date.getTime()){
           m_a_p.evaluation = 'finished late';
         }
@@ -206,253 +428,6 @@ export class VolumeProgressComponent implements OnInit {
     if (isChanged) {
       await this._memberActivityProjectService.update(m_a_p).toPromise();
     }
-  }
-
-  /* Give the number of days between 2 dates */
-  intervalDate(d1, d2){
-    let start = new Date(d1);
-    let end = new Date(d2);
-    let interval = Math.floor((Date.UTC(end.getFullYear(), end.getMonth(), end.getDate()) - Date.UTC(start.getFullYear(), start.getMonth(), start.getDate()) ) /(1000 * 60 * 60 * 24));
-    return interval;
-  }
-
-  /* Store every target of each m_a_ps in the good week of the period */
-  calculTargetsPerWeek() {
-    //Map where MEMBER is the key, value : new MAP { Week date : quantity }
-    this.targets = new Map();
-
-    //We check every members
-    for (let element of this.elements) {
-      this.targets.set(element['member'].member_id, new Map());
-
-      /* ----- We check every m_a_ps of the member ----- */
-      for (let map of element['m_a_ps']) {
-
-        let start = new Date(map['m_a_p'].date_begin);
-        let end = new Date(map['m_a_p'].target_date);
-
-        //Interval in days & quantity per day
-        let interval = moment(end).diff(start) / (1000 * 60 * 60 * 24) + 1;
-        let one_quantity: number = Math.floor(map['m_a_p'].target_quantity / interval);
-        let one_quantity_finished: number = Math.floor(map['m_a_p'].finished_quantity / interval);
-
-        let quantity_given = 0;
-        let quantity_finished_given = 0;
-        let quantity = one_quantity;
-        let quantity_finished = one_quantity_finished;
-        let full_quantity = parseFloat((one_quantity * interval).toFixed(1));
-        let full_quantity_finished = parseFloat((one_quantity_finished * interval).toFixed(1));
-
-        if (one_quantity == 0){
-          one_quantity = parseFloat((map['m_a_p'].target_quantity / interval).toFixed(1));
-          full_quantity = parseFloat((one_quantity * interval).toFixed(1));
-        }
-        if (one_quantity_finished == 0){
-          one_quantity_finished = parseFloat((map['m_a_p'].finished_quantity / interval).toFixed(1));
-          full_quantity_finished = parseFloat((one_quantity_finished * interval).toFixed(1));
-        }
-
-        let w;
-
-        //The day that will be the key of the amount of quantity calculated
-        if (moment(start).format('dddd') == 'Monday'){
-          w = new Date(start.getFullYear(), start.getMonth(), start.getDate()); //We do this process to have minutes, hours & seconds at default value
-        }else{
-          let fake_date = new Date(start);
-          let first_day = moment(fake_date).format('dddd');
-          while (first_day != 'Monday' && fake_date != start){
-            fake_date.setDate(fake_date.getDate()-1);
-            first_day = moment(fake_date).format('dddd');
-          }
-          //FIRST KEY
-          w = new Date(fake_date.getFullYear(), fake_date.getMonth(), fake_date.getDate());
-        }
-
-
-        /* ----- We check every days ----- */
-        /* ----- We check every days ----- */
-        for (let i = new Date(start); i <= end; i.setDate(i.getDate() + 1)) {
-
-          let day = moment(i).format('dddd');
-
-          //If it's Monday, we store the previous quantity in a week, and continue in a new week
-          if (day == 'Monday' && i.toString() != start.toString()) {
-
-            //If it's the last day, we need to add the rest of the quantity
-            if(i.toString() == end.toString()){
-              quantity = full_quantity - quantity_given;
-              quantity_finished = full_quantity_finished - quantity_finished_given;
-              quantity = parseFloat(quantity.toFixed(1));
-              quantity_finished = parseFloat(quantity_finished.toFixed(1));
-            }
-            let previous_quantity = 0;
-            let previous_quantity_finished = 0;
-              if (this.targets.get(element['member'].member_id).get(w.toString()) != null){
-              //Yes, we need to increase with the existing quantity
-              previous_quantity = this.targets.get(element['member'].member_id).get(w.toString())['target_quantity'];
-              previous_quantity_finished = this.targets.get(element['member'].member_id).get(w.toString())['finished_quantity'];
-            }
-            let e = {
-                finished_quantity: previous_quantity_finished+quantity_finished,
-                target_quantity: previous_quantity+quantity
-            };
-            this.targets.get(element['member'].member_id).set(w.toString(), e);
-            quantity_given += quantity;
-            quantity_finished_given += quantity_finished;
-
-            //We get the new Monday date for next quantities
-            w = new Date(i.getFullYear(), i.getMonth(), i.getDate());
-            quantity = 0;
-            quantity_finished = 0;
-          }
-          else {
-            quantity += one_quantity;
-            quantity_finished += one_quantity_finished;
-
-            quantity = parseFloat(quantity.toFixed(1));
-            quantity_finished = parseFloat(quantity_finished.toFixed(1));
-          }
-        }
-        /* ----- /We check every days ----- */
-
-        //If it's Monday, we have already add the quantity, so we add only if it's not monday
-        let last_day = moment(end).format('dddd');
-        if (last_day != 'Monday') {
-          //Is the week already exist ?
-          quantity = full_quantity - quantity_given;
-          quantity_finished = full_quantity_finished - quantity_finished_given;
-          quantity = parseFloat(quantity.toFixed(1));
-          quantity_finished = parseFloat(quantity_finished.toFixed(1));
-          let previous_quantity = 0;
-          let previous_quantity_finished = 0;
-
-          if (this.targets.get(element['member'].member_id).get(w.toString()) != null) {
-            //Yes, we need to increase with the existing quantity
-            previous_quantity = this.targets.get(element['member'].member_id).get(w.toString())['target_quantity'];
-            previous_quantity_finished = this.targets.get(element['member'].member_id).get(w.toString())['finished_quantity'];
-          }
-          let e = {
-            target_quantity: previous_quantity+quantity,
-            finished_quantity: previous_quantity_finished+quantity_finished
-          };
-          this.targets.get(element['member'].member_id).set(w.toString(), e);
-        }
-      }
-      /* ----- /We check every m_a_ps of the member ----- */
-    }
-  }
-
-  /* Give all weeks for a given month (used for the targets display data) */
-  calculWeeksPerMonth(year, month){
-    this.weeks = [];
-    let start = new Date(year, month);
-    let end = new Date(year, month+1, 0);
-
-    let first_day = moment(start).format('dddd');
-    while (first_day != 'Monday'){
-      start.setDate(start.getDate()-1);
-      first_day = moment(start).format('dddd');
-    }
-
-    let i = new Date(start);
-    let date_label = "";
-    let j =0
-    while(i<=end && j<56){
-      let key = new Date(i);
-      date_label = moment(i).format('M/D')+' - '
-      i.setDate(i.getDate()+6);
-      date_label += moment(i).format('M/D');
-      this.weeks.push([date_label, key.toString()]);
-      i.setDate(i.getDate()+1);
-      j++;
-    }
-  }
-
-  calculPourcentage(value, total){
-    return Math.ceil(value*100/total);
-  }
-
-  calculMonths(){
-    let start = new Date(this.project.project_start);
-    let end = new Date(this.project.project_end);
-    start.setDate(1);
-    end.setMonth(end.getMonth()+1);
-    end.setDate(0);
-    let i = new Date(start);
-    while (i<end){
-      let m = {
-        month: new Date(i),
-        month_label: moment(i).format('MMMM Y')
-      };
-      this.months.push(m);
-      i.setMonth(i.getMonth()+1);
-    }
-    this.month_selected = this.months[0];
-    this.calculWeeksPerMonth(start.getFullYear(), start.getMonth());
-  }
-
-  changeMonth(next){
-    let indice = this.months.indexOf(this.month_selected);
-
-    let changed: boolean = false;
-    if (next &&  indice < this.months.length-1){
-      this.month_selected = this.months[indice+1];
-
-      changed = true;
-    }
-    else if (!next && indice>0){
-      this.month_selected = this.months[indice-1];
-      changed = true;
-    }
-
-    if (changed) {
-      let date = new Date(this.month_selected['month']);
-      this.calculWeeksPerMonth(date.getFullYear(), date.getMonth());
-    }
-  }
-
-  selectMember(element){
-    if(this.element_selected != null){
-      let oldCell = document.getElementById(this.element_selected['member']['member_id']);
-      oldCell.className = "";
-    }
-
-    this.element_selected = element;
-
-    let newCell = document.getElementById(element['member']['member_id']);
-    newCell.className += "selected";
-  }
-
-  async onSubmit(element){
-    this.old_cell = element['member']['member_id'];
-    try{
-      for (let map of element['m_a_ps']){
-        let m = map['m_a_p'] as MemberActivityProject;
-        if(m.finished_quantity>m.target_quantity){
-          throw new Error('One or more finished quantities are greater than their target quantity');
-        }
-      }
-
-      for(let map of element['m_a_ps']){
-        let m = map['m_a_p'] as MemberActivityProject;
-        await this._memberActivityProjectService.update(m).toPromise();
-      }
-      this.errorMessage = "";
-      this.ready = false;
-
-      await this.loadData();
-      await this.sortElements();
-      await this.calculTargetsPerWeek();
-      await this.calculMonths();
-      this.element_selected = null;
-
-      this.ready = true;
-
-    }
-    catch (error){
-      this.errorMessage = error;
-    }
-
   }
 
   sortTable(n) {
@@ -585,5 +560,4 @@ export class VolumeProgressComponent implements OnInit {
       }
     }
   }
-
 }
