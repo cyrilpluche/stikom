@@ -246,6 +246,11 @@ router.get('/volume_progress_days/:project',
     }
 );
 
+router.get('/volume_progress_days',
+    function (req, res, next) {
+        
+    }
+);
 
 
 router.get('/volume_progress_weeks/:project',

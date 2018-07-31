@@ -25,7 +25,8 @@ app.use(express.static(path.join(__dirname, 'dist/client')));
 
 const unlessPath = [
     '/favicon.ico', '/api/member/register', '/api/member/login', '/api/member/validate_registration',
-    '/api/organisation/all', '/api/department/all', '/api/branch/all', '/api/sub_department/all'
+    '/api/organisation/all', '/api/department/all', '/api/branch/all', '/api/sub_department/all',
+    '/api/member/loggedIn'
 ];
 // TODO remettre en place express jwt
 app.use('/api/',expressJwt({ secret: process.env.JWT_SECRET }).unless({ path: unlessPath}));

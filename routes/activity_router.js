@@ -119,9 +119,9 @@ router.get('/all_from_all_job_from_sop/:sop',
                        Promise.all(promises).then(function () {
                            sop.jobs = jobs;
                            res.json(sop)
+                       }).catch(function (e) {
+                           throw e
                        });
-
-
 
                    }).catch(next)
 
