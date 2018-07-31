@@ -32,13 +32,53 @@ router.get('/all',
     }
 );
 
-router.get('/all_sort',
+/* 
+get the project state for all projects
+ 0: not started
+ 1: started but not ended 
+ 2: ended 
+ */
+router.get('/all_state',
     function (req, res, next) {
         modelProject.selectAll().then(function (projects) {
-            for (let i = 0; i < projects.length; i++) {
+            let promises = [];
 
+            for (let i = 0; i < projects.length; i++) {
+                promises.push(
+                    modelProject.selectAllMemberActivityProjectByProjectId(projects[i].project_id)
+                        .then(function (memberActivityProjects) {
+                            let date_begin = new Date(projects[i].project_start);
+                            let date_end = new Date(projects[i].project_end);
+                            let state = 0;
+                            let finished = true;
+                            for (let j = 0; j < memberActivityProjects.length; j++) {
+                                if (memberActivityProjects[j].target_quantity
+                                    !== memberActivityProjects[j].finished_quantity
+                                    || date_end > new Date()) {
+                                    // the task isn't finished or the date of end isn't come yet
+                                    finished = false
+                                }
+                                if (memberActivityProjects[j].finished_quantity > 0
+                                    && date_begin > new Date()) {
+                                    state = 1 // the project has started
+                                }
+                            }
+
+                            if (finished) {
+                                state = 2
+                            } else if (state === 0 && date_end <= new Date()) {
+                                state = 2
+                            }
+                            projects[i].state = state;
+
+                        })
+                )
             }
-            res.json({data: projects})
+            
+            Promise.all(promises).then(function (d) {
+                res.json({data: projects})
+            });
+            
         }).catch(next)
     }
 );
