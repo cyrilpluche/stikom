@@ -38,7 +38,7 @@ get the project state for all projects
  1: started but not ended 
  2: ended 
  */
-router.get('/all_sort',
+router.get('/all_state',
     function (req, res, next) {
         modelProject.selectAll().then(function (projects) {
             let promises = [];
