@@ -67,7 +67,7 @@ let basicMethods = {
 
     monthsBetween: function (date_begin, date_end) {
         let dates = [];
-        let d = date_begin;
+        let d = new Date(date_begin);
         while (d <= date_end){
             dates.push({
                 label: MONTH[d.getMonth()] + ' ' + d.getFullYear(),
@@ -85,8 +85,8 @@ let basicMethods = {
      * @returns {Date}
      */
     previousMonday: function (startDate) {
-        let d = startDate
-        moment(d).startOf('week')
+        let d = startDate;
+        moment(d).startOf('week');
         while (d.getDay() !== 1) {
             d.setDate(d.getDate() - 1);
         }
