@@ -28,7 +28,7 @@ const unlessPath = [
     '/api/organisation/all', '/api/department/all', '/api/branch/all', '/api/sub_department/all'
 ];
 // TODO remettre en place express jwt
-// app.use('/api/',expressJwt({ secret: process.env.JWT_SECRET }).unless({ path: unlessPath}));
+app.use('/api/',expressJwt({ secret: process.env.JWT_SECRET }).unless({ path: unlessPath}));
 
 /*
 ========================================== ROUTERS ============================================
@@ -56,7 +56,6 @@ app.use('/api/pdf', require('./routes/pdf_router'));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-    // TODO rediriger l'erreur sur le dist
     // console.log('Error')
     // next(createError(404));
     // res.sendFile(path.join(__dirname, 'dist/client/index.html'));
