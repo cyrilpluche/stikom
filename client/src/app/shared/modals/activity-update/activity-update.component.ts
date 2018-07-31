@@ -19,8 +19,10 @@ export class ActivityUpdateComponent implements OnInit {
   @Input() managment_levels: ManagmentLevel[];
   @Input() link: string;
   @Input() isLinkActive: boolean;
+
   new_unit: Unit = new Unit();
   new_management_level: ManagmentLevel = new ManagmentLevel();
+  type_durations = ['minutes', 'hours', 'days', 'months'];
 
   @Output() success = new EventEmitter<boolean>();
 
@@ -39,9 +41,12 @@ export class ActivityUpdateComponent implements OnInit {
       this.router.navigate(['/',link]);
     }
     else {
-
       this.success.emit(true);
     }
+  }
+
+  reset(){
+    this.success.emit(false);
   }
 
   selectUnit(){

@@ -16,7 +16,7 @@
   <div class="row-first">
 
     <!-- Error alert -->
-    <div *ngIf="errorMessage" class="row justify-content-end error-text">
+    <div *ngIf="errorMessage && formNumber == 1" class="row justify-content-end error-text">
       <i>{{errorMessage}}</i>
     </div>
 
@@ -49,7 +49,7 @@
                 <p>SOP title</p>
               </div>
               <div class="col-8">
-                <input [disabled]="!isEditable" [(ngModel)]="sop.sop_title" type="text" class="form-control">
+                <input [disabled]="!isEditable" (keyup)="checkSop()" [(ngModel)]="sop.sop_title" type="text" class="form-control">
               </div>
             </div>
 
@@ -139,13 +139,13 @@
                 <p>Objective</p>
               </div>
               <div class="col-8">
-                <input [disabled]="!isEditable" [(ngModel)]="sop.sop_objectives" type="text" class="form-control">
+                <input [disabled]="!isEditable" (keyup)="checkSop()" [(ngModel)]="sop.sop_objectives" type="text" class="form-control">
               </div>
             </div>
 
             <div class="row row-first text-center">
               <div class="col">
-                <button [disabled]="!isEditable" class="btn btn-success waves-effect" type="button" data-toggle="modal" data-target="#confirmationModal">Save</button>
+                <button [disabled]="!isEditable || !isSopValid" class="btn btn-success waves-effect" type="button" data-toggle="modal" data-target="#confirmationModal">Save</button>
               </div>
             </div>
           </ng-controller>
@@ -157,6 +157,11 @@
 
   <!-- UNITS -->
   <div class="row-first">
+
+    <!-- Error alert -->
+    <div *ngIf="errorMessage && formNumber == 2" class="row justify-content-end error-text">
+      <i>{{errorMessage}}</i>
+    </div>
 
     <div class="card card-cascade hoverable">
       <a>
@@ -176,13 +181,13 @@
 
             <div *ngFor="let unit of units" class="row text-center">
                 <div class="offset-2 col-8">
-                  <input [disabled]="!isEditableUnits" [(ngModel)]="unit.unit_name" type="text" class="form-control">
+                  <input [disabled]="!isEditableUnits" (keyup)="checkUnits(unit)" [(ngModel)]="unit.unit_name" type="text" class="form-control">
                 </div>
             </div>
 
             <div class="row row-first text-center">
               <div class="col">
-                <button [disabled]="!isEditableUnits" class="btn btn-success waves-effect" type="button" data-toggle="modal" data-target="#confirmationModal">Save</button>
+                <button [disabled]="!isEditableUnits || !isUnitsValide" class="btn btn-success waves-effect" type="button" data-toggle="modal" data-target="#confirmationModal">Save</button>
               </div>
             </div>
           </ng-controller>
@@ -216,7 +221,7 @@
               <hr class="col-12">
 
               <div class="col-1">
-                <a (click)="pickActivity(activity, 1)" data-toggle="modal" data-target="#activityModal"><i class="fa fa-cog text-blue"></i></a>
+                <a *ngIf="isEditableActivities" (click)="pickActivity(activity, 1)" data-toggle="modal" data-target="#activityModal"><i class="fa fa-cog text-blue"></i></a>
               </div>
               <div class="col-1">({{activity['sub_activities'].length}})</div>
               <div class="col-8 text-left">{{activity['activity'].activity_title}}</div>
@@ -230,7 +235,7 @@
               <ng-controller class="col-12 collapse" id="{{activity['activity'].activity_id}}">
                 <div class="row" *ngFor="let sub_activity of activity['sub_activities']">
                   <div class="offset-1 col-1">
-                    <a (click)="pickActivity(sub_activity, 2)" data-toggle="modal" data-target="#activityModal"><i class="fa fa-cog text-link"></i></a>
+                    <a *ngIf="isEditableActivities" (click)="pickActivity(sub_activity, 2)" data-toggle="modal" data-target="#activityModal"><i class="fa fa-cog text-link"></i></a>
                   </div>
                   <div class="col-10 text-left">
                     {{sub_activity.activity_title}}
@@ -259,7 +264,7 @@
 <!-- Modal confirmation -->
 <app-confirmation title="Update SOP informations"
                   text="Are you sure you want to modify these informations ? If the SOP is used, this mights create some errors"
-                  (success)="onSubmit()"
+                  (success)="onSubmit(null)"
                   [isLinkActive]=false
                   link="sop-list">
 </app-confirmation>
@@ -267,6 +272,7 @@
 <app-activity-update *ngIf="activity_selected != null"
                      title={{title_modal_activity}}
                      [units]=units
+                     (success)="onSubmit($event)"
                      [managment_levels]=management_levels
                      [activityUpdate]=activity_selected
                      [isLinkActive]=false>

@@ -128,4 +128,14 @@ export class ProjectService {
     this.generateHeaders();
     return this.http.put(this.domain + '/api/project/update',body,this.httpOptions);
   }
+
+  volume_per_days(project_id:string){
+    this.generateHeaders();
+    return this.http.get(this.domain + '/api/project/volume_progress_days/'+project_id,this.httpOptions);
+  }
+
+  volume_per_weeks(project_id:string){
+    this.generateHeaders();
+    return this.http.get(this.domain + '/api/project/volume_progress_weeks/'+project_id,this.httpOptions);
+  }
 }

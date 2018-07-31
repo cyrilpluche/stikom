@@ -53,6 +53,11 @@ export class ActivityService {
     return this.http.get(this.domain + '/api/activity/all_from_unit/'+unit_id,this.httpOptions);
   }
 
+  selectAllFromProject(project_id){
+    this.generateHeaders();
+    return this.http.get(this.domain + '/api/activity/all_from_project/'+project_id,this.httpOptions);
+  }
+
   update(activity: Activity){
     let body = {
       activity_id: activity.activity_id,
