@@ -105,6 +105,22 @@ let project = {
             });
     },
 
+    selectAllMemberActivityProjectByProjectIdAndJobId (project_id, job_id) {
+        return db.any('SELECT * \n' +
+            'FROM public.member_activity_project \n' +
+            'WHERE project_id = ${project_id} AND job_id = ${job_id}',
+            {project_id, job_id})
+            .then(function (data) {
+                if (data.length === 0) {
+                    return false
+                } else {
+                    return data
+                }
+            }).catch(function (err) {
+                throw ERRORTYPE.customError('The server has encountred an internal error: ' + err.toString())
+            });
+    },
+
     selectAllMemberActivityProjectByProjectIdFull (project_id) {
         return db.any('SELECT * FROM public.member_activity_project MAP, public.activity A, public.member M\n' +
             'WHERE MAP.project_id = $1 AND MAP.activity_id = A.activity_id AND MAP.member_id = M.member_id',
