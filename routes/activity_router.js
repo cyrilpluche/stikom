@@ -100,6 +100,35 @@ router.get('/all_from_all_job_from_project/:project',
     }
 );
 
+router.get('/all_from_all_job_from_sop/:sop',
+    function (req, res, next) {
+       require('../models/sop_model').selectById(req.params.sop)
+           .then(function (sop) {
+               require('../models/job_model').selectAllBySopId(sop.sop_id)
+                   .then(function (jobs) {
+                       let promises = [];
+
+                       for (let i = 0; i < jobs.length; i++) {
+                           promises.push(
+                               modelActivity.selectAllByJobId(jobs[i].job_id).then(function (activities) {
+                                   jobs[i].activities = activities
+                               })
+                           );
+                       }
+
+                       Promise.all(promises).then(function () {
+                           sop.jobs = jobs;
+                           res.json(sop)
+                       });
+
+
+
+                   }).catch(next)
+
+           })
+    }
+);
+
 
 /*
 =========================================== ROUTER POST =============================================
