@@ -115,6 +115,11 @@ export class ProjectService {
     return this.http.get(this.domain + '/api/activity/all_from_all_job_from_project/'+project_id,this.httpOptions);
   }
 
+  selectAllFromSOP(sop_id:string){
+    this.generateHeaders();
+    return this.http.get(this.domain + '/api/activity/all_from_all_job_from_sop/'+sop_id,this.httpOptions);
+  }
+
   updateProject(project:Project) {
     let body = {
       project_id: project.project_id,
@@ -132,6 +137,11 @@ export class ProjectService {
   volume_per_days(project_id:string){
     this.generateHeaders();
     return this.http.get(this.domain + '/api/project/volume_progress_days/'+project_id,this.httpOptions);
+  }
+
+  volume_per_days_pdf(project_id:string,job_id:string){
+    this.generateHeaders();
+    return this.http.get(this.domain + '/api/project/t/volume_progress_days?project='+project_id+'&job='+job_id,this.httpOptions);
   }
 
   volume_per_weeks(project_id:string){

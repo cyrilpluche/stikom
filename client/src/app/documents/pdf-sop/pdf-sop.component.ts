@@ -19,8 +19,8 @@ declare var jsPDF: any;
 })
 export class PdfSopComponent implements OnInit {
 
-  sop_id:string="";
-  project_id:string="";
+  sop_id:string;
+  project_id:string;
 
 
   organisation_id:string;
@@ -56,6 +56,9 @@ export class PdfSopComponent implements OnInit {
   display_pdf_project:boolean=false;
   display_pdf_sop:boolean=false;
 
+  sop_pdf_button:boolean=false;
+  project_pdf_button:boolean=false;
+
 
 
 
@@ -79,13 +82,16 @@ export class PdfSopComponent implements OnInit {
       console.log("ERROR : No data send to the PDF.")
     }
     else if(this.sop_id !== null){
+      this.sop_pdf_button=true;
       await this.getSOP(this.sop_id);
       setTimeout(() => {
+        this.filupPDF();
         this.display_pdf_sop=true;
       }, 1000);
 
 
     }else if(this.project_id !== null){
+      this.project_pdf_button=true;
       await this.getProject(this.project_id);
       setTimeout(() => {
         this.filupPDF();
@@ -541,6 +547,146 @@ this.htmlPDF  +=`
   }
 
 
+  async getAllSopFromProject2(){
+    await this._projectService.selectAllFromSOP(this.sop_id)
+      .subscribe( (res) => {
+          console.log("Sop Data :");
+          console.log(res['data']);
+
+          // Take all the sop informations and preparing them for display in the var
+          this.sop_id=res['data']['sop_id'];
+          this.sop_creation=new Date(res['data']['sop_creation']);
+          this.sop_revision=new Date(res['data']['sop_revision']);
+          this.sop_published=new Date(res['data']['sop_published']);
+          this.sop_approvment=res['data']['sop_approvment'];
+          this.sop_rules=res['data']['sop_rules'];
+          this.sop_warning=res['data']['sop_warning'];
+          this.sop_staff_qualification=res['data']['sop_staff_qualification'];
+          this.sop_tools=res['data']['sop_tools'];
+          this.sop_type_reports=res['data']['sop_type_reports'];
+          this.sop_objectives=res['data']['sop_objectives'];
+          this.sop_title=res['data']['sop_title'];
+
+          //creating a table of the units working for this project
+          let counter=0;
+          for (let job of res['data']['jobs'])
+          {
+            for (let activitie of job['activities'])
+            {
+              for (let unit of activitie['activity_unit'])
+              {
+                if(!this.isInUnitTable(unit))
+                {
+                  console.log(unit);
+                  if(counter==0)
+                  {
+                    this.units[0]=unit;
+                  }else{
+                    this.units.push(unit);
+                  }
+
+
+                }
+                counter=counter+1;
+              }
+            }
+          }
+          console.log("Tableau final 1 : "+this.units);
+          //End unit tab filling up
+          let counter2=0;
+          console.log("Tableau des jobs :");
+          console.log(res['data']);
+          for (let job of res['data']['jobs'])
+          {
+            console.log("Job "+counter2+" :");
+            console.log(job);
+            for (let activitie of job['activities'])
+            {
+              console.log("Activité :");
+              console.log(activitie);
+              if (activitie['activity_id_is_father']==null){
+                console.log("Est père car atribue est : ");
+                console.log(activitie['activity_id_is_father']);
+
+                let temp:string[]=[];
+                temp.push(activitie['activity_id']);
+                temp.push(activitie['activity_title']+ " : "+activitie['activity_description']);
+                temp.push(activitie['activity_type']);
+                temp.push(activitie['activity_duration']+" "+activitie['activity_type_duration']);
+                temp.push(activitie['activity_type_output']);
+                for(let i of this.units)
+                {
+                  temp.push("");
+                }
+                if ( this.activities[0] =="")
+                {
+                  this.activities[0]=temp;
+                }else{
+                  this.activities.push(temp);
+                }
+
+                console.log("Is father :");
+                console.log(temp);
+
+              }else{
+                let pointeur=0;
+                console.log("Père recherché :");
+                console.log(activitie['activity_id_is_father']);
+                console.log("dans le tableau d'acitivté suivant :");
+                console.log(this.activities);
+                for(let j=0; j<this.activities.length; j++)
+                {
+                  console.log("j :");
+                  console.log(this.activities[j]);
+                  console.log("j[0] :");
+                  console.log(this.activities[j][0]);
+                  if (this.activities[j][0]===activitie['activity_id_is_father'])
+                  {
+
+                    console.log("J'y suis père trouvé");
+                    if(activitie['activity_unit']!==null){
+                      let points=0;
+                      let res;
+                      for(let k=0; k<this.units.length; k++)
+                      {
+                        console.log("activitie['activity_unit'][0] :");
+                        console.log(activitie['activity_unit'][0]);
+                        if (this.units[k]==activitie['activity_unit'][0])
+                        {
+                          res=points;
+                        }
+                        points=points+1;
+
+                      }
+                      if (res !== null)
+                      {
+                        this.activities[pointeur][res+5]=activitie['activity_title']+ " : "+activitie['activity_description'];
+                      }
+
+                    }
+
+                  }
+                  pointeur=pointeur+1;
+                }
+              }
+
+
+            }
+          }
+
+          console.log("Tableau final 2 : ");
+          console.log(this.activities);
+
+
+
+        },//end subscribe
+        error => {
+          console.log("ERREUR : ",error);
+
+        });
+  }
+
+
   async getOrganisation(idSubDepartment: string){
     await this._organisationService.selectSchema(idSubDepartment)
       .subscribe( (res) => {
@@ -558,10 +704,10 @@ this.htmlPDF  +=`
   }
 
   async getSOP(idSop: string){
-    console.log("ici : "+idSop);
+    console.log("SOP PDF ID : "+idSop);
     await this._sopService.getSop(idSop)
       .subscribe( (res) => {
-          console.log(res['data']);
+          console.log("SOP : "+res['data']);
           //this.res=res['data'];
           this.sop_creation=new Date(res['data']['sop_creation']);
           this.sop_revision=new Date(res['data']['sop_revision']);
@@ -574,7 +720,8 @@ this.htmlPDF  +=`
           this.sop_type_reports=res['data']['sop_type_reports'];
           this.sop_objectives=res['data']['sop_objectives'];
           this.sop_title=res['data']['sop_title'];
-          console.log(res['data']['sop_title']);
+
+          this.getAllSopFromProject2();
 
 
 

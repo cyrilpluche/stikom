@@ -72,7 +72,7 @@ export class MemberService {
   }
 
   storeUserData(token) {
-    localStorage.setItem('Token', token);
+    localStorage.setItem('Token', "Bearer "+token);
   }
 
   storeUserDataFull(user:any) {
