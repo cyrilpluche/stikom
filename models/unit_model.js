@@ -96,7 +96,7 @@ let unit = {
     updateExecute (unit_id, activity_id) {
         return db.any('UPDATE public.execute\n' +
             'SET activity_id=${activity_id}\n' +
-            'WHERE unit_id=${unit_id};',
+            'WHERE unit_id=${unit_id} returning unit_id, activity_id;',
             {unit_id, activity_id})
             .then(function (data) {
                 if (data.length === 0) {
