@@ -1,0 +1,24 @@
+h5 {
+  color: #7b7b7b !important;
+}
+
+h1 {
+  font-size: 3em !important;
+}
+
+html {
+  min-height: 100% !important;
+}
+
+.row-first {
+  margin-top: 15% !important;
+}
+
+body {
+  background-image: url('../../../assets/images/home-background.jpg');
+  /*opacity : 0.5; width: 100%;*/
+  min-height:100%;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
