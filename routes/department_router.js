@@ -6,7 +6,7 @@ const ERRORTYPE = require('../policy/errorType');
 
 
 router.get('/all', policy.checkParameters(['branch']), function (req, res, next) {
-        let branch_id = req.query.branch
+        let branch_id = req.query.branch;
         modelDepartment.selectAllByBranchId(branch_id).then(function (data) {
             res.json({data: data});
         }).catch(function (er) {
