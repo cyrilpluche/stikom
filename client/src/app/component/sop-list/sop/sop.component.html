@@ -200,6 +200,11 @@
   <!-- ACTIVITIES -->
   <div class="row-first">
 
+    <!-- Error alert -->
+    <div *ngIf="errorMessage && formNumber == 3" class="row justify-content-end error-text">
+      <i>{{errorMessage}}</i>
+    </div>
+
     <div class="card card-cascade hoverable">
         <div class="row card-body card-body-cascade justify-content-center">
           <a class="col-12 row" data-toggle="collapse" data-target="#activities" aria-expanded="false" aria-controls="activities">

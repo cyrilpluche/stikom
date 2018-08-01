@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {SopService} from "../../../objects/sop/sop.service";
 import {DatePipe} from "@angular/common";
 import {UnitService} from "../../../objects/unit/unit.service";
@@ -39,6 +39,7 @@ export class SopComponent implements OnInit {
   activity_selected: Activity;
   sub_activities_linked: Activity[];
   title_modal_activity: string = 'Update activity';
+  @Output() refresh = new EventEmitter<boolean>();
 
   constructor( private _sopService: SopService,
                private _unitService: UnitService,
@@ -79,6 +80,7 @@ export class SopComponent implements OnInit {
           await this._unitService.updateUnit(u).toPromise();
         }
         await this.loadUnit();
+        await this.loadActivities();
       }
       catch (error){
         this.errorMessage = error.message;
@@ -88,6 +90,7 @@ export class SopComponent implements OnInit {
       if(event){
         try{
           await this._activityService.update(this.activity_selected).toPromise();
+          console.log(this.selectUnit().unit_id);
           await this._executeService.update(this.selectUnit().unit_id, this.activity_selected.activity_id).toPromise();
           console.log(this.sub_activities_linked);
           if (this.sub_activities_linked != null){
@@ -104,7 +107,7 @@ export class SopComponent implements OnInit {
         }
       }
     }
-
+    this.refresh.emit(true);
     this.isEditable = false;
     this.isEditableUnits = false;
 
@@ -196,13 +199,20 @@ export class SopComponent implements OnInit {
     this.errorMessage = "";
     if (table == 1){
       this.isEditable = !this.isEditable;
+      this.isEditableUnits = false;
+      this.isEditableActivities = false;
       this.checkSop();
     }
     else if (table == 2){
       this.isEditableUnits = !this.isEditableUnits;
+      this.isEditableActivities = false;
+      this.isEditable = false;
+
     }
     else if (table == 3){
       this.isEditableActivities = !this.isEditableActivities;
+      this.isEditable = false;
+      this.isEditableUnits = false;
     }
     this.formNumber = table;
   }

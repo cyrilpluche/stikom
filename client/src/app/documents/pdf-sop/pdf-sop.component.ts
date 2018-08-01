@@ -225,11 +225,8 @@ this.htmlPDF  +=`
 
 for (let i=0;i<this.activities.length;i++)
 {
-  console.log("là :");
-  console.log(this.activities[i]);
   this.htmlPDF += ` <tr>`;
   for (let j=0;j<this.activities[i].length;j++) {
-    console.log(this.activities[i][j]);
     if(j<9) //Have just the 4 first unit
     {
       this.htmlPDF += ` <td>`+this.activities[i][j]+`</td>`;
@@ -283,11 +280,8 @@ this.htmlPDF  +=`
 
     for (let i=0;i<this.activities.length;i++)
     {
-      console.log("là :");
-      console.log(this.activities[i]);
       this.htmlPDF += ` <tr>`;
       for (let j=0;j<this.activities[i].length;j++) {
-        console.log(this.activities[i][j]);
         if(j<5 || (j>8 && j<13)) //Have just the 4 first unit
         {
           this.htmlPDF += ` <td>`+this.activities[i][j]+`</td>`;
@@ -344,11 +338,8 @@ this.htmlPDF  +=`
 
       for (let i=0;i<this.activities.length;i++)
       {
-        console.log("là :");
-        console.log(this.activities[i]);
         this.htmlPDF += ` <tr>`;
         for (let j=0;j<this.activities[i].length;j++) {
-          console.log(this.activities[i][j]);
           if(j<5 || (j>12 && j<17)) //Have just the 4 first unit
           {
             this.htmlPDF += ` <td>`+this.activities[i][j]+`</td>`;
@@ -382,8 +373,6 @@ this.htmlPDF  +=`
   {
     await this._pdfService.generatePdf(this.htmlPDF)
       .subscribe( (res) => {
-          console.log(res);
-
           if (!window.navigator.msSaveOrOpenBlob){
             // BLOB NAVIGATOR
             const url = window.URL.createObjectURL(new Blob([res]));
@@ -410,8 +399,6 @@ this.htmlPDF  +=`
   async getAllSopFromProject(idProject: string){
     await this._projectService.selectAllFromProject(idProject)
       .subscribe( (res) => {
-          console.log("Sop Data :");
-          console.log(res['data']);
 
           // Take all the sop informations and preparing them for display in the var
           this.sop_id=res['data'][0]['sop_id'];
@@ -437,7 +424,6 @@ this.htmlPDF  +=`
               {
                 if(!this.isInUnitTable(unit))
                 {
-                  console.log(unit);
                   if(counter==0)
                   {
                     this.units[0]=unit;
@@ -451,22 +437,13 @@ this.htmlPDF  +=`
               }
             }
           }
-          console.log("Tableau final 1 : "+this.units);
           //End unit tab filling up
           let counter2=0;
-          console.log("Tableau des jobs :");
-          console.log(res['data']);
           for (let job of res['data'])
           {
-            console.log("Job "+counter2+" :");
-            console.log(job);
             for (let activitie of job['activities'])
             {
-              console.log("Activité :");
-              console.log(activitie);
               if (activitie['activity_id_is_father']==null){
-                console.log("Est père car atribue est : ");
-                console.log(activitie['activity_id_is_father']);
 
                 let temp:string[]=[];
                 temp.push(activitie['activity_id']);
@@ -485,32 +462,18 @@ this.htmlPDF  +=`
                   this.activities.push(temp);
                 }
 
-                console.log("Is father :");
-                console.log(temp);
-
               }else{
                 let pointeur=0;
-                console.log("Père recherché :");
-                console.log(activitie['activity_id_is_father']);
-                console.log("dans le tableau d'acitivté suivant :");
-                console.log(this.activities);
                 for(let j=0; j<this.activities.length; j++)
                 {
-                  console.log("j :");
-                  console.log(this.activities[j]);
-                  console.log("j[0] :");
-                  console.log(this.activities[j][0]);
                   if (this.activities[j][0]===activitie['activity_id_is_father'])
                   {
 
-                    console.log("J'y suis père trouvé");
                     if(activitie['activity_unit']!==null){
                       let points=0;
                       let res;
                       for(let k=0; k<this.units.length; k++)
                       {
-                        console.log("activitie['activity_unit'][0] :");
-                        console.log(activitie['activity_unit'][0]);
                         if (this.units[k]==activitie['activity_unit'][0])
                         {
                           res=points;
@@ -533,12 +496,6 @@ this.htmlPDF  +=`
 
             }
           }
-
-          console.log("Tableau final 2 : ");
-          console.log(this.activities);
-
-
-
         },//end subscribe
         error => {
           console.log("ERREUR : ",error);
@@ -550,8 +507,6 @@ this.htmlPDF  +=`
   async getAllSopFromProject2(){
     await this._projectService.selectAllFromSOP(this.sop_id)
       .subscribe( (res) => {
-          console.log("Sop Data :");
-          console.log(res['data']);
 
           // Take all the sop informations and preparing them for display in the var
           this.sop_id=res['data']['sop_id'];
@@ -577,7 +532,6 @@ this.htmlPDF  +=`
               {
                 if(!this.isInUnitTable(unit))
                 {
-                  console.log(unit);
                   if(counter==0)
                   {
                     this.units[0]=unit;
@@ -591,22 +545,15 @@ this.htmlPDF  +=`
               }
             }
           }
-          console.log("Tableau final 1 : "+this.units);
           //End unit tab filling up
           let counter2=0;
-          console.log("Tableau des jobs :");
-          console.log(res['data']);
           for (let job of res['data']['jobs'])
           {
-            console.log("Job "+counter2+" :");
-            console.log(job);
+
             for (let activitie of job['activities'])
             {
-              console.log("Activité :");
-              console.log(activitie);
+
               if (activitie['activity_id_is_father']==null){
-                console.log("Est père car atribue est : ");
-                console.log(activitie['activity_id_is_father']);
 
                 let temp:string[]=[];
                 temp.push(activitie['activity_id']);
@@ -625,32 +572,19 @@ this.htmlPDF  +=`
                   this.activities.push(temp);
                 }
 
-                console.log("Is father :");
-                console.log(temp);
 
               }else{
                 let pointeur=0;
-                console.log("Père recherché :");
-                console.log(activitie['activity_id_is_father']);
-                console.log("dans le tableau d'acitivté suivant :");
-                console.log(this.activities);
                 for(let j=0; j<this.activities.length; j++)
                 {
-                  console.log("j :");
-                  console.log(this.activities[j]);
-                  console.log("j[0] :");
-                  console.log(this.activities[j][0]);
                   if (this.activities[j][0]===activitie['activity_id_is_father'])
                   {
 
-                    console.log("J'y suis père trouvé");
                     if(activitie['activity_unit']!==null){
                       let points=0;
                       let res;
                       for(let k=0; k<this.units.length; k++)
                       {
-                        console.log("activitie['activity_unit'][0] :");
-                        console.log(activitie['activity_unit'][0]);
                         if (this.units[k]==activitie['activity_unit'][0])
                         {
                           res=points;
@@ -674,11 +608,6 @@ this.htmlPDF  +=`
             }
           }
 
-          console.log("Tableau final 2 : ");
-          console.log(this.activities);
-
-
-
         },//end subscribe
         error => {
           console.log("ERREUR : ",error);
@@ -690,7 +619,6 @@ this.htmlPDF  +=`
   async getOrganisation(idSubDepartment: string){
     await this._organisationService.selectSchema(idSubDepartment)
       .subscribe( (res) => {
-          console.log(res['data']);
           this.sub_department_name=res['data'][0]['sub_department_name'];
           this.department_name=res['data'][0]['department_name'];
           this.branch_name=res['data'][0]['branch_name'];
@@ -704,10 +632,8 @@ this.htmlPDF  +=`
   }
 
   async getSOP(idSop: string){
-    console.log("SOP PDF ID : "+idSop);
     await this._sopService.getSop(idSop)
       .subscribe( (res) => {
-          console.log("SOP : "+res['data']);
           //this.res=res['data'];
           this.sop_creation=new Date(res['data']['sop_creation']);
           this.sop_revision=new Date(res['data']['sop_revision']);
@@ -733,10 +659,8 @@ this.htmlPDF  +=`
   }
 
   async getProject(idProject: string){
-    console.log("ici projet id : "+idProject);
     await this._projectService.getProject(idProject)
       .subscribe( (res) => {
-          console.log(res['data']);
           //this.res=res['data'];
 
 

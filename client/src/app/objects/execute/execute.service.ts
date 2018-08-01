@@ -21,7 +21,7 @@ export class ExecuteService {
       activity_id: activity_id
     };
     this.generateHeaders();
-    return this.http.put(this.domain + '/api/execute/update',body,this.httpOptions);
+    return this.http.put(this.domain + '/api/unit/update_execute',body,this.httpOptions);
   }
 
   generateHeaders()
