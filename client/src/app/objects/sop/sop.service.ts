@@ -100,7 +100,6 @@ export class SopService {
 
   getSop(sop_id:string){
     this.generateHeaders();
-    console.log(sop_id);
     return this.http.get(this.domain + '/api/sop/findOne/'+sop_id,this.httpOptions);
   }
 
