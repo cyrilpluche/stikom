@@ -316,7 +316,7 @@ router.get('/volume_progress_days',
                     // get the previous monday
 
                     // get an array with every single date between both date
-                    let dates = basicMethods.datesBetween(date_begin, date_end, 1);
+                    let dates = basicMethods.datesBetween(lastMonday, date_end, 1);
                     return {dates: dates}; // return an object that contains all date to the next promise
 
                 }
