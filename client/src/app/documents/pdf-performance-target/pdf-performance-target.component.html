@@ -1,3 +1,2 @@
-<p>
-  pdf-performance-target works!
-</p>
+<button *ngIf="display_pdf_target" type="button" class="btn btn-default" (click)="download('Staff-Performance-Target.pdf')">Download Performance Target PDF</button>
+<button *ngIf="!display_pdf_target" type="button" class="btn btn-default" disabled (click)="download('Staff-Performance-Target.pdf')">Download Performance Target PDF</button>

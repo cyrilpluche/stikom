@@ -1,3 +1,2 @@
-<p>
-  pdf-performance-report works!
-</p>
+<button *ngIf="display_pdf_report" type="button" class="btn btn-default" (click)="download('Staff-Performance-Report.pdf')">Download Performance Report PDF</button>
+<button *ngIf="!display_pdf_report" type="button" class="btn btn-default" disabled (click)="download('Staff-Performance-Report.pdf')">Download Performance Report PDF</button>

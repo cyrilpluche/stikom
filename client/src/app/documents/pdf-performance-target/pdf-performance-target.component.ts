@@ -16,7 +16,7 @@ import {MemberService} from "../../objects/member/member.service";
 export class PdfPerformanceTargetComponent implements OnInit {
 
   errorMessage: string = "";
-  idProject:string="3";
+  idProject:string="";
   project:Project;
   activities:any[];
   htmlPDF:string;
@@ -26,13 +26,17 @@ export class PdfPerformanceTargetComponent implements OnInit {
 
   staffActivities:any[]=[];
 
+  display_pdf_target:boolean=false;
+
   constructor(private _projectService:ProjectService,
               private _memberActivityProjectService:MemberActivityProjectService,
               private _pdfService: PdfService,
               private _memberService: MemberService) { }
 
   ngOnInit() {
+    this.idProject=localStorage.getItem("Project_id");
     this.getProject(this.idProject);
+
 
 
   }
@@ -143,8 +147,9 @@ tr{
     this.htmlPDF  += `
 </body>
 </html>`;
+    this.display_pdf_target=true;
 
-    this.download("Staff-Performance-Target.pdf");
+
   }
 
 

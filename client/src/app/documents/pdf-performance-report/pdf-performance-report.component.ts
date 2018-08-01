@@ -25,12 +25,15 @@ export class PdfPerformanceReportComponent implements OnInit {
 
   staffActivities:any[]=[];
 
+  display_pdf_report:boolean=false;
+
   constructor(private _projectService:ProjectService,
               private _memberActivityProjectService:MemberActivityProjectService,
               private _pdfService: PdfService,
               private _memberService: MemberService) { }
 
   ngOnInit() {
+    this.idProject=localStorage.getItem("Project_id");
     this.getProject(this.idProject);
 
 
@@ -78,7 +81,7 @@ tr{
     for(let j=0; j<this.staffActivities.length; j++)
     {
 
-      let performance = "99%";
+
 
       if(j>0)
       {
@@ -121,7 +124,7 @@ tr{
       `;
 
       for(let activity of this.staffActivities[j]['staff_activities']) {
-
+        let performance = activity['finished_quantity']/activity['target_quantity']*100;
         this.htmlPDF += `
       <tr>
         <td class="center-align">`+activity['activity_id']+`</td>
@@ -149,8 +152,7 @@ tr{
     this.htmlPDF  += `
 </body>
 </html>`;
-
-    this.download("Staff-Performance-Report.pdf");
+    this.display_pdf_report=true;
   }
 
 
