@@ -76,17 +76,17 @@
           <td class="text-small"><a (click)="selectMember(member['member'].member_id)">{{member['member'].member_name.toUpperCase()}} {{member['member'].member_first_name}}</a></td>
           <td>
             <h6>
-              <span class="badge badge-default">{{member['total_finished']}}</span>
-              <span class="badge badge-primary">{{member['total_target']}}</span>
-              <span class="badge badge-danger">{{member['total_rates']}}%</span>
+              <span class="badge badge-default">{{roundOne(member['total_finished'], 10)}}</span>
+              <span class="badge badge-primary">{{roundOne(member['total_target'], 10)}}</span>
+              <span class="badge badge-danger">{{roundOne(member['total_rates'], 1)}}%</span>
             </h6>
           </td>
 
             <td *ngFor="let volume of member['volumes']"> <!-- SAME MEMBERS -->
               <h6 *ngIf="volume['target_quantity'] != 0">
-                <span class="badge badge-default">{{volume['finished_quantity']}}</span>
-                <span class="badge badge-primary">{{volume['target_quantity']}}</span>
-                <span class="badge badge-danger">{{volume['finished_rate']}}%</span>
+                <span class="badge badge-default">{{roundOne(volume['finished_quantity'], 10)}}</span>
+                <span class="badge badge-primary">{{roundOne(volume['target_quantity'], 10)}}</span>
+                <span class="badge badge-danger">{{roundOne(volume['finished_rate'], 1)}}%</span>
               </h6>
             </td>
 

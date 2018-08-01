@@ -37,6 +37,11 @@ export class JobService {
     return this.http.get(this.domain + '/api/job/all_from_activity/'+activity_id,this.httpOptions);
   }
 
+  selectAllFromProject(project_id: string){
+    this.generateHeaders();
+    return this.http.get(this.domain + '/api/job/all_from_project/'+project_id,this.httpOptions);
+  }
+
   selectAllFromSop(sop_id:string){
     this.generateHeaders();
     return this.http.get(this.domain + '/api/job/all_from_sop/'+sop_id,this.httpOptions);

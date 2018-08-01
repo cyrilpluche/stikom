@@ -81,6 +81,7 @@ export class SopComponent implements OnInit {
         }
         await this.loadUnit();
         await this.loadActivities();
+        this.activity_selected = null;
       }
       catch (error){
         this.errorMessage = error.message;
@@ -101,6 +102,7 @@ export class SopComponent implements OnInit {
             }
           }
           await this.loadActivities();
+          this.activity_selected = null;
           this.isEditableActivities = false;
         }catch (error){
           this.errorMessage = error.message;

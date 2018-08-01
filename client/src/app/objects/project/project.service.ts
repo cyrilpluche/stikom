@@ -21,6 +21,11 @@ export class ProjectService {
     return this.http.get(this.domain + '/api/project/all',this.httpOptions);
   }
 
+  selectAllSort(){
+    this.generateHeaders();
+    return this.http.get(this.domain + '/api/project/all_state',this.httpOptions);
+  }
+
   select(project_id){
     this.generateHeaders();
     return this.http.get(this.domain + '/api/project/find_one/'+project_id,this.httpOptions);

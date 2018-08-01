@@ -9,7 +9,7 @@
   <div class="row row-first">
     <div class="col">
       <button type="button" class="btn btn-outline-danger waves-effect" [routerLink]="['/project-list']"><h6 class="no-margin-bottom"><i class="fa fa-times mr-3"></i>Back</h6></button>
-      <button [disabled]="!isEditable" class="btn btn-success waves-effect" type="button" data-toggle="modal" data-target="#confirmationModal">Save</button>
+      <button [disabled]="!isEditable || !isProjectValid" class="btn btn-success waves-effect" type="button" data-toggle="modal" data-target="#confirmationModal">Save</button>
       <app-pdf-sop ></app-pdf-sop>
     </div>
   </div>
@@ -27,7 +27,7 @@
         <p>Project title</p>
       </div>
       <div class="col-8">
-        <input [disabled]="!isEditable" [(ngModel)]="project.project_title" type="text" class="form-control">
+        <input (keyup)="checkProject()" [disabled]="!isEditable" [(ngModel)]="project.project_title" type="text" class="form-control">
       </div>
   </div>
 
@@ -45,7 +45,7 @@
       <p>Project work code</p>
     </div>
     <div class="col-8">
-      <input [disabled]="!isEditable" [(ngModel)]="project.project_work_code" type="text" class="form-control">
+      <input (keyup)="checkProject()" [disabled]="!isEditable" [(ngModel)]="project.project_work_code" type="text" class="form-control">
     </div>
   </div>
 
@@ -54,7 +54,7 @@
       <p>Start date</p>
     </div>
     <div class="col-8">
-      <input [disabled]="!isEditable" [(ngModel)]="project.project_start" type="date" class="form-control">
+      <input [disabled]="!isEditable" (change)="checkEndDate()" [(ngModel)]="project.project_start" type="date" class="form-control">
     </div>
   </div>
 
@@ -63,7 +63,7 @@
       <p>End date</p>
     </div>
     <div class="col-8">
-      <input [disabled]="!isEditable" [(ngModel)]="project.project_end" type="date" class="form-control">
+      <input [disabled]="!isEditable"  [(ngModel)]="new_project_end" [min]="minimum_project_end" type="date" class="form-control">
     </div>
   </div>
 

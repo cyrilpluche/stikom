@@ -10,6 +10,9 @@ import {Router} from "@angular/router";
 import {BranchService} from "../../../objects/branch/branch.service";
 import {SubDepartmentService} from "../../../objects/sub_department/sub-department.service";
 import {DepartmentService} from "../../../objects/department/department.service";
+import * as moment from 'moment';
+import {JobService} from "../../../objects/job/job.service";
+import {Job} from "../../../objects/job/job";
 
 @Component({
   selector: 'app-project',
@@ -23,6 +26,7 @@ export class ProjectComponent implements OnInit {
   project_id: string;
   project: Project;
   isEditable: boolean = false;
+  isProjectValid: boolean = true;
   ready: boolean = false;
 
   //Manage the disabled function of organisations selects
@@ -34,27 +38,34 @@ export class ProjectComponent implements OnInit {
   department: Object;
   sub_department: SubDepartment;
 
+  //Date management
+  jobs: Job[];
+  minimum_project_end: any;
+  new_project_end: any;
+
   constructor(private _projectService: ProjectService,
               private _organisationService: OrganisationService,
               private router: Router,
               private _branchService: BranchService,
               private _departmentService: DepartmentService,
-              private _subDepartmentService: SubDepartmentService) { }
+              private _subDepartmentService: SubDepartmentService,
+              private _jobService: JobService) { }
 
   async ngOnInit() {
     this.project_id=localStorage.getItem("Project_id");
     await this.loadProject();
     await this.loadOrganisations();
     await this.loadOrganisationFromProject();
+    await this.loadJobs();
+    await this.checkEndDate();
     this.ready = true;
-    console.log(this.organisation_elements);
-    console.log(this.organisation, this.branch, this.department, this.sub_department);
   }
 
   async loadProject(){
     try{
       let s = await this._projectService.getProject(this.project_id).toPromise();
       this.project = s['data'] as Project;
+      this.new_project_end = this.project.project_end;
     }
     catch(error){
       this.errorMessage = error.message;
@@ -75,6 +86,16 @@ export class ProjectComponent implements OnInit {
     }
   }
 
+  async loadJobs(){
+    try{
+      let j = await this._jobService.selectAllFromProject(this.project_id).toPromise();
+      this.jobs = j['data'] as Job[];
+    }
+    catch(error){
+      this.errorMessage = error.message;
+    }
+  }
+
   makeEditable() {
     this.isEditable = !this.isEditable;
   }
@@ -87,6 +108,36 @@ export class ProjectComponent implements OnInit {
     }
     catch (error){
       this.errorMessage = error.message;
+    }
+  }
+
+  checkProject(){
+    this.errorMessage = "";
+    let check = true;
+    if(this.project.project_title == ""){
+      this.errorMessage = "Project name is required.";
+      check = false;
+    }
+    else if (this.project.project_work_code == ""){
+      this.errorMessage = "Project work code is required.";
+      check = false;
+    }
+    this.isProjectValid = check
+  }
+
+  async checkEndDate(){
+    let p = await this._jobService.computeDateEnd(this.jobs, this.project.project_start).toPromise();
+    let p2 = new Date(p['data']['end_date']);
+
+    //We get the minimum date
+    this.minimum_project_end = moment(p2).format('YYYY-MM-DD');
+
+    //We change the end date if needed
+    let d1 = new Date(this.new_project_end);
+    let d2 = new Date(this.minimum_project_end);
+    if(d1<d2){
+      let d = new Date(this.minimum_project_end)
+      this.new_project_end = moment(d).format('YYYY-MM-DD');
     }
   }
 
