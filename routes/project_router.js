@@ -354,6 +354,7 @@ router.get('/volume_progress_days',
                                     }
                                 }
                             }
+
                             object.members = members;
                             return object;
                         }

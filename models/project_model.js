@@ -109,7 +109,7 @@ let project = {
         return db.any('SELECT * \n' +
             'FROM public.member_activity_project \n' +
             'WHERE project_id = ${project_id} AND job_id = ${job_id}',
-            {project_id, job_id})
+            {project_id: project_id, job_id: job_id})
             .then(function (data) {
                 if (data.length === 0) {
                     return false
