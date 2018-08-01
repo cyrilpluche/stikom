@@ -54,13 +54,13 @@ let basicMethods = {
      */
     datesBetween: function (date_begin, date_end, step) {
         let dates = [];
-        let d = date_begin;
+        let d = new Date(date_begin);
         let d_tmp = null;
         while (d <= date_end){
             dates.push(d);
             d_tmp = d;
             d = new Date(d); // add A day
-            d.setDate(d.getDate() + step)
+            d.setDate(d_tmp.getDate() + step)
         }
         return dates
     },
@@ -68,14 +68,19 @@ let basicMethods = {
     monthsBetween: function (date_begin, date_end) {
         let dates = [];
         let d = new Date(date_begin);
-        while (d <= date_end){
+        let d_tmp = null;
+        while (d <= new Date(date_end)){
             dates.push({
                 label: MONTH[d.getMonth()] + ' ' + d.getFullYear(),
                 date: d,
                 shortcut: MONTH[d.getMonth()].substr(0, 3) + ' ' + d.getFullYear()
             });
-            d = new Date(d.setMonth(d.getMonth() + 1)) // a new month
+            d_tmp = d;
+            d = new Date(); // a new month
+            d.setFullYear(d_tmp.getFullYear());
+            d.setMonth(d_tmp.getMonth() + 1)
         }
+
         return dates
     },
 
