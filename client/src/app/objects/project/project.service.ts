@@ -141,7 +141,7 @@ export class ProjectService {
 
   volume_per_days_pdf(project_id:string,job_id:string){
     this.generateHeaders();
-    return this.http.get(this.domain + '/api/project/t/volume_progress_days?project='+project_id+'&job='+job_id,this.httpOptions);
+    return this.http.get(this.domain + '/api/project/volume_progress_days?project='+project_id+'&job='+job_id,this.httpOptions);
   }
 
   volume_per_weeks(project_id:string){

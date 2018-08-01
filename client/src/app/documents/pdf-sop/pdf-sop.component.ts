@@ -9,6 +9,7 @@ import {SopService} from "../../objects/sop/sop.service";
 import {DatePipe} from "@angular/common";
 import {ProjectService} from "../../objects/project/project.service";
 import {PdfService} from "../../objects/pdf/pdf.service";
+import {Project} from "../../objects/project/project";
 
 declare var jsPDF: any;
 
@@ -59,6 +60,9 @@ export class PdfSopComponent implements OnInit {
   sop_pdf_button:boolean=false;
   project_pdf_button:boolean=false;
 
+  project:Project;
+  title:string=" ";
+
 
 
 
@@ -103,6 +107,14 @@ export class PdfSopComponent implements OnInit {
 
   filupPDF()
   {
+    if(this.sop_pdf_button==true)
+    {
+      this.title=this.sop_title;
+    }else
+    {
+      this.title=this.project.project_title;
+    }
+
     this.htmlPDF  = `<html>
 <head>
 <style>
@@ -158,7 +170,7 @@ tr{
       <td>`+this.sop_approvment+`</td>
     </tr>
     <tr>
-      <td colspan="4" style="text-align: center;font-size: 6mm; padding: 2mm;line-height: 8mm"><strong>STANDARD OPERATIONAL PROCEDURE <br> `+this.sop_title+`</strong></td>
+      <td colspan="4" style="text-align: center;font-size: 6mm; padding: 2mm;line-height: 8mm"><strong>STANDARD OPERATIONAL PROCEDURE <br> `+this.title+`</strong></td>
     </tr>
   </table>
   
@@ -247,7 +259,7 @@ for (let i=0;i<this.activities.length;i++)
 this.htmlPDF  +=`
   </table>`
 
-  if(this.units.length>3) // if more than 4 units
+  if(this.units.length>4) // if more than 4 units
   {
     this.htmlPDF  +=`<div class="saut-page">
 
@@ -371,6 +383,13 @@ this.htmlPDF  +=`
 
   async download()
   {
+    if(this.sop_pdf_button==true)
+    {
+      this.title="sop-"+this.sop_title;
+    }else
+    {
+      this.title="project-"+this.project.project_title;
+    }
     await this._pdfService.generatePdf(this.htmlPDF)
       .subscribe( (res) => {
           if (!window.navigator.msSaveOrOpenBlob){
@@ -378,7 +397,7 @@ this.htmlPDF  +=`
             const url = window.URL.createObjectURL(new Blob([res]));
             const link = document.createElement('a');
             link.href = url;
-            link.setAttribute('download', `sop-`+this.sop_title+`.pdf`);
+            link.setAttribute('download', this.title+`.pdf`);
             document.body.appendChild(link);
             link.click();
           }else{
@@ -438,59 +457,85 @@ this.htmlPDF  +=`
             }
           }
           //End unit tab filling up
+          let tmp_activites:any[]=[];
           let counter2=0;
           for (let job of res['data'])
           {
+
             for (let activitie of job['activities'])
             {
-              if (activitie['activity_id_is_father']==null){
-
-                let temp:string[]=[];
-                temp.push(activitie['activity_id']);
-                temp.push(activitie['activity_title']+ " : "+activitie['activity_description']);
-                temp.push(activitie['activity_type']);
-                temp.push(activitie['activity_duration']+" "+activitie['activity_type_duration']);
-                temp.push(activitie['activity_type_output']);
-                for(let i of this.units)
+              let boolean_test:boolean=false;
+              for (let f=0;f<tmp_activites.length;f++)
+              {
+                if(activitie['activity_id']==tmp_activites[f])
                 {
-                  temp.push("");
+                  boolean_test=true;
                 }
-                if ( this.activities[0] =="")
-                {
-                  this.activities[0]=temp;
-                }else{
-                  this.activities.push(temp);
-                }
+              }
+              if(boolean_test==false)
+              {
+                tmp_activites.push(activitie['activity_id']);
 
-              }else{
-                let pointeur=0;
-                for(let j=0; j<this.activities.length; j++)
-                {
-                  if (this.activities[j][0]===activitie['activity_id_is_father'])
+                if (activitie['activity_id_is_father']==null){
+
+                  if(activitie['activity_type'] != "sop")
                   {
+                    let temp:string[]=[];
+                    temp.push(activitie['activity_id']);
+                    temp.push(activitie['activity_title']+ " : "+activitie['activity_description']);
+                    temp.push(activitie['activity_type']);
+                    temp.push(activitie['activity_duration']+" "+activitie['activity_type_duration']);
+                    temp.push(activitie['activity_type_output']);
+                    for(let i of this.units)
+                    {
+                      temp.push("");
+                    }
+                    if ( this.activities[0] =="")
+                    {
+                      this.activities[0]=temp;
+                    }else{
+                      this.activities.push(temp);
+                    }
+                  }
 
-                    if(activitie['activity_unit']!==null){
-                      let points=0;
-                      let res;
-                      for(let k=0; k<this.units.length; k++)
-                      {
-                        if (this.units[k]==activitie['activity_unit'][0])
+                }else{
+
+                  let pointeur=0;
+                  for(let j=0; j<this.activities.length; j++)
+                  {
+                    if (this.activities[j][0]===activitie['activity_id_is_father'] && activitie['activity_type'] != "super_activity")
+                    {
+
+                      if(activitie['activity_unit']!==null){
+                        let points=0;
+                        let res;
+                        for(let k=0; k<this.units.length; k++)
                         {
-                          res=points;
-                        }
-                        points=points+1;
+                          if (this.units[k]==activitie['activity_unit'][0])
+                          {
+                            res=points;
+                          }
+                          points=points+1;
 
-                      }
-                      if (res !== null)
-                      {
-                        this.activities[pointeur][res+5]=activitie['activity_title']+ " : "+activitie['activity_description'];
+                        }
+                        if (res !== null)
+                        {
+                          if(this.activities[pointeur][res+5]=="")
+                          {
+                            this.activities[pointeur][res+5]+="- "+activitie['activity_title']+ " : "+activitie['activity_description'];
+                          }else{
+                            this.activities[pointeur][res+5]+="</br></br>- "+activitie['activity_title']+ " : "+activitie['activity_description'];
+                          }
+
+                        }
+
                       }
 
                     }
-
+                    pointeur=pointeur+1;
                   }
-                  pointeur=pointeur+1;
-                }
+                }//
+
               }
 
 
@@ -546,68 +591,90 @@ this.htmlPDF  +=`
             }
           }
           //End unit tab filling up
+        let tmp_activites:any[]=[];
           let counter2=0;
           for (let job of res['data']['jobs'])
           {
 
             for (let activitie of job['activities'])
             {
-
-              if (activitie['activity_id_is_father']==null){
-
-                let temp:string[]=[];
-                temp.push(activitie['activity_id']);
-                temp.push(activitie['activity_title']+ " : "+activitie['activity_description']);
-                temp.push(activitie['activity_type']);
-                temp.push(activitie['activity_duration']+" "+activitie['activity_type_duration']);
-                temp.push(activitie['activity_type_output']);
-                for(let i of this.units)
+              let boolean_test:boolean=false;
+              for (let f=0;f<tmp_activites.length;f++)
+              {
+                if(activitie['activity_id']==tmp_activites[f])
                 {
-                  temp.push("");
+                  boolean_test=true;
                 }
-                if ( this.activities[0] =="")
-                {
-                  this.activities[0]=temp;
-                }else{
-                  this.activities.push(temp);
-                }
+              }
+              if(boolean_test==false)
+              {
+                tmp_activites.push(activitie['activity_id']);
 
+                if (activitie['activity_id_is_father']==null){
 
-              }else{
-                let pointeur=0;
-                for(let j=0; j<this.activities.length; j++)
-                {
-                  if (this.activities[j][0]===activitie['activity_id_is_father'])
+                  if(activitie['activity_type'] != "sop")
                   {
+                    let temp:string[]=[];
+                    temp.push(activitie['activity_id']);
+                    temp.push(activitie['activity_title']+ " : "+activitie['activity_description']);
+                    temp.push(activitie['activity_type']);
+                    temp.push(activitie['activity_duration']+" "+activitie['activity_type_duration']);
+                    temp.push(activitie['activity_type_output']);
+                    for(let i of this.units)
+                    {
+                      temp.push("");
+                    }
+                    if ( this.activities[0] =="")
+                    {
+                      this.activities[0]=temp;
+                    }else{
+                      this.activities.push(temp);
+                    }
+                  }
 
-                    if(activitie['activity_unit']!==null){
-                      let points=0;
-                      let res;
-                      for(let k=0; k<this.units.length; k++)
-                      {
-                        if (this.units[k]==activitie['activity_unit'][0])
+                }else{
+
+                  let pointeur=0;
+                  for(let j=0; j<this.activities.length; j++)
+                  {
+                    if (this.activities[j][0]===activitie['activity_id_is_father'] && activitie['activity_type'] != "super_activity")
+                    {
+
+                      if(activitie['activity_unit']!==null){
+                        let points=0;
+                        let res;
+                        for(let k=0; k<this.units.length; k++)
                         {
-                          res=points;
-                        }
-                        points=points+1;
+                          if (this.units[k]==activitie['activity_unit'][0])
+                          {
+                            res=points;
+                          }
+                          points=points+1;
 
-                      }
-                      if (res !== null)
-                      {
-                        this.activities[pointeur][res+5]=activitie['activity_title']+ " : "+activitie['activity_description'];
+                        }
+                        if (res !== null)
+                        {
+                          if(this.activities[pointeur][res+5]=="")
+                          {
+                            this.activities[pointeur][res+5]+="- "+activitie['activity_title']+ " : "+activitie['activity_description'];
+                          }else{
+                            this.activities[pointeur][res+5]+="</br></br>- "+activitie['activity_title']+ " : "+activitie['activity_description'];
+                          }
+
+                        }
+
                       }
 
                     }
-
+                    pointeur=pointeur+1;
                   }
-                  pointeur=pointeur+1;
-                }
+                }//
+
               }
 
 
             }
           }
-
         },//end subscribe
         error => {
           console.log("ERREUR : ",error);
@@ -661,7 +728,7 @@ this.htmlPDF  +=`
   async getProject(idProject: string){
     await this._projectService.getProject(idProject)
       .subscribe( (res) => {
-          //this.res=res['data'];
+          this.project=res['data'];
 
 
           this.getOrganisation(res['data']['sub_department_id']);
