@@ -83,7 +83,6 @@ export class PdfProgressEvaluationComponent implements OnInit {
   async ngOnInit() {
     await this.loadData();
     await this.sortElements();
-    await this.loadVolumePerDay();
     this.ready = true;
     console.log(this.elements);
     await this.getProject(localStorage.getItem("Project_id"));
@@ -94,7 +93,7 @@ export class PdfProgressEvaluationComponent implements OnInit {
 
   }
 
-  filupPDF()
+  async filupPDF()
   {
     this.htmlPDF  = `<html>
 <head>
@@ -132,77 +131,135 @@ tr{
 </head>
 <body>
 `;
+    console.log(this.activities)
+    let tmp_job_done:any[]=[];
+    for(let i=0; i<this.activities.length;i++)
+    {
+      let boolTest=false;
+      for(let j=0; j<tmp_job_done.length; j++)
+      {
+        if(tmp_job_done[j] == this.activities[i]['job']['job_id'])
+        {
+          boolTest=true;
+        }
+      }
+
+      if(boolTest== false)
+      {
 
 
-      this.htmlPDF  += `
-    <h5 style="margin-left: 37%; font-size: 140%;font-weight: bold;margin-top: 25mm;">VOLUME PROGRESS EVALUATION </h5>
-    
-    <table style="margin-left: 5%; width: 90%;">
-        <tr class="no-borders">
-            <td class="no-borders" style="width: 20%">Work Code</td>
-            <td class="no-borders" style="width: 15%">0000000</td>
-            <td class="no-borders" style="width: 15%">Project Code</td>
-            <td class="no-borders" style="width: 15%">`+this.project_pdf.project_id+`</td>
-            <td class="no-borders" style="width: 35%"></td>
-        </tr>
-        <tr class="no-borders">
-            <td class="no-borders">Name of Project Work</td>
-            <td colspan="4" class="no-borders">Name of the job</td>
-    
-        </tr>
-        
-    </table>
-    
-    <table style="margin-left: 5%; width: 90%; margin-top: 10mm;">
-      <tr>
-        <td style="width: 3%" class="center-align text-bold" rowspan="3">No</td>
-        <td style="width: 10%" class="center-align text-bold" rowspan="3">Staff Names</td>
-        <td style="width: 7%" class="center-align text-bold" rowspan="3">Total <br> Target</td>
-        <td style="width: 10%" class="center-align text-bold" rowspan="3">Total Target <br> vs Details</td>
-        <td style="width: 45%" class="center-align text-bold" colspan="27">w1</td>
-        <td style="width: 8%" class="center-align text-bold" rowspan="3">Total Finished</td>
-        <td style="width: 7%" class="center-align text-bold" rowspan="3">%</td>
-        <td style="width: 10%" class="center-align text-bold" rowspan="3">Note</td>
-         
-      </tr>
-      <tr>
-        <td colspan="3" class="center-align">D1</td>
-        <td colspan="3" class="center-align">D2</td>
-        <td colspan="3" class="center-align">D3</td>
-        <td colspan="3" class="center-align">D4</td>
-        <td colspan="3" class="center-align">D5</td>
-        <td colspan="3" class="center-align">D6</td>
-        <td colspan="3" class="center-align">D7</td>
-      </tr>
-      <tr>
-        <td class="center-align">Target</td>
-        <td class="center-align">Finished</td>
-        <td class="center-align">%</td>
-        <td class="center-align">Target</td>
-        <td class="center-align">Finished</td>
-        <td class="center-align">%</td>
-        <td class="center-align">Target</td>
-        <td class="center-align">Finished</td>
-        <td class="center-align">%</td>
-        <td class="center-align">Target</td>
-        <td class="center-align">Finished</td>
-        <td class="center-align">%</td>
-        <td class="center-align">Target</td>
-        <td class="center-align">Finished</td>
-        <td class="center-align">%</td>
-        <td class="center-align">Target</td>
-        <td class="center-align">Finished</td>
-        <td class="center-align">%</td>
-        <td class="center-align">Target</td>
-        <td class="center-align">Finished</td>
-        <td class="center-align">%</td>
-      </tr>
-      `;
+        try {
+          console.log("ici");
+          await this.loadVolumePerDay(this.activities[i]['job']['job_id']);
+          console.log(this.volumes_displayed);
+
+          if(i>0)
+          {
+            this.htmlPDF  += `<div class="saut-page"></div> `;
+          }
+
+              this.htmlPDF  += `
+            <h5 style="margin-left: 37%; font-size: 140%;font-weight: bold;margin-top: 25mm;">VOLUME PROGRESS EVALUATION </h5>
+            
+            <table style="margin-left: 5%; width: 90%;">
+                <tr class="no-borders">
+                    <td class="no-borders" style="width: 20%">Work Code</td>
+                    <td class="no-borders" style="width: 15%">`+this.activities[i]['job']['job_id']+`</td>
+                    <td class="no-borders" style="width: 15%">Project Code</td>
+                    <td class="no-borders" style="width: 15%">`+this.project_pdf.project_id+`</td>
+                    <td class="no-borders" style="width: 35%"></td>
+                </tr>
+                <tr class="no-borders">
+                    <td class="no-borders">Name of Project Work</td>
+                    <td colspan="4" class="no-borders">Name of the job</td>
+            
+                </tr>
+                
+            </table>
+            
+            <table style="margin-left: 5%; width: 90%; margin-top: 10mm;">
+              <tr>
+                <td style="width: 3%" class="center-align text-bold" rowspan="3">No</td>
+                <td style="width: 10%" class="center-align text-bold" rowspan="3">Staff Names</td>
+                <td style="width: 7%" class="center-align text-bold" rowspan="3">Total <br> Target</td>
+                <td style="width: 10%" class="center-align text-bold" rowspan="3">Total Target <br> vs Details</td>
+                <td style="width: 45%" class="center-align text-bold" colspan="27">w1</td>
+                <td style="width: 8%" class="center-align text-bold" rowspan="3">Total Finished</td>
+                <td style="width: 7%" class="center-align text-bold" rowspan="3">%</td>
+                <td style="width: 10%" class="center-align text-bold" rowspan="3">Note</td>
+                 
+              </tr>
+              <tr>
+                <td colspan="3" class="center-align">D1</td>
+                <td colspan="3" class="center-align">D2</td>
+                <td colspan="3" class="center-align">D3</td>
+                <td colspan="3" class="center-align">D4</td>
+                <td colspan="3" class="center-align">D5</td>
+                <td colspan="3" class="center-align">D6</td>
+                <td colspan="3" class="center-align">D7</td>
+              </tr>
+              <tr>
+                <td class="center-align">Target</td>
+                <td class="center-align">Finished</td>
+                <td class="center-align">%</td>
+                <td class="center-align">Target</td>
+                <td class="center-align">Finished</td>
+                <td class="center-align">%</td>
+                <td class="center-align">Target</td>
+                <td class="center-align">Finished</td>
+                <td class="center-align">%</td>
+                <td class="center-align">Target</td>
+                <td class="center-align">Finished</td>
+                <td class="center-align">%</td>
+                <td class="center-align">Target</td>
+                <td class="center-align">Finished</td>
+                <td class="center-align">%</td>
+                <td class="center-align">Target</td>
+                <td class="center-align">Finished</td>
+                <td class="center-align">%</td>
+                <td class="center-align">Target</td>
+                <td class="center-align">Finished</td>
+                <td class="center-align">%</td>
+              </tr>
+              `;
+
+            for (let member of this.convertMap(this.volumes_displayed))
+            {
+              this.htmlPDF += `
+                <tr>
+              <td >`+member['member'].member_id+`</td>
+              <td class="text-small">`+member['member'].member_name+` `+member['member'].member_first_name+`</td>
+               <td>`+member['total_finished']+` `+member['total_target']+` `+member['total_rates']+` </td>
+               <td></td>
+               `;
+              for(let volume of member['volumes'])
+              {
+                this.htmlPDF += `
+                <td>`+volume['target_quantity']+`</td>
+                <td>`+volume['finished_quantity']+`</td>
+                <td>`+volume['finished_rate']+`</td>
+                `;
+              }
+              this.htmlPDF += `</tr>`;
+
+            }
 
 
 
-      this.htmlPDF  += `
-    </table>`;
+              this.htmlPDF  += `
+            </table>`;
+
+          console.log("là");
+        }
+        catch (error){
+          this.errorMessage = error.message;
+        }
+
+
+
+
+      }
+    }
 
 
     this.htmlPDF +=`</body></html>`;
@@ -468,9 +525,9 @@ tr{
   }
 
   /* Ask to the server side to compute every target quantity, quantity finished, rates and store it in an array per days */
-  async loadVolumePerDay(){
+  async loadVolumePerDay(job_id){
     try {
-      let v = await this._projectService.volume_per_days(this.project.project_id).toPromise();
+      let v = await this._projectService.volume_per_days_pdf(this.project.project_id,job_id).toPromise();
       this.volume_per_days = v['data'];
       this.volumes_displayed_iterator = 0;
       await this.selectVolumes(0);
