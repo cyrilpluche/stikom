@@ -68,7 +68,7 @@ router.get('/all_state',
                                 state = 2
                             } else if (state === 0 && date_end <= new Date()) {
                                 state = 2
-                            } else if (state === 0 && date_begin >= new Date()) {
+                            } else if (state === 0 && date_begin <= new Date()) {
                                 state = 1
                             }
                             projects[i].state = state;
