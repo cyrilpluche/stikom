@@ -300,6 +300,7 @@ router.get('/volume_progress_days/:project',
 );
 
 router.get('/volume_progress_days',
+    policy.checkParameters(['project', 'job']),
     function (req, res, next) {
         let project_id = req.query.project;
         let job_id = req.query.job;
