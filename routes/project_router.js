@@ -665,7 +665,8 @@ router.get('/volume_progress_weeks/:project',
                        // reset the data
                    }
                     else if (object[i].date.getDay() === 1) { // a monday
-                       data.endDate = object[i].date; // set the end date
+                       data.endDate = new Date(object[i].date); // set the end date
+                       data.endDate.setDate(data.endDate.getDate() -1);
                        result.push(data);
                        data = {startDate: object[i].date, endDate: null, elements: []};
                        // element = {target_quantity: 0, finished_quantity: 0, finished_rate: 0};
