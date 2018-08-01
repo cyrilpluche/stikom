@@ -16,7 +16,7 @@ const ERROR_TYPE = require('./policy/errorType');
 app.use(cors({origin: '*'}));
 app.use(helmet());
 app.use(logger('dev'));
-app.use(express.json({limit:'50mb'}));
+app.use(express.json({limit:'50mb'})); // change the payload limit size
 app.use(express.urlencoded({ extended: true, limit: '50mb', parameterLimit:50000}));
 app.use(cookieParser());
 //app.use(express.static(path.join(__dirname, 'dist')));

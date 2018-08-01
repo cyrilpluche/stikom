@@ -724,15 +724,17 @@ router.get('/volume_progress_weeks/:project',
                         if (basicMethods.equalDate(object[j].endDate,req.date_end) &&
                             object[j].startDate.getMonth() === months[i].date.getMonth() &&
                             object[j].startDate.getFullYear() === months[i].date.getFullYear()) {
-                            data.weeks.push(object[j])
+                            data.weeks.push(object[j]);
                         }
                         else if (object[j].endDate.getMonth() === months[i].date.getMonth() &&
                             object[j].endDate.getFullYear() === months[i].date.getFullYear()) {
-                            data.weeks.push(object[j])
+                            data.weeks.push(object[j]);
                         }
                     }
-                    result.push(data);
-                    data = {month: '', shortcut: '', weeks: []};
+                    if (data.weeks.length > 0) { // only if there is a week
+                        result.push(data);
+                    }
+                    data = {month: '', shortcut: '', weeks: []}; // reset data
                 }
                 res.json({data: result})
             })
