@@ -379,7 +379,14 @@ export class VolumeProgressComponent implements OnInit {
 
   //Round a number for the display view
   roundOne(n: number, long: number) {
-    return Math.round(n*long)/long;
+    let answer;
+    if (n>0){
+      answer = Math.round(n*long)/long;
+    }
+    else{
+      answer = 0;
+    }
+    return answer;
   }
 
   //Load the seven next days

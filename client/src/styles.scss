@@ -7,8 +7,16 @@
 /* GREY #818384 */
 
 body {
-  background-color: #fafafa;
+  /*background-color: #fafafa;*/
 }
+
+/*body {
+  background-image: url('assets/images/home-background.jpg') !important;
+  opacity : 0.5; width: 100%;
+  min-height:100%;
+  background-repeat: no-repeat;
+  background-size: cover;
+}*/
 
 footer {
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12) inset;
@@ -228,5 +236,9 @@ table .selected{
 footer {
   background-color: #efefef !important;
   color: #7b7b7b !important;
+
+  width: 100%;
+  position: relative;
+  bottom: 0;
 }
 /* ---------- /FOOTER ---------- */
