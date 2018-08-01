@@ -11,13 +11,13 @@ const app = express();
 const server = require('http').Server(app);
 require('dotenv').config();
 
-const ERROR_TYPE = require('./policy/errorType')
+const ERROR_TYPE = require('./policy/errorType');
 
 app.use(cors({origin: '*'}));
 app.use(helmet());
 app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.json({limit:'50mb'}));
+app.use(express.urlencoded({ extended: true, limit: '50mb', parameterLimit:50000}));
 app.use(cookieParser());
 //app.use(express.static(path.join(__dirname, 'dist')));
 app.use(express.static(__dirname + '/dist/client'));
