@@ -17,7 +17,11 @@ export class ProjectListComponent implements OnInit {
   textHelper: TextHelperComponent = new TextHelperComponent();
   dateHelper: DateHelperComponent = new DateHelperComponent();
 
-  projects: Project[];
+  projects: any;
+  projects_0: Project[]; // Not started
+  projects_1: Project[]; // Started
+  projects_2: Project[]; // Finished
+
   project_selected: Project = new Project();
   buttonsTitles: string [] = ['Project information', 'Master of work', 'Gantt', 'Volume Progress'];
   buttonsLinks: string [] = ['project', 'master-of-work', 'gantt-creation', 'volume-progress'];
@@ -25,21 +29,40 @@ export class ProjectListComponent implements OnInit {
   constructor(private _projectService: ProjectService,
               private _sopService: SopService) { }
 
-  ngOnInit() {
+  async ngOnInit() {
     this._sopService.removeSopIdLocal();
-    this.loadProjects();
+    await this.loadProjects();
+    console.log(this.projects);
   }
 
-  loadProjects(){
-    this.projects = [];
-    this._projectService.selectAll()
-      .subscribe( (res) => {
-          this.errorMessage = "";
-          this.projects = res['data'] as Project[];
-        },
-        error => {
-          this.errorMessage = error.error.message;
-        });
+  async loadProjects(){
+    try {
+      this.errorMessage = "";
+      this.projects_0 = [];
+      this.projects_1 = [];
+      this.projects_2 = [];
+      let p = await this._projectService.selectAllSort().toPromise();
+      this.projects = p['data'];
+      this.sortProjects();
+    }
+    catch (error) {
+      this.errorMessage = error.message;
+    }
+  }
+
+  sortProjects(){
+    for (let p of this.projects){
+      if (p['state'] == 0){
+        this.projects_0.push(p);
+      }
+      else if (p['state'] == 1){
+        this.projects_1.push(p);
+      }
+      else {
+        this.projects_2.push(p);
+      }
+    }
+
   }
 
   sortTable(n, t: number) {

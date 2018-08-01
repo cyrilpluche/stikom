@@ -377,6 +377,11 @@ export class VolumeProgressComponent implements OnInit {
     return Array.from(map.values());
   }
 
+  //Round a number for the display view
+  roundOne(n: number, long: number) {
+    return Math.round(n*long)/long;
+  }
+
   //Load the seven next days
   next(){
     if (!this.isDay){

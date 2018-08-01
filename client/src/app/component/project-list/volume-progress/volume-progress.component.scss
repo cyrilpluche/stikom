@@ -120,7 +120,7 @@ input[type=checkbox], input[type=radio] {
 .switch-label:before {
   content: attr(data-off);
   right: 11px;
-  color: #aaaaaa;
+  color: #FFFFFF;
   text-shadow: 0 1px rgba(255, 255, 255, 0.5);
 }
 
@@ -213,4 +213,8 @@ span.switch-label:after {
   background-image: -webkit-linear-gradient(top, #eeeeee, #FFFFFF);
   border-radius: 6px;
   box-shadow: inset 0 1px rgba(0, 0, 0, 0.02);
+}
+
+.switch-left-right[_ngcontent-c3] .switch-label[_ngcontent-c3]:before, .switch-left-right[_ngcontent-c3] .switch-label[_ngcontent-c3]:after {
+  background-color: #FFA701;
 }

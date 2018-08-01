@@ -5,20 +5,32 @@
       <button type="button" class="btn btn-outline-default waves-effect" [routerLink]="['/project-creation']"><h6 class="no-margin-bottom"><i class="fa fa-plus mr-3"></i>New Project</h6></button>
     </div>
   </div>
+  <!-- Error alert -->
+  <div *ngIf="errorMessage" class="row row-first justify-content-end error-text">
+    <i>{{errorMessage}}</i>
+  </div>
 
   <!-- Project not started -->
   <div class="row row-first justify-content-between">
-
-    <div class=" ">
-      <h5><span class="badge badge-primary">Project started</span></h5>
+    <div class="col">
+      <a data-toggle="collapse" data-target="#projects_1" aria-expanded="false" aria-controls="projects_1">
+        <h5><span class="badge badge-primary">Project started</span></h5>
+      </a>
     </div>
-    <div class=" md-form" id="search-bar">
+    <!-- SEARCH BAR -->
+    <div *ngIf="projects_1.length != 0" class=" md-form" id="search-bar">
       <input id="search" (keyup)="search(1)" class="form-control" type="text" placeholder="Search" aria-label="Search">
     </div>
   </div>
 
+  <div class="row" *ngIf="projects_1.length == 0">
+    <div class="offset-1">
+      No projects
+    </div>
+  </div>
+
   <!-- TABLE -->
-  <div class="row justify-content-center">
+  <div *ngIf="projects_1.length != 0" class="row justify-content-center collapse show" id="projects_1">
 
   <!--Table-->
     <table class="col-12 table hoverable table-borderless table-hover table-fixed" id="project-table">
@@ -38,7 +50,7 @@
 
       <!--Table body-->
       <tbody>
-      <tr *ngFor="let project of projects" (click)="selectProject(project)">
+      <tr *ngFor="let project of projects_1" (click)="selectProject(project)">
         <td scope="row">
           <a data-toggle="modal" data-target="#actionModal"><i class="fa fa-cog text-blue"></i></a>
         </td>
@@ -61,16 +73,26 @@
   <!-- Project started -->
   <div class="row row-first justify-content-between">
 
-    <div class=" ">
-      <h5><span class="badge badge-primary">Project finished</span></h5>
+    <div class="col">
+      <a data-toggle="collapse" data-target="#projects_0" aria-expanded="true" aria-controls="projects_0">
+        <h5><span class="badge badge-primary">Project not started</span></h5>
+      </a>
     </div>
-    <div class=" md-form" id="search-bar-2">
+
+    <!-- SEARCH BAR -->
+    <div *ngIf="projects_0.length != 0" class=" md-form" id="search-bar-2">
       <input id="search-2" (keyup)="search(2)" class="form-control" type="text" placeholder="Search" aria-label="Search">
     </div>
   </div>
 
+  <div class="row" *ngIf="projects_0.length == 0">
+    <div class="offset-1">
+      No projects
+    </div>
+  </div>
+
   <!-- TABLE -->
-  <div class="row justify-content-center">
+  <div *ngIf="projects_0.length != 0" class="row justify-content-center collapse show" id="projects_0">
 
     <!--Table-->
     <table class="col-12 table hoverable table-borderless table-hover table-fixed" id="project-table-2">
@@ -90,7 +112,7 @@
 
       <!--Table body-->
       <tbody>
-      <tr *ngFor="let project of projects" (click)="selectProject(project)">
+      <tr *ngFor="let project of projects_0" (click)="selectProject(project)">
         <td scope="row">
           <a data-toggle="modal" data-target="#actionModal"><i class="fa fa-cog text-blue"></i></a>
         </td>
@@ -113,16 +135,26 @@
   <!-- Project finished -->
   <div class="row row-first justify-content-between">
 
-    <div class=" ">
-      <h5><span class="badge badge-primary">Project finished</span></h5>
+    <div class="col">
+      <a data-toggle="collapse" data-target="#projects_2" aria-expanded="false" aria-controls="projects_2">
+        <h5><span class="badge badge-primary">Project finished </span></h5>
+      </a>
     </div>
-    <div class=" md-form" id="search-bar-3">
+
+    <!-- SEARCH BAR -->
+    <div *ngIf="projects_2.length != 0" class="col md-form" id="search-bar-3">
       <input id="search-3" (keyup)="search(2)" class="form-control" type="text" placeholder="Search" aria-label="Search">
     </div>
   </div>
 
+  <div class="row" *ngIf="projects_2.length == 0">
+    <div class="offset-1">
+      No projects
+    </div>
+  </div>
+
   <!-- TABLE -->
-  <div class="row justify-content-center">
+  <div *ngIf="projects_2.length != 0" class="row justify-content-center collapse show" id="projects_2">
 
     <!--Table-->
     <table class="col-12 table hoverable table-borderless table-hover table-fixed" id="project-table-3">
@@ -142,7 +174,7 @@
 
       <!--Table body-->
       <tbody>
-      <tr *ngFor="let project of projects" (click)="selectProject(project)">
+      <tr *ngFor="let project of projects_2" (click)="selectProject(project)">
         <td scope="row">
           <a data-toggle="modal" data-target="#actionModal"><i class="fa fa-cog text-blue"></i></a>
         </td>
