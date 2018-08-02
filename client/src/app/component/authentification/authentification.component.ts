@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {MemberService} from '../../objects/member/member.service';
 import {Observable} from 'rxjs';
 import { Router } from '@angular/router';
+import { Location } from '@angular/common';
 
 
 
@@ -24,14 +25,15 @@ export class AuthentificationComponent {
 
 
   constructor(private _memberService: MemberService,
-              private router: Router) { }
+              private router: Router,
+              private location: Location) { }
 
   ngOnInit() {
   }
 
 
 
-  onSubmit() {
+  async onSubmit() {
     this.errorMessage ="";
     if (this.email == null || this.email == "") {
       this.errorMessage = "Email is required.";
@@ -47,18 +49,18 @@ export class AuthentificationComponent {
       let auth=true;
       let resultat;
 
-      this._memberService.auth(this.email,this.password)
-        .subscribe( (res) => {
-            this.errorMessage = "";
-            this._memberService.storeUserData(res['token']);
-            this.router.navigate(['/home']);
-          },
-          error => {
-            console.log("ERREUR : ",error);
-
-            this.errorMessage = error.error.message;
-          });
-
+      try{
+        let res = await this._memberService.auth(this.email,this.password).toPromise();
+        this.errorMessage = "";
+        this._memberService.storeUserData(res['token']);
+        let r = await this._memberService.setUserDetails().toPromise();
+        this._memberService.storeUserDataFull(r['data']);
+        this.router.navigate(['/home']);
+        await location.reload();
+      }catch (error){
+        console.log("ERREUR : ",error);
+        this.errorMessage = error.message;
+      }
     }
   }
 
