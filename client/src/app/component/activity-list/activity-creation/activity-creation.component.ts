@@ -113,7 +113,6 @@ export class ActivityCreationComponent implements OnInit {
           let id2 = await this._activityService.createActivity(element['activity']).toPromise();
           await this._unitService.bindUnitActivity(element['unit'], id2['data']['activity_id']).toPromise();
           await this._jobService.bind_job_activity(job_id['data']['job_id'], id2['data']['activity_id']).toPromise();
-          console.log('Super activity created no problem.');
         }
         else{
           //We have old activity
@@ -128,7 +127,6 @@ export class ActivityCreationComponent implements OnInit {
             //We check its children
             let isChanged = false;
             let old_job = await this._jobService.selectFromActivity(element['activity'].activity_id).toPromise();
-            console.log('Old job : ', old_job);
 
             for (let sub_a of element['children']){
               //We need to delete sub activity if it's changed
@@ -155,16 +153,12 @@ export class ActivityCreationComponent implements OnInit {
               /* SUPER ACTIVITY UPDATE */
               //We generate the super activity linked, -1 means that we already have the good idea
               this.generateSuperActivity(element, -1);
-              console.log('Ok super activity now : ', element['super']);
-              console.log('with this element : ', element);
               await this._activityService.update(element['super']).toPromise();
             }
           }
         }
       }
-      console.log("Let's try");
       await this.generateSopActivity();
-      console.log("done");
       this.router.navigate(["/sop-list"]);
     }
     catch (error) {
@@ -216,7 +210,6 @@ export class ActivityCreationComponent implements OnInit {
             this.activities.set(activity.activity_id, e);
           }
           else if(activity.activity_type == 'sop'){
-            console.log('activity : ', activity);
             this.activity_sop = activity as Activity;
             this.isNewSop = false;
             let j = await this._jobService.selectFromActivity(activity.activity_id).toPromise();
@@ -492,7 +485,6 @@ export class ActivityCreationComponent implements OnInit {
       activity.managment_level_id = this.management_levels[0].managment_level_id.toString();
     }else{
       activity = this.activity_sop;
-      console.log('act : ', this.activity_sop);
     }
 
     let minutes = 0;
@@ -535,7 +527,6 @@ export class ActivityCreationComponent implements OnInit {
     }
     else{
       try {
-        console.log('up + : ', activity);
         await this._activityService.update(activity).toPromise();
       }
       catch (error){

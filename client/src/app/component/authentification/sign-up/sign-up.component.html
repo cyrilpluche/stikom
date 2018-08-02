@@ -1,4 +1,10 @@
-<div *ngIf="!displayEnd" class="container">
+<div class="container" *ngIf="!ready">
+  <div class="row-first">
+    <app-loader></app-loader>
+  </div>
+</div>
+
+<div *ngIf="!displayEnd && ready" class="container">
   <div class="row row-first justify-content-center">
 
     <!-- Card -->
@@ -56,9 +62,9 @@
             <label for="passwordConfirm">Confirm your password</label>
           </div>
 
-          <div class="md-form">
-            <select [(ngModel)]="managmentLevelChoosen" name="managmentLevel" class="form-control mdb-select" >
-              <option value="" disabled selected>Choose managment level</option>
+          <div class="">
+            <select [(ngModel)]="managmentLevelChoosen" name="managementLevel" class="form-control">
+              <option name="organisation" value="" disabled selected>Choose a management level</option>
               <option *ngFor="let manage of managmentLevels" [ngValue]=manage.managment_level_id>{{manage.managment_level_label}}</option>
             </select>
           </div>
@@ -72,38 +78,41 @@
         <!-- Second step of the form -->
         <div class="form-group" [hidden]="!step2">
 
-          <!-- Organisation -->
-          <div class="md-form">
-            <select [(ngModel)]="organisationChoosen" name="organisation" class="form-control mdb-select" (change)="enableBranch()" >
-              <option value="" disabled selected>Choose organisation</option>
-              <option *ngFor="let orga of organisations" [ngValue]=orga.organisation_id>{{orga.organisation_name}}</option>
-            </select>
+          <div class="row" *ngIf="organisation_elements.length != 0">
+            <div class="col-12">
+              <select (change)="pickOrganisation()" name="organisation" [(ngModel)]="organisation" class="form-control">
+                <option name="organisation" value="" disabled selected>Choose organisation</option>
+                <option *ngFor="let o of organisation_elements" [ngValue]="o">{{o['organisation'].organisation_name}}</option>
+              </select>
+            </div>
           </div>
 
-          <!-- Branch -->
-          <div class="md-form">
-            <select [(ngModel)]="branchChoosen" name="branch" class="form-control" [disabled]="!branchEnabled" (change)="enableDepartment()" >
-              <option value="" disabled selected>Choose a branch</option>
-              <option *ngFor="let branch of branchs" [ngValue]=branch.branch_id>{{branch.branch_name}}</option>
-            </select>
+          <div class="row" *ngIf="organisation != null">
+            <div class="col-12">
+              <select (change)="pickBranch()" name="branch" [(ngModel)]="branch" class="form-control">
+                <option name="organisation" value="" disabled selected>Choose branch</option>
+                <option *ngFor="let b of organisation['branchs']" [ngValue]="b">{{b['branch'].branch_name}}</option>
+              </select>
+            </div>
           </div>
 
-          <!-- Department -->
-          <div class="md-form">
-            <select [(ngModel)]="departmentChoosen" name="department" class="form-control mdb-select" [disabled]="!departmentEnabled" (change)="enableSubDepartment()" >
-              <option value="" disabled selected>Choose department</option>
-              <option *ngFor="let department of departments" [ngValue]=department.department_id>{{department.department_name}}</option>
-
-            </select>
+          <div class="row" *ngIf="branch != null">
+            <div class="col-12">
+              <select (change)="pickDepartment()" name="department" [disabled]="branch['branch'].branch_name == 'No branch'" [(ngModel)]="department" class="form-control">
+                <option name="organisation" value="" disabled selected>Choose department</option>
+                <option *ngFor="let d of branch['departments']" [ngValue]="d">{{d['department'].department_name}}</option>
+              </select>
+            </div>
           </div>
 
-          <!-- SubDepartment -->
-          <div class="md-form">
-            <select [(ngModel)]="subDepartmentChoosen" name="subDepartment" class="form-control mdb-select" [disabled]="!subDepartmentEnabled" >
-              <option value="" disabled selected>Choose sub-department</option>
-              <option *ngFor="let subDepartment of subDepartments" [ngValue]=subDepartment.sub_department_id>{{subDepartment.sub_department_name}}</option>
-            </select>
-          </div>
+            <div class="row" *ngIf="department != null">
+              <div class="col-12">
+                <select name="sub_department" [disabled]="department['department'].department_name == 'No department'" [(ngModel)]="sub_department" class="form-control">
+                  <option name="organisation" value="" disabled selected>Choose a sub department</option>
+                  <option *ngFor="let s of department['sub_departments']" [ngValue]="s">{{s.sub_department_name}}</option>
+                </select>
+              </div>
+            </div>
         </div>
 
         <div class="text-center mt-4">

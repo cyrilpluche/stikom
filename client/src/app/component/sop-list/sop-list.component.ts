@@ -40,7 +40,6 @@ export class SopListComponent implements OnInit {
   }
 
   deleteSop(sop_id) {
-    console.log('hey');
     this._sopService.delete(sop_id).subscribe((res) => {
         this.errorMessage = "";
         this.getAllSop();
@@ -121,7 +120,6 @@ export class SopListComponent implements OnInit {
     // Loop through all table rows, and hide those who don't match the search query
     for (i = 0; i < tr.length; i++) {
       td = tr[i].getElementsByTagName("td")[2];
-      console.log(td);
       if (td) {
         if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
           tr[i].style.display = "";

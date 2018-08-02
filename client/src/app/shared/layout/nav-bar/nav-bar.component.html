@@ -23,7 +23,7 @@
       </li>
 
       <!-- Dropdown -->
-      <li class="nav-item dropdown" dropdown *ngIf="_memberService.isLoggedIn()">
+      <li class="nav-item dropdown" dropdown *ngIf="_memberService.isLoggedIn() && member_role=='admin'">
         <a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle waves-light font-weight-bold" mdbWavesEffect>
           ADMIN<span class="caret"></span>
         </a>
@@ -43,7 +43,7 @@
       </li>
 
       <li class="nav-item">
-        <a class="nav-link" *ngIf="_memberService.isLoggedIn()" [routerLink]="['/sop-list']" >SOP</a>
+        <a class="nav-link" *ngIf="_memberService.isLoggedIn() && member_role !='performer' && member_role !='none'" [routerLink]="['/sop-list']" >SOP</a>
       </li>
 
       <li class="nav-item">

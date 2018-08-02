@@ -55,13 +55,11 @@ export class SopComponent implements OnInit {
     await this.loadUnit();
     await this.loadActivities();
     await this.loadManagement();
-    console.log(this.activities);
     this.ready = true;
 
   }
 
   async onSubmit(event){
-    console.log('submit !');
     this.ready = false;
     this.errorMessage = "";
     if (this.formNumber == 1){
@@ -91,9 +89,7 @@ export class SopComponent implements OnInit {
       if(event){
         try{
           await this._activityService.update(this.activity_selected).toPromise();
-          console.log(this.selectUnit().unit_id);
           await this._executeService.update(this.selectUnit().unit_id, this.activity_selected.activity_id).toPromise();
-          console.log(this.sub_activities_linked);
           if (this.sub_activities_linked != null){
             for (let s of this.sub_activities_linked){
               s.activity_type_duration = this.activity_selected.activity_type_duration;

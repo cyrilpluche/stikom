@@ -11,6 +11,7 @@ import * as moment from 'moment';
 import {first} from "rxjs/internal/operators";
 import {JobService} from "../../../objects/job/job.service";
 import {Job} from "../../../objects/job/job";
+import {RoleHelperComponent} from "../../../helpers/role-helper/role-helper.component";
 
 @Component({
   selector: 'app-volume-progress',
@@ -71,6 +72,10 @@ export class VolumeProgressComponent implements OnInit {
 
   members_activities = new Map();
 
+  member_role: string;
+  active_member_id: string;
+  role_helper: RoleHelperComponent = new RoleHelperComponent(this._memberService);
+
   constructor(private _memberActivityProjectService: MemberActivityProjectService,
               private _memberService: MemberService,
               private _activityService: ActivityService,
@@ -78,6 +83,8 @@ export class VolumeProgressComponent implements OnInit {
               private _jobService: JobService) { }
 
   async ngOnInit() {
+    this.member_role = await this.role_helper.getRole();
+    this.active_member_id = this._memberService.getUserDataFull()['id'];
     await this.loadData();
     await this.sortElements();
     await this.loadVolumePerDay();
@@ -273,7 +280,6 @@ export class VolumeProgressComponent implements OnInit {
     }
     else {
       this.selectVolumesWeeks(i);
-      console.log(this.volume_per_weeks);
     }
   }
 
@@ -283,8 +289,6 @@ export class VolumeProgressComponent implements OnInit {
     this.ready = false;
     this.volumes_displayed = new Map();
     this.dates_displayed = [];
-    console.log('i : ', i);
-    console.log(' : ', i);
     this.date_displayed = moment(this.volume_per_days.slice(i, i+7)[0]['date']).format('MMM YYYY');
 
     for (let volume of this.volume_per_days.slice(i, i+7)){

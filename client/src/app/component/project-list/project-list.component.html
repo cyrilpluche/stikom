@@ -1,6 +1,6 @@
 <div class="container">
 
-  <div class="row row-first">
+  <div class="row row-first" *ngIf="member_role != 'performer' && member_role != 'none' && member_role !='manager'">
     <div class="col">
       <button type="button" class="btn btn-outline-default waves-effect" [routerLink]="['/project-creation']"><h6 class="no-margin-bottom"><i class="fa fa-plus mr-3"></i>New Project</h6></button>
     </div>
@@ -43,7 +43,7 @@
         <th style="width:40%;" (click)="sortTable(2, 1)"><a>Title</a></th>
         <th style="width:20%;" (click)="sortTable(3, 1)"><a>Start Date</a></th>
         <th style="width:20%;" (click)="sortTable(4, 1)"><a>Finished Date</a></th>
-        <th style="width:5%;"></th>
+        <th *ngIf="member_role != 'performer' && member_role != 'none' && member_role !='manager'" style="width:5%;"></th>
       </tr>
       </thead>
       <!--Table head-->
@@ -58,7 +58,7 @@
         <td>{{textHelper.firstLetterUpperCase(project.project_title.substr(0,50))}}</td>
         <td>{{project.project_start | date:"MM/dd/yyyy"}}</td>
         <td>{{project.project_end | date:"MM/dd/yyyy"}}</td>
-        <td>
+        <td *ngIf="member_role != 'performer' && member_role != 'none' && member_role !='manager'">
           <a data-toggle="modal" data-target="#warningModal"><i class="fa fa-close text-red"></i></a>
         </td>
       </tr>
@@ -105,7 +105,7 @@
         <th style="width:40%;" (click)="sortTable(2, 2)"><a>Title</a></th>
         <th style="width:20%;" (click)="sortTable(3, 2)"><a>Start Date</a></th>
         <th style="width:20%;" (click)="sortTable(4, 2)"><a>Finished Date</a></th>
-        <th style="width:5%;"></th>
+        <th *ngIf="member_role != 'performer' && member_role != 'none' && member_role !='manager'" style="width:5%;"></th>
       </tr>
       </thead>
       <!--Table head-->
@@ -120,7 +120,7 @@
         <td>{{textHelper.firstLetterUpperCase(project.project_title.substr(0,50))}}</td>
         <td>{{project.project_start | date:"MM/dd/yyyy"}}</td>
         <td>{{project.project_end | date:"MM/dd/yyyy"}}</td>
-        <td>
+        <td *ngIf="member_role != 'performer' && member_role != 'none' && member_role !='manager'">
           <a data-toggle="modal" data-target="#warningModal"><i class="fa fa-close text-red"></i></a>
         </td>
       </tr>
@@ -167,7 +167,7 @@
         <th style="width:40%;" (click)="sortTable(2, 3)"><a>Title</a></th>
         <th style="width:20%;" (click)="sortTable(3, 3)"><a>Start Date</a></th>
         <th style="width:20%;" (click)="sortTable(4, 3)"><a>Finished Date</a></th>
-        <th style="width:5%;"></th>
+        <th *ngIf="member_role != 'performer' && member_role != 'none' && member_role !='manager'" style="width:5%;"></th>
       </tr>
       </thead>
       <!--Table head-->
@@ -182,7 +182,7 @@
         <td>{{textHelper.firstLetterUpperCase(project.project_title.substr(0,50))}}</td>
         <td>{{project.project_start | date:"MM/dd/yyyy"}}</td>
         <td>{{project.project_end | date:"MM/dd/yyyy"}}</td>
-        <td>
+        <td *ngIf="member_role != 'performer' && member_role != 'none' && member_role !='manager'">
           <a data-toggle="modal" data-target="#warningModal"><i class="fa fa-close text-red"></i></a>
         </td>
       </tr>

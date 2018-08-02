@@ -39,7 +39,6 @@ export class AdminUsersComponent implements OnInit {
   async getAllUsers(){
     await this._memberService.selectAll()
       .subscribe( (res) => {
-          console.log(res['data']);
           this.users=res['data'];
 
         },
@@ -52,7 +51,6 @@ export class AdminUsersComponent implements OnInit {
   async getAllRoles(){
     await this._roleService.selectAll()
       .subscribe( (res) => {
-          console.log(res['data']);
           this.roles=res['data'];
 
         },
@@ -96,7 +94,6 @@ export class AdminUsersComponent implements OnInit {
 
     await this._memberService.getAllRoles(user_id)
     .subscribe( (res) => {
-       console.log(res['data']);
        this.user_roles=res['data']['member_role'];
        this.user_admin=res['data']['member_admin'];
        this.mdlSampleIsOpen=true;
@@ -114,7 +111,6 @@ export class AdminUsersComponent implements OnInit {
 
     await this._memberService.grantMember(this.user_id, this.roleChossen)
       .subscribe( (res) => {
-          console.log(res['data']);
           this.mdlSampleIsOpen=false;
           this.manageRoles(this.user_id,this.user_admin);
         },
@@ -130,7 +126,6 @@ export class AdminUsersComponent implements OnInit {
 
     await this._memberService.unGrantMember(this.user_id, roleChossen)
       .subscribe( (res) => {
-          console.log(res['data']);
           this.mdlSampleIsOpen=false;
           this.manageRoles(this.user_id,this.user_admin);
         },

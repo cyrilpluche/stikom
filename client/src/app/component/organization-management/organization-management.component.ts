@@ -50,7 +50,6 @@ export class OrganizationManagementComponent implements OnInit {
   getOrganisations(){
     this._organisationService.selectAll()
       .subscribe( (res) => {
-          console.log(res['data']);
           this.organisations=res['data'];
 
         },
@@ -87,7 +86,6 @@ export class OrganizationManagementComponent implements OnInit {
       if (this.branchChoosen != 'blank') {
         this._departmentService.selectAllFromBranch(this.branchChoosen)
           .subscribe( (res) => {
-              console.log(res['data']);
               this.departments=res['data'];
               this.departmentEnabled = true;
               this.errorMessage="";
@@ -119,7 +117,6 @@ export class OrganizationManagementComponent implements OnInit {
       if (this.departmentChoosen != "blank") {
         this._subDepartmentService.selectAllFromDepartment(this.departmentChoosen)
           .subscribe( (res) => {
-              console.log(res['data']);
               this.subDepartments=res['data'];
               this.subDepartmentEnabled = true;
               this.errorMessage="";
