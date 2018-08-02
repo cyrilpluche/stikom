@@ -60,13 +60,6 @@ router.get('/findOne/:sopId',
     }
 );
 
-router.get('find_one_full/:sop',
-    function (req, res, next) {
-        modelSop.selectById(req.params.sop).then(function (data) {
-           // TODO finir
-        }).catch(next)
-    }
-);
 
 router.put('/update',
     policy.requireSpecificRight(ROLE.Planner),

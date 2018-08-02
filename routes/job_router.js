@@ -51,20 +51,21 @@ router.get('/all_from_activity/:activity',
                     )
                 }
 
-                Promise.all(promises).then(function (r) {
-                    let data = {
-                        sop_job: null, // there can only be one sop_job in the list
-                        simple_jobs: []
-                    };
-                    for (let i = 0; i < r.length; i++) {
-                        if (r[i].job_is_sop) {
-                            data.sop_job = r[i].associated_job
-                        } else {
-                            data.simple_jobs.push(r[i].associated_job)
+                Promise.all(promises) // wait for all the promises to finish
+                    .then(function (r) {
+                        let data = {
+                            sop_job: null, // there can only be one sop_job in the list
+                            simple_jobs: []
+                        };
+                        for (let i = 0; i < r.length; i++) {
+                            if (r[i].job_is_sop) {
+                                data.sop_job = r[i].associated_job
+                            } else {
+                                data.simple_jobs.push(r[i].associated_job)
+                            }
                         }
-                    }
-                    res.json({data: data})
-                })
+                        res.json({data: data})
+                    })
             }).catch(next)
     }
 );
@@ -104,6 +105,9 @@ router.post('/bind_job_activity',
             }).catch(next)
     });
 
+/*
+ Compute the end date of a project
+ */
 router.post('/compute_end_date',
     policy.checkParameters(['jobs', 'date_begin']),
     function (req, res, next) {
@@ -119,41 +123,41 @@ router.post('/compute_end_date',
             )
         }
 
-        Promise.all(promises).then(
-            function (activites) {
-                let activity_duration = 0;
-                let activity_duration_MAX = 0;
-                for (let i = 0; i < activites.length; i++) {
-                    if (activites[i] !== false) {
-                        for (let j = 0; j < activites[i].length; j++) {
-                            // convert every times in minutes
-                            switch (activites[i][j].activity_type_duration.toLowerCase())  {
-                                case 'minutes':
-                                    activity_duration = activites[i][j].activity_duration;
-                                    break;
-                                case 'hours':
-                                    activity_duration = activites[i][j].activity_duration * 60; // 60 minutes
-                                    break;
-                                case 'days':
-                                    activity_duration = activites[i][j].activity_duration * 60 * 24; // 24 hours
-                                    break;
-                                case 'months':
-                                    activity_duration = activites[i][j].activity_duration * 60 * 24 * 30; // 30 days
-                                    break;
-                            }
+        Promise.all(promises)
+            .then(
+                function (activites) {
+                    let activity_duration = 0;
+                    let activity_duration_MAX = 0;
+                    for (let i = 0; i < activites.length; i++) {
+                        if (activites[i] !== false) {
+                            for (let j = 0; j < activites[i].length; j++) {
+                                // convert every times in minutes
+                                switch (activites[i][j].activity_type_duration.toLowerCase())  {
+                                    case 'minutes':
+                                        activity_duration = activites[i][j].activity_duration;
+                                        break;
+                                    case 'hours':
+                                        activity_duration = activites[i][j].activity_duration * 60; // 60 minutes
+                                        break;
+                                    case 'days':
+                                        activity_duration = activites[i][j].activity_duration * 60 * 24; // 24 hours
+                                        break;
+                                    case 'months':
+                                        activity_duration = activites[i][j].activity_duration * 60 * 24 * 30; // 30 days
+                                        break;
+                                }
 
-                            if (activity_duration > activity_duration_MAX) {
-                                // if the computed duration is greater than the previous greater one
-                                activity_duration_MAX = activity_duration
+                                if (activity_duration > activity_duration_MAX) {
+                                    // if the computed duration is greater than the previous greater one
+                                    activity_duration_MAX = activity_duration
+                                }
                             }
                         }
                     }
+                    end_date.setMinutes(end_date.getMinutes() +  activity_duration_MAX); // add on the max duration
+                    //end_date.setDate(end.getDate() +  basicMethods.numberOfSunday(new Date(req.body.date_begin), end_date))
+                    res.json({data: {end_date: end_date}});
                 }
-                end_date.setMinutes(end_date.getMinutes() +  activity_duration_MAX); // add on the max duration
-                // TODO maybe take care of the number of sundays
-                //end_date.setDate(end.getDate() +  basicMethods.numberOfSunday(new Date(req.body.date_begin), end_date))
-                res.json({data: {end_date: end_date}});
-            }
         ).catch(next)
     }
 );
