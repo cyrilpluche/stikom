@@ -424,12 +424,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _helpers_date_helper_date_helper_component__WEBPACK_IMPORTED_MODULE_50__ = __webpack_require__(/*! ./helpers/date-helper/date-helper.component */ "./src/app/helpers/date-helper/date-helper.component.ts");
 /* harmony import */ var _component_master_of_work_master_of_work_component__WEBPACK_IMPORTED_MODULE_51__ = __webpack_require__(/*! ./component/master-of-work/master-of-work.component */ "./src/app/component/master-of-work/master-of-work.component.ts");
 /* harmony import */ var _shared_footer_footer_component__WEBPACK_IMPORTED_MODULE_52__ = __webpack_require__(/*! ./shared/footer/footer.component */ "./src/app/shared/footer/footer.component.ts");
+/* harmony import */ var _helpers_role_helper_role_helper_component__WEBPACK_IMPORTED_MODULE_53__ = __webpack_require__(/*! ./helpers/role-helper/role-helper.component */ "./src/app/helpers/role-helper/role-helper.component.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -572,7 +574,8 @@ var AppModule = /** @class */ (function () {
                 _shared_footer_footer_component__WEBPACK_IMPORTED_MODULE_52__["FooterComponent"],
                 _shared_modals_activity_update_activity_update_component__WEBPACK_IMPORTED_MODULE_49__["ActivityUpdateComponent"],
                 _helpers_date_helper_date_helper_component__WEBPACK_IMPORTED_MODULE_50__["DateHelperComponent"],
-                _component_master_of_work_master_of_work_component__WEBPACK_IMPORTED_MODULE_51__["MasterOfWorkComponent"]
+                _component_master_of_work_master_of_work_component__WEBPACK_IMPORTED_MODULE_51__["MasterOfWorkComponent"],
+                _helpers_role_helper_role_helper_component__WEBPACK_IMPORTED_MODULE_53__["RoleHelperComponent"]
             ],
             imports: [
                 _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClientModule"],
@@ -1010,7 +1013,6 @@ var ActivityCreationComponent = /** @class */ (function () {
                         return [4 /*yield*/, this._jobService.bind_job_activity(job_id['data']['job_id'], id2['data']['activity_id']).toPromise()];
                     case 16:
                         _f.sent();
-                        console.log('Super activity created no problem.');
                         return [3 /*break*/, 33];
                     case 17:
                         if (!(element['action'] == 'delete')) return [3 /*break*/, 20];
@@ -1029,7 +1031,6 @@ var ActivityCreationComponent = /** @class */ (function () {
                         return [4 /*yield*/, this._jobService.selectFromActivity(element['activity'].activity_id).toPromise()];
                     case 21:
                         old_job = _f.sent();
-                        console.log('Old job : ', old_job);
                         _d = 0, _e = element['children'];
                         _f.label = 22;
                     case 22:
@@ -1074,8 +1075,6 @@ var ActivityCreationComponent = /** @class */ (function () {
                         /* SUPER ACTIVITY UPDATE */
                         //We generate the super activity linked, -1 means that we already have the good idea
                         this.generateSuperActivity(element, -1);
-                        console.log('Ok super activity now : ', element['super']);
-                        console.log('with this element : ', element);
                         return [4 /*yield*/, this._activityService.update(element['super']).toPromise()];
                     case 32:
                         _f.sent();
@@ -1083,12 +1082,9 @@ var ActivityCreationComponent = /** @class */ (function () {
                     case 33:
                         _i++;
                         return [3 /*break*/, 1];
-                    case 34:
-                        console.log("Let's try");
-                        return [4 /*yield*/, this.generateSopActivity()];
+                    case 34: return [4 /*yield*/, this.generateSopActivity()];
                     case 35:
                         _f.sent();
-                        console.log("done");
                         this.router.navigate(["/sop-list"]);
                         return [3 /*break*/, 37];
                     case 36:
@@ -1159,7 +1155,6 @@ var ActivityCreationComponent = /** @class */ (function () {
                         return [3 /*break*/, 12];
                     case 10:
                         if (!(activity.activity_type == 'sop')) return [3 /*break*/, 12];
-                        console.log('activity : ', activity);
                         this.activity_sop = activity;
                         this.isNewSop = false;
                         return [4 /*yield*/, this._jobService.selectFromActivity(activity.activity_id).toPromise()];
@@ -1441,7 +1436,6 @@ var ActivityCreationComponent = /** @class */ (function () {
                         return [3 /*break*/, 3];
                     case 2:
                         activity = this.activity_sop;
-                        console.log('act : ', this.activity_sop);
                         _b.label = 3;
                     case 3:
                         minutes = 0;
@@ -1493,7 +1487,6 @@ var ActivityCreationComponent = /** @class */ (function () {
                     case 10: return [3 /*break*/, 14];
                     case 11:
                         _b.trys.push([11, 13, , 14]);
-                        console.log('up + : ', activity);
                         return [4 /*yield*/, this._activityService.update(activity).toPromise()];
                     case 12:
                         _b.sent();
@@ -1719,7 +1712,6 @@ var AdminUsersComponent = /** @class */ (function () {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, this._memberService.selectAll()
                             .subscribe(function (res) {
-                            console.log(res['data']);
                             _this.users = res['data'];
                         }, function (error) {
                             console.log("ERREUR : ", error);
@@ -1738,7 +1730,6 @@ var AdminUsersComponent = /** @class */ (function () {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, this._roleService.selectAll()
                             .subscribe(function (res) {
-                            console.log(res['data']);
                             _this.roles = res['data'];
                         }, function (error) {
                             console.log("ERREUR : ", error);
@@ -1787,7 +1778,6 @@ var AdminUsersComponent = /** @class */ (function () {
                         this.user_id = user_id;
                         return [4 /*yield*/, this._memberService.getAllRoles(user_id)
                                 .subscribe(function (res) {
-                                console.log(res['data']);
                                 _this.user_roles = res['data']['member_role'];
                                 _this.user_admin = res['data']['member_admin'];
                                 _this.mdlSampleIsOpen = true;
@@ -1808,7 +1798,6 @@ var AdminUsersComponent = /** @class */ (function () {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, this._memberService.grantMember(this.user_id, this.roleChossen)
                             .subscribe(function (res) {
-                            console.log(res['data']);
                             _this.mdlSampleIsOpen = false;
                             _this.manageRoles(_this.user_id, _this.user_admin);
                         }, function (error) {
@@ -1828,7 +1817,6 @@ var AdminUsersComponent = /** @class */ (function () {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, this._memberService.unGrantMember(this.user_id, roleChossen)
                             .subscribe(function (res) {
-                            console.log(res['data']);
                             _this.mdlSampleIsOpen = false;
                             _this.manageRoles(_this.user_id, _this.user_admin);
                         }, function (error) {
@@ -1958,6 +1946,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _objects_member_member_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../objects/member/member.service */ "./src/app/objects/member/member.service.ts");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1967,13 +1956,50 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 var __metadata = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __generator = (undefined && undefined.__generator) || function (thisArg, body) {
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    function verb(n) { return function (v) { return step([n, v]); }; }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) try {
+            if (f = 1, y && (t = y[op[0] & 2 ? "return" : op[0] ? "throw" : "next"]) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [0, t.value];
+            switch (op[0]) {
+                case 0: case 1: t = op; break;
+                case 4: _.label++; return { value: op[1], done: false };
+                case 5: _.label++; y = op[1]; op = [0]; continue;
+                case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                default:
+                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                    if (t[2]) _.ops.pop();
+                    _.trys.pop(); continue;
+            }
+            op = body.call(thisArg, _);
+        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
+
 
 
 
 var AuthentificationComponent = /** @class */ (function () {
-    function AuthentificationComponent(_memberService, router) {
+    function AuthentificationComponent(_memberService, router, location) {
         this._memberService = _memberService;
         this.router = router;
+        this.location = location;
         /* ----- Data ----- */
         this.errorMessage = "";
         this.email = "";
@@ -1985,31 +2011,53 @@ var AuthentificationComponent = /** @class */ (function () {
     AuthentificationComponent.prototype.ngOnInit = function () {
     };
     AuthentificationComponent.prototype.onSubmit = function () {
-        var _this = this;
-        this.errorMessage = "";
-        if (this.email == null || this.email == "") {
-            this.errorMessage = "Email is required.";
-        }
-        else if (!this.emailReg.test(this.email)) {
-            this.errorMessage = "Please enter a valid email.";
-        }
-        else if (this.password == null || this.password == "") {
-            this.errorMessage = "Password is required";
-        }
-        else {
-            var user = void 0;
-            var auth = true;
-            var resultat = void 0;
-            this._memberService.auth(this.email, this.password)
-                .subscribe(function (res) {
-                _this.errorMessage = "";
-                _this._memberService.storeUserData(res['token']);
-                _this.router.navigate(['/home']);
-            }, function (error) {
-                console.log("ERREUR : ", error);
-                _this.errorMessage = error.error.message;
+        return __awaiter(this, void 0, void 0, function () {
+            var user, auth, resultat, res, r, error_1;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        this.errorMessage = "";
+                        if (!(this.email == null || this.email == "")) return [3 /*break*/, 1];
+                        this.errorMessage = "Email is required.";
+                        return [3 /*break*/, 9];
+                    case 1:
+                        if (!!this.emailReg.test(this.email)) return [3 /*break*/, 2];
+                        this.errorMessage = "Please enter a valid email.";
+                        return [3 /*break*/, 9];
+                    case 2:
+                        if (!(this.password == null || this.password == "")) return [3 /*break*/, 3];
+                        this.errorMessage = "Password is required";
+                        return [3 /*break*/, 9];
+                    case 3:
+                        user = void 0;
+                        auth = true;
+                        resultat = void 0;
+                        _a.label = 4;
+                    case 4:
+                        _a.trys.push([4, 8, , 9]);
+                        return [4 /*yield*/, this._memberService.auth(this.email, this.password).toPromise()];
+                    case 5:
+                        res = _a.sent();
+                        this.errorMessage = "";
+                        this._memberService.storeUserData(res['token']);
+                        return [4 /*yield*/, this._memberService.setUserDetails().toPromise()];
+                    case 6:
+                        r = _a.sent();
+                        this._memberService.storeUserDataFull(r['data']);
+                        this.router.navigate(['/home']);
+                        return [4 /*yield*/, location.reload()];
+                    case 7:
+                        _a.sent();
+                        return [3 /*break*/, 9];
+                    case 8:
+                        error_1 = _a.sent();
+                        console.log("ERREUR : ", error_1);
+                        this.errorMessage = error_1.message;
+                        return [3 /*break*/, 9];
+                    case 9: return [2 /*return*/];
+                }
             });
-        }
+        });
     };
     AuthentificationComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -2018,7 +2066,8 @@ var AuthentificationComponent = /** @class */ (function () {
             styles: [__webpack_require__(/*! ./authentification.component.css */ "./src/app/component/authentification/authentification.component.css")]
         }),
         __metadata("design:paramtypes", [_objects_member_member_service__WEBPACK_IMPORTED_MODULE_1__["MemberService"],
-            _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"]])
+            _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"],
+            _angular_common__WEBPACK_IMPORTED_MODULE_3__["Location"]])
     ], AuthentificationComponent);
     return AuthentificationComponent;
 }());
@@ -2045,7 +2094,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div *ngIf=\"!displayEnd\" class=\"container\">\r\n  <div class=\"row row-first justify-content-center\">\r\n\r\n    <!-- Card -->\r\n    <div class=\"col-10 col-sm-8 col-md-6 col-xl-4 card card-cascade hoverable\">\r\n\r\n      <!-- Card content -->\r\n      <div class=\"card-body card-body-cascade\">\r\n\r\n      <!-- Material form register -->\r\n      <form (ngSubmit)=\"onSubmitRegistration()\">\r\n        <p class=\"h4 text-center mb-4\">Sign up</p>\r\n\r\n        <!-- First step of the form -->\r\n        <div [hidden]=\"!step1\">\r\n\r\n          <!-- Input first name -->\r\n          <div class=\"md-form\">\r\n            <i class=\"fa fa-user prefix grey-text\"></i>\r\n            <input [(ngModel)]=\"firstName\" name=\"firstName\" type=\"text\" id=\"firstName\" class=\"form-control\">\r\n            <label for=\"firstName\">First name</label>\r\n          </div>\r\n\r\n          <!-- Input last name -->\r\n          <div class=\"md-form\">\r\n            <i class=\"fa fa-user prefix grey-text\"></i>\r\n            <input [(ngModel)]=\"lastName\" name=\"lastName\" type=\"text\" id=\"lastName\" class=\"form-control\">\r\n            <label for=\"lastName\">Last name</label>\r\n          </div>\r\n\r\n          <!-- Input email -->\r\n          <div class=\"md-form\">\r\n            <i class=\"fa fa-envelope prefix grey-text\"></i>\r\n            <input [(ngModel)]=\"email\" name=\"email\" type=\"email\" id=\"email\" class=\"form-control\">\r\n            <label for=\"email\">Your email</label>\r\n          </div>\r\n\r\n          <!-- Input email confirmation -->\r\n          <div class=\"md-form\">\r\n            <i class=\"fa fa-exclamation-triangle prefix grey-text\"></i>\r\n            <input [(ngModel)]=\"emailConfirmation\" name=\"emailConfirmation\" type=\"email\" id=\"emailConfirm\" class=\"form-control\">\r\n            <label for=\"emailConfirm\">Confirm your email</label>\r\n          </div>\r\n\r\n          <!-- Input password -->\r\n          <div class=\"md-form\">\r\n            <i class=\"fa fa-lock prefix grey-text\"></i>\r\n            <input [(ngModel)]=\"password\" name=\"password\" type=\"password\" id=\"password\" class=\"form-control\">\r\n            <label for=\"password\">Your password</label>\r\n          </div>\r\n\r\n          <!-- Input password confirmation -->\r\n          <div class=\"md-form\">\r\n            <i class=\"fa fa-exclamation-triangle prefix grey-text\"></i>\r\n            <input [(ngModel)]=\"passwordConfirmation\" name=\"passwordConfirmation\" type=\"password\" id=\"passwordConfirm\" class=\"form-control\">\r\n            <label for=\"passwordConfirm\">Confirm your password</label>\r\n          </div>\r\n\r\n          <div class=\"md-form\">\r\n            <select [(ngModel)]=\"managmentLevelChoosen\" name=\"managmentLevel\" class=\"form-control mdb-select\" >\r\n              <option value=\"\" disabled selected>Choose managment level</option>\r\n              <option *ngFor=\"let manage of managmentLevels\" [ngValue]=manage.managment_level_id>{{manage.managment_level_label}}</option>\r\n            </select>\r\n          </div>\r\n        </div>\r\n\r\n        <!-- Error alert -->\r\n        <div *ngIf=\"errorMessage\" class=\"alert alert-danger\" role=\"alert\">\r\n          {{errorMessage}}\r\n        </div>\r\n\r\n        <!-- Second step of the form -->\r\n        <div class=\"form-group\" [hidden]=\"!step2\">\r\n\r\n          <!-- Organisation -->\r\n          <div class=\"md-form\">\r\n            <select [(ngModel)]=\"organisationChoosen\" name=\"organisation\" class=\"form-control mdb-select\" (change)=\"enableBranch()\" >\r\n              <option value=\"\" disabled selected>Choose organisation</option>\r\n              <option *ngFor=\"let orga of organisations\" [ngValue]=orga.organisation_id>{{orga.organisation_name}}</option>\r\n            </select>\r\n          </div>\r\n\r\n          <!-- Branch -->\r\n          <div class=\"md-form\">\r\n            <select [(ngModel)]=\"branchChoosen\" name=\"branch\" class=\"form-control\" [disabled]=\"!branchEnabled\" (change)=\"enableDepartment()\" >\r\n              <option value=\"\" disabled selected>Choose a branch</option>\r\n              <option *ngFor=\"let branch of branchs\" [ngValue]=branch.branch_id>{{branch.branch_name}}</option>\r\n            </select>\r\n          </div>\r\n\r\n          <!-- Department -->\r\n          <div class=\"md-form\">\r\n            <select [(ngModel)]=\"departmentChoosen\" name=\"department\" class=\"form-control mdb-select\" [disabled]=\"!departmentEnabled\" (change)=\"enableSubDepartment()\" >\r\n              <option value=\"\" disabled selected>Choose department</option>\r\n              <option *ngFor=\"let department of departments\" [ngValue]=department.department_id>{{department.department_name}}</option>\r\n\r\n            </select>\r\n          </div>\r\n\r\n          <!-- SubDepartment -->\r\n          <div class=\"md-form\">\r\n            <select [(ngModel)]=\"subDepartmentChoosen\" name=\"subDepartment\" class=\"form-control mdb-select\" [disabled]=\"!subDepartmentEnabled\" >\r\n              <option value=\"\" disabled selected>Choose sub-department</option>\r\n              <option *ngFor=\"let subDepartment of subDepartments\" [ngValue]=subDepartment.sub_department_id>{{subDepartment.sub_department_name}}</option>\r\n            </select>\r\n          </div>\r\n        </div>\r\n\r\n        <div class=\"text-center mt-4\">\r\n          <a class=\"btn btn-default\" (click)=\"firstStepVerification()\" [hidden]=\"!step1\" >Next</a>\r\n          <a class=\"btn btn-default\" (click)=\"changeStep()\" [hidden]=\"!step2\" >Back</a>\r\n          <button class=\"btn btn-default\" type=\"\" [hidden]=\"!step2\" >Sign Up</button>\r\n        </div>\r\n\r\n      </form>\r\n      <!-- Material form register -->\r\n\r\n      <hr>\r\n\r\n      <div class=\"row justify-content-center\">\r\n        <!-- Forgotten password -->\r\n        <p class=\"font-small grey-text d-flex justify-content-end mt-3\">Already have an account ? <a [routerLink]=\"['/authentification']\" class=\"dark-grey-text ml-1 font-weight-bold text-link\"> Sign in</a></p>\r\n        <!--<a class=\"px-2 fa-lg email-ic\"><i class=\"fa fa-envelope\"> </i></a>-->\r\n      </div>\r\n\r\n      </div>\r\n    </div>\r\n\r\n  </div>\r\n</div>\r\n\r\n<app-summary *ngIf=\"displayEnd\"\r\n             title=\"Your account was created\"\r\n             text=\"To complete your registration please follow the instruction on the mail you received and wait for the admin validation\"\r\n             buttonTitle=\"Home\" link=\"home\">\r\n</app-summary>\r\n\r\n<!--\r\n\r\n\r\n-->\r\n\r\n<script>\r\n  $(document).ready(function() {\r\n  $('.mdb-select').material_select();\r\n});\r\n</script>\r\n"
+module.exports = "<div class=\"container\" *ngIf=\"!ready\">\r\n  <div class=\"row-first\">\r\n    <app-loader></app-loader>\r\n  </div>\r\n</div>\r\n\r\n<div *ngIf=\"!displayEnd && ready\" class=\"container\">\r\n  <div class=\"row row-first justify-content-center\">\r\n\r\n    <!-- Card -->\r\n    <div class=\"col-10 col-sm-8 col-md-6 col-xl-4 card card-cascade hoverable\">\r\n\r\n      <!-- Card content -->\r\n      <div class=\"card-body card-body-cascade\">\r\n\r\n      <!-- Material form register -->\r\n      <form (ngSubmit)=\"onSubmitRegistration()\">\r\n        <p class=\"h4 text-center mb-4\">Sign up</p>\r\n\r\n        <!-- First step of the form -->\r\n        <div [hidden]=\"!step1\">\r\n\r\n          <!-- Input first name -->\r\n          <div class=\"md-form\">\r\n            <i class=\"fa fa-user prefix grey-text\"></i>\r\n            <input [(ngModel)]=\"firstName\" name=\"firstName\" type=\"text\" id=\"firstName\" class=\"form-control\">\r\n            <label for=\"firstName\">First name</label>\r\n          </div>\r\n\r\n          <!-- Input last name -->\r\n          <div class=\"md-form\">\r\n            <i class=\"fa fa-user prefix grey-text\"></i>\r\n            <input [(ngModel)]=\"lastName\" name=\"lastName\" type=\"text\" id=\"lastName\" class=\"form-control\">\r\n            <label for=\"lastName\">Last name</label>\r\n          </div>\r\n\r\n          <!-- Input email -->\r\n          <div class=\"md-form\">\r\n            <i class=\"fa fa-envelope prefix grey-text\"></i>\r\n            <input [(ngModel)]=\"email\" name=\"email\" type=\"email\" id=\"email\" class=\"form-control\">\r\n            <label for=\"email\">Your email</label>\r\n          </div>\r\n\r\n          <!-- Input email confirmation -->\r\n          <div class=\"md-form\">\r\n            <i class=\"fa fa-exclamation-triangle prefix grey-text\"></i>\r\n            <input [(ngModel)]=\"emailConfirmation\" name=\"emailConfirmation\" type=\"email\" id=\"emailConfirm\" class=\"form-control\">\r\n            <label for=\"emailConfirm\">Confirm your email</label>\r\n          </div>\r\n\r\n          <!-- Input password -->\r\n          <div class=\"md-form\">\r\n            <i class=\"fa fa-lock prefix grey-text\"></i>\r\n            <input [(ngModel)]=\"password\" name=\"password\" type=\"password\" id=\"password\" class=\"form-control\">\r\n            <label for=\"password\">Your password</label>\r\n          </div>\r\n\r\n          <!-- Input password confirmation -->\r\n          <div class=\"md-form\">\r\n            <i class=\"fa fa-exclamation-triangle prefix grey-text\"></i>\r\n            <input [(ngModel)]=\"passwordConfirmation\" name=\"passwordConfirmation\" type=\"password\" id=\"passwordConfirm\" class=\"form-control\">\r\n            <label for=\"passwordConfirm\">Confirm your password</label>\r\n          </div>\r\n\r\n          <div class=\"\">\r\n            <select [(ngModel)]=\"managmentLevelChoosen\" name=\"managementLevel\" class=\"form-control\">\r\n              <option name=\"organisation\" value=\"\" disabled selected>Choose a management level</option>\r\n              <option *ngFor=\"let manage of managmentLevels\" [ngValue]=manage.managment_level_id>{{manage.managment_level_label}}</option>\r\n            </select>\r\n          </div>\r\n        </div>\r\n\r\n        <!-- Error alert -->\r\n        <div *ngIf=\"errorMessage\" class=\"alert alert-danger\" role=\"alert\">\r\n          {{errorMessage}}\r\n        </div>\r\n\r\n        <!-- Second step of the form -->\r\n        <div class=\"form-group\" [hidden]=\"!step2\">\r\n\r\n          <div class=\"row\" *ngIf=\"organisation_elements.length != 0\">\r\n            <div class=\"col-12\">\r\n              <select (change)=\"pickOrganisation()\" name=\"organisation\" [(ngModel)]=\"organisation\" class=\"form-control\">\r\n                <option name=\"organisation\" value=\"\" disabled selected>Choose organisation</option>\r\n                <option *ngFor=\"let o of organisation_elements\" [ngValue]=\"o\">{{o['organisation'].organisation_name}}</option>\r\n              </select>\r\n            </div>\r\n          </div>\r\n\r\n          <div class=\"row\" *ngIf=\"organisation != null\">\r\n            <div class=\"col-12\">\r\n              <select (change)=\"pickBranch()\" name=\"branch\" [(ngModel)]=\"branch\" class=\"form-control\">\r\n                <option name=\"organisation\" value=\"\" disabled selected>Choose branch</option>\r\n                <option *ngFor=\"let b of organisation['branchs']\" [ngValue]=\"b\">{{b['branch'].branch_name}}</option>\r\n              </select>\r\n            </div>\r\n          </div>\r\n\r\n          <div class=\"row\" *ngIf=\"branch != null\">\r\n            <div class=\"col-12\">\r\n              <select (change)=\"pickDepartment()\" name=\"department\" [disabled]=\"branch['branch'].branch_name == 'No branch'\" [(ngModel)]=\"department\" class=\"form-control\">\r\n                <option name=\"organisation\" value=\"\" disabled selected>Choose department</option>\r\n                <option *ngFor=\"let d of branch['departments']\" [ngValue]=\"d\">{{d['department'].department_name}}</option>\r\n              </select>\r\n            </div>\r\n          </div>\r\n\r\n            <div class=\"row\" *ngIf=\"department != null\">\r\n              <div class=\"col-12\">\r\n                <select name=\"sub_department\" [disabled]=\"department['department'].department_name == 'No department'\" [(ngModel)]=\"sub_department\" class=\"form-control\">\r\n                  <option name=\"organisation\" value=\"\" disabled selected>Choose a sub department</option>\r\n                  <option *ngFor=\"let s of department['sub_departments']\" [ngValue]=\"s\">{{s.sub_department_name}}</option>\r\n                </select>\r\n              </div>\r\n            </div>\r\n        </div>\r\n\r\n        <div class=\"text-center mt-4\">\r\n          <a class=\"btn btn-default\" (click)=\"firstStepVerification()\" [hidden]=\"!step1\" >Next</a>\r\n          <a class=\"btn btn-default\" (click)=\"changeStep()\" [hidden]=\"!step2\" >Back</a>\r\n          <button class=\"btn btn-default\" type=\"\" [hidden]=\"!step2\" >Sign Up</button>\r\n        </div>\r\n\r\n      </form>\r\n      <!-- Material form register -->\r\n\r\n      <hr>\r\n\r\n      <div class=\"row justify-content-center\">\r\n        <!-- Forgotten password -->\r\n        <p class=\"font-small grey-text d-flex justify-content-end mt-3\">Already have an account ? <a [routerLink]=\"['/authentification']\" class=\"dark-grey-text ml-1 font-weight-bold text-link\"> Sign in</a></p>\r\n        <!--<a class=\"px-2 fa-lg email-ic\"><i class=\"fa fa-envelope\"> </i></a>-->\r\n      </div>\r\n\r\n      </div>\r\n    </div>\r\n\r\n  </div>\r\n</div>\r\n\r\n<app-summary *ngIf=\"displayEnd\"\r\n             title=\"Your account was created\"\r\n             text=\"To complete your registration please follow the instruction on the mail you received and wait for the admin validation\"\r\n             buttonTitle=\"Home\" link=\"home\">\r\n</app-summary>\r\n\r\n<!--\r\n\r\n\r\n-->\r\n\r\n<script>\r\n  $(document).ready(function() {\r\n  $('.mdb-select').material_select();\r\n});\r\n</script>\r\n"
 
 /***/ }),
 
@@ -2129,6 +2178,7 @@ var SignUpComponent = /** @class */ (function () {
         this._subDepartmentService = _subDepartmentService;
         this.router = router;
         /* ----- Data ----- */
+        this.ready = true;
         this.step1 = true;
         this.step2 = false;
         this.branchEnabled = false;
@@ -2149,16 +2199,28 @@ var SignUpComponent = /** @class */ (function () {
         this.displayEnd = false;
         //Norme RFC2822 email validation
         this.emailReg = new RegExp(/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
+        //Manage the disabled function of organisations selects
+        this.pick_level = 1;
+        this.organisation_elements = [];
     }
     SignUpComponent.prototype.ngOnInit = function () {
-        this.getOrganisations();
-        this.getManagmentLevels();
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.loadOrganisations()];
+                    case 1:
+                        _a.sent();
+                        this.getOrganisations();
+                        this.getManagmentLevels();
+                        return [2 /*return*/];
+                }
+            });
+        });
     };
     SignUpComponent.prototype.getOrganisations = function () {
         var _this = this;
         this._organisationService.selectAll()
             .subscribe(function (res) {
-            console.log(res['data']);
             _this.organisations = res['data'];
         }, function (error) {
             console.log("ERREUR : ", error);
@@ -2168,7 +2230,6 @@ var SignUpComponent = /** @class */ (function () {
         var _this = this;
         this._managmentLevelService.selectAll()
             .subscribe(function (res) {
-            console.log(res['data']);
             _this.managmentLevels = res['data'];
         }, function (error) {
             console.log("ERREUR : ", error);
@@ -2180,26 +2241,24 @@ var SignUpComponent = /** @class */ (function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        if (!(this.subDepartmentChoosen == "")) return [3 /*break*/, 1];
-                        this.errorMessage = "Sub-Department name required. If not select default.";
-                        return [3 /*break*/, 3];
-                    case 1: 
-                    //this._memberService.register(this.email,this.password,this.firstName, this.lastName, "0",this.subDepartmentChoosen)
-                    return [4 /*yield*/, this._memberService.register(this.email, this.password, this.firstName, this.lastName, "0", this.subDepartmentChoosen, this.managmentLevelChoosen)
-                            .subscribe(function (res) {
-                            _this.errorMessage = "";
-                            _this.step1 = false;
-                            _this.step2 = false;
-                            _this.displayEnd = true;
-                            _this.errorMessage = "";
-                        }, function (error) {
-                            _this.errorMessage = error.error.message;
-                        })];
-                    case 2:
+                        this.ready = false;
+                        //this._memberService.register(this.email,this.password,this.firstName, this.lastName, "0",this.subDepartmentChoosen)
+                        return [4 /*yield*/, this._memberService.register(this.email, this.password, this.firstName, this.lastName, "0", this.sub_department.sub_department_id.toString(), this.managmentLevelChoosen)
+                                .subscribe(function (res) {
+                                _this.errorMessage = "";
+                                _this.step1 = false;
+                                _this.step2 = false;
+                                _this.displayEnd = true;
+                                _this.errorMessage = "";
+                                _this.ready = true;
+                            }, function (error) {
+                                _this.errorMessage = error.error.message;
+                                _this.ready = true;
+                            })];
+                    case 1:
                         //this._memberService.register(this.email,this.password,this.firstName, this.lastName, "0",this.subDepartmentChoosen)
                         _a.sent();
-                        _a.label = 3;
-                    case 3: return [2 /*return*/];
+                        return [2 /*return*/];
                 }
             });
         });
@@ -2223,8 +2282,6 @@ var SignUpComponent = /** @class */ (function () {
             this.errorMessage = "Please enter a valid email.";
         }
         else if (this.emailConfirmation != this.email) {
-            console.log(this.emailConfirmation);
-            console.log(this.email);
             this.errorMessage = "Email confirmation is wrong.";
         }
         else if (this.password == null || this.password == "") {
@@ -2240,7 +2297,6 @@ var SignUpComponent = /** @class */ (function () {
             //Connexion code
             this.step1 = false;
             this.step2 = true;
-            console.log("Next");
             this.errorMessage = "";
         }
     };
@@ -2263,7 +2319,6 @@ var SignUpComponent = /** @class */ (function () {
             if (this.branchChoosen != 'blank') {
                 this._departmentService.selectAllFromBranch(this.branchChoosen)
                     .subscribe(function (res) {
-                    console.log(res['data']);
                     _this.departments = res['data'];
                     _this.departmentEnabled = true;
                 }, function (error) {
@@ -2288,7 +2343,6 @@ var SignUpComponent = /** @class */ (function () {
             if (this.departmentChoosen != "blank") {
                 this._subDepartmentService.selectAllFromDepartment(this.departmentChoosen)
                     .subscribe(function (res) {
-                    console.log(res['data']);
                     _this.subDepartments = res['data'];
                     _this.subDepartmentEnabled = true;
                 }, function (error) {
@@ -2302,6 +2356,142 @@ var SignUpComponent = /** @class */ (function () {
                 this.subDepartmentChoosen = "blank";
             }
         }
+    };
+    /*  ----------------- ORGANISATIONS / BRANCHS / DEPARTMENTS / SUB_DEPARTMENTS ----------------- */
+    //We get all Organisations, branchs, departements and sub departements from database
+    SignUpComponent.prototype.loadOrganisations = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var o, organisations, _i, organisations_1, organisation, b, branchs, e0, _a, branchs_1, branch, d, departments, e1, _b, departments_1, department, s, sub_departments, e2, error_1;
+            return __generator(this, function (_c) {
+                switch (_c.label) {
+                    case 0:
+                        _c.trys.push([0, 14, , 15]);
+                        this.errorMessage = "";
+                        return [4 /*yield*/, this._organisationService.selectAll().toPromise()];
+                    case 1:
+                        o = _c.sent();
+                        organisations = o['data'];
+                        _i = 0, organisations_1 = organisations;
+                        _c.label = 2;
+                    case 2:
+                        if (!(_i < organisations_1.length)) return [3 /*break*/, 13];
+                        organisation = organisations_1[_i];
+                        return [4 /*yield*/, this._branchService.selectAllFromOrganisation(organisation.organisation_id.toString()).toPromise()];
+                    case 3:
+                        b = _c.sent();
+                        branchs = b['data'];
+                        e0 = {
+                            organisation: organisation,
+                            branchs: []
+                        };
+                        _a = 0, branchs_1 = branchs;
+                        _c.label = 4;
+                    case 4:
+                        if (!(_a < branchs_1.length)) return [3 /*break*/, 11];
+                        branch = branchs_1[_a];
+                        return [4 /*yield*/, this._departmentService.selectAllFromBranch(branch.branch_id.toString()).toPromise()];
+                    case 5:
+                        d = _c.sent();
+                        departments = d['data'];
+                        e1 = {
+                            branch: branch,
+                            departments: []
+                        };
+                        _b = 0, departments_1 = departments;
+                        _c.label = 6;
+                    case 6:
+                        if (!(_b < departments_1.length)) return [3 /*break*/, 9];
+                        department = departments_1[_b];
+                        return [4 /*yield*/, this._subDepartmentService.selectAllFromDepartment(department.department_id.toString()).toPromise()];
+                    case 7:
+                        s = _c.sent();
+                        sub_departments = s['data'];
+                        e2 = {
+                            department: department,
+                            sub_departments: sub_departments
+                        };
+                        e1['departments'].push(e2);
+                        _c.label = 8;
+                    case 8:
+                        _b++;
+                        return [3 /*break*/, 6];
+                    case 9:
+                        e0['branchs'].push(e1);
+                        _c.label = 10;
+                    case 10:
+                        _a++;
+                        return [3 /*break*/, 4];
+                    case 11:
+                        this.organisation_elements.push(e0);
+                        this.organisation = this.findElement(this.organisation_elements[0]['organisation'].organisation_id, 1);
+                        this.branch = this.organisation['branchs'][0];
+                        this.department = this.branch['departments'][0];
+                        this.sub_department = this.department['sub_departments'][0];
+                        _c.label = 12;
+                    case 12:
+                        _i++;
+                        return [3 /*break*/, 2];
+                    case 13: return [3 /*break*/, 15];
+                    case 14:
+                        error_1 = _c.sent();
+                        this.errorMessage = error_1.message;
+                        return [3 /*break*/, 15];
+                    case 15: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    /* element is an id of organisation, branch or department. Level 1 = We search for organisation, level 2 = we search for departments.
+     * Return : the element of organisation_elements wanted */
+    SignUpComponent.prototype.findElement = function (element, level) {
+        if (level == 1) {
+            //We search for an organisation
+            for (var _i = 0, _a = this.organisation_elements; _i < _a.length; _i++) {
+                var e = _a[_i];
+                if (e['organisation'].organisation_id == element) {
+                    return e;
+                }
+            }
+        }
+        else if (level == 2) {
+            for (var _b = 0, _c = this.organisation['branchs']; _b < _c.length; _b++) {
+                var e = _c[_b];
+                if (e['branch'].branch_id == element) {
+                    return e;
+                }
+            }
+        }
+        else if (level == 3) {
+            for (var _d = 0, _e = this.branch['departments']; _d < _e.length; _d++) {
+                var e = _e[_d];
+                if (e['department'].department_id == element) {
+                    return e;
+                }
+            }
+        }
+        else if (level == 4) {
+            for (var _f = 0, _g = this.department['sub_departments']; _f < _g.length; _f++) {
+                var e = _g[_f];
+                if (e.department_id == element) {
+                    return e;
+                }
+            }
+        }
+    };
+    SignUpComponent.prototype.pickOrganisation = function () {
+        // I have picked my new organisation, I need to set my new array for other levels
+        this.branch = this.organisation['branchs'][0];
+        this.department = this.branch['departments'][0];
+        this.sub_department = this.department['sub_departments'][0];
+    };
+    SignUpComponent.prototype.pickBranch = function () {
+        // I have picked my new organisation, I need to set my new array for other levels
+        this.department = this.branch['departments'][0];
+        this.sub_department = this.department['sub_departments'][0];
+    };
+    SignUpComponent.prototype.pickDepartment = function () {
+        this.sub_department = this.department['sub_departments'][0];
+        //
     };
     SignUpComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -2624,7 +2814,6 @@ var GanttCreationComponent = /** @class */ (function () {
                             element['max_date_begin'] = date;
                             this.elements.push(element);
                         }
-                        console.log(this.elements);
                         this.ready = true;
                         return [2 /*return*/];
                 }
@@ -2902,7 +3091,7 @@ module.exports = "h5 {\r\n  color: #7b7b7b !important;\r\n}\r\n\r\nh1 {\r\n  fon
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container\">\r\n  <div class=\"row row-first\">\r\n    <div class=\"col-6\">\r\n      <h5 class=\"font-weight-bold text-uppercase\">Welcome to sop manager</h5>\r\n      <h1 class=\"row-first font-weight-bold\">Set up and manage your projects with SOP Manager</h1>\r\n    </div>\r\n    <div class=\"col-6 text-right\" style=\"padding-top: 10%;\">\r\n      <button type=\"button\" class=\"btn btn-outline-default waves-effect\" [routerLink]=\"['/sop-creation']\"><h6 class=\"no-margin-bottom\"><i class=\"fa fa-plus mr-3\"></i>CREATE A NEW SOP</h6></button>\r\n    </div>\r\n  </div>\r\n</div>\r\n"
+module.exports = "<div class=\"container\">\r\n  <div class=\"row row-first\">\r\n    <div class=\"col-6\">\r\n      <h5 class=\"font-weight-bold text-uppercase\">Welcome to sop manager</h5>\r\n      <h1 class=\"row-first font-weight-bold\">Set up and manage your projects with SOP Manager</h1>\r\n    </div>\r\n    <div class=\"col-6 text-right\" style=\"padding-top: 10%;\">\r\n      <button *ngIf=\"_memberService.isLoggedIn()\" type=\"button\" class=\"btn btn-outline-default waves-effect\" [routerLink]=\"['/sop-creation']\"><h6 class=\"no-margin-bottom\"><i class=\"fa fa-plus mr-3\"></i>CREATE A NEW SOP</h6></button>\r\n    </div>\r\n  </div>\r\n</div>\r\n"
 
 /***/ }),
 
@@ -2917,6 +3106,7 @@ module.exports = "<div class=\"container\">\r\n  <div class=\"row row-first\">\r
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "HomeComponent", function() { return HomeComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _objects_member_member_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../objects/member/member.service */ "./src/app/objects/member/member.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2927,8 +3117,10 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
+
 var HomeComponent = /** @class */ (function () {
-    function HomeComponent() {
+    function HomeComponent(_memberService) {
+        this._memberService = _memberService;
     }
     HomeComponent.prototype.ngOnInit = function () {
     };
@@ -2938,7 +3130,7 @@ var HomeComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./home.component.html */ "./src/app/component/home/home.component.html"),
             styles: [__webpack_require__(/*! ./home.component.css */ "./src/app/component/home/home.component.css")]
         }),
-        __metadata("design:paramtypes", [])
+        __metadata("design:paramtypes", [_objects_member_member_service__WEBPACK_IMPORTED_MODULE_1__["MemberService"]])
     ], HomeComponent);
     return HomeComponent;
 }());
@@ -3040,7 +3232,6 @@ var JobCreationComponent = /** @class */ (function () {
             _this.errorMessage = "";
             var picks = document.querySelectorAll(".form-check-input");
             var activities = res['data'];
-            console.log(activities);
             for (var i = 0; i < picks.length; i++) {
                 for (var _i = 0, activities_1 = activities; _i < activities_1.length; _i++) {
                     var a = activities_1[_i];
@@ -3067,7 +3258,6 @@ var JobCreationComponent = /** @class */ (function () {
                     _this.sub_activities.push([]);
                 }
             }
-            console.log(_this.activities);
             for (var _b = 0, _c = res['data']; _b < _c.length; _b++) {
                 var element = _c[_b];
                 var activity = element;
@@ -3121,7 +3311,6 @@ var JobCreationComponent = /** @class */ (function () {
         var elements = document.querySelectorAll(".form-check-input");
         var isChecked = false;
         for (var i = 0; i < elements.length; i++) {
-            console.log("Let's check");
             if (elements[i]['checked'] == true) {
                 isChecked = true;
             }
@@ -3442,7 +3631,6 @@ var MasterOfWorkComponent = /** @class */ (function () {
                     case 1:
                         _a.sent();
                         this.ready = true;
-                        console.log(this.activities);
                         return [2 /*return*/];
                 }
             });
@@ -3818,7 +4006,6 @@ var OrganizationManagementComponent = /** @class */ (function () {
         var _this = this;
         this._organisationService.selectAll()
             .subscribe(function (res) {
-            console.log(res['data']);
             _this.organisations = res['data'];
         }, function (error) {
             console.log("ERREUR : ", error);
@@ -3847,7 +4034,6 @@ var OrganizationManagementComponent = /** @class */ (function () {
             if (this.branchChoosen != 'blank') {
                 this._departmentService.selectAllFromBranch(this.branchChoosen)
                     .subscribe(function (res) {
-                    console.log(res['data']);
                     _this.departments = res['data'];
                     _this.departmentEnabled = true;
                     _this.errorMessage = "";
@@ -3875,7 +4061,6 @@ var OrganizationManagementComponent = /** @class */ (function () {
             if (this.departmentChoosen != "blank") {
                 this._subDepartmentService.selectAllFromDepartment(this.departmentChoosen)
                     .subscribe(function (res) {
-                    console.log(res['data']);
                     _this.subDepartments = res['data'];
                     _this.subDepartmentEnabled = true;
                     _this.errorMessage = "";
@@ -4693,7 +4878,6 @@ var ProjectCreationComponent = /** @class */ (function () {
                                                 return [4 /*yield*/, vm_1.groupJob(key)];
                                             case 1:
                                                 activity = _b.sent();
-                                                console.log(activity);
                                                 return [4 /*yield*/, vm_1._unitService.selectAllFromActivity(activity.activity_id).toPromise()];
                                             case 2:
                                                 units = _b.sent();
@@ -4751,7 +4935,6 @@ var ProjectCreationComponent = /** @class */ (function () {
                         activitiesData = _a.sent();
                         activities = activitiesData['data'];
                         //we search for the one that group all activities in one instance
-                        console.log(activities);
                         for (_i = 0, activities_1 = activities; _i < activities_1.length; _i++) {
                             a = activities_1[_i];
                             if (a.activity_type == 'super_activity' || a.activity_type == 'sop') {
@@ -5062,7 +5245,6 @@ var ProjectCreationComponent = /** @class */ (function () {
                             d = new Date(this.minimum_project_end);
                             this.new_project_end = moment__WEBPACK_IMPORTED_MODULE_9__(d).format('YYYY-MM-DD');
                         }
-                        console.log('mini : ', this.minimum_project_end);
                         return [2 /*return*/];
                 }
             });
@@ -5176,7 +5358,6 @@ var ProjectCreationComponent = /** @class */ (function () {
     /* element is an id of organisation, branch or department. Level 1 = We search for organisation, level 2 = we search for departments.
      * Return : the element of organisation_elements wanted */
     ProjectCreationComponent.prototype.findElement = function (element, level) {
-        console.log('element : ', element, ' - level : ', level);
         if (level == 1) {
             //We search for an organisation
             for (var _i = 0, _a = this.organisation_elements; _i < _a.length; _i++) {
@@ -5216,17 +5397,14 @@ var ProjectCreationComponent = /** @class */ (function () {
         this.branch = this.organisation['branchs'][0];
         this.department = this.branch['departments'][0];
         this.sub_department = this.department['sub_departments'][0];
-        console.log(this.organisation, this.branch, this.department, this.sub_department);
     };
     ProjectCreationComponent.prototype.pickBranch = function () {
         // I have picked my new organisation, I need to set my new array for other levels
         this.department = this.branch['departments'][0];
         this.sub_department = this.department['sub_departments'][0];
-        console.log(this.organisation, this.branch, this.department, this.sub_department);
     };
     ProjectCreationComponent.prototype.pickDepartment = function () {
         this.sub_department = this.department['sub_departments'][0];
-        console.log(this.organisation, this.branch, this.department, this.sub_department);
         //
     };
     ProjectCreationComponent = __decorate([
@@ -5272,7 +5450,7 @@ module.exports = ".md-form\r\n{\r\n  margin-bottom: 20px;\r\n  margin-top: 0;\r\
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container\">\r\n\r\n  <div class=\"row row-first\">\r\n    <div class=\"col\">\r\n      <button type=\"button\" class=\"btn btn-outline-default waves-effect\" [routerLink]=\"['/project-creation']\"><h6 class=\"no-margin-bottom\"><i class=\"fa fa-plus mr-3\"></i>New Project</h6></button>\r\n    </div>\r\n  </div>\r\n  <!-- Error alert -->\r\n  <div *ngIf=\"errorMessage\" class=\"row row-first justify-content-end error-text\">\r\n    <i>{{errorMessage}}</i>\r\n  </div>\r\n\r\n  <!-- Project not started -->\r\n  <div class=\"row row-first justify-content-between\">\r\n    <div class=\"col\">\r\n      <a data-toggle=\"collapse\" data-target=\"#projects_1\" aria-expanded=\"false\" aria-controls=\"projects_1\">\r\n        <h5><span class=\"badge badge-primary\">Project started</span></h5>\r\n      </a>\r\n    </div>\r\n    <!-- SEARCH BAR -->\r\n    <div *ngIf=\"projects_1.length != 0\" class=\" md-form\" id=\"search-bar\">\r\n      <input id=\"search\" (keyup)=\"search(1)\" class=\"form-control\" type=\"text\" placeholder=\"Search\" aria-label=\"Search\">\r\n    </div>\r\n  </div>\r\n\r\n  <div class=\"row\" *ngIf=\"projects_1.length == 0\">\r\n    <div class=\"offset-1\">\r\n      No projects\r\n    </div>\r\n  </div>\r\n\r\n  <!-- TABLE -->\r\n  <div *ngIf=\"projects_1.length != 0\" class=\"row justify-content-center collapse show\" id=\"projects_1\">\r\n\r\n  <!--Table-->\r\n    <table class=\"col-12 table hoverable table-borderless table-hover table-fixed\" id=\"project-table\">\r\n\r\n      <!--Table head-->\r\n      <thead class=\"\">\r\n      <tr class=\"text-white\">\r\n        <th style=\"width:5%;\"></th>\r\n        <th style=\"width:10%;\"  (click)=\"sortTable(1, 1)\"><a>Code</a></th>\r\n        <th style=\"width:40%;\" (click)=\"sortTable(2, 1)\"><a>Title</a></th>\r\n        <th style=\"width:20%;\" (click)=\"sortTable(3, 1)\"><a>Start Date</a></th>\r\n        <th style=\"width:20%;\" (click)=\"sortTable(4, 1)\"><a>Finished Date</a></th>\r\n        <th style=\"width:5%;\"></th>\r\n      </tr>\r\n      </thead>\r\n      <!--Table head-->\r\n\r\n      <!--Table body-->\r\n      <tbody>\r\n      <tr *ngFor=\"let project of projects_1\" (click)=\"selectProject(project)\">\r\n        <td scope=\"row\">\r\n          <a data-toggle=\"modal\" data-target=\"#actionModal\"><i class=\"fa fa-cog text-blue\"></i></a>\r\n        </td>\r\n        <td>{{project.project_id}}</td>\r\n        <td>{{textHelper.firstLetterUpperCase(project.project_title.substr(0,50))}}</td>\r\n        <td>{{project.project_start | date:\"MM/dd/yyyy\"}}</td>\r\n        <td>{{project.project_end | date:\"MM/dd/yyyy\"}}</td>\r\n        <td>\r\n          <a data-toggle=\"modal\" data-target=\"#warningModal\"><i class=\"fa fa-close text-red\"></i></a>\r\n        </td>\r\n      </tr>\r\n      </tbody>\r\n      <!--Table body-->\r\n\r\n    </table>\r\n    <!--Table-->\r\n\r\n  </div>\r\n\r\n  <!-- Project started -->\r\n  <div class=\"row row-first justify-content-between\">\r\n\r\n    <div class=\"col\">\r\n      <a data-toggle=\"collapse\" data-target=\"#projects_0\" aria-expanded=\"true\" aria-controls=\"projects_0\">\r\n        <h5><span class=\"badge badge-primary\">Project not started</span></h5>\r\n      </a>\r\n    </div>\r\n\r\n    <!-- SEARCH BAR -->\r\n    <div *ngIf=\"projects_0.length != 0\" class=\" md-form\" id=\"search-bar-2\">\r\n      <input id=\"search-2\" (keyup)=\"search(2)\" class=\"form-control\" type=\"text\" placeholder=\"Search\" aria-label=\"Search\">\r\n    </div>\r\n  </div>\r\n\r\n  <div class=\"row\" *ngIf=\"projects_0.length == 0\">\r\n    <div class=\"offset-1\">\r\n      No projects\r\n    </div>\r\n  </div>\r\n\r\n  <!-- TABLE -->\r\n  <div *ngIf=\"projects_0.length != 0\" class=\"row justify-content-center collapse show\" id=\"projects_0\">\r\n\r\n    <!--Table-->\r\n    <table class=\"col-12 table hoverable table-borderless table-hover table-fixed\" id=\"project-table-2\">\r\n\r\n      <!--Table head-->\r\n      <thead class=\"\">\r\n      <tr class=\"text-white\">\r\n        <th style=\"width:5%;\"></th>\r\n        <th style=\"width:10%;\"  (click)=\"sortTable(1, 2)\"><a>Code</a></th>\r\n        <th style=\"width:40%;\" (click)=\"sortTable(2, 2)\"><a>Title</a></th>\r\n        <th style=\"width:20%;\" (click)=\"sortTable(3, 2)\"><a>Start Date</a></th>\r\n        <th style=\"width:20%;\" (click)=\"sortTable(4, 2)\"><a>Finished Date</a></th>\r\n        <th style=\"width:5%;\"></th>\r\n      </tr>\r\n      </thead>\r\n      <!--Table head-->\r\n\r\n      <!--Table body-->\r\n      <tbody>\r\n      <tr *ngFor=\"let project of projects_0\" (click)=\"selectProject(project)\">\r\n        <td scope=\"row\">\r\n          <a data-toggle=\"modal\" data-target=\"#actionModal\"><i class=\"fa fa-cog text-blue\"></i></a>\r\n        </td>\r\n        <td>{{project.project_id}}</td>\r\n        <td>{{textHelper.firstLetterUpperCase(project.project_title.substr(0,50))}}</td>\r\n        <td>{{project.project_start | date:\"MM/dd/yyyy\"}}</td>\r\n        <td>{{project.project_end | date:\"MM/dd/yyyy\"}}</td>\r\n        <td>\r\n          <a data-toggle=\"modal\" data-target=\"#warningModal\"><i class=\"fa fa-close text-red\"></i></a>\r\n        </td>\r\n      </tr>\r\n      </tbody>\r\n      <!--Table body-->\r\n\r\n    </table>\r\n    <!--Table-->\r\n\r\n  </div>\r\n\r\n  <!-- Project finished -->\r\n  <div class=\"row row-first justify-content-between\">\r\n\r\n    <div class=\"col\">\r\n      <a data-toggle=\"collapse\" data-target=\"#projects_2\" aria-expanded=\"false\" aria-controls=\"projects_2\">\r\n        <h5><span class=\"badge badge-primary\">Project finished </span></h5>\r\n      </a>\r\n    </div>\r\n\r\n    <!-- SEARCH BAR -->\r\n    <div *ngIf=\"projects_2.length != 0\" class=\"col md-form\" id=\"search-bar-3\">\r\n      <input id=\"search-3\" (keyup)=\"search(2)\" class=\"form-control\" type=\"text\" placeholder=\"Search\" aria-label=\"Search\">\r\n    </div>\r\n  </div>\r\n\r\n  <div class=\"row\" *ngIf=\"projects_2.length == 0\">\r\n    <div class=\"offset-1\">\r\n      No projects\r\n    </div>\r\n  </div>\r\n\r\n  <!-- TABLE -->\r\n  <div *ngIf=\"projects_2.length != 0\" class=\"row justify-content-center collapse show\" id=\"projects_2\">\r\n\r\n    <!--Table-->\r\n    <table class=\"col-12 table hoverable table-borderless table-hover table-fixed\" id=\"project-table-3\">\r\n\r\n      <!--Table head-->\r\n      <thead class=\"\">\r\n      <tr class=\"text-white\">\r\n        <th style=\"width:5%;\"></th>\r\n        <th style=\"width:10%;\"  (click)=\"sortTable(1, 3)\"><a>Code</a></th>\r\n        <th style=\"width:40%;\" (click)=\"sortTable(2, 3)\"><a>Title</a></th>\r\n        <th style=\"width:20%;\" (click)=\"sortTable(3, 3)\"><a>Start Date</a></th>\r\n        <th style=\"width:20%;\" (click)=\"sortTable(4, 3)\"><a>Finished Date</a></th>\r\n        <th style=\"width:5%;\"></th>\r\n      </tr>\r\n      </thead>\r\n      <!--Table head-->\r\n\r\n      <!--Table body-->\r\n      <tbody>\r\n      <tr *ngFor=\"let project of projects_2\" (click)=\"selectProject(project)\">\r\n        <td scope=\"row\">\r\n          <a data-toggle=\"modal\" data-target=\"#actionModal\"><i class=\"fa fa-cog text-blue\"></i></a>\r\n        </td>\r\n        <td>{{project.project_id}}</td>\r\n        <td>{{textHelper.firstLetterUpperCase(project.project_title.substr(0,50))}}</td>\r\n        <td>{{project.project_start | date:\"MM/dd/yyyy\"}}</td>\r\n        <td>{{project.project_end | date:\"MM/dd/yyyy\"}}</td>\r\n        <td>\r\n          <a data-toggle=\"modal\" data-target=\"#warningModal\"><i class=\"fa fa-close text-red\"></i></a>\r\n        </td>\r\n      </tr>\r\n      </tbody>\r\n      <!--Table body-->\r\n\r\n    </table>\r\n    <!--Table-->\r\n\r\n  </div>\r\n\r\n</div>\r\n\r\n<app-action title={{project_selected.project_title}}\r\n            text=\"\"\r\n            buttons={{buttonsTitles}}\r\n            links={{buttonsLinks}}\r\n            [isLinkActive]=true\r\n>\r\n</app-action>\r\n\r\n<!-- Modal warning -->\r\n<app-warning title=\"Delete Project {{project_selected.project_id}}\"\r\n             text=\"Are you sure you want to delete the Project : {{project_selected.project_title}} from the project list ? All data linked will be destroyed.\"\r\n             link=\"project-list\"\r\n             (success)=\"deleteProject(project_selected.project_id)\"\r\n             [isLink]=false>\r\n</app-warning>\r\n"
+module.exports = "<div class=\"container\">\r\n\r\n  <div class=\"row row-first\" *ngIf=\"member_role != 'performer' && member_role != 'none' && member_role !='manager'\">\r\n    <div class=\"col\">\r\n      <button type=\"button\" class=\"btn btn-outline-default waves-effect\" [routerLink]=\"['/project-creation']\"><h6 class=\"no-margin-bottom\"><i class=\"fa fa-plus mr-3\"></i>New Project</h6></button>\r\n    </div>\r\n  </div>\r\n  <!-- Error alert -->\r\n  <div *ngIf=\"errorMessage\" class=\"row row-first justify-content-end error-text\">\r\n    <i>{{errorMessage}}</i>\r\n  </div>\r\n\r\n  <!-- Project not started -->\r\n  <div class=\"row row-first justify-content-between\">\r\n    <div class=\"col\">\r\n      <a data-toggle=\"collapse\" data-target=\"#projects_1\" aria-expanded=\"false\" aria-controls=\"projects_1\">\r\n        <h5><span class=\"badge badge-primary\">Project started</span></h5>\r\n      </a>\r\n    </div>\r\n    <!-- SEARCH BAR -->\r\n    <div *ngIf=\"projects_1.length != 0\" class=\" md-form\" id=\"search-bar\">\r\n      <input id=\"search\" (keyup)=\"search(1)\" class=\"form-control\" type=\"text\" placeholder=\"Search\" aria-label=\"Search\">\r\n    </div>\r\n  </div>\r\n\r\n  <div class=\"row\" *ngIf=\"projects_1.length == 0\">\r\n    <div class=\"offset-1\">\r\n      No projects\r\n    </div>\r\n  </div>\r\n\r\n  <!-- TABLE -->\r\n  <div *ngIf=\"projects_1.length != 0\" class=\"row justify-content-center collapse show\" id=\"projects_1\">\r\n\r\n  <!--Table-->\r\n    <table class=\"col-12 table hoverable table-borderless table-hover table-fixed\" id=\"project-table\">\r\n\r\n      <!--Table head-->\r\n      <thead class=\"\">\r\n      <tr class=\"text-white\">\r\n        <th style=\"width:5%;\"></th>\r\n        <th style=\"width:10%;\"  (click)=\"sortTable(1, 1)\"><a>Code</a></th>\r\n        <th style=\"width:40%;\" (click)=\"sortTable(2, 1)\"><a>Title</a></th>\r\n        <th style=\"width:20%;\" (click)=\"sortTable(3, 1)\"><a>Start Date</a></th>\r\n        <th style=\"width:20%;\" (click)=\"sortTable(4, 1)\"><a>Finished Date</a></th>\r\n        <th *ngIf=\"member_role != 'performer' && member_role != 'none' && member_role !='manager'\" style=\"width:5%;\"></th>\r\n      </tr>\r\n      </thead>\r\n      <!--Table head-->\r\n\r\n      <!--Table body-->\r\n      <tbody>\r\n      <tr *ngFor=\"let project of projects_1\" (click)=\"selectProject(project)\">\r\n        <td scope=\"row\">\r\n          <a data-toggle=\"modal\" data-target=\"#actionModal\"><i class=\"fa fa-cog text-blue\"></i></a>\r\n        </td>\r\n        <td>{{project.project_id}}</td>\r\n        <td>{{textHelper.firstLetterUpperCase(project.project_title.substr(0,50))}}</td>\r\n        <td>{{project.project_start | date:\"MM/dd/yyyy\"}}</td>\r\n        <td>{{project.project_end | date:\"MM/dd/yyyy\"}}</td>\r\n        <td *ngIf=\"member_role != 'performer' && member_role != 'none' && member_role !='manager'\">\r\n          <a data-toggle=\"modal\" data-target=\"#warningModal\"><i class=\"fa fa-close text-red\"></i></a>\r\n        </td>\r\n      </tr>\r\n      </tbody>\r\n      <!--Table body-->\r\n\r\n    </table>\r\n    <!--Table-->\r\n\r\n  </div>\r\n\r\n  <!-- Project started -->\r\n  <div class=\"row row-first justify-content-between\">\r\n\r\n    <div class=\"col\">\r\n      <a data-toggle=\"collapse\" data-target=\"#projects_0\" aria-expanded=\"true\" aria-controls=\"projects_0\">\r\n        <h5><span class=\"badge badge-primary\">Project not started</span></h5>\r\n      </a>\r\n    </div>\r\n\r\n    <!-- SEARCH BAR -->\r\n    <div *ngIf=\"projects_0.length != 0\" class=\" md-form\" id=\"search-bar-2\">\r\n      <input id=\"search-2\" (keyup)=\"search(2)\" class=\"form-control\" type=\"text\" placeholder=\"Search\" aria-label=\"Search\">\r\n    </div>\r\n  </div>\r\n\r\n  <div class=\"row\" *ngIf=\"projects_0.length == 0\">\r\n    <div class=\"offset-1\">\r\n      No projects\r\n    </div>\r\n  </div>\r\n\r\n  <!-- TABLE -->\r\n  <div *ngIf=\"projects_0.length != 0\" class=\"row justify-content-center collapse show\" id=\"projects_0\">\r\n\r\n    <!--Table-->\r\n    <table class=\"col-12 table hoverable table-borderless table-hover table-fixed\" id=\"project-table-2\">\r\n\r\n      <!--Table head-->\r\n      <thead class=\"\">\r\n      <tr class=\"text-white\">\r\n        <th style=\"width:5%;\"></th>\r\n        <th style=\"width:10%;\"  (click)=\"sortTable(1, 2)\"><a>Code</a></th>\r\n        <th style=\"width:40%;\" (click)=\"sortTable(2, 2)\"><a>Title</a></th>\r\n        <th style=\"width:20%;\" (click)=\"sortTable(3, 2)\"><a>Start Date</a></th>\r\n        <th style=\"width:20%;\" (click)=\"sortTable(4, 2)\"><a>Finished Date</a></th>\r\n        <th *ngIf=\"member_role != 'performer' && member_role != 'none' && member_role !='manager'\" style=\"width:5%;\"></th>\r\n      </tr>\r\n      </thead>\r\n      <!--Table head-->\r\n\r\n      <!--Table body-->\r\n      <tbody>\r\n      <tr *ngFor=\"let project of projects_0\" (click)=\"selectProject(project)\">\r\n        <td scope=\"row\">\r\n          <a data-toggle=\"modal\" data-target=\"#actionModal\"><i class=\"fa fa-cog text-blue\"></i></a>\r\n        </td>\r\n        <td>{{project.project_id}}</td>\r\n        <td>{{textHelper.firstLetterUpperCase(project.project_title.substr(0,50))}}</td>\r\n        <td>{{project.project_start | date:\"MM/dd/yyyy\"}}</td>\r\n        <td>{{project.project_end | date:\"MM/dd/yyyy\"}}</td>\r\n        <td *ngIf=\"member_role != 'performer' && member_role != 'none' && member_role !='manager'\">\r\n          <a data-toggle=\"modal\" data-target=\"#warningModal\"><i class=\"fa fa-close text-red\"></i></a>\r\n        </td>\r\n      </tr>\r\n      </tbody>\r\n      <!--Table body-->\r\n\r\n    </table>\r\n    <!--Table-->\r\n\r\n  </div>\r\n\r\n  <!-- Project finished -->\r\n  <div class=\"row row-first justify-content-between\">\r\n\r\n    <div class=\"col\">\r\n      <a data-toggle=\"collapse\" data-target=\"#projects_2\" aria-expanded=\"false\" aria-controls=\"projects_2\">\r\n        <h5><span class=\"badge badge-primary\">Project finished </span></h5>\r\n      </a>\r\n    </div>\r\n\r\n    <!-- SEARCH BAR -->\r\n    <div *ngIf=\"projects_2.length != 0\" class=\"col md-form\" id=\"search-bar-3\">\r\n      <input id=\"search-3\" (keyup)=\"search(2)\" class=\"form-control\" type=\"text\" placeholder=\"Search\" aria-label=\"Search\">\r\n    </div>\r\n  </div>\r\n\r\n  <div class=\"row\" *ngIf=\"projects_2.length == 0\">\r\n    <div class=\"offset-1\">\r\n      No projects\r\n    </div>\r\n  </div>\r\n\r\n  <!-- TABLE -->\r\n  <div *ngIf=\"projects_2.length != 0\" class=\"row justify-content-center collapse show\" id=\"projects_2\">\r\n\r\n    <!--Table-->\r\n    <table class=\"col-12 table hoverable table-borderless table-hover table-fixed\" id=\"project-table-3\">\r\n\r\n      <!--Table head-->\r\n      <thead class=\"\">\r\n      <tr class=\"text-white\">\r\n        <th style=\"width:5%;\"></th>\r\n        <th style=\"width:10%;\"  (click)=\"sortTable(1, 3)\"><a>Code</a></th>\r\n        <th style=\"width:40%;\" (click)=\"sortTable(2, 3)\"><a>Title</a></th>\r\n        <th style=\"width:20%;\" (click)=\"sortTable(3, 3)\"><a>Start Date</a></th>\r\n        <th style=\"width:20%;\" (click)=\"sortTable(4, 3)\"><a>Finished Date</a></th>\r\n        <th *ngIf=\"member_role != 'performer' && member_role != 'none' && member_role !='manager'\" style=\"width:5%;\"></th>\r\n      </tr>\r\n      </thead>\r\n      <!--Table head-->\r\n\r\n      <!--Table body-->\r\n      <tbody>\r\n      <tr *ngFor=\"let project of projects_2\" (click)=\"selectProject(project)\">\r\n        <td scope=\"row\">\r\n          <a data-toggle=\"modal\" data-target=\"#actionModal\"><i class=\"fa fa-cog text-blue\"></i></a>\r\n        </td>\r\n        <td>{{project.project_id}}</td>\r\n        <td>{{textHelper.firstLetterUpperCase(project.project_title.substr(0,50))}}</td>\r\n        <td>{{project.project_start | date:\"MM/dd/yyyy\"}}</td>\r\n        <td>{{project.project_end | date:\"MM/dd/yyyy\"}}</td>\r\n        <td *ngIf=\"member_role != 'performer' && member_role != 'none' && member_role !='manager'\">\r\n          <a data-toggle=\"modal\" data-target=\"#warningModal\"><i class=\"fa fa-close text-red\"></i></a>\r\n        </td>\r\n      </tr>\r\n      </tbody>\r\n      <!--Table body-->\r\n\r\n    </table>\r\n    <!--Table-->\r\n\r\n  </div>\r\n\r\n</div>\r\n\r\n<app-action title={{project_selected.project_title}}\r\n            text=\"\"\r\n            buttons={{buttonsTitles}}\r\n            links={{buttonsLinks}}\r\n            [isLinkActive]=true\r\n>\r\n</app-action>\r\n\r\n<!-- Modal warning -->\r\n<app-warning title=\"Delete Project {{project_selected.project_id}}\"\r\n             text=\"Are you sure you want to delete the Project : {{project_selected.project_title}} from the project list ? All data linked will be destroyed.\"\r\n             link=\"project-list\"\r\n             (success)=\"deleteProject(project_selected.project_id)\"\r\n             [isLink]=false>\r\n</app-warning>\r\n"
 
 /***/ }),
 
@@ -5292,6 +5470,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _helpers_text_helper_text_helper_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../helpers/text-helper/text-helper.component */ "./src/app/helpers/text-helper/text-helper.component.ts");
 /* harmony import */ var _helpers_date_helper_date_helper_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../helpers/date-helper/date-helper.component */ "./src/app/helpers/date-helper/date-helper.component.ts");
 /* harmony import */ var _objects_sop_sop_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../objects/sop/sop.service */ "./src/app/objects/sop/sop.service.ts");
+/* harmony import */ var _helpers_role_helper_role_helper_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../helpers/role-helper/role-helper.component */ "./src/app/helpers/role-helper/role-helper.component.ts");
+/* harmony import */ var _objects_member_member_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../objects/member/member.service */ "./src/app/objects/member/member.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -5342,32 +5522,51 @@ var __generator = (undefined && undefined.__generator) || function (thisArg, bod
 
 
 
+
+
 var ProjectListComponent = /** @class */ (function () {
-    function ProjectListComponent(_projectService, _sopService) {
+    function ProjectListComponent(_projectService, _sopService, _memberService) {
         this._projectService = _projectService;
         this._sopService = _sopService;
+        this._memberService = _memberService;
         /* ----- Data ----- */
         this.errorMessage = "";
         this.textHelper = new _helpers_text_helper_text_helper_component__WEBPACK_IMPORTED_MODULE_3__["TextHelperComponent"]();
         this.dateHelper = new _helpers_date_helper_date_helper_component__WEBPACK_IMPORTED_MODULE_4__["DateHelperComponent"]();
         this.project_selected = new _objects_project_project__WEBPACK_IMPORTED_MODULE_1__["Project"]();
-        this.buttonsTitles = ['Project information', 'Master of work', 'Gantt', 'Volume Progress'];
-        this.buttonsLinks = ['project', 'master-of-work', 'gantt-creation', 'volume-progress'];
+        this.buttonsTitles = [];
+        this.buttonsLinks = [];
+        this.role_helper = new _helpers_role_helper_role_helper_component__WEBPACK_IMPORTED_MODULE_6__["RoleHelperComponent"](this._memberService);
     }
     ProjectListComponent.prototype.ngOnInit = function () {
         return __awaiter(this, void 0, void 0, function () {
-            return __generator(this, function (_a) {
-                switch (_a.label) {
+            var _a;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
                     case 0:
+                        _a = this;
+                        return [4 /*yield*/, this.role_helper.getRole()];
+                    case 1:
+                        _a.member_role = _b.sent();
+                        this.setLinks();
                         this._sopService.removeSopIdLocal();
                         return [4 /*yield*/, this.loadProjects()];
-                    case 1:
-                        _a.sent();
-                        console.log(this.projects);
+                    case 2:
+                        _b.sent();
                         return [2 /*return*/];
                 }
             });
         });
+    };
+    ProjectListComponent.prototype.setLinks = function () {
+        if (this.member_role == 'performer' || this.member_role == 'none') {
+            this.buttonsTitles = ['Project information', 'Master of work', 'Volume Progress'];
+            this.buttonsLinks = ['project', 'master-of-work', 'volume-progress'];
+        }
+        else {
+            this.buttonsTitles = ['Project information', 'Master of work', 'Gantt', 'Volume Progress'];
+            this.buttonsLinks = ['project', 'master-of-work', 'gantt-creation', 'volume-progress'];
+        }
     };
     ProjectListComponent.prototype.loadProjects = function () {
         return __awaiter(this, void 0, void 0, function () {
@@ -5524,7 +5723,8 @@ var ProjectListComponent = /** @class */ (function () {
             styles: [__webpack_require__(/*! ./project-list.component.css */ "./src/app/component/project-list/project-list.component.css")]
         }),
         __metadata("design:paramtypes", [_objects_project_project_service__WEBPACK_IMPORTED_MODULE_2__["ProjectService"],
-            _objects_sop_sop_service__WEBPACK_IMPORTED_MODULE_5__["SopService"]])
+            _objects_sop_sop_service__WEBPACK_IMPORTED_MODULE_5__["SopService"],
+            _objects_member_member_service__WEBPACK_IMPORTED_MODULE_7__["MemberService"]])
     ], ProjectListComponent);
     return ProjectListComponent;
 }());
@@ -5551,7 +5751,7 @@ module.exports = ".anil_nepal{\r\n  padding:20px 0px;\r\n  width:100%;\r\n  disp
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container\" *ngIf=\"!ready\">\r\n  <div class=\"row-first\">\r\n    <app-loader></app-loader>\r\n  </div>\r\n</div>\r\n\r\n<div class=\"container\" *ngIf=\"ready\">\r\n\r\n  <div class=\"row row-first\">\r\n    <div class=\"col\">\r\n      <button type=\"button\" class=\"btn btn-outline-danger waves-effect\" [routerLink]=\"['/project-list']\"><h6 class=\"no-margin-bottom\"><i class=\"fa fa-times mr-3\"></i>Back</h6></button>\r\n      <button [disabled]=\"!isEditable || !isProjectValid\" class=\"btn btn-success waves-effect\" type=\"button\" data-toggle=\"modal\" data-target=\"#confirmationModal\">Save</button>\r\n      <app-pdf-sop ></app-pdf-sop>\r\n    </div>\r\n  </div>\r\n\r\n  <div class=\"row row-first\">\r\n    <div class=\"col anil_nepal\">\r\n      <label class=\"switch switch-left-right\">\r\n        <input class=\"switch-input\" type=\"checkbox\" (click)=\"makeEditable()\">\r\n        <span class=\"switch-label\" data-on=\"Editable\" data-off=\"OFF\"></span> <span class=\"switch-handle\"></span> </label>\r\n    </div>\r\n  </div>\r\n\r\n  <div class=\"row\">\r\n      <div class=\"col-3 font-weight-bold\">\r\n        <p>Project title</p>\r\n      </div>\r\n      <div class=\"col-8\">\r\n        <input (keyup)=\"checkProject()\" [disabled]=\"!isEditable\" [(ngModel)]=\"project.project_title\" type=\"text\" class=\"form-control\">\r\n      </div>\r\n  </div>\r\n\r\n  <div class=\"row\">\r\n    <div class=\"col-3 font-weight-bold\">\r\n      <p>Project Code</p>\r\n    </div>\r\n    <div class=\"col-8\">\r\n      <input [disabled]=\"true\" [(ngModel)]=\"project.project_id\" type=\"text\" class=\"form-control\">\r\n    </div>\r\n  </div>\r\n\r\n  <div class=\"row\">\r\n    <div class=\"col-3 font-weight-bold\">\r\n      <p>Project work code</p>\r\n    </div>\r\n    <div class=\"col-8\">\r\n      <input (keyup)=\"checkProject()\" [disabled]=\"!isEditable\" [(ngModel)]=\"project.project_work_code\" type=\"text\" class=\"form-control\">\r\n    </div>\r\n  </div>\r\n\r\n  <div class=\"row\">\r\n    <div class=\"col-3 font-weight-bold\">\r\n      <p>Start date</p>\r\n    </div>\r\n    <div class=\"col-8\">\r\n      <input [disabled]=\"!isEditable\" (change)=\"checkEndDate()\" [(ngModel)]=\"project.project_start\" type=\"date\" class=\"form-control\">\r\n    </div>\r\n  </div>\r\n\r\n  <div class=\"row\">\r\n    <div class=\"col-3 font-weight-bold\">\r\n      <p>End date</p>\r\n    </div>\r\n    <div class=\"col-8\">\r\n      <input [disabled]=\"!isEditable\"  [(ngModel)]=\"new_project_end\" [min]=\"minimum_project_end\" type=\"date\" class=\"form-control\">\r\n    </div>\r\n  </div>\r\n\r\n  <br>\r\n\r\n  <div class=\"row\">\r\n    <div class=\"col-3 font-weight-bold\">\r\n      <p>Organisation</p>\r\n    </div>\r\n    <div class=\"col-8\">\r\n      <select (change)=\"pickOrganisation()\" [disabled]=\"!isEditable\" [(ngModel)]=\"organisation\" class=\"form-control\">\r\n        <option name=\"organisation\" value=\"\" disabled selected>Choose organisation</option>\r\n        <option *ngFor=\"let o of organisation_elements\" [ngValue]=\"o\">{{o['organisation'].organisation_name}}</option>\r\n      </select>\r\n    </div>\r\n  </div>\r\n\r\n  <div class=\"row\">\r\n    <div class=\"col-3 font-weight-bold\">\r\n      <p>Branch</p>\r\n    </div>\r\n    <div class=\"col-8\">\r\n      <select (change)=\"pickBranch()\" [disabled]=\"!isEditable\" [(ngModel)]=\"branch\" class=\"form-control\">\r\n        <option name=\"organisation\" value=\"\" disabled selected>Choose branch</option>\r\n        <option *ngFor=\"let b of organisation['branchs']\" [ngValue]=\"b\">{{b['branch'].branch_name}}</option>\r\n      </select>\r\n    </div>\r\n  </div>\r\n\r\n  <div class=\"row\">\r\n    <div class=\"col-3 font-weight-bold\">\r\n      <p>Department</p>\r\n    </div>\r\n    <div class=\"col-8\">\r\n      <select (change)=\"pickDepartment()\" [disabled]=\"!isEditable || branch['branch'].branch_name == 'No branch'\" [(ngModel)]=\"department\" class=\"form-control\">\r\n        <option name=\"organisation\" value=\"\" disabled selected>Choose department</option>\r\n        <option *ngFor=\"let d of branch['departments']\" [ngValue]=\"d\">{{d['department'].department_name}}</option>\r\n      </select>\r\n    </div>\r\n  </div>\r\n\r\n  <div class=\"row\">\r\n    <div class=\"col-3 font-weight-bold\">\r\n      <p>Branch</p>\r\n    </div>\r\n    <div class=\"col-8\">\r\n      <select [disabled]=\"!isEditable || department['department'].department_name == 'No department'\" [(ngModel)]=\"sub_department\" class=\"form-control\">\r\n        <option name=\"organisation\" value=\"\" disabled selected>Choose organisation</option>\r\n        <option *ngFor=\"let s of department['sub_departments']\" [ngValue]=\"s\">{{s.sub_department_name}}</option>\r\n      </select>\r\n    </div>\r\n  </div>\r\n\r\n</div>\r\n\r\n<!-- Modal confirmation -->\r\n<app-confirmation title=\"Update Project\"\r\n                  text=\"Are you sure you want to modify this project ? If the project has already started, this mights create some errors\"\r\n                  (success)=\"onSubmit()\"\r\n                  [isLinkActive]=false\r\n                  link=\"project-list\">\r\n</app-confirmation>\r\n"
+module.exports = "<div class=\"container\" *ngIf=\"!ready\">\r\n  <div class=\"row-first\">\r\n    <app-loader></app-loader>\r\n  </div>\r\n</div>\r\n\r\n<div class=\"container\" *ngIf=\"ready\">\r\n\r\n  <div class=\"row row-first\">\r\n    <div class=\"col\">\r\n      <button type=\"button\" class=\"btn btn-outline-danger waves-effect\" [routerLink]=\"['/project-list']\"><h6 class=\"no-margin-bottom\"><i class=\"fa fa-times mr-3\"></i>Back</h6></button>\r\n      <button [disabled]=\"!isEditable || !isProjectValid\" class=\"btn btn-success waves-effect\" type=\"button\" data-toggle=\"modal\" data-target=\"#confirmationModal\">Save</button>\r\n      <app-pdf-sop ></app-pdf-sop>\r\n    </div>\r\n  </div>\r\n\r\n  <div class=\"row row-first\" >\r\n    <div class=\"col anil_nepal\" *ngIf=\"member_role != 'performer' && member_role != 'none' && member_role !='manager'\">\r\n      <label class=\"switch switch-left-right\">\r\n        <input class=\"switch-input\" type=\"checkbox\" (click)=\"makeEditable()\">\r\n        <span class=\"switch-label\" data-on=\"Editable\" data-off=\"OFF\"></span> <span class=\"switch-handle\"></span> </label>\r\n    </div>\r\n  </div>\r\n\r\n  <div class=\"row\">\r\n      <div class=\"col-3 font-weight-bold\">\r\n        <p>Project title</p>\r\n      </div>\r\n      <div class=\"col-8\">\r\n        <input (keyup)=\"checkProject()\" [disabled]=\"!isEditable\" [(ngModel)]=\"project.project_title\" type=\"text\" class=\"form-control\">\r\n      </div>\r\n  </div>\r\n\r\n  <div class=\"row\">\r\n    <div class=\"col-3 font-weight-bold\">\r\n      <p>Project Code</p>\r\n    </div>\r\n    <div class=\"col-8\">\r\n      <input [disabled]=\"true\" [(ngModel)]=\"project.project_id\" type=\"text\" class=\"form-control\">\r\n    </div>\r\n  </div>\r\n\r\n  <div class=\"row\">\r\n    <div class=\"col-3 font-weight-bold\">\r\n      <p>Project work code</p>\r\n    </div>\r\n    <div class=\"col-8\">\r\n      <input (keyup)=\"checkProject()\" [disabled]=\"!isEditable\" [(ngModel)]=\"project.project_work_code\" type=\"text\" class=\"form-control\">\r\n    </div>\r\n  </div>\r\n\r\n  <div class=\"row\">\r\n    <div class=\"col-3 font-weight-bold\">\r\n      <p>Start date</p>\r\n    </div>\r\n    <div class=\"col-8\">\r\n      <input [disabled]=\"!isEditable\" (change)=\"checkEndDate()\" [(ngModel)]=\"project.project_start\" type=\"date\" class=\"form-control\">\r\n    </div>\r\n  </div>\r\n\r\n  <div class=\"row\">\r\n    <div class=\"col-3 font-weight-bold\">\r\n      <p>End date</p>\r\n    </div>\r\n    <div class=\"col-8\">\r\n      <input [disabled]=\"!isEditable\"  [(ngModel)]=\"new_project_end\" [min]=\"minimum_project_end\" type=\"date\" class=\"form-control\">\r\n    </div>\r\n  </div>\r\n\r\n  <br>\r\n\r\n  <div class=\"row\">\r\n    <div class=\"col-3 font-weight-bold\">\r\n      <p>Organisation</p>\r\n    </div>\r\n    <div class=\"col-8\">\r\n      <select (change)=\"pickOrganisation()\" [disabled]=\"!isEditable\" [(ngModel)]=\"organisation\" class=\"form-control\">\r\n        <option name=\"organisation\" value=\"\" disabled selected>Choose organisation</option>\r\n        <option *ngFor=\"let o of organisation_elements\" [ngValue]=\"o\">{{o['organisation'].organisation_name}}</option>\r\n      </select>\r\n    </div>\r\n  </div>\r\n\r\n  <div class=\"row\">\r\n    <div class=\"col-3 font-weight-bold\">\r\n      <p>Branch</p>\r\n    </div>\r\n    <div class=\"col-8\">\r\n      <select (change)=\"pickBranch()\" [disabled]=\"!isEditable\" [(ngModel)]=\"branch\" class=\"form-control\">\r\n        <option name=\"organisation\" value=\"\" disabled selected>Choose branch</option>\r\n        <option *ngFor=\"let b of organisation['branchs']\" [ngValue]=\"b\">{{b['branch'].branch_name}}</option>\r\n      </select>\r\n    </div>\r\n  </div>\r\n\r\n  <div class=\"row\">\r\n    <div class=\"col-3 font-weight-bold\">\r\n      <p>Department</p>\r\n    </div>\r\n    <div class=\"col-8\">\r\n      <select (change)=\"pickDepartment()\" [disabled]=\"!isEditable || branch['branch'].branch_name == 'No branch'\" [(ngModel)]=\"department\" class=\"form-control\">\r\n        <option name=\"organisation\" value=\"\" disabled selected>Choose department</option>\r\n        <option *ngFor=\"let d of branch['departments']\" [ngValue]=\"d\">{{d['department'].department_name}}</option>\r\n      </select>\r\n    </div>\r\n  </div>\r\n\r\n  <div class=\"row\">\r\n    <div class=\"col-3 font-weight-bold\">\r\n      <p>Branch</p>\r\n    </div>\r\n    <div class=\"col-8\">\r\n      <select [disabled]=\"!isEditable || department['department'].department_name == 'No department'\" [(ngModel)]=\"sub_department\" class=\"form-control\">\r\n        <option name=\"organisation\" value=\"\" disabled selected>Choose organisation</option>\r\n        <option *ngFor=\"let s of department['sub_departments']\" [ngValue]=\"s\">{{s.sub_department_name}}</option>\r\n      </select>\r\n    </div>\r\n  </div>\r\n\r\n</div>\r\n\r\n<!-- Modal confirmation -->\r\n<app-confirmation title=\"Update Project\"\r\n                  text=\"Are you sure you want to modify this project ? If the project has already started, this mights create some errors\"\r\n                  (success)=\"onSubmit()\"\r\n                  [isLinkActive]=false\r\n                  link=\"project-list\">\r\n</app-confirmation>\r\n"
 
 /***/ }),
 
@@ -5575,6 +5775,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_7__);
 /* harmony import */ var _objects_job_job_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../../objects/job/job.service */ "./src/app/objects/job/job.service.ts");
+/* harmony import */ var _helpers_role_helper_role_helper_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../../helpers/role-helper/role-helper.component */ "./src/app/helpers/role-helper/role-helper.component.ts");
+/* harmony import */ var _objects_member_member_service__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../../objects/member/member.service */ "./src/app/objects/member/member.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -5628,8 +5830,10 @@ var __generator = (undefined && undefined.__generator) || function (thisArg, bod
 
 
 
+
+
 var ProjectComponent = /** @class */ (function () {
-    function ProjectComponent(_projectService, _organisationService, router, _branchService, _departmentService, _subDepartmentService, _jobService) {
+    function ProjectComponent(_projectService, _organisationService, router, _branchService, _departmentService, _subDepartmentService, _jobService, _memberService) {
         this._projectService = _projectService;
         this._organisationService = _organisationService;
         this.router = router;
@@ -5637,6 +5841,7 @@ var ProjectComponent = /** @class */ (function () {
         this._departmentService = _departmentService;
         this._subDepartmentService = _subDepartmentService;
         this._jobService = _jobService;
+        this._memberService = _memberService;
         /* ----- Data ----- */
         this.errorMessage = "";
         this.isEditable = false;
@@ -5645,28 +5850,34 @@ var ProjectComponent = /** @class */ (function () {
         //Manage the disabled function of organisations selects
         this.pick_level = 1;
         this.organisation_elements = [];
+        this.role_helper = new _helpers_role_helper_role_helper_component__WEBPACK_IMPORTED_MODULE_9__["RoleHelperComponent"](this._memberService);
     }
     ProjectComponent.prototype.ngOnInit = function () {
         return __awaiter(this, void 0, void 0, function () {
-            return __generator(this, function (_a) {
-                switch (_a.label) {
+            var _a;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
                     case 0:
+                        _a = this;
+                        return [4 /*yield*/, this.role_helper.getRole()];
+                    case 1:
+                        _a.member_role = _b.sent();
                         this.project_id = localStorage.getItem("Project_id");
                         return [4 /*yield*/, this.loadProject()];
-                    case 1:
-                        _a.sent();
-                        return [4 /*yield*/, this.loadOrganisations()];
                     case 2:
-                        _a.sent();
-                        return [4 /*yield*/, this.loadOrganisationFromProject()];
+                        _b.sent();
+                        return [4 /*yield*/, this.loadOrganisations()];
                     case 3:
-                        _a.sent();
-                        return [4 /*yield*/, this.loadJobs()];
+                        _b.sent();
+                        return [4 /*yield*/, this.loadOrganisationFromProject()];
                     case 4:
-                        _a.sent();
-                        return [4 /*yield*/, this.checkEndDate()];
+                        _b.sent();
+                        return [4 /*yield*/, this.loadJobs()];
                     case 5:
-                        _a.sent();
+                        _b.sent();
+                        return [4 /*yield*/, this.checkEndDate()];
+                    case 6:
+                        _b.sent();
                         this.ready = true;
                         return [2 /*return*/];
                 }
@@ -5884,7 +6095,6 @@ var ProjectComponent = /** @class */ (function () {
     /* element is an id of organisation, branch or department. Level 1 = We search for organisation, level 2 = we search for departments.
      * Return : the element of organisation_elements wanted */
     ProjectComponent.prototype.findElement = function (element, level) {
-        console.log('element : ', element, ' - level : ', level);
         if (level == 1) {
             //We search for an organisation
             for (var _i = 0, _a = this.organisation_elements; _i < _a.length; _i++) {
@@ -5924,17 +6134,14 @@ var ProjectComponent = /** @class */ (function () {
         this.branch = this.organisation['branchs'][0];
         this.department = this.branch['departments'][0];
         this.sub_department = this.department['sub_departments'][0];
-        console.log(this.organisation, this.branch, this.department, this.sub_department);
     };
     ProjectComponent.prototype.pickBranch = function () {
         // I have picked my new organisation, I need to set my new array for other levels
         this.department = this.branch['departments'][0];
         this.sub_department = this.department['sub_departments'][0];
-        console.log(this.organisation, this.branch, this.department, this.sub_department);
     };
     ProjectComponent.prototype.pickDepartment = function () {
         this.sub_department = this.department['sub_departments'][0];
-        console.log(this.organisation, this.branch, this.department, this.sub_department);
         //
     };
     ProjectComponent = __decorate([
@@ -5949,7 +6156,8 @@ var ProjectComponent = /** @class */ (function () {
             _objects_branch_branch_service__WEBPACK_IMPORTED_MODULE_4__["BranchService"],
             _objects_department_department_service__WEBPACK_IMPORTED_MODULE_6__["DepartmentService"],
             _objects_sub_department_sub_department_service__WEBPACK_IMPORTED_MODULE_5__["SubDepartmentService"],
-            _objects_job_job_service__WEBPACK_IMPORTED_MODULE_8__["JobService"]])
+            _objects_job_job_service__WEBPACK_IMPORTED_MODULE_8__["JobService"],
+            _objects_member_member_service__WEBPACK_IMPORTED_MODULE_10__["MemberService"]])
     ], ProjectComponent);
     return ProjectComponent;
 }());
@@ -5965,7 +6173,7 @@ var ProjectComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container\" *ngIf=\"!ready\">\r\n  <div class=\"row-first\">\r\n    <app-loader></app-loader>\r\n  </div>\r\n</div>\r\n\r\n<div class=\"container\" *ngIf=\"ready\">\r\n\r\n  <div class=\"row row-first\">\r\n    <div class=\"col\">\r\n      <button type=\"button\" class=\"btn btn-outline-danger waves-effect\" routerLink=\"/project-list\"><h6 class=\"no-margin-bottom\"><i class=\"fa fa-times mr-3\"></i>Back</h6></button>\r\n      <app-pdf-performance-target></app-pdf-performance-target>\r\n      <app-pdf-performance-report></app-pdf-performance-report>\r\n      <app-pdf-progress-evaluation></app-pdf-progress-evaluation>\r\n    </div>\r\n  </div>\r\n\r\n  <div class=\"row row-first input-group justify-content-between\">\r\n\r\n    <div class=\"md-form col-2\" id=\"search-bar\">\r\n      <input id=\"search\" (keyup)=\"search()\" class=\"form-control\" type=\"text\" placeholder=\"Search\" aria-label=\"Search\">\r\n    </div>\r\n\r\n    <!-- LEGEND -->\r\n    <div class=\"md-form col text-center\">\r\n      <h5><span class=\"badge badge-default\">Finished</span>\r\n      <span class=\"badge badge-primary\">Target</span>\r\n      <span class=\"badge badge-danger\">Pourcentage</span></h5>\r\n    </div>\r\n\r\n    <div *ngIf=\"isSwitchable\" class=\"col center-block anil_nepal\">\r\n      <label class=\"switch switch-left-right\">\r\n        <input class=\"switch-input\" type=\"checkbox\"(click)=\"switchView()\" [checked]=\"!isDay\">\r\n        <span class=\"switch-label\" data-on=\"Month\" data-off=\"Day\"></span> <span class=\"switch-handle\"></span> </label>\r\n    </div>\r\n\r\n    <div class=\"month-select col-2\">\r\n      <ul class=\"pagination pg-blue justify-content-center\">\r\n        <li class=\"page-item text-middle\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"previous\" ><i class=\"page-link no-hover fa fa-arrow-left\" (click)=\"previous()\"></i></li>\r\n\r\n        <!--DATE SELECTOR-->\r\n        <li><h2><span class=\"badge badge-default\">{{date_displayed}}</span></h2></li>\r\n\r\n        <li class=\"page-item\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"next\" ><i id=\"nextArrow\" class=\"page-link no-hover fa fa-arrow-right\" (click)=\"next()\"></i></li>\r\n\r\n      </ul>\r\n    </div>\r\n  </div>\r\n\r\n  <div class=\"row justify-content-center\">\r\n\r\n    <table *ngIf=\"volumes_displayed.size != 0\" class=\"col-12 hoverable table table-borderless table-hover table-fixed\" id=\"volume-table\">\r\n\r\n      <!--Table head-->\r\n      <thead class=\"\">\r\n      <tr class=\"text-white\">\r\n        <th style=\"width: 5%\" (click)=\"sortTable(0)\"><a>No</a></th>\r\n        <th class=\"text-small\" (click)=\"sortTable(1)\"><a>Staff Names</a></th>\r\n        <th class=\"text-small\" (click)=\"sortTable(2)\"><a>Total Target</a></th>\r\n        <th *ngFor=\"let date of dates_displayed\">{{date}}</th>\r\n      </tr>\r\n      </thead>\r\n      <!--Table head-->\r\n\r\n      <!--Table body-->\r\n      <tbody>\r\n        <!-- /*\r\n              * [{date: Date,\r\n              *   elements: [{target_quantity: number,\r\n              *               finished_quantity: number,\r\n              *               finished_rate: number,\r\n              *               member: Member\r\n              *              }]\r\n              *  }]\r\n              * */\r\n        -->\r\n        <tr *ngFor=\"let member of convertMap(volumes_displayed)\" id=\"{{member['member'].member_id}}\"> <!-- ONE ROW -->\r\n          <td ><a (click)=\"selectMember(member['member'].member_id)\">{{member['member'].member_id}}</a></td>\r\n          <td class=\"text-small\"><a (click)=\"selectMember(member['member'].member_id)\">{{member['member'].member_name.toUpperCase()}} {{member['member'].member_first_name}}</a></td>\r\n          <td>\r\n            <h6>\r\n              <span class=\"badge badge-default\">{{roundOne(member['total_finished'], 1)}}</span>\r\n              <span class=\"badge badge-primary\">{{roundOne(member['total_target'],1)}}</span>\r\n              <span class=\"badge badge-danger\">{{roundOne(member['total_rates'], 1)}}%</span>\r\n            </h6>\r\n          </td>\r\n\r\n            <td *ngFor=\"let volume of member['volumes']\"> <!-- SAME MEMBERS -->\r\n              <h6 *ngIf=\"volume['target_quantity'] != 0\">\r\n                <span class=\"badge badge-default\">{{roundOne(volume['finished_quantity'],1)}}</span>\r\n                <span class=\"badge badge-primary\">{{roundOne(volume['target_quantity'],1)}}</span>\r\n                <span class=\"badge badge-danger\">{{roundOne(volume['finished_rate'],1)}}%</span>\r\n              </h6>\r\n            </td>\r\n\r\n        </tr>\r\n      </tbody>\r\n      <!--Table body-->\r\n\r\n    </table>\r\n    <!--Table-->\r\n\r\n    <table class=\"col-10 hoverable table table-borderless table-hover table-fixed\" id=\"activity-table\" *ngIf=\"element_selected != null\">\r\n\r\n      <!--Table head-->\r\n      <thead class=\"thead-secondary\">\r\n      <tr class=\"text-white\">\r\n        <th class=\"text-small\" style=\"width: 7%\" (click)=\"sortTable1(0)\"><a>Job</a></th>\r\n        <th class=\"text-small\" (click)=\"sortTable1(1)\"><a>Activity</a></th>\r\n        <th class=\"text-small\" (click)=\"sortTable1(2)\"><a>Finished Quantity</a></th>\r\n        <th class=\"text-small\" (click)=\"sortTable1(3)\"><a>Target Quantity</a></th>\r\n        <th class=\"text-small\" style=\"width: 20%\" (click)=\"sortTable1(4)\"><a>Finished Date</a></th>\r\n        <th class=\"text-small\" (click)=\"sortTable1(5)\"><a>Target Date</a></th>\r\n        <th class=\"text-small\" (click)=\"sortTable1(6)\"><a>State</a></th>\r\n      </tr>\r\n      </thead>\r\n      <!--Table head-->\r\n\r\n      <!--Table body-->\r\n      <tbody >\r\n      <tr *ngFor=\"let activity of element_selected['m_a_ps']\">\r\n        <td class=\"text-small\">{{activity['job'].job_name}}</td>\r\n        <td class=\"text-small\">{{activity['activity'].activity_title}}</td>\r\n        <td>\r\n          <input [hidden]=\"activity['m_a_p'].target_quantity==0\" [(ngModel)]=\"activity['m_a_p'].finished_quantity\" type=\"number\" class=\"form-control\" max=\"{{activity['m_a_p'].target_quantity}}\" min=\"0\">\r\n        </td>\r\n        <td >{{activity['m_a_p'].target_quantity}}</td>\r\n        <td>\r\n          <input *ngIf=\"activity['m_a_p'].target_quantity == activity['m_a_p'].finished_quantity\" [(ngModel)]=\"activity['m_a_p'].finished_date\" type=\"date\" class=\"form-control\">\r\n        </td>\r\n        <td class=\"text-small\">{{activity['m_a_p'].target_date | date: 'dd/MM/yyyy'}}</td>\r\n        <td class=\"text-small\">{{activity['m_a_p'].evaluation}}</td>\r\n      </tr>\r\n      </tbody>\r\n      <!--Table body-->\r\n\r\n    </table>\r\n    <!--Table-->\r\n\r\n    <div class=\"col-2 text-center\" *ngIf=\"element_selected != null\">\r\n      <button class=\"btn btn-success waves-effect\" type=\"button\" data-toggle=\"modal\" data-target=\"#confirmationModal\">Save</button>\r\n      <br>\r\n      <!-- Error alert -->\r\n      <i class=\"error-text\" *ngIf=\"errorMessage && errorMessage != ''\">{{errorMessage}}</i>\r\n    </div>\r\n\r\n  </div>\r\n\r\n</div>\r\n\r\n<!-- Modal confirmation -->\r\n<app-confirmation title=\"Save finished quantities and duration\"\r\n                  text=\"Are you sure all informations provided are correct ?\"\r\n                  (success)=\"onSubmit(element_selected)\"\r\n                  [isLinkActive]=false\r\n                  link=\"project-list\">\r\n</app-confirmation>\r\n\r\n<script>\r\n  // Material Select Initialization\r\n  $(document).ready(function() {\r\n    $('.mdb-select').material_select();\r\n  });\r\n</script>\r\n\r\n"
+module.exports = "<div class=\"container\" *ngIf=\"!ready\">\r\n  <div class=\"row-first\">\r\n    <app-loader></app-loader>\r\n  </div>\r\n</div>\r\n\r\n<div class=\"container\" *ngIf=\"ready\">\r\n\r\n  <div class=\"row row-first\">\r\n    <div class=\"col\">\r\n      <button type=\"button\" class=\"btn btn-outline-danger waves-effect\" routerLink=\"/project-list\"><h6 class=\"no-margin-bottom\"><i class=\"fa fa-times mr-3\"></i>Back</h6></button>\r\n      <app-pdf-performance-target *ngIf=\"member_role != 'performer' && member_role != 'none'\"></app-pdf-performance-target>\r\n      <app-pdf-performance-report *ngIf=\"member_role != 'performer' && member_role != 'none'\"></app-pdf-performance-report>\r\n      <app-pdf-progress-evaluation *ngIf=\"member_role != 'performer' && member_role != 'none'\"></app-pdf-progress-evaluation>\r\n    </div>\r\n  </div>\r\n\r\n  <div class=\"row row-first input-group justify-content-between\">\r\n\r\n    <div class=\"md-form col-2\" id=\"search-bar\">\r\n      <input id=\"search\" (keyup)=\"search()\" class=\"form-control\" type=\"text\" placeholder=\"Search\" aria-label=\"Search\">\r\n    </div>\r\n\r\n    <!-- LEGEND -->\r\n    <div class=\"md-form col text-center\">\r\n      <h5><span class=\"badge badge-default\">Finished</span>\r\n      <span class=\"badge badge-primary\">Target</span>\r\n      <span class=\"badge badge-danger\">Pourcentage</span></h5>\r\n    </div>\r\n\r\n    <div *ngIf=\"isSwitchable\" class=\"col center-block anil_nepal\">\r\n      <label class=\"switch switch-left-right\">\r\n        <input class=\"switch-input\" type=\"checkbox\"(click)=\"switchView()\" [checked]=\"!isDay\">\r\n        <span class=\"switch-label\" data-on=\"Month\" data-off=\"Day\"></span> <span class=\"switch-handle\"></span> </label>\r\n    </div>\r\n\r\n    <div class=\"month-select col-2\">\r\n      <ul class=\"pagination pg-blue justify-content-center\">\r\n        <li class=\"page-item text-middle\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"previous\" ><i class=\"page-link no-hover fa fa-arrow-left\" (click)=\"previous()\"></i></li>\r\n\r\n        <!--DATE SELECTOR-->\r\n        <li><h2><span class=\"badge badge-default\">{{date_displayed}}</span></h2></li>\r\n\r\n        <li class=\"page-item\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"next\" ><i id=\"nextArrow\" class=\"page-link no-hover fa fa-arrow-right\" (click)=\"next()\"></i></li>\r\n\r\n      </ul>\r\n    </div>\r\n  </div>\r\n\r\n  <div class=\"row justify-content-center\">\r\n\r\n    <table *ngIf=\"volumes_displayed.size != 0\" class=\"col-12 hoverable table table-borderless table-hover table-fixed\" id=\"volume-table\">\r\n\r\n      <!--Table head-->\r\n      <thead class=\"\">\r\n      <tr class=\"text-white\">\r\n        <th style=\"width: 5%\" (click)=\"sortTable(0)\"><a>No</a></th>\r\n        <th class=\"text-small\" (click)=\"sortTable(1)\"><a>Staff Names</a></th>\r\n        <th class=\"text-small\" (click)=\"sortTable(2)\"><a>Total Target</a></th>\r\n        <th *ngFor=\"let date of dates_displayed\">{{date}}</th>\r\n      </tr>\r\n      </thead>\r\n      <!--Table head-->\r\n\r\n      <!--Table body-->\r\n      <tbody>\r\n        <!-- /*\r\n              * [{date: Date,\r\n              *   elements: [{target_quantity: number,\r\n              *               finished_quantity: number,\r\n              *               finished_rate: number,\r\n              *               member: Member\r\n              *              }]\r\n              *  }]\r\n              * */\r\n        -->\r\n        <tr *ngFor=\"let member of convertMap(volumes_displayed)\" id=\"{{member['member'].member_id}}\" [hidden]=\"active_member_id != member['member'].member_id && (member_role == 'performer' || member_role == 'none')\"> <!-- ONE ROW -->\r\n          <td ><a (click)=\"selectMember(member['member'].member_id)\">{{member['member'].member_id}}</a></td>\r\n          <td class=\"text-small\"><a (click)=\"selectMember(member['member'].member_id)\">{{member['member'].member_name.toUpperCase()}} {{member['member'].member_first_name}}</a></td>\r\n          <td>\r\n            <h6>\r\n              <span class=\"badge badge-default\">{{roundOne(member['total_finished'], 1)}}</span>\r\n              <span class=\"badge badge-primary\">{{roundOne(member['total_target'],1)}}</span>\r\n              <span class=\"badge badge-danger\">{{roundOne(member['total_rates'], 1)}}%</span>\r\n            </h6>\r\n          </td>\r\n\r\n            <td *ngFor=\"let volume of member['volumes']\"> <!-- SAME MEMBERS -->\r\n              <h6 *ngIf=\"volume['target_quantity'] != 0\">\r\n                <span class=\"badge badge-default\">{{roundOne(volume['finished_quantity'],1)}}</span>\r\n                <span class=\"badge badge-primary\">{{roundOne(volume['target_quantity'],1)}}</span>\r\n                <span class=\"badge badge-danger\">{{roundOne(volume['finished_rate'],1)}}%</span>\r\n              </h6>\r\n            </td>\r\n\r\n        </tr>\r\n      </tbody>\r\n      <!--Table body-->\r\n\r\n    </table>\r\n    <!--Table-->\r\n\r\n    <table class=\"col-10 hoverable table table-borderless table-hover table-fixed\" id=\"activity-table\" *ngIf=\"element_selected != null\">\r\n\r\n      <!--Table head-->\r\n      <thead class=\"thead-secondary\">\r\n      <tr class=\"text-white\">\r\n        <th class=\"text-small\" style=\"width: 7%\" (click)=\"sortTable1(0)\"><a>Job</a></th>\r\n        <th class=\"text-small\" (click)=\"sortTable1(1)\"><a>Activity</a></th>\r\n        <th class=\"text-small\" (click)=\"sortTable1(2)\"><a>Finished Quantity</a></th>\r\n        <th class=\"text-small\" (click)=\"sortTable1(3)\"><a>Target Quantity</a></th>\r\n        <th class=\"text-small\" style=\"width: 20%\" (click)=\"sortTable1(4)\"><a>Finished Date</a></th>\r\n        <th class=\"text-small\" (click)=\"sortTable1(5)\"><a>Target Date</a></th>\r\n        <th class=\"text-small\" (click)=\"sortTable1(6)\"><a>State</a></th>\r\n      </tr>\r\n      </thead>\r\n      <!--Table head-->\r\n\r\n      <!--Table body-->\r\n      <tbody >\r\n      <tr *ngFor=\"let activity of element_selected['m_a_ps']\">\r\n        <td class=\"text-small\">{{activity['job'].job_name}}</td>\r\n        <td class=\"text-small\">{{activity['activity'].activity_title}}</td>\r\n        <td>\r\n          <input [disabled]=\"member_role == 'performer' || member_role == 'none'\" [hidden]=\"activity['m_a_p'].target_quantity==0\" [(ngModel)]=\"activity['m_a_p'].finished_quantity\" type=\"number\" class=\"form-control\" max=\"{{activity['m_a_p'].target_quantity}}\" min=\"0\">\r\n        </td>\r\n        <td >{{activity['m_a_p'].target_quantity}}</td>\r\n        <td>\r\n          <input [disabled]=\"member_role == 'performer' || member_role == 'none'\" *ngIf=\"activity['m_a_p'].target_quantity == activity['m_a_p'].finished_quantity\" [(ngModel)]=\"activity['m_a_p'].finished_date\" type=\"date\" class=\"form-control\">\r\n        </td>\r\n        <td class=\"text-small\">{{activity['m_a_p'].target_date | date: 'dd/MM/yyyy'}}</td>\r\n        <td class=\"text-small\">{{activity['m_a_p'].evaluation}}</td>\r\n      </tr>\r\n      </tbody>\r\n      <!--Table body-->\r\n\r\n    </table>\r\n    <!--Table-->\r\n\r\n    <div class=\"col-2 text-center\" *ngIf=\"element_selected != null\">\r\n      <button [disabled]=\"member_role == 'performer' || member_role == 'none'\" class=\"btn btn-success waves-effect\" type=\"button\" data-toggle=\"modal\" data-target=\"#confirmationModal\">Save</button>\r\n      <br>\r\n      <!-- Error alert -->\r\n      <i class=\"error-text\" *ngIf=\"errorMessage && errorMessage != ''\">{{errorMessage}}</i>\r\n    </div>\r\n\r\n  </div>\r\n\r\n</div>\r\n\r\n<!-- Modal confirmation -->\r\n<app-confirmation title=\"Save finished quantities and duration\"\r\n                  text=\"Are you sure all informations provided are correct ?\"\r\n                  (success)=\"onSubmit(element_selected)\"\r\n                  [isLinkActive]=false\r\n                  link=\"project-list\">\r\n</app-confirmation>\r\n\r\n<script>\r\n  // Material Select Initialization\r\n  $(document).ready(function() {\r\n    $('.mdb-select').material_select();\r\n  });\r\n</script>\r\n\r\n"
 
 /***/ }),
 
@@ -5998,6 +6206,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _objects_job_job_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../objects/job/job.service */ "./src/app/objects/job/job.service.ts");
+/* harmony import */ var _helpers_role_helper_role_helper_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../../helpers/role-helper/role-helper.component */ "./src/app/helpers/role-helper/role-helper.component.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -6042,6 +6251,7 @@ var __generator = (undefined && undefined.__generator) || function (thisArg, bod
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+
 
 
 
@@ -6094,20 +6304,28 @@ var VolumeProgressComponent = /** @class */ (function () {
         //Tells the view if we display days or months
         this.isDay = true;
         this.members_activities = new Map();
+        this.role_helper = new _helpers_role_helper_role_helper_component__WEBPACK_IMPORTED_MODULE_7__["RoleHelperComponent"](this._memberService);
     }
     VolumeProgressComponent.prototype.ngOnInit = function () {
         return __awaiter(this, void 0, void 0, function () {
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.loadData()];
+            var _a;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
+                    case 0:
+                        _a = this;
+                        return [4 /*yield*/, this.role_helper.getRole()];
                     case 1:
-                        _a.sent();
-                        return [4 /*yield*/, this.sortElements()];
+                        _a.member_role = _b.sent();
+                        this.active_member_id = this._memberService.getUserDataFull()['id'];
+                        return [4 /*yield*/, this.loadData()];
                     case 2:
-                        _a.sent();
-                        return [4 /*yield*/, this.loadVolumePerDay()];
+                        _b.sent();
+                        return [4 /*yield*/, this.sortElements()];
                     case 3:
-                        _a.sent();
+                        _b.sent();
+                        return [4 /*yield*/, this.loadVolumePerDay()];
+                    case 4:
+                        _b.sent();
                         this.isSwitchableProject();
                         this.ready = true;
                         return [2 /*return*/];
@@ -6415,7 +6633,6 @@ var VolumeProgressComponent = /** @class */ (function () {
         }
         else {
             this.selectVolumesWeeks(i);
-            console.log(this.volume_per_weeks);
         }
     };
     /* Take 7 elements from Monday to Sunday, and store it in the array that is shown on the view */
@@ -6424,8 +6641,6 @@ var VolumeProgressComponent = /** @class */ (function () {
         this.ready = false;
         this.volumes_displayed = new Map();
         this.dates_displayed = [];
-        console.log('i : ', i);
-        console.log(' : ', i);
         this.date_displayed = moment__WEBPACK_IMPORTED_MODULE_5__(this.volume_per_days.slice(i, i + 7)[0]['date']).format('MMM YYYY');
         for (var _i = 0, _a = this.volume_per_days.slice(i, i + 7); _i < _a.length; _i++) {
             var volume = _a[_i];
@@ -7236,7 +7451,6 @@ var SopListComponent = /** @class */ (function () {
     };
     SopListComponent.prototype.deleteSop = function (sop_id) {
         var _this = this;
-        console.log('hey');
         this._sopService.delete(sop_id).subscribe(function (res) {
             _this.errorMessage = "";
             _this.getAllSop();
@@ -7314,7 +7528,6 @@ var SopListComponent = /** @class */ (function () {
         // Loop through all table rows, and hide those who don't match the search query
         for (i = 0; i < tr.length; i++) {
             td = tr[i].getElementsByTagName("td")[2];
-            console.log(td);
             if (td) {
                 if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
                     tr[i].style.display = "";
@@ -7468,7 +7681,6 @@ var SopComponent = /** @class */ (function () {
                         return [4 /*yield*/, this.loadManagement()];
                     case 4:
                         _a.sent();
-                        console.log(this.activities);
                         this.ready = true;
                         return [2 /*return*/];
                 }
@@ -7481,7 +7693,6 @@ var SopComponent = /** @class */ (function () {
             return __generator(this, function (_d) {
                 switch (_d.label) {
                     case 0:
-                        console.log('submit !');
                         this.ready = false;
                         this.errorMessage = "";
                         if (!(this.formNumber == 1)) return [3 /*break*/, 6];
@@ -7540,11 +7751,9 @@ var SopComponent = /** @class */ (function () {
                         return [4 /*yield*/, this._activityService.update(this.activity_selected).toPromise()];
                     case 18:
                         _d.sent();
-                        console.log(this.selectUnit().unit_id);
                         return [4 /*yield*/, this._executeService.update(this.selectUnit().unit_id, this.activity_selected.activity_id).toPromise()];
                     case 19:
                         _d.sent();
-                        console.log(this.sub_activities_linked);
                         if (!(this.sub_activities_linked != null)) return [3 /*break*/, 24];
                         _b = 0, _c = this.sub_activities_linked;
                         _d.label = 20;
@@ -8084,7 +8293,6 @@ var PdfGanttComponent = /** @class */ (function () {
         this.htmlPDF = "<html>\n<head>\n<style>\ntable{\n  border-collapse: collapse;\n}\n td {\n    border: 0.5mm solid black;\n    margin: 0;\n    padding: 2mm;\n    font-size: 4.5mm;\n    \n}\ntr{\n  margin: 0;\n  padding: 0;\n}\n.text-bold{\n    font-weight: bold;\n}\n.saut-page\n{\n    page-break-after: always;\n}\n.no-borders\n{\n    border: none;\n}\n.center-align\n{\n    text-align: center;\n}\n</style>\n</head>\n<body>\n";
         for (var j = 0; j < this.jobs.length; j++) {
             var theJob = this.jobs[j];
-            console.log("JobId : " + theJob['job_id']);
             var tempActivites = [];
             //We sore all the activities that are linked to that job
             for (var _i = 0, _a = this.activities; _i < _a.length; _i++) {
@@ -8104,7 +8312,6 @@ var PdfGanttComponent = /** @class */ (function () {
                     tempSubActivities.push(activitate);
                 }
             }
-            console.log(tempActivites);
             if (j > 0) {
                 this.htmlPDF += "<div class=\"saut-page\"></div> ";
             }
@@ -8125,7 +8332,6 @@ var PdfGanttComponent = /** @class */ (function () {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, this._pdfService.generatePdf(this.htmlPDF)
                             .subscribe(function (res) {
-                            console.log(res);
                             if (!window.navigator.msSaveOrOpenBlob) {
                                 // BLOB NAVIGATOR
                                 var url = window.URL.createObjectURL(new Blob([res]));
@@ -8164,7 +8370,6 @@ var PdfGanttComponent = /** @class */ (function () {
                 });
             }
         }
-        console.log(this.jobs);
         this.filupPDF();
     };
     PdfGanttComponent.prototype.selectAllFromProject = function (idProject) {
@@ -8172,16 +8377,13 @@ var PdfGanttComponent = /** @class */ (function () {
             var _this = this;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0:
-                        console.log("ici : " + idProject);
-                        return [4 /*yield*/, this._memberActivityProjectService.selectAllFromProjectFull(idProject)
-                                .subscribe(function (res) {
-                                console.log(res['data']);
-                                _this.activities = res['data'];
-                                _this.fillUpJobTable();
-                            }, function (error) {
-                                console.log("ERREUR : ", error);
-                            })];
+                    case 0: return [4 /*yield*/, this._memberActivityProjectService.selectAllFromProjectFull(idProject)
+                            .subscribe(function (res) {
+                            _this.activities = res['data'];
+                            _this.fillUpJobTable();
+                        }, function (error) {
+                            console.log("ERREUR : ", error);
+                        })];
                     case 1:
                         _a.sent();
                         return [2 /*return*/];
@@ -8194,15 +8396,13 @@ var PdfGanttComponent = /** @class */ (function () {
             var _this = this;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0:
-                        console.log("ici projet id : " + idProject);
-                        return [4 /*yield*/, this._projectService.getProject(idProject)
-                                .subscribe(function (res) {
-                                _this.project = res['data'];
-                                _this.selectAllFromProject(idProject);
-                            }, function (error) {
-                                console.log("ERREUR : ", error);
-                            })];
+                    case 0: return [4 /*yield*/, this._projectService.getProject(idProject)
+                            .subscribe(function (res) {
+                            _this.project = res['data'];
+                            _this.selectAllFromProject(idProject);
+                        }, function (error) {
+                            console.log("ERREUR : ", error);
+                        })];
                     case 1:
                         _a.sent();
                         return [2 /*return*/];
@@ -10382,6 +10582,143 @@ var DateHelperComponent = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./src/app/helpers/role-helper/role-helper.component.html":
+/*!****************************************************************!*\
+  !*** ./src/app/helpers/role-helper/role-helper.component.html ***!
+  \****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<p>\r\n  role-helper works!\r\n</p>\r\n"
+
+/***/ }),
+
+/***/ "./src/app/helpers/role-helper/role-helper.component.scss":
+/*!****************************************************************!*\
+  !*** ./src/app/helpers/role-helper/role-helper.component.scss ***!
+  \****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ""
+
+/***/ }),
+
+/***/ "./src/app/helpers/role-helper/role-helper.component.ts":
+/*!**************************************************************!*\
+  !*** ./src/app/helpers/role-helper/role-helper.component.ts ***!
+  \**************************************************************/
+/*! exports provided: RoleHelperComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RoleHelperComponent", function() { return RoleHelperComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _objects_member_member_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../objects/member/member.service */ "./src/app/objects/member/member.service.ts");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __generator = (undefined && undefined.__generator) || function (thisArg, body) {
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    function verb(n) { return function (v) { return step([n, v]); }; }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) try {
+            if (f = 1, y && (t = y[op[0] & 2 ? "return" : op[0] ? "throw" : "next"]) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [0, t.value];
+            switch (op[0]) {
+                case 0: case 1: t = op; break;
+                case 4: _.label++; return { value: op[1], done: false };
+                case 5: _.label++; y = op[1]; op = [0]; continue;
+                case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                default:
+                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                    if (t[2]) _.ops.pop();
+                    _.trys.pop(); continue;
+            }
+            op = body.call(thisArg, _);
+        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
+
+
+var RoleHelperComponent = /** @class */ (function () {
+    function RoleHelperComponent(_memberService) {
+        this._memberService = _memberService;
+    }
+    RoleHelperComponent.prototype.ngOnInit = function () {
+    };
+    RoleHelperComponent.prototype.getRole = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var i, id, r, role, error_1;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 3, , 4]);
+                        return [4 /*yield*/, this._memberService.getUserDataFull()];
+                    case 1:
+                        i = _a.sent();
+                        id = i['id'];
+                        return [4 /*yield*/, this._memberService.getAllRoles(id).toPromise()];
+                    case 2:
+                        r = _a.sent();
+                        role = r['data'];
+                        if (role['member_admin'] == 1) {
+                            return [2 /*return*/, 'admin'];
+                        }
+                        else if (role['member_role'].includes('Planner')) {
+                            return [2 /*return*/, 'planner'];
+                        }
+                        else if (role['member_role'].includes('Project Manager')) {
+                            return [2 /*return*/, 'manager'];
+                        }
+                        else if (role['member_role'].includes('Performer')) {
+                            return [2 /*return*/, 'performer'];
+                        }
+                        return [3 /*break*/, 4];
+                    case 3:
+                        error_1 = _a.sent();
+                        return [2 /*return*/, 'none'];
+                    case 4: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    RoleHelperComponent = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+            selector: 'app-role-helper',
+            template: __webpack_require__(/*! ./role-helper.component.html */ "./src/app/helpers/role-helper/role-helper.component.html"),
+            styles: [__webpack_require__(/*! ./role-helper.component.scss */ "./src/app/helpers/role-helper/role-helper.component.scss")]
+        }),
+        __metadata("design:paramtypes", [_objects_member_member_service__WEBPACK_IMPORTED_MODULE_1__["MemberService"]])
+    ], RoleHelperComponent);
+    return RoleHelperComponent;
+}());
+
+
+
+/***/ }),
+
 /***/ "./src/app/helpers/text-helper/text-helper.component.html":
 /*!****************************************************************!*\
   !*** ./src/app/helpers/text-helper/text-helper.component.html ***!
@@ -12225,7 +12562,7 @@ module.exports = "/* LIGHT BLACK #222222 */\r\n\r\n.navbar-brand {\r\n  max-widt
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!--Navbar-->\r\n<nav class=\"navbar sticky-top navbar-expand-lg navbar-dark primary-color hoverable\">\r\n\r\n  <!-- Navbar brand -->\r\n  <img src=\"../../../../assets/images/logo-stikom.png\" class=\"navbar-brand img-fluid\" />\r\n\r\n  <!-- Collapse button -->\r\n  <button class=\"navbar-toggler text-link\" type=\"button\" data-toggle=\"collapse\" data-target=\"#basicExampleNav\" aria-controls=\"basicExampleNav\"\r\n          aria-expanded=\"false\" aria-label=\"Toggle navigation\">\r\n    <span class=\"navbar-toggler-icon text-link\"></span>\r\n  </button>\r\n\r\n\r\n  <!-- Collapsible content -->\r\n  <div class=\"collapse navbar-collapse\" id=\"basicExampleNav\">\r\n\r\n    <!-- Links -->\r\n    <ul class=\"navbar-nav ml-auto\">\r\n      <li class=\"nav-item active\">\r\n        <a class=\"nav-link\" [routerLink]=\"['/home']\" >Home\r\n          <span class=\"sr-only\">(current)</span>\r\n        </a>\r\n      </li>\r\n\r\n      <!-- Dropdown -->\r\n      <li class=\"nav-item dropdown\" dropdown *ngIf=\"_memberService.isLoggedIn()\">\r\n        <a dropdownToggle mdbWavesEffect type=\"button\" class=\"nav-link dropdown-toggle waves-light font-weight-bold\" mdbWavesEffect>\r\n          ADMIN<span class=\"caret\"></span>\r\n        </a>\r\n        <div  *dropdownMenu class=\"dropdown-menu dropdown dropdown-primary\" role=\"menu\">\r\n          <a class=\"dropdown-item waves-light\" mdbWavesEffect [routerLink]=\"['/admin-users']\">Users</a>\r\n          <a class=\"dropdown-item waves-light\" mdbWavesEffect [routerLink]=\"['/admin-organization-management']\">Organizations</a>\r\n        </div>\r\n      </li>\r\n\r\n      <!--<li class=\"nav-item active\">\r\n        <a class=\"nav-link\" *ngIf=\"_memberService.isLoggedIn()\" [routerLink]=\"['/personal-achievement']\" >Personal achievement\r\n        </a>\r\n      </li>-->\r\n\r\n      <li class=\"nav-item\">\r\n        <a class=\"nav-link\" *ngIf=\"_memberService.isLoggedIn()\" [routerLink]=\"['/project-list']\" >Projects</a>\r\n      </li>\r\n\r\n      <li class=\"nav-item\">\r\n        <a class=\"nav-link\" *ngIf=\"_memberService.isLoggedIn()\" [routerLink]=\"['/sop-list']\" >SOP</a>\r\n      </li>\r\n\r\n      <li class=\"nav-item\">\r\n        <a class=\"nav-link\" *ngIf=\"_memberService.isLoggedIn()\" [routerLink]=\"['/account']\" >My Account</a>\r\n      </li>\r\n\r\n      <li class=\"nav-item\">\r\n        <a class=\"nav-link\" *ngIf=\"!_memberService.isLoggedIn()\" [routerLink]=\"['/authentification']\" ><ng-controller class=\"font-weight-bold text-success\">Log In</ng-controller></a>\r\n      </li>\r\n\r\n      <li class=\"nav-item\">\r\n        <a class=\"nav-link\" *ngIf=\"_memberService.isLoggedIn()\" (click)=\"onLogoutClick()\" ><ng-controller class=\"font-weight-bold text-red\">Log Out</ng-controller></a>\r\n      </li>\r\n\r\n    </ul>\r\n    <!-- Links -->\r\n\r\n    <form class=\"form-inline\">\r\n      <div class=\"md-form my-0\">\r\n        <input class=\"form-control mr-sm-2\" type=\"text\" placeholder=\"Search\" aria-label=\"Search\">\r\n      </div>\r\n    </form>\r\n  </div>\r\n  <!-- Collapsible content -->\r\n\r\n</nav>\r\n<!--/.Navbar-->\r\n"
+module.exports = "<!--Navbar-->\r\n<nav class=\"navbar sticky-top navbar-expand-lg navbar-dark primary-color hoverable\">\r\n\r\n  <!-- Navbar brand -->\r\n  <img src=\"../../../../assets/images/logo-stikom.png\" class=\"navbar-brand img-fluid\" />\r\n\r\n  <!-- Collapse button -->\r\n  <button class=\"navbar-toggler text-link\" type=\"button\" data-toggle=\"collapse\" data-target=\"#basicExampleNav\" aria-controls=\"basicExampleNav\"\r\n          aria-expanded=\"false\" aria-label=\"Toggle navigation\">\r\n    <span class=\"navbar-toggler-icon text-link\"></span>\r\n  </button>\r\n\r\n\r\n  <!-- Collapsible content -->\r\n  <div class=\"collapse navbar-collapse\" id=\"basicExampleNav\">\r\n\r\n    <!-- Links -->\r\n    <ul class=\"navbar-nav ml-auto\">\r\n      <li class=\"nav-item active\">\r\n        <a class=\"nav-link\" [routerLink]=\"['/home']\" >Home\r\n          <span class=\"sr-only\">(current)</span>\r\n        </a>\r\n      </li>\r\n\r\n      <!-- Dropdown -->\r\n      <li class=\"nav-item dropdown\" dropdown *ngIf=\"_memberService.isLoggedIn() && member_role=='admin'\">\r\n        <a dropdownToggle mdbWavesEffect type=\"button\" class=\"nav-link dropdown-toggle waves-light font-weight-bold\" mdbWavesEffect>\r\n          ADMIN<span class=\"caret\"></span>\r\n        </a>\r\n        <div  *dropdownMenu class=\"dropdown-menu dropdown dropdown-primary\" role=\"menu\">\r\n          <a class=\"dropdown-item waves-light\" mdbWavesEffect [routerLink]=\"['/admin-users']\">Users</a>\r\n          <a class=\"dropdown-item waves-light\" mdbWavesEffect [routerLink]=\"['/admin-organization-management']\">Organizations</a>\r\n        </div>\r\n      </li>\r\n\r\n      <!--<li class=\"nav-item active\">\r\n        <a class=\"nav-link\" *ngIf=\"_memberService.isLoggedIn()\" [routerLink]=\"['/personal-achievement']\" >Personal achievement\r\n        </a>\r\n      </li>-->\r\n\r\n      <li class=\"nav-item\">\r\n        <a class=\"nav-link\" *ngIf=\"_memberService.isLoggedIn()\" [routerLink]=\"['/project-list']\" >Projects</a>\r\n      </li>\r\n\r\n      <li class=\"nav-item\">\r\n        <a class=\"nav-link\" *ngIf=\"_memberService.isLoggedIn() && member_role !='performer' && member_role !='none'\" [routerLink]=\"['/sop-list']\" >SOP</a>\r\n      </li>\r\n\r\n      <li class=\"nav-item\">\r\n        <a class=\"nav-link\" *ngIf=\"_memberService.isLoggedIn()\" [routerLink]=\"['/account']\" >My Account</a>\r\n      </li>\r\n\r\n      <li class=\"nav-item\">\r\n        <a class=\"nav-link\" *ngIf=\"!_memberService.isLoggedIn()\" [routerLink]=\"['/authentification']\" ><ng-controller class=\"font-weight-bold text-success\">Log In</ng-controller></a>\r\n      </li>\r\n\r\n      <li class=\"nav-item\">\r\n        <a class=\"nav-link\" *ngIf=\"_memberService.isLoggedIn()\" (click)=\"onLogoutClick()\" ><ng-controller class=\"font-weight-bold text-red\">Log Out</ng-controller></a>\r\n      </li>\r\n\r\n    </ul>\r\n    <!-- Links -->\r\n\r\n    <form class=\"form-inline\">\r\n      <div class=\"md-form my-0\">\r\n        <input class=\"form-control mr-sm-2\" type=\"text\" placeholder=\"Search\" aria-label=\"Search\">\r\n      </div>\r\n    </form>\r\n  </div>\r\n  <!-- Collapsible content -->\r\n\r\n</nav>\r\n<!--/.Navbar-->\r\n"
 
 /***/ }),
 
@@ -12242,6 +12579,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _objects_member_member_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../objects/member/member.service */ "./src/app/objects/member/member.service.ts");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var _helpers_role_helper_role_helper_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../helpers/role-helper/role-helper.component */ "./src/app/helpers/role-helper/role-helper.component.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -12251,6 +12589,42 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 var __metadata = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __generator = (undefined && undefined.__generator) || function (thisArg, body) {
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    function verb(n) { return function (v) { return step([n, v]); }; }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) try {
+            if (f = 1, y && (t = y[op[0] & 2 ? "return" : op[0] ? "throw" : "next"]) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [0, t.value];
+            switch (op[0]) {
+                case 0: case 1: t = op; break;
+                case 4: _.label++; return { value: op[1], done: false };
+                case 5: _.label++; y = op[1]; op = [0]; continue;
+                case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                default:
+                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                    if (t[2]) _.ops.pop();
+                    _.trys.pop(); continue;
+            }
+            op = body.call(thisArg, _);
+        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
+
 
 
 
@@ -12259,15 +12633,29 @@ var NavBarComponent = /** @class */ (function () {
         this._memberService = _memberService;
         this.router = router;
         this.isLoggedIn = false;
+        this.role_helper = new _helpers_role_helper_role_helper_component__WEBPACK_IMPORTED_MODULE_3__["RoleHelperComponent"](this._memberService);
     }
     NavBarComponent.prototype.ngOnInit = function () {
-        var result = this._memberService.isLoggedIn();
-        if (result) {
-            this.isLoggedIn = true;
-        }
-        else {
-            this.isLoggedIn = false;
-        }
+        return __awaiter(this, void 0, void 0, function () {
+            var _a, result;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
+                    case 0:
+                        _a = this;
+                        return [4 /*yield*/, this.role_helper.getRole()];
+                    case 1:
+                        _a.member_role = _b.sent();
+                        result = this._memberService.isLoggedIn();
+                        if (result) {
+                            this.isLoggedIn = true;
+                        }
+                        else {
+                            this.isLoggedIn = false;
+                        }
+                        return [2 /*return*/];
+                }
+            });
+        });
     };
     NavBarComponent.prototype.onLogoutClick = function () {
         var _this = this;
