@@ -56,7 +56,6 @@ export class AccountComponent implements OnInit {
         },
         error => {
           console.log("ERREUR : ",error);
-
           this.errorMessage = error.error.message;
         });
 

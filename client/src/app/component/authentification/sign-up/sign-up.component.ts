@@ -20,6 +20,7 @@ import {ManagmentLevelService} from "../../../objects/managment_level/managment-
 export class SignUpComponent implements OnInit {
 
   /* ----- Data ----- */
+  ready: boolean = true;
   step1: boolean = true;
   step2: boolean = false;
   branchEnabled: boolean = false;
@@ -52,6 +53,14 @@ export class SignUpComponent implements OnInit {
   //Norme RFC2822 email validation
   emailReg = new RegExp( /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
 
+  //Manage the disabled function of organisations selects
+  pick_level: number = 1;
+  organisation_elements: Object[] = [];
+
+  organisation: Object;
+  branch: Object;
+  department: Object;
+  sub_department: SubDepartment;
 
   constructor(private _memberService: MemberService,
               private _organisationService: OrganisationService,
@@ -61,7 +70,9 @@ export class SignUpComponent implements OnInit {
               private _subDepartmentService: SubDepartmentService,
               private router: Router) { }
 
-  ngOnInit() {
+  async ngOnInit() {
+    await this.loadOrganisations();
+
     this.getOrganisations();
     this.getManagmentLevels();
   }
@@ -69,7 +80,6 @@ export class SignUpComponent implements OnInit {
   getOrganisations(){
     this._organisationService.selectAll()
       .subscribe( (res) => {
-         console.log(res['data']);
          this.organisations=res['data'];
 
         },
@@ -82,7 +92,6 @@ export class SignUpComponent implements OnInit {
   getManagmentLevels(){
     this._managmentLevelService.selectAll()
       .subscribe( (res) => {
-          console.log(res['data']);
           this.managmentLevels=res['data'];
 
         },
@@ -93,26 +102,21 @@ export class SignUpComponent implements OnInit {
   }
 
   async onSubmitRegistration() {
-    if (this.subDepartmentChoosen == "") {
-      this.errorMessage = "Sub-Department name required. If not select default.";
-    }
-    else {
-
-      //this._memberService.register(this.email,this.password,this.firstName, this.lastName, "0",this.subDepartmentChoosen)
-      await this._memberService.register(this.email,this.password,this.firstName, this.lastName, "0",this.subDepartmentChoosen,this.managmentLevelChoosen)
-        .subscribe( (res) => {
-            this.errorMessage = "";
-            this.step1 = false;
-            this.step2 = false;
-            this.displayEnd = true;
-            this.errorMessage = "";
-
-          },
-          error => {
-            this.errorMessage = error.error.message;
-          });
-
-    }
+    this.ready = false;
+    //this._memberService.register(this.email,this.password,this.firstName, this.lastName, "0",this.subDepartmentChoosen)
+    await this._memberService.register(this.email,this.password,this.firstName, this.lastName, "0",this.sub_department.sub_department_id.toString(),this.managmentLevelChoosen)
+      .subscribe( (res) => {
+          this.errorMessage = "";
+          this.step1 = false;
+          this.step2 = false;
+          this.displayEnd = true;
+          this.errorMessage = "";
+          this.ready = true;
+        },
+        error => {
+          this.errorMessage = error.error.message;
+          this.ready = true;
+        });
   }
 
 
@@ -137,8 +141,6 @@ export class SignUpComponent implements OnInit {
       this.errorMessage = "Please enter a valid email."
     }
     else if (this.emailConfirmation != this.email) {
-      console.log(this.emailConfirmation);
-      console.log(this.email);
       this.errorMessage = "Email confirmation is wrong.";
     }
     else if (this.password == null || this.password == "") {
@@ -154,7 +156,6 @@ export class SignUpComponent implements OnInit {
       //Connexion code
       this.step1 = false;
       this.step2 = true;
-      console.log("Next");
       this.errorMessage = "";
     }
   }
@@ -181,7 +182,6 @@ export class SignUpComponent implements OnInit {
       if (this.branchChoosen != 'blank') {
         this._departmentService.selectAllFromBranch(this.branchChoosen)
           .subscribe( (res) => {
-              console.log(res['data']);
               this.departments=res['data'];
               this.departmentEnabled = true;
             },
@@ -210,7 +210,6 @@ export class SignUpComponent implements OnInit {
       if (this.departmentChoosen != "blank") {
         this._subDepartmentService.selectAllFromDepartment(this.departmentChoosen)
           .subscribe( (res) => {
-              console.log(res['data']);
               this.subDepartments=res['data'];
               this.subDepartmentEnabled = true;
             },
@@ -229,5 +228,113 @@ export class SignUpComponent implements OnInit {
     }
   }
 
+
+  /*  ----------------- ORGANISATIONS / BRANCHS / DEPARTMENTS / SUB_DEPARTMENTS ----------------- */
+
+  //We get all Organisations, branchs, departements and sub departements from database
+  async loadOrganisations(){
+    try {
+      this.errorMessage = "";
+      let o = await this._organisationService.selectAll().toPromise();
+      let organisations = o['data'] as Organisation[];
+
+      for (let organisation of organisations){
+        let b = await this._branchService.selectAllFromOrganisation(organisation.organisation_id.toString()).toPromise();
+        let branchs = b['data'] as Branch[];
+
+        //We generate one element
+        let e0 = {
+          organisation: organisation,
+          branchs: []
+        };
+
+        for (let branch of branchs){
+          let d = await this._departmentService.selectAllFromBranch(branch.branch_id.toString()).toPromise();
+          let departments = d['data'] as Department[];
+
+          //We generate one sub element
+          let e1 = {
+            branch: branch,
+            departments: []
+          };
+
+          for (let department of departments){
+            let s = await this._subDepartmentService.selectAllFromDepartment(department.department_id.toString()).toPromise();
+            let sub_departments = s['data'] as SubDepartment[];
+
+            //We generate lasts elements of the schema
+            let e2 = {
+              department: department,
+              sub_departments: sub_departments
+            };
+            e1['departments'].push(e2);
+          }
+          e0['branchs'].push(e1);
+        }
+        this.organisation_elements.push(e0);
+        this.organisation = this.findElement(this.organisation_elements[0]['organisation'].organisation_id, 1);
+        this.branch = this.organisation['branchs'][0];
+        this.department = this.branch['departments'][0];
+        this.sub_department = this.department['sub_departments'][0];
+      }
+    }
+    catch (error) {
+      this.errorMessage = error.message;
+    }
+  }
+
+  /* element is an id of organisation, branch or department. Level 1 = We search for organisation, level 2 = we search for departments.
+   * Return : the element of organisation_elements wanted */
+  findElement(element: number, level: number){
+    if ( level == 1){
+      //We search for an organisation
+      for (let e of this.organisation_elements){
+        if (e['organisation'].organisation_id == element){
+          return e;
+        }
+      }
+    }
+    else if ( level == 2 ){
+      for (let e of this.organisation['branchs']){
+        if (e['branch'].branch_id == element){
+          return e;
+        }
+      }
+    }
+    else if ( level == 3 ){
+      for (let e of this.branch['departments']){
+        if (e['department'].department_id == element){
+          return e;
+        }
+      }
+    }
+    else if ( level == 4 ){
+      for (let e of this.department['sub_departments']){
+        if (e.department_id == element){
+          return e;
+        }
+      }
+    }
+  }
+
+  pickOrganisation(){
+    // I have picked my new organisation, I need to set my new array for other levels
+    this.branch = this.organisation['branchs'][0];
+    this.department = this.branch['departments'][0];
+    this.sub_department = this.department['sub_departments'][0];
+  }
+
+  pickBranch(){
+    // I have picked my new organisation, I need to set my new array for other levels
+    this.department = this.branch['departments'][0];
+    this.sub_department = this.department['sub_departments'][0];
+  }
+
+  pickDepartment(){
+    this.sub_department = this.department['sub_departments'][0];
+    //
+  }
+
+  //  ----------------- ORGANISATIONS / BRANCHS / DEPARTMENTS / SUB_DEPARTMENTS ----------------- //
 
 }

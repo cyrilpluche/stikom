@@ -13,6 +13,9 @@ import {DepartmentService} from "../../../objects/department/department.service"
 import * as moment from 'moment';
 import {JobService} from "../../../objects/job/job.service";
 import {Job} from "../../../objects/job/job";
+import {RoleHelperComponent} from "../../../helpers/role-helper/role-helper.component";
+import {Member} from "../../../objects/member/member";
+import {MemberService} from "../../../objects/member/member.service";
 
 @Component({
   selector: 'app-project',
@@ -43,15 +46,20 @@ export class ProjectComponent implements OnInit {
   minimum_project_end: any;
   new_project_end: any;
 
+  member_role: string;
+  role_helper: RoleHelperComponent = new RoleHelperComponent(this._memberService);
+
   constructor(private _projectService: ProjectService,
               private _organisationService: OrganisationService,
               private router: Router,
               private _branchService: BranchService,
               private _departmentService: DepartmentService,
               private _subDepartmentService: SubDepartmentService,
-              private _jobService: JobService) { }
+              private _jobService: JobService,
+              private _memberService: MemberService) { }
 
   async ngOnInit() {
+    this.member_role = await this.role_helper.getRole();
     this.project_id=localStorage.getItem("Project_id");
     await this.loadProject();
     await this.loadOrganisations();
@@ -194,7 +202,6 @@ export class ProjectComponent implements OnInit {
   /* element is an id of organisation, branch or department. Level 1 = We search for organisation, level 2 = we search for departments.
    * Return : the element of organisation_elements wanted */
   findElement(element: number, level: number){
-    console.log('element : ', element, ' - level : ', level);
     if ( level == 1){
       //We search for an organisation
       for (let e of this.organisation_elements){
@@ -231,19 +238,16 @@ export class ProjectComponent implements OnInit {
     this.branch = this.organisation['branchs'][0];
     this.department = this.branch['departments'][0];
     this.sub_department = this.department['sub_departments'][0];
-    console.log(this.organisation, this.branch, this.department, this.sub_department);
   }
 
   pickBranch(){
     // I have picked my new organisation, I need to set my new array for other levels
     this.department = this.branch['departments'][0];
     this.sub_department = this.department['sub_departments'][0];
-    console.log(this.organisation, this.branch, this.department, this.sub_department);
   }
 
   pickDepartment(){
     this.sub_department = this.department['sub_departments'][0];
-    console.log(this.organisation, this.branch, this.department, this.sub_department);
     //
   }
 

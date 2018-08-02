@@ -56,7 +56,6 @@ export class JobCreationComponent implements OnInit {
         this.errorMessage = "";
         let picks = document.querySelectorAll(".form-check-input");
         let activities = res['data'];
-        console.log(activities);
         for (let i = 0; i<picks.length; i++){
           for (let a of activities){
             if (a['activity_id'] == picks[i]['id']) {
@@ -82,7 +81,6 @@ export class JobCreationComponent implements OnInit {
             this.sub_activities.push([]);
           }
         }
-        console.log(this.activities);
         for (let element of res['data']) {
           let activity = element as Activity;
           if (activity.activity_id_is_father != null || activity.activity_id_is_father != ""){
@@ -143,7 +141,6 @@ export class JobCreationComponent implements OnInit {
     let elements = document.querySelectorAll(".form-check-input");
     let isChecked: boolean = false;
     for (let i = 0; i<elements.length; i++){
-      console.log("Let's check");
       if (elements[i]['checked'] == true) {
         isChecked = true;
       }

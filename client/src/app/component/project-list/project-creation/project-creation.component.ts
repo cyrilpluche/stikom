@@ -192,7 +192,6 @@ export class ProjectCreationComponent implements OnInit {
         //If we want a grouped job, then we take the single activity instance that correspond, and look at the unit concerned
         if(value['grouped']){
           let activity = await vm.groupJob(key);
-          console.log(activity);
           units = await vm._unitService.selectAllFromActivity(activity.activity_id).toPromise();
           e = {
             activities: [activity],
@@ -231,7 +230,6 @@ export class ProjectCreationComponent implements OnInit {
     let activities = activitiesData['data'] as Activity[];
     let activity;
     //we search for the one that group all activities in one instance
-    console.log(activities);
     for (let a of activities){
       if (a.activity_type == 'super_activity' || a.activity_type == 'sop'){
         //we add it to the array
@@ -459,7 +457,6 @@ export class ProjectCreationComponent implements OnInit {
       let d = new Date(this.minimum_project_end)
       this.new_project_end = moment(d).format('YYYY-MM-DD');
     }
-    console.log('mini : ', this.minimum_project_end);
   }
 
   search() {
@@ -542,7 +539,6 @@ export class ProjectCreationComponent implements OnInit {
   /* element is an id of organisation, branch or department. Level 1 = We search for organisation, level 2 = we search for departments.
    * Return : the element of organisation_elements wanted */
   findElement(element: number, level: number){
-    console.log('element : ', element, ' - level : ', level);
     if ( level == 1){
       //We search for an organisation
       for (let e of this.organisation_elements){
@@ -579,19 +575,16 @@ export class ProjectCreationComponent implements OnInit {
     this.branch = this.organisation['branchs'][0];
     this.department = this.branch['departments'][0];
     this.sub_department = this.department['sub_departments'][0];
-    console.log(this.organisation, this.branch, this.department, this.sub_department);
   }
 
   pickBranch(){
     // I have picked my new organisation, I need to set my new array for other levels
     this.department = this.branch['departments'][0];
     this.sub_department = this.department['sub_departments'][0];
-    console.log(this.organisation, this.branch, this.department, this.sub_department);
   }
 
   pickDepartment(){
     this.sub_department = this.department['sub_departments'][0];
-    console.log(this.organisation, this.branch, this.department, this.sub_department);
     //
   }
 

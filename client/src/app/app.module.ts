@@ -54,6 +54,7 @@ import { ActivityUpdateComponent } from './shared/modals/activity-update/activit
 import { DateHelperComponent } from './helpers/date-helper/date-helper.component';
 import { MasterOfWorkComponent } from './component/master-of-work/master-of-work.component';
 import { FooterComponent } from './shared/footer/footer.component';
+import { RoleHelperComponent } from './helpers/role-helper/role-helper.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -140,7 +141,8 @@ const routes: Routes = [
     FooterComponent,
     ActivityUpdateComponent,
     DateHelperComponent,
-    MasterOfWorkComponent
+    MasterOfWorkComponent,
+    RoleHelperComponent
   ],
   imports: [
     HttpClientModule,

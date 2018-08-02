@@ -9,9 +9,9 @@
   <div class="row row-first">
     <div class="col">
       <button type="button" class="btn btn-outline-danger waves-effect" routerLink="/project-list"><h6 class="no-margin-bottom"><i class="fa fa-times mr-3"></i>Back</h6></button>
-      <app-pdf-performance-target></app-pdf-performance-target>
-      <app-pdf-performance-report></app-pdf-performance-report>
-      <app-pdf-progress-evaluation></app-pdf-progress-evaluation>
+      <app-pdf-performance-target *ngIf="member_role != 'performer' && member_role != 'none'"></app-pdf-performance-target>
+      <app-pdf-performance-report *ngIf="member_role != 'performer' && member_role != 'none'"></app-pdf-performance-report>
+      <app-pdf-progress-evaluation *ngIf="member_role != 'performer' && member_role != 'none'"></app-pdf-progress-evaluation>
     </div>
   </div>
 
@@ -74,7 +74,7 @@
               *  }]
               * */
         -->
-        <tr *ngFor="let member of convertMap(volumes_displayed)" id="{{member['member'].member_id}}"> <!-- ONE ROW -->
+        <tr *ngFor="let member of convertMap(volumes_displayed)" id="{{member['member'].member_id}}" [hidden]="active_member_id != member['member'].member_id && (member_role == 'performer' || member_role == 'none')"> <!-- ONE ROW -->
           <td ><a (click)="selectMember(member['member'].member_id)">{{member['member'].member_id}}</a></td>
           <td class="text-small"><a (click)="selectMember(member['member'].member_id)">{{member['member'].member_name.toUpperCase()}} {{member['member'].member_first_name}}</a></td>
           <td>
@@ -122,11 +122,11 @@
         <td class="text-small">{{activity['job'].job_name}}</td>
         <td class="text-small">{{activity['activity'].activity_title}}</td>
         <td>
-          <input [hidden]="activity['m_a_p'].target_quantity==0" [(ngModel)]="activity['m_a_p'].finished_quantity" type="number" class="form-control" max="{{activity['m_a_p'].target_quantity}}" min="0">
+          <input [disabled]="member_role == 'performer' || member_role == 'none'" [hidden]="activity['m_a_p'].target_quantity==0" [(ngModel)]="activity['m_a_p'].finished_quantity" type="number" class="form-control" max="{{activity['m_a_p'].target_quantity}}" min="0">
         </td>
         <td >{{activity['m_a_p'].target_quantity}}</td>
         <td>
-          <input *ngIf="activity['m_a_p'].target_quantity == activity['m_a_p'].finished_quantity" [(ngModel)]="activity['m_a_p'].finished_date" type="date" class="form-control">
+          <input [disabled]="member_role == 'performer' || member_role == 'none'" *ngIf="activity['m_a_p'].target_quantity == activity['m_a_p'].finished_quantity" [(ngModel)]="activity['m_a_p'].finished_date" type="date" class="form-control">
         </td>
         <td class="text-small">{{activity['m_a_p'].target_date | date: 'dd/MM/yyyy'}}</td>
         <td class="text-small">{{activity['m_a_p'].evaluation}}</td>
@@ -138,7 +138,7 @@
     <!--Table-->
 
     <div class="col-2 text-center" *ngIf="element_selected != null">
-      <button class="btn btn-success waves-effect" type="button" data-toggle="modal" data-target="#confirmationModal">Save</button>
+      <button [disabled]="member_role == 'performer' || member_role == 'none'" class="btn btn-success waves-effect" type="button" data-toggle="modal" data-target="#confirmationModal">Save</button>
       <br>
       <!-- Error alert -->
       <i class="error-text" *ngIf="errorMessage && errorMessage != ''">{{errorMessage}}</i>

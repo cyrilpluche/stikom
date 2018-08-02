@@ -55,7 +55,6 @@ export class MasterOfWorkComponent implements OnInit {
   async ngOnInit() {
     await this.loadData();
     this.ready = true;
-    console.log(this.activities);
   }
 
 

@@ -4,6 +4,8 @@ import {ProjectService} from "../../objects/project/project.service";
 import {TextHelperComponent} from "../../helpers/text-helper/text-helper.component";
 import {DateHelperComponent} from "../../helpers/date-helper/date-helper.component";
 import {SopService} from "../../objects/sop/sop.service";
+import {RoleHelperComponent} from "../../helpers/role-helper/role-helper.component";
+import {MemberService} from "../../objects/member/member.service";
 
 @Component({
   selector: 'app-project-list',
@@ -23,16 +25,31 @@ export class ProjectListComponent implements OnInit {
   projects_2: Project[]; // Finished
 
   project_selected: Project = new Project();
-  buttonsTitles: string [] = ['Project information', 'Master of work', 'Gantt', 'Volume Progress'];
-  buttonsLinks: string [] = ['project', 'master-of-work', 'gantt-creation', 'volume-progress'];
+  buttonsTitles: string [] = [];
+  buttonsLinks: string [] = [];
+
+  member_role: string;
+  role_helper: RoleHelperComponent = new RoleHelperComponent(this._memberService);
 
   constructor(private _projectService: ProjectService,
-              private _sopService: SopService) { }
+              private _sopService: SopService,
+              private _memberService: MemberService) { }
 
   async ngOnInit() {
+    this.member_role = await this.role_helper.getRole();
+    this.setLinks();
     this._sopService.removeSopIdLocal();
     await this.loadProjects();
-    console.log(this.projects);
+  }
+
+  setLinks(){
+    if (this.member_role == 'performer' || this.member_role == 'none'){
+      this.buttonsTitles = ['Project information', 'Master of work', 'Volume Progress'];
+      this.buttonsLinks = ['project', 'master-of-work', 'volume-progress'];
+    }else{
+      this.buttonsTitles = ['Project information', 'Master of work', 'Gantt', 'Volume Progress'];
+      this.buttonsLinks = ['project', 'master-of-work', 'gantt-creation', 'volume-progress'];
+    }
   }
 
   async loadProjects(){

@@ -14,8 +14,8 @@
     </div>
   </div>
 
-  <div class="row row-first">
-    <div class="col anil_nepal">
+  <div class="row row-first" >
+    <div class="col anil_nepal" *ngIf="member_role != 'performer' && member_role != 'none' && member_role !='manager'">
       <label class="switch switch-left-right">
         <input class="switch-input" type="checkbox" (click)="makeEditable()">
         <span class="switch-label" data-on="Editable" data-off="OFF"></span> <span class="switch-handle"></span> </label>

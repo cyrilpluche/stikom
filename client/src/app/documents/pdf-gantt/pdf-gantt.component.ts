@@ -83,7 +83,6 @@ tr{
     {
 
       let theJob=this.jobs[j];
-      console.log("JobId : "+theJob['job_id']);
       let tempActivites:any[]=[];
 
       //We sore all the activities that are linked to that job
@@ -111,7 +110,6 @@ tr{
         }
       }
 
-      console.log(tempActivites);
 
       if(j>0)
       {
@@ -191,7 +189,6 @@ tr{
   {
     await this._pdfService.generatePdf(this.htmlPDF)
       .subscribe( (res) => {
-          console.log(res);
 
           if (!window.navigator.msSaveOrOpenBlob){
             // BLOB NAVIGATOR
@@ -236,7 +233,6 @@ tr{
       }
 
     }
-    console.log(this.jobs);
 
 
     this.filupPDF();
@@ -247,10 +243,8 @@ tr{
 
 
   async selectAllFromProject(idProject: string){
-    console.log("ici : "+idProject);
     await this._memberActivityProjectService.selectAllFromProjectFull(idProject)
       .subscribe( (res) => {
-        console.log(res['data']);
           this.activities=res['data'];
           this.fillUpJobTable();
 
@@ -262,7 +256,6 @@ tr{
   }
 
   async getProject(idProject: string){
-    console.log("ici projet id : "+idProject);
     await this._projectService.getProject(idProject)
       .subscribe( (res) => {
 

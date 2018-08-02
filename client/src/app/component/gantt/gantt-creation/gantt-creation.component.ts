@@ -176,7 +176,6 @@ export class GanttCreationComponent implements OnInit {
         this.elements.push(element);
     }
 
-    console.log(this.elements);
     this.ready = true;
 
   }
