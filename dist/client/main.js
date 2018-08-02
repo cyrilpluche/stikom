@@ -321,7 +321,7 @@ module.exports = "body {\r\n  background-color: #f1f1f0;\r\n}\r\n"
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<app-nav-bar></app-nav-bar>\r\n\r\n<router-outlet></router-outlet>\r\n\r\n"
+module.exports = "<app-nav-bar></app-nav-bar>\r\n\r\n<div class=\"body-content\" style=\"min-height: 700px\">\r\n  <router-outlet></router-outlet>\r\n</div>\r\n\r\n\r\n<app-footer></app-footer>\r\n\r\n"
 
 /***/ }),
 
@@ -419,12 +419,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _shared_Loader_loader_loader_component__WEBPACK_IMPORTED_MODULE_45__ = __webpack_require__(/*! ./shared/Loader/loader/loader.component */ "./src/app/shared/Loader/loader/loader.component.ts");
 /* harmony import */ var _component_project_list_volume_progress_volume_progress_component__WEBPACK_IMPORTED_MODULE_46__ = __webpack_require__(/*! ./component/project-list/volume-progress/volume-progress.component */ "./src/app/component/project-list/volume-progress/volume-progress.component.ts");
 /* harmony import */ var _component_not_found_not_found_not_found_component__WEBPACK_IMPORTED_MODULE_47__ = __webpack_require__(/*! ./component/not-found/not-found/not-found.component */ "./src/app/component/not-found/not-found/not-found.component.ts");
+/* harmony import */ var _helpers_text_helper_text_helper_component__WEBPACK_IMPORTED_MODULE_48__ = __webpack_require__(/*! ./helpers/text-helper/text-helper.component */ "./src/app/helpers/text-helper/text-helper.component.ts");
+/* harmony import */ var _shared_modals_activity_update_activity_update_component__WEBPACK_IMPORTED_MODULE_49__ = __webpack_require__(/*! ./shared/modals/activity-update/activity-update.component */ "./src/app/shared/modals/activity-update/activity-update.component.ts");
+/* harmony import */ var _helpers_date_helper_date_helper_component__WEBPACK_IMPORTED_MODULE_50__ = __webpack_require__(/*! ./helpers/date-helper/date-helper.component */ "./src/app/helpers/date-helper/date-helper.component.ts");
+/* harmony import */ var _component_master_of_work_master_of_work_component__WEBPACK_IMPORTED_MODULE_51__ = __webpack_require__(/*! ./component/master-of-work/master-of-work.component */ "./src/app/component/master-of-work/master-of-work.component.ts");
+/* harmony import */ var _shared_footer_footer_component__WEBPACK_IMPORTED_MODULE_52__ = __webpack_require__(/*! ./shared/footer/footer.component */ "./src/app/shared/footer/footer.component.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
+
+
+
+
 
 
 
@@ -504,6 +514,7 @@ var routes = [
     { path: 'pdf-performance-target', component: _documents_pdf_performance_target_pdf_performance_target_component__WEBPACK_IMPORTED_MODULE_41__["PdfPerformanceTargetComponent"] },
     { path: 'pdf-performance-report', component: _documents_pdf_performance_report_pdf_performance_report_component__WEBPACK_IMPORTED_MODULE_42__["PdfPerformanceReportComponent"] },
     { path: 'volume-progress', component: _component_project_list_volume_progress_volume_progress_component__WEBPACK_IMPORTED_MODULE_46__["VolumeProgressComponent"] },
+    { path: 'master-of-work', component: _component_master_of_work_master_of_work_component__WEBPACK_IMPORTED_MODULE_51__["MasterOfWorkComponent"] },
     { path: '404', component: _component_not_found_not_found_not_found_component__WEBPACK_IMPORTED_MODULE_47__["NotFoundComponent"] },
     { path: '**', component: _component_not_found_not_found_not_found_component__WEBPACK_IMPORTED_MODULE_47__["NotFoundComponent"] }
 ];
@@ -555,7 +566,13 @@ var AppModule = /** @class */ (function () {
                 _component_gantt_gantt_creation_gantt_creation_component__WEBPACK_IMPORTED_MODULE_44__["GanttCreationComponent"],
                 _shared_Loader_loader_loader_component__WEBPACK_IMPORTED_MODULE_45__["LoaderComponent"],
                 _component_project_list_volume_progress_volume_progress_component__WEBPACK_IMPORTED_MODULE_46__["VolumeProgressComponent"],
-                _component_not_found_not_found_not_found_component__WEBPACK_IMPORTED_MODULE_47__["NotFoundComponent"]
+                _component_not_found_not_found_not_found_component__WEBPACK_IMPORTED_MODULE_47__["NotFoundComponent"],
+                _helpers_text_helper_text_helper_component__WEBPACK_IMPORTED_MODULE_48__["TextHelperComponent"],
+                _shared_modals_activity_update_activity_update_component__WEBPACK_IMPORTED_MODULE_49__["ActivityUpdateComponent"],
+                _shared_footer_footer_component__WEBPACK_IMPORTED_MODULE_52__["FooterComponent"],
+                _shared_modals_activity_update_activity_update_component__WEBPACK_IMPORTED_MODULE_49__["ActivityUpdateComponent"],
+                _helpers_date_helper_date_helper_component__WEBPACK_IMPORTED_MODULE_50__["DateHelperComponent"],
+                _component_master_of_work_master_of_work_component__WEBPACK_IMPORTED_MODULE_51__["MasterOfWorkComponent"]
             ],
             imports: [
                 _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClientModule"],
@@ -1397,16 +1414,16 @@ var ActivityCreationComponent = /** @class */ (function () {
     };
     ActivityCreationComponent.prototype.generateSopActivity = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var activity, s, sop, type_duration_array, _i, _a, element, i, _b, _c, sub_a, more, more, more, more, unit_id, id, job_id, error_5, error_6;
-            return __generator(this, function (_d) {
-                switch (_d.label) {
+            var activity, s, sop, minutes, _i, _a, element, unit_id, id, job_id, error_5, error_6;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
                     case 0:
                         if (!this.isNewSop) return [3 /*break*/, 2];
                         //We get the SOP
                         activity = new _objects_activity_activity__WEBPACK_IMPORTED_MODULE_3__["Activity"]();
                         return [4 /*yield*/, this._sopService.getSop(this.sop_id).toPromise()];
                     case 1:
-                        s = _d.sent();
+                        s = _b.sent();
                         sop = s['data'];
                         //Automatic
                         activity.activity_type = "sop";
@@ -1425,93 +1442,44 @@ var ActivityCreationComponent = /** @class */ (function () {
                     case 2:
                         activity = this.activity_sop;
                         console.log('act : ', this.activity_sop);
-                        _d.label = 3;
+                        _b.label = 3;
                     case 3:
-                        type_duration_array = [0, 0, 0, 0];
-                        //We get the sorted duration inside an array
+                        minutes = 0;
                         for (_i = 0, _a = this.convertMap(this.activities); _i < _a.length; _i++) {
                             element = _a[_i];
-                            i = void 0;
+                            //We convert all durations into minutes
                             if (element['activity'].activity_type_duration == 'months') {
-                                i = 3;
+                                minutes += (element['activity'].activity_duration) * 30 * 24 * 60;
                             }
                             else if (element['activity'].activity_type_duration == 'days') {
-                                i = 2;
+                                minutes += (element['activity'].activity_duration) * 24 * 60;
                             }
                             else if (element['activity'].activity_type_duration == 'hours') {
-                                i = 1;
+                                minutes += (element['activity'].activity_duration) * 60;
                             }
                             if (element['activity'].activity_type_duration == 'minutes') {
-                                i = 0;
-                            }
-                            type_duration_array[i] += element['activity'].activity_duration;
-                            for (_b = 0, _c = element['children']; _b < _c.length; _b++) {
-                                sub_a = _c[_b];
-                                if (sub_a['activity'].activity_type_duration == 'months') {
-                                    i = 3;
-                                }
-                                else if (sub_a['activity'].activity_type_duration == 'days') {
-                                    i = 2;
-                                }
-                                else if (sub_a['activity'].activity_type_duration == 'hours') {
-                                    i = 1;
-                                }
-                                if (sub_a['activity'].activity_type_duration == 'minutes') {
-                                    i = 0;
-                                }
-                                type_duration_array[i] += sub_a['activity'].activity_duration;
+                                minutes += element['activity'].activity_duration;
                             }
                         }
-                        console.log(type_duration_array);
-                        if (type_duration_array[3] > 0 || type_duration_array[2] > 30) {
-                            activity.activity_type_duration = 'months';
-                            activity.activity_duration = type_duration_array[3] + 1;
-                            more = Math.ceil(type_duration_array[2] / 30);
-                            activity.activity_duration += more;
-                            console.log("yeah");
-                        }
-                        else if (((type_duration_array[2] > 0 && type_duration_array[2] <= 30) || type_duration_array[1] >= 24) && type_duration_array[3] == 0) {
-                            activity.activity_type_duration = 'days';
-                            activity.activity_duration = type_duration_array[2] + 1;
-                            more = Math.ceil(type_duration_array[1] / 24);
-                            activity.activity_duration += more;
-                            console.log("yeah 2");
-                        }
-                        else if (((type_duration_array[1] > 0 && type_duration_array[1] < 24) || type_duration_array[0] >= 60) && type_duration_array[2] == 0 && type_duration_array[3] == 0) {
-                            activity.activity_type_duration = 'hours';
-                            activity.activity_duration = type_duration_array[1] + 1;
-                            more = Math.ceil(type_duration_array[0] / 1440);
-                            activity.activity_duration += more;
-                            console.log("yeah 3");
-                        }
-                        else if (type_duration_array[0] <= 1440) {
-                            activity.activity_type_duration = 'minutes';
-                            activity.activity_duration = type_duration_array[0];
-                            console.log("yeah 4");
-                        }
-                        else {
-                            activity.activity_type_duration = 'hours';
-                            more = Math.ceil(type_duration_array[0] / 1440);
-                            activity.activity_duration = more + 1;
-                            console.log("yeah 5");
-                        }
+                        activity.activity_type_duration = 'days';
+                        activity.activity_duration = Math.ceil(minutes / 60 / 24) + 1;
                         if (!this.isNewSop) return [3 /*break*/, 11];
-                        _d.label = 4;
+                        _b.label = 4;
                     case 4:
-                        _d.trys.push([4, 9, , 10]);
+                        _b.trys.push([4, 9, , 10]);
                         unit_id = this.units[0].unit_id;
                         return [4 /*yield*/, this._activityService.createActivity(activity).toPromise()];
                     case 5:
-                        id = _d.sent();
+                        id = _b.sent();
                         return [4 /*yield*/, this._jobService.createJob(activity.activity_title, id['data']['activity_id'], this.sop_id).toPromise()];
                     case 6:
-                        job_id = _d.sent();
+                        job_id = _b.sent();
                         return [4 /*yield*/, this._unitService.bindUnitActivity(unit_id, id['data']['activity_id']).toPromise()];
                     case 7:
-                        _d.sent();
+                        _b.sent();
                         return [4 /*yield*/, this._jobService.bind_job_activity(job_id['data']['job_id'], id['data']['activity_id']).toPromise()];
                     case 8:
-                        _d.sent();
+                        _b.sent();
                         this.isNewSop = false;
                         this.job_sop = new _objects_job_job__WEBPACK_IMPORTED_MODULE_8__["Job"]();
                         this.job_sop.job_id = job_id['data']['job_id'];
@@ -1519,19 +1487,19 @@ var ActivityCreationComponent = /** @class */ (function () {
                         this.activity_sop = activity;
                         return [3 /*break*/, 10];
                     case 9:
-                        error_5 = _d.sent();
+                        error_5 = _b.sent();
                         this.errorMessage = error_5.message;
                         return [3 /*break*/, 10];
                     case 10: return [3 /*break*/, 14];
                     case 11:
-                        _d.trys.push([11, 13, , 14]);
+                        _b.trys.push([11, 13, , 14]);
                         console.log('up + : ', activity);
                         return [4 /*yield*/, this._activityService.update(activity).toPromise()];
                     case 12:
-                        _d.sent();
+                        _b.sent();
                         return [3 /*break*/, 14];
                     case 13:
-                        error_6 = _d.sent();
+                        error_6 = _b.sent();
                         this.errorMessage = error_6.message;
                         return [3 /*break*/, 14];
                     case 14: return [2 /*return*/];
@@ -1842,7 +1810,7 @@ var AdminUsersComponent = /** @class */ (function () {
                             .subscribe(function (res) {
                             console.log(res['data']);
                             _this.mdlSampleIsOpen = false;
-                            _this.mdlSampleIsOpen = true;
+                            _this.manageRoles(_this.user_id, _this.user_admin);
                         }, function (error) {
                             console.log(error.message);
                         })];
@@ -1862,7 +1830,7 @@ var AdminUsersComponent = /** @class */ (function () {
                             .subscribe(function (res) {
                             console.log(res['data']);
                             _this.mdlSampleIsOpen = false;
-                            _this.mdlSampleIsOpen = true;
+                            _this.manageRoles(_this.user_id, _this.user_admin);
                         }, function (error) {
                             console.log(error.message);
                         })];
@@ -2363,7 +2331,7 @@ var SignUpComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container\" *ngIf=\"!ready\">\r\n  <div class=\"row-first\">\r\n    <app-loader></app-loader>\r\n  </div>\r\n</div>\r\n\r\n<div class=\"container\" *ngIf=\"ready\">\r\n\r\n  <div class=\"row row-first\">\r\n    <div class=\"col\">\r\n      <button type=\"button\" class=\"btn btn-outline-danger waves-effect\" data-toggle=\"modal\" data-target=\"#warningModal\"><h6 class=\"no-margin-bottom\"><i class=\"fa fa-times mr-3\"></i>Back</h6></button>\r\n      <button class=\"btn btn-success waves-effect\" type=\"button\" data-toggle=\"modal\" data-target=\"#confirmationModal\">Submit</button>\r\n    </div>\r\n  </div>\r\n\r\n  <div class=\"row row-first justify-content-end\">\r\n    <div class=\" md-form\" id=\"search-bar\">\r\n      <input id=\"search\" (keyup)=\"search()\" class=\"form-control\" type=\"text\" placeholder=\"Search\" aria-label=\"Search\">\r\n    </div>\r\n  </div>\r\n\r\n  <div class=\"row justify-content-center\">\r\n\r\n        <table class=\"col-12 hoverable table table-borderless table-hover table-fixed\" id=\"gantt-table\">\r\n\r\n          <!--Table head-->\r\n          <thead class=\"\">\r\n          <tr class=\"text-white\">\r\n            <th (click)=\"sortTable(0)\"><a>Job</a></th>\r\n            <th (click)=\"sortTable(1)\"><a>Activity</a></th>\r\n            <th (click)=\"sortTable(2)\"><a>Target Date</a></th>\r\n            <th (click)=\"sortTable(3)\"><a>Begin Date</a></th>\r\n          </tr>\r\n          </thead>\r\n          <!--Table head-->\r\n\r\n          <!--Table body-->\r\n          <tbody>\r\n          <!-- elements[0]: activity_id && elements[1]: activity && elements[2]: m_a_p && elements[3]: members linked -->\r\n            <tr *ngFor=\"let element of elements\">\r\n              <td (click)=\"selectRow(element)\"><a>{{element['job'].job_name}}</a></td>\r\n              <td (click)=\"selectRow(element)\"><a>{{element['activity'].activity_title}}</a></td>\r\n              <td>\r\n                <input (change)=\"minMaxBeginDates(element)\" [(ngModel)]=\"elements[elements.indexOf(element)]['date_target']\" min=\"{{element['min_date_target'] | date:'yyyy-MM-dd'}}\" max=\"{{element['max_date_target'] | date:'yyyy-MM-dd'}}\" type=\"date\" class=\"form-control\">\r\n              </td>\r\n              <td>\r\n                <input [(ngModel)]=\"elements[elements.indexOf(element)]['date_begin']\" min=\"{{element['min_date_begin'] | date:'yyyy-MM-dd'}}\" max=\"{{element['max_date_begin'] | date:'yyyy-MM-dd'}}\" type=\"date\" class=\"form-control\">\r\n              </td>\r\n            </tr>\r\n          </tbody>\r\n          <!--Table body-->\r\n\r\n        </table>\r\n        <!--Table-->\r\n\r\n        <table class=\"col-12 hoverable table table-borderless table-hover table-fixed\" id=\"worker-table\" *ngIf=\"element_selected != null\">\r\n\r\n          <!--Table head-->\r\n          <thead class=\"thead-secondary\">\r\n          <tr class=\"text-white\">\r\n            <th (click)=\"sortTable1(0)\"><a>Last Name</a></th>\r\n            <th (click)=\"sortTable1(1)\"><a>First Name</a></th>\r\n            <th>Target Quantity</th>\r\n          </tr>\r\n          </thead>\r\n          <!--Table head-->\r\n\r\n          <!--Table body-->\r\n          <tbody >\r\n          <tr *ngFor=\"let worker of element_selected['maps_members']\">\r\n            <td>{{worker['member'].member_name.toUpperCase()}}</td>\r\n            <td>{{worker['member'].member_first_name}}</td>\r\n            <td>\r\n              <input [(ngModel)]=\"worker['m_a_p'].target_quantity\" type=\"number\" class=\"form-control\">\r\n            </td>\r\n          </tr>\r\n          </tbody>\r\n          <!--Table body-->\r\n\r\n        </table>\r\n        <!--Table-->\r\n\r\n  </div>\r\n</div>\r\n\r\n<!-- Modal warning -->\r\n<app-warning title=\"Exit\"\r\n             text=\"Are you sure you want to go back to the projects list ?\"\r\n             [isLink]=true\r\n             link=\"project-list\">\r\n</app-warning>\r\n\r\n<!-- Modal confirmation -->\r\n<app-confirmation title=\"Finalize gantt informations\"\r\n                  text=\"Are you sure all informations provided are correct ?\"\r\n                  (success)=\"onSubmit()\"\r\n                  [isLinkActive]=false\r\n                  link=\"project-list\">\r\n</app-confirmation>\r\n"
+module.exports = "<div class=\"container\" *ngIf=\"!ready\">\r\n  <div class=\"row-first\">\r\n    <app-loader></app-loader>\r\n  </div>\r\n</div>\r\n\r\n<div class=\"container\" *ngIf=\"ready\">\r\n\r\n  <div class=\"row row-first\">\r\n    <div class=\"col\">\r\n      <button type=\"button\" class=\"btn btn-outline-danger waves-effect\" data-toggle=\"modal\" data-target=\"#warningModal\"><h6 class=\"no-margin-bottom\"><i class=\"fa fa-times mr-3\"></i>Back</h6></button>\r\n      <button class=\"btn btn-success waves-effect\" type=\"button\" data-toggle=\"modal\" data-target=\"#confirmationModal\">Submit</button>\r\n      <app-pdf-gantt ></app-pdf-gantt>\r\n    </div>\r\n  </div>\r\n\r\n  <div class=\"row row-first justify-content-end\">\r\n    <div class=\" md-form\" id=\"search-bar\">\r\n      <input id=\"search\" (keyup)=\"search()\" class=\"form-control\" type=\"text\" placeholder=\"Search\" aria-label=\"Search\">\r\n    </div>\r\n  </div>\r\n\r\n  <div class=\"row justify-content-center\">\r\n\r\n        <table class=\"col-12 hoverable table table-borderless table-hover table-fixed\" id=\"gantt-table\">\r\n\r\n          <!--Table head-->\r\n          <thead class=\"\">\r\n          <tr class=\"text-white\">\r\n            <th (click)=\"sortTable(0)\"><a>Job</a></th>\r\n            <th (click)=\"sortTable(1)\"><a>Activity</a></th>\r\n            <th (click)=\"sortTable(2)\"><a>Target Date</a></th>\r\n            <th (click)=\"sortTable(3)\"><a>Begin Date</a></th>\r\n          </tr>\r\n          </thead>\r\n          <!--Table head-->\r\n\r\n          <!--Table body-->\r\n          <tbody>\r\n          <!-- elements[0]: activity_id && elements[1]: activity && elements[2]: m_a_p && elements[3]: members linked -->\r\n            <tr *ngFor=\"let element of elements\">\r\n              <td (click)=\"selectRow(element)\"><a>{{element['job'].job_id}}</a></td>\r\n              <td (click)=\"selectRow(element)\"><a>{{element['activity'].activity_title}}</a></td>\r\n              <td>\r\n                <input (change)=\"minMaxBeginDates(element)\" [(ngModel)]=\"elements[elements.indexOf(element)]['date_target']\" min=\"{{element['min_date_target'] | date:'yyyy-MM-dd'}}\" max=\"{{element['max_date_target'] | date:'yyyy-MM-dd'}}\" type=\"date\" class=\"form-control\">\r\n              </td>\r\n              <td>\r\n                <input [(ngModel)]=\"elements[elements.indexOf(element)]['date_begin']\" min=\"{{element['min_date_begin'] | date:'yyyy-MM-dd'}}\" max=\"{{element['max_date_begin'] | date:'yyyy-MM-dd'}}\" type=\"date\" class=\"form-control\">\r\n              </td>\r\n            </tr>\r\n          </tbody>\r\n          <!--Table body-->\r\n\r\n        </table>\r\n        <!--Table-->\r\n\r\n        <table class=\"col-12 hoverable table table-borderless table-hover table-fixed\" id=\"worker-table\" *ngIf=\"element_selected != null\">\r\n\r\n          <!--Table head-->\r\n          <thead class=\"thead-secondary\">\r\n          <tr class=\"text-white\">\r\n            <th (click)=\"sortTable1(0)\"><a>Last Name</a></th>\r\n            <th (click)=\"sortTable1(1)\"><a>First Name</a></th>\r\n            <th>Target Quantity</th>\r\n          </tr>\r\n          </thead>\r\n          <!--Table head-->\r\n\r\n          <!--Table body-->\r\n          <tbody >\r\n          <tr *ngFor=\"let worker of element_selected['maps_members']\">\r\n            <td>{{worker['member'].member_name.toUpperCase()}}</td>\r\n            <td>{{worker['member'].member_first_name}}</td>\r\n            <td>\r\n              <input [(ngModel)]=\"worker['m_a_p'].target_quantity\" type=\"number\" class=\"form-control\">\r\n            </td>\r\n          </tr>\r\n          </tbody>\r\n          <!--Table body-->\r\n\r\n        </table>\r\n        <!--Table-->\r\n\r\n  </div>\r\n</div>\r\n\r\n<!-- Modal warning -->\r\n<app-warning title=\"Exit\"\r\n             text=\"Are you sure you want to go back to the projects list ?\"\r\n             [isLink]=true\r\n             link=\"project-list\">\r\n</app-warning>\r\n\r\n<!-- Modal confirmation -->\r\n<app-confirmation title=\"Finalize gantt informations\"\r\n                  text=\"Are you sure all informations provided are correct ?\"\r\n                  (success)=\"onSubmit()\"\r\n                  [isLinkActive]=false\r\n                  link=\"project-list\">\r\n</app-confirmation>\r\n"
 
 /***/ }),
 
@@ -2923,7 +2891,7 @@ var GanttComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ""
+module.exports = "h5 {\r\n  color: #7b7b7b !important;\r\n}\r\n\r\nh1 {\r\n  font-size: 3em !important;\r\n}\r\n\r\nhtml {\r\n  min-height: 100% !important;\r\n}\r\n\r\n.row-first {\r\n  margin-top: 15% !important;\r\n}\r\n\r\n\r\n\r\n"
 
 /***/ }),
 
@@ -2934,7 +2902,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container\">\r\n  <div class=\"row row-first\">\r\n    <div class=\"col-6 col-padding-1\">\r\n\r\n    </div>\r\n    <div class=\"col-6 col-padding-1\">\r\n      <h1>Set up and manage your projects with SOP Manager</h1>\r\n    </div>\r\n  </div>\r\n</div>\r\n"
+module.exports = "<div class=\"container\">\r\n  <div class=\"row row-first\">\r\n    <div class=\"col-6\">\r\n      <h5 class=\"font-weight-bold text-uppercase\">Welcome to sop manager</h5>\r\n      <h1 class=\"row-first font-weight-bold\">Set up and manage your projects with SOP Manager</h1>\r\n    </div>\r\n  </div>\r\n</div>\r\n"
 
 /***/ }),
 
@@ -3342,6 +3310,329 @@ var JobComponent = /** @class */ (function () {
         __metadata("design:paramtypes", [])
     ], JobComponent);
     return JobComponent;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/component/master-of-work/master-of-work.component.html":
+/*!************************************************************************!*\
+  !*** ./src/app/component/master-of-work/master-of-work.component.html ***!
+  \************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"container\" *ngIf=\"!ready\">\r\n  <div class=\"row-first\">\r\n    <app-loader></app-loader>\r\n  </div>\r\n</div>\r\n\r\n<div class=\"container\" *ngIf=\"ready\">\r\n\r\n  <div class=\"row row-first\">\r\n    <div class=\"col\">\r\n      <button type=\"button\" class=\"btn btn-outline-danger waves-effect\" [routerLink]=\"['/project-list']\"><h6 class=\"no-margin-bottom\"><i class=\"fa fa-times mr-3\"></i>Back</h6></button>\r\n    </div>\r\n  </div>\r\n\r\n  <!-- Error alert -->\r\n  <div class=\"row row-first justify-content-end error-text\">\r\n    <i>{{errorMessage}}</i>\r\n  </div>\r\n\r\n  <!-- MASTER OF WORK -->\r\n  <div *ngFor=\"let job of convertMap(activities)\" class=\"row-first card card-cascade hoverable\">\r\n    <div class=\"card-body card-body-cascade\">\r\n      <!--Title-->\r\n      <h4 style=\"margin-bottom: 10px !important;\" class=\"row justify-content-center card-title\">\r\n        <div class=\"col-2 text-link\">\r\n          {{job['job'].job_id}}\r\n        </div>\r\n        <div class=\"col\">\r\n          {{job['job'].job_name}}\r\n        </div>\r\n        <div class=\"col text-right\">\r\n          <a>\r\n            <i class=\"fa fa-eye text-blue\" data-toggle=\"collapse\" [attr.data-target]=\"'#'+job['job'].job_id\" aria-expanded=\"false\" aria-controls=\"{{job['job'].job_id}}\"></i>\r\n          </a>\r\n        </div>\r\n      </h4>\r\n\r\n      <div class=\"collapse row justify-content-center\" id=\"{{job['job'].job_id}}\">\r\n        <div class=\"row row-first col-12\">\r\n          <div class=\"offset-2 col-4\">\r\n            ACTIVITY\r\n          </div>\r\n          <div class=\"col-4\">\r\n            UNIT\r\n          </div>\r\n        </div>\r\n\r\n        <!-- JOB  -->\r\n        <div *ngFor=\"let father_activity of convertMap(job['activities'])\" class=\"col-12 row justify-content-center\">\r\n\r\n          <hr class=\"col-11\">\r\n\r\n          <div class=\"col-1\">\r\n            <a (click)=\"pickActivity(father_activity, 1)\" data-toggle=\"modal\" data-target=\"#activityModal\"><i class=\"fa fa-cog text-blue\"></i></a>\r\n          </div>\r\n          <div class=\"col-1\">({{father_activity['sub_activities'].length}})</div>\r\n          <div class=\"col-4 text-left\">{{father_activity['activity'].activity_title}}</div>\r\n          <div class=\"col-4 text-left\">{{father_activity['unit'].unit_name}}</div>\r\n          <div class=\"col-2 text-center\">\r\n            <a *ngIf=\"father_activity['sub_activities'].length != 0\">\r\n              <i class=\"fa fa-eye text-blue\" data-toggle=\"collapse\" [attr.data-target]=\"'#'+father_activity['job_id']+'-'+father_activity['activity'].activity_id\" aria-expanded=\"false\" aria-controls=\"{{father_activity['activity'].activity_id}}\"></i>\r\n            </a>\r\n          </div>\r\n\r\n          <!-- Collapsible element -->\r\n          <ng-controller class=\"col-12 collapse\" id=\"{{father_activity['job_id']}}-{{father_activity['activity'].activity_id}}\">\r\n            <div class=\"row\" *ngFor=\"let sub_activity of father_activity['sub_activities']\">\r\n              <div class=\"offset-1 col-1\">\r\n                <a (click)=\"pickActivity(sub_activity, 2)\" data-toggle=\"modal\" data-target=\"#activityModal\"><i class=\"fa fa-cog text-link\"></i></a>\r\n              </div>\r\n              <div class=\"col-10 text-left\">\r\n                {{sub_activity.activity_title}}\r\n              </div>\r\n            </div>\r\n          </ng-controller>\r\n          <!-- / Collapsible element -->\r\n\r\n        </div>\r\n\r\n      </div>\r\n    </div>\r\n  </div>\r\n\r\n</div>\r\n\r\n<app-activity-update *ngIf=\"activity_selected != null\"\r\n                     title={{title_modal_activity}}\r\n                     [units]=convertMap(units)\r\n                     [managment_levels]=management_levels\r\n                     [activityUpdate]=activity_selected\r\n                     [isActive]=false\r\n                     [isLinkActive]=false>\r\n</app-activity-update>\r\n\r\n\r\n\r\n"
+
+/***/ }),
+
+/***/ "./src/app/component/master-of-work/master-of-work.component.scss":
+/*!************************************************************************!*\
+  !*** ./src/app/component/master-of-work/master-of-work.component.scss ***!
+  \************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ""
+
+/***/ }),
+
+/***/ "./src/app/component/master-of-work/master-of-work.component.ts":
+/*!**********************************************************************!*\
+  !*** ./src/app/component/master-of-work/master-of-work.component.ts ***!
+  \**********************************************************************/
+/*! exports provided: MasterOfWorkComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MasterOfWorkComponent", function() { return MasterOfWorkComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _objects_project_project_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../objects/project/project.service */ "./src/app/objects/project/project.service.ts");
+/* harmony import */ var _helpers_text_helper_text_helper_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../helpers/text-helper/text-helper.component */ "./src/app/helpers/text-helper/text-helper.component.ts");
+/* harmony import */ var _objects_activity_activity_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../objects/activity/activity.service */ "./src/app/objects/activity/activity.service.ts");
+/* harmony import */ var _objects_member_activity_project_member_activity_project_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../objects/member_activity_project/member-activity-project.service */ "./src/app/objects/member_activity_project/member-activity-project.service.ts");
+/* harmony import */ var _objects_job_job_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../objects/job/job.service */ "./src/app/objects/job/job.service.ts");
+/* harmony import */ var _objects_unit_unit_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../objects/unit/unit.service */ "./src/app/objects/unit/unit.service.ts");
+/* harmony import */ var _objects_managment_level_managment_level_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../objects/managment_level/managment-level.service */ "./src/app/objects/managment_level/managment-level.service.ts");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __generator = (undefined && undefined.__generator) || function (thisArg, body) {
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    function verb(n) { return function (v) { return step([n, v]); }; }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) try {
+            if (f = 1, y && (t = y[op[0] & 2 ? "return" : op[0] ? "throw" : "next"]) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [0, t.value];
+            switch (op[0]) {
+                case 0: case 1: t = op; break;
+                case 4: _.label++; return { value: op[1], done: false };
+                case 5: _.label++; y = op[1]; op = [0]; continue;
+                case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                default:
+                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                    if (t[2]) _.ops.pop();
+                    _.trys.pop(); continue;
+            }
+            op = body.call(thisArg, _);
+        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
+
+
+
+
+
+
+
+
+var MasterOfWorkComponent = /** @class */ (function () {
+    function MasterOfWorkComponent(_projectService, _activityService, _jobService, _managmentLevel, _unitService, _memberActivityProjectService) {
+        this._projectService = _projectService;
+        this._activityService = _activityService;
+        this._jobService = _jobService;
+        this._managmentLevel = _managmentLevel;
+        this._unitService = _unitService;
+        this._memberActivityProjectService = _memberActivityProjectService;
+        /* ----- Data ----- */
+        this.errorMessage = "";
+        this.ready = false;
+        this.textHelper = new _helpers_text_helper_text_helper_component__WEBPACK_IMPORTED_MODULE_2__["TextHelperComponent"]();
+        /*
+         * activities: MAP[KEY: job_id, VALUES: {job: Job,
+         *                                       activities: MAP[KEY: activity_id, VALUES: {activity: Activity,
+         *                                                                                  sub_activities: Activity[]
+         *                                                                                 }
+         *                                                      ]
+         *                                       }
+         *                ]
+         */
+        this.activities = new Map();
+        this.units = new Map();
+        this.management_levels = [];
+        this.title_modal_activity = 'Update activity ';
+    }
+    MasterOfWorkComponent.prototype.ngOnInit = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.loadData()];
+                    case 1:
+                        _a.sent();
+                        this.ready = true;
+                        console.log(this.activities);
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    /* ------------------ LOAD METHODS ------------------ */
+    /* ------------------ LOAD METHODS ------------------ */
+    MasterOfWorkComponent.prototype.loadData = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.loadProject()];
+                    case 1:
+                        _a.sent();
+                        return [4 /*yield*/, this.loadActivitiesFromProject()];
+                    case 2:
+                        _a.sent();
+                        return [4 /*yield*/, this.loadManagement()];
+                    case 3:
+                        _a.sent();
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    MasterOfWorkComponent.prototype.loadProject = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var project_id, p, error_1;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        project_id = localStorage.getItem("Project_id");
+                        return [4 /*yield*/, this._projectService.getProject(project_id).toPromise()];
+                    case 1:
+                        p = _a.sent();
+                        this.project = p['data'];
+                        return [3 /*break*/, 3];
+                    case 2:
+                        error_1 = _a.sent();
+                        this.errorMessage = error_1.message;
+                        return [3 /*break*/, 3];
+                    case 3: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    MasterOfWorkComponent.prototype.loadActivitiesFromProject = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var maps, activities_id, activities, _i, activities_id_1, activity_id, activity, job, unit, e, error_2;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 8, , 9]);
+                        return [4 /*yield*/, this._memberActivityProjectService.selectAllFromProjectDistinct(this.project.project_id).toPromise()];
+                    case 1:
+                        maps = _a.sent();
+                        activities_id = maps['data'];
+                        activities = [];
+                        _i = 0, activities_id_1 = activities_id;
+                        _a.label = 2;
+                    case 2:
+                        if (!(_i < activities_id_1.length)) return [3 /*break*/, 7];
+                        activity_id = activities_id_1[_i];
+                        return [4 /*yield*/, this._activityService.select(activity_id['activity_id']).toPromise()];
+                    case 3:
+                        activity = _a.sent();
+                        return [4 /*yield*/, this._jobService.select(activity_id['job_id']).toPromise()];
+                    case 4:
+                        job = _a.sent();
+                        return [4 /*yield*/, this._unitService.selectAllFromActivity(activity_id['activity_id']).toPromise()];
+                    case 5:
+                        unit = _a.sent();
+                        e = {
+                            activity: activity['data'],
+                            job: job['data'],
+                            unit: unit['data'][0]
+                        };
+                        activities.push(e);
+                        this.units.set(unit['data'][0].unit_id, unit['data'][0]);
+                        _a.label = 6;
+                    case 6:
+                        _i++;
+                        return [3 /*break*/, 2];
+                    case 7:
+                        this.sortActivities(activities);
+                        return [3 /*break*/, 9];
+                    case 8:
+                        error_2 = _a.sent();
+                        this.errorMessage = error_2.message;
+                        return [3 /*break*/, 9];
+                    case 9: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    MasterOfWorkComponent.prototype.loadManagement = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var m, error_3;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        return [4 /*yield*/, this._managmentLevel.selectAll().toPromise()];
+                    case 1:
+                        m = _a.sent();
+                        this.management_levels = m['data'];
+                        return [3 /*break*/, 3];
+                    case 2:
+                        error_3 = _a.sent();
+                        this.errorMessage = error_3.message;
+                        return [3 /*break*/, 3];
+                    case 3: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    /* ------------------ SORT METHODS ------------------ */
+    /* ------------------ SORT METHODS ------------------ */
+    /*
+     * DATA - activities: {job: Job, activity: Activity, unit: Unit}
+     */
+    MasterOfWorkComponent.prototype.sortActivities = function (activities) {
+        //We have a main activity
+        for (var _i = 0, activities_1 = activities; _i < activities_1.length; _i++) {
+            var activity = activities_1[_i];
+            if (activity['activity'].activity_id_is_father == null || activity['activity'].activity_id_is_father == "") {
+                //We create the job if needed
+                if (this.activities.get(activity['job'].job_id) == null) {
+                    var e1 = {
+                        job: activity['job'],
+                        activities: new Map()
+                    };
+                    this.activities.set(activity['job'].job_id, e1);
+                }
+                //We store the activity
+                var a = this.activities.get(activity['job'].job_id)['activities'];
+                var e2 = {
+                    activity: activity['activity'],
+                    job_id: activity['job'].job_id,
+                    unit: activity['unit'],
+                    sub_activities: []
+                };
+                a.set(activity['activity'].activity_id, e2);
+            }
+        }
+        //We have sub activities
+        for (var _a = 0, activities_2 = activities; _a < activities_2.length; _a++) {
+            var activity = activities_2[_a];
+            if (activity['activity'].activity_id_is_father != null && activity['activity'].activity_id_is_father != "") {
+                var main_activity = this.activities.get(activity['job'].job_id)['activities'];
+                var sub_activities = main_activity.get(activity['activity'].activity_id_is_father)['sub_activities'];
+                sub_activities.push(activity['activity']);
+            }
+        }
+    };
+    /* ------------------ METHODS ------------------ */
+    /* ------------------ METHODS ------------------ */
+    /* Ask by the view, return the right sub activities for the right unit of a job */
+    MasterOfWorkComponent.prototype.pickActivity = function (activity, level) {
+        if (level == 1) {
+            this.activity_selected = activity['activity'];
+            this.title_modal_activity = 'Informations : ' + activity['activity'].activity_title;
+        }
+        else {
+            this.activity_selected = activity;
+            this.title_modal_activity = 'Update activity ' + activity.activity_title;
+        }
+        this.sub_activities_linked = null;
+    };
+    /* ------------------ HELPER ------------------ */
+    /* ------------------ HELPER ------------------ */
+    //Convert map to array to use it in the view
+    MasterOfWorkComponent.prototype.convertMap = function (map) {
+        return Array.from(map.values());
+    };
+    MasterOfWorkComponent = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+            selector: 'app-master-of-work',
+            template: __webpack_require__(/*! ./master-of-work.component.html */ "./src/app/component/master-of-work/master-of-work.component.html"),
+            styles: [__webpack_require__(/*! ./master-of-work.component.scss */ "./src/app/component/master-of-work/master-of-work.component.scss")]
+        }),
+        __metadata("design:paramtypes", [_objects_project_project_service__WEBPACK_IMPORTED_MODULE_1__["ProjectService"],
+            _objects_activity_activity_service__WEBPACK_IMPORTED_MODULE_3__["ActivityService"],
+            _objects_job_job_service__WEBPACK_IMPORTED_MODULE_5__["JobService"],
+            _objects_managment_level_managment_level_service__WEBPACK_IMPORTED_MODULE_7__["ManagmentLevelService"],
+            _objects_unit_unit_service__WEBPACK_IMPORTED_MODULE_6__["UnitService"],
+            _objects_member_activity_project_member_activity_project_service__WEBPACK_IMPORTED_MODULE_4__["MemberActivityProjectService"]])
+    ], MasterOfWorkComponent);
+    return MasterOfWorkComponent;
 }());
 
 
@@ -4112,7 +4403,7 @@ var PerformanceTargetComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container\">\r\n\r\n  <!-- SOP List back button -->\r\n  <div class=\"row row-first\">\r\n    <div class=\"col\">\r\n      <button type=\"button\" class=\"btn btn-outline-danger waves-effect\" data-toggle=\"modal\" data-target=\"#warningModal\"><h6 class=\"no-margin-bottom\"><i class=\"fa fa-times mr-3\"></i>Back</h6></button>\r\n    </div>\r\n  </div>\r\n\r\n  <!-- Project Form -->\r\n  <div class=\"row row-first justify-content-center\">\r\n\r\n    <!-- Card -->\r\n    <div class=\"col card card-cascade hoverable\">\r\n\r\n      <!-- Card content -->\r\n      <div class=\"card-body card-body-cascade\">\r\n\r\n        <p class=\"card-title h4 text-center mb-4\">Project Creation</p>\r\n\r\n        <!-- Form -->\r\n        <form>\r\n\r\n          <!-- SOP Model -->\r\n          <div [hidden]=\"stepSelected != 0\">\r\n            <div class=\"row md-form\">\r\n\r\n              <div class=\"offset-2 col-8\">\r\n                <p class=\"text-center mb-4 text-description\"> Please select a SOP model to begin your project </p>\r\n                <select name=\"sop_selected\" class=\"form-control\" multiple>\r\n                  <option value=\"\" disabled selected>Choose your model</option>\r\n                  <option *ngFor=\"let sop of sops\" (click)=\"selectSop(sop)\">{{sop.sop_title}}</option>\r\n                </select>\r\n              </div>\r\n            </div>\r\n            <div class=\"row justify-content-center\">\r\n              <div>\r\n                <button [disabled]=\"sop_selected == null\" class=\"btn btn-primary waves-effect\" type=\"button\" (click)=\"loadJobsFromSop(); changeStep(true)\">Next</button>\r\n              </div>\r\n            </div>\r\n          </div>\r\n\r\n          <!-- Project name -->\r\n          <div [hidden]=\"stepSelected != 1\">\r\n            <div class=\"row md-form\">\r\n              <p class=\"col-12 text-center mb-4 text-description\"> Please choose a project name </p>\r\n              <div class=\"offset-2 col-8\">\r\n                <input [(ngModel)]=\"new_project.project_title\" name=\"new_project.project_title\" type=\"text\" id=\"newTitle\" class=\"form-control\">\r\n                <label for=\"newTitle\">Project name</label>\r\n              </div>\r\n            </div>\r\n\r\n            <div class=\"row md-form\">\r\n              <p class=\"col-12 text-center mb-4 text-description\"> Project date start </p>\r\n              <div class=\"offset-2 col-8\">\r\n                <input [(ngModel)]=\"new_project_start\" name=\"new_project_start\" type=\"date\" id=\"new_project_start\" class=\"form-control\">\r\n              </div>\r\n            </div>\r\n\r\n            <div class=\"row md-form\">\r\n              <p class=\"col-12 text-center mb-4 text-description\"> Project date start </p>\r\n              <div class=\"offset-2 col-8\">\r\n                <input [(ngModel)]=\"new_project_end\" name=\"new_project_project_end\" type=\"date\" id=\"new_project_end\" class=\"form-control\">\r\n              </div>\r\n            </div>\r\n\r\n            <div class=\"row justify-content-center\">\r\n              <div>\r\n                <button class=\"btn btn-danger waves-effect\" type=\"button\" (click)=\"changeStep(false)\">Back</button>\r\n              </div>\r\n              <div>\r\n                <button [disabled]=\"new_project.project_title == null || new_project.project_title == ''\" class=\"btn btn-primary waves-effect\" type=\"button\" (click)=\"changeStep(true)\">Next</button>\r\n              </div>\r\n            </div>\r\n          </div>\r\n\r\n          <!-- Department selection -->\r\n          <div class=\"form-group\" [hidden]=\"stepSelected != 2\">\r\n\r\n            <!-- Organisation -->\r\n            <div class=\"row md-form\">\r\n              <div class=\"offset-2 col-8\">\r\n              <select class=\"form-control\" multiple>\r\n                <option name=\"organisation\" value=\"\" disabled selected>Choose organisation</option>\r\n                <option *ngFor=\"let o of organisation_elements\" (click)=\"pickOrganisation(o)\">{{o['organisation'].organisation_name}}</option>\r\n              </select>\r\n              </div>\r\n            </div>\r\n\r\n            <!-- Branch -->\r\n            <div class=\"row md-form\">\r\n              <div class=\"offset-2 col-8\">\r\n              <select class=\"form-control\" [hidden]=\"pick_level<2\" multiple>\r\n                <option value=\"\" disabled selected>Choose a branch</option>\r\n                <option *ngFor=\"let b of branchs\" (click)=\"pickBranch(b)\">{{b['branch'].branch_name}}</option>\r\n              </select>\r\n              </div>\r\n            </div>\r\n\r\n            <!-- Department -->\r\n            <div class=\"row md-form\">\r\n              <div class=\"offset-2 col-8\">\r\n              <select class=\"form-control\" [hidden]=\"pick_level<3\" multiple>\r\n                <option value=\"\" disabled selected>Choose a branch</option>\r\n                <option *ngFor=\"let d of departments\" (click)=\"pickDepartment(d)\">{{d['department'].department_name}}</option>\r\n              </select>\r\n              </div>\r\n            </div>\r\n\r\n            <!-- SubDepartment -->\r\n            <div class=\"row md-form\">\r\n              <div class=\"offset-2 col-8\">\r\n              <select class=\"form-control\" [hidden]=\"pick_level<4\" multiple>\r\n                <option value=\"\" disabled selected>Choose a branch</option>\r\n                <option *ngFor=\"let s of sub_departments\" (click)=\"pickSubDepartment(s)\">{{s.sub_department_name}}</option>\r\n              </select>\r\n              </div>\r\n            </div>\r\n\r\n            <div class=\"row justify-content-center\">\r\n              <div>\r\n                <button class=\"btn btn-danger waves-effect\" type=\"button\" (click)=\"changeStep(false)\">Back</button>\r\n              </div>\r\n              <div>\r\n                <button [disabled]=\"pick_level == 1\" class=\"btn btn-primary waves-effect\" type=\"button\" (click)=\"changeStep(true)\">Next</button>\r\n              </div>\r\n            </div>\r\n          </div>\r\n\r\n          <!-- Job selection -->\r\n          <div [hidden]=\"stepSelected != 3\">\r\n\r\n            <div class=\"row md-form\">\r\n              <p class=\"col-12 text-center mb-4 text-description\"> Please choose one or more jobs </p>\r\n            </div>\r\n\r\n            <div class=\"row\">\r\n              <div class=\"col-12\">\r\n                <div class=\"card-body card-body-cascade\">\r\n\r\n                  <!--Table-->\r\n                  <table class=\"table table-borderless table-hover table-fixed\" id=\"job-table\">\r\n\r\n                    <!--Table head-->\r\n                    <thead class=\"\">\r\n                    <tr class=\"text-white\">\r\n                      <th style=\"width:10%\">Selected</th>\r\n                      <th><a>Job Code</a></th>\r\n                      <th><a>Job Name</a></th>\r\n                      <th>Grouped</th>\r\n                      <th class=\"text-center\"><a>Activities</a></th>\r\n                    </tr>\r\n                    </thead>\r\n                    <!--Table head-->\r\n\r\n                    <!--Table body-->\r\n                    <tbody>\r\n                    <tr *ngFor=\"let job of jobs\">\r\n                      <td class=\"text-center\">\r\n                        <input type=\"checkbox\" class=\"form-check-input\" (click)=\"pickJob(job, false)\" id=\"{{job.job_id}}\">\r\n                      </td>\r\n                      <td>{{job.job_code}}</td>\r\n                      <td>{{job.job_name}}</td>\r\n                      <td class=\"text-center\">\r\n                        <input type=\"checkbox\" class=\"form-check-input grouped\" (click)=\"pickJob(job, true)\" id=\"g_{{job.job_id}}\">\r\n                      </td>\r\n                      <td class=\"text-center\">\r\n                        <a><i class=\"fa fa-eye text-blue\"></i></a>\r\n                      </td>\r\n                    </tr>\r\n                    </tbody>\r\n                    <!--Table body-->\r\n\r\n                  </table>\r\n                  <!--Table-->\r\n\r\n                </div>\r\n              </div>\r\n            </div>\r\n\r\n            <div class=\"row justify-content-center\">\r\n              <div>\r\n                <button class=\"btn btn-danger waves-effect\" type=\"button\" (click)=\"changeStep(false)\">Back</button>\r\n              </div>\r\n              <div>\r\n                <button [disabled]=\"jobs_selected.size == 0\" class=\"btn btn-primary waves-effect\" type=\"button\" (click)=\"changeStep(true); loadUnitsFromJobs();\">Next</button>\r\n              </div>\r\n            </div>\r\n          </div>\r\n          <!-- Job selection -->\r\n\r\n          <!-- Unit affectation -->\r\n          <div [hidden]=\"stepSelected != 4\">\r\n            <div class=\"row md-form\">\r\n              <div class=\"offset-2 col-8\">\r\n                <p class=\"text-center mb-4 text-description\"> Choose an unit and pick members you want to add into </p>\r\n                <select name=\"unit_id_selected\" class=\"form-control\" multiple>\r\n                  <option value=\"\" disabled selected>Choose an unit</option>\r\n                  <option *ngFor=\"let unit of elements\" (click)=\"pickUnit(unit)\">{{unit['unit'].unit_name}} - {{unit['detail']['job'].job_name}}</option>\r\n                </select>\r\n              </div>\r\n            </div>\r\n            <div class=\"row md-form\">\r\n              <div class=\"offset-2 col-8\">\r\n                <select (click)=\"isFormReady()\" name=\"member_selected\" class=\"form-control\" multiple>\r\n                  <option value=\"\" disabled selected>Add a member to the selected unit</option>\r\n                  <option *ngFor=\"let member of members\" (click)=\"pickMember(member); \">{{member.member_name}} {{member.member_first_name}}</option>\r\n                </select>\r\n              </div>\r\n            </div>\r\n            <div class=\"row justify-content-center\">\r\n              <div>\r\n                <button class=\"btn btn-danger waves-effect\" type=\"button\" (click)=\"changeStep(false)\">Back</button>\r\n              </div>\r\n              <div>\r\n                <button class=\"btn btn-success waves-effect\" type=\"button\" data-toggle=\"modal\" data-target=\"#confirmationModal\" [disabled]=\"!formReady\">Finish</button>\r\n              </div>\r\n            </div>\r\n          </div>\r\n          <!-- Unit affectation -->\r\n\r\n        </form>\r\n        <!-- Form -->\r\n\r\n      </div>\r\n      <!-- Card content -->\r\n\r\n    </div>\r\n    <!-- Card -->\r\n\r\n  </div>\r\n  <!-- Project Form -->\r\n\r\n\r\n  <!--Title of the unit-->\r\n  <div class=\"row row-first\" [hidden]=\"stepSelected != 4\" >\r\n    <h4>\r\n      <span class=\"badge badge-pill badge-primary\" *ngIf=\"unit_selected != null\">{{unit_selected['unit'].unit_name}} - {{unit_selected['detail']['job'].job_name}}</span>\r\n    </h4>\r\n    <!-- Error alert -->\r\n    <div *ngIf=\"errorMessage\" class=\"col offset-2 row justify-content-end error-text\">\r\n      <i>{{errorMessage}}</i>\r\n    </div>\r\n  </div>\r\n\r\n  <!-- Member Unit Binding Display -->\r\n  <div class=\"row row-last justify-content-center\" [hidden]=\"stepSelected != 4\">\r\n\r\n        <table class=\"col table table-borderless table-hover table-fixed\" id=\"member-table\">\r\n\r\n          <!--Table head-->\r\n          <thead class=\"\">\r\n          <tr class=\"text-white\" *ngIf=\"unit_selected != null\">\r\n            <th style=\"width:40%;\"  (click)=\"sortTable(0)\"><a>Last Name</a></th>\r\n            <th style=\"width:40%;\" (click)=\"sortTable(1)\"><a>First Name</a></th>\r\n            <th style=\"width:10%;\">Remove</th>\r\n          </tr>\r\n\r\n          <tbody *ngIf=\"unit_selected != null\">\r\n\r\n          <tr *ngFor=\"let member of unit_selected['detail']['members']\">\r\n            <td>{{member.member_name}}</td>\r\n            <td>{{member.member_first_name}}</td>\r\n            <td>\r\n              <a (click)=\"removeMember(member); isFormReady()\"><i class=\"fa fa-close text-red\"></i></a>\r\n            </td>\r\n          </tr>\r\n\r\n          </tbody>\r\n        </table>\r\n\r\n  </div>\r\n  <!-- Activity Display -->\r\n\r\n\r\n\r\n</div>\r\n\r\n<!-- Modal warning -->\r\n<app-warning title=\"Exit\"\r\n                  text=\"Are you sure you want to exit ? All your work will be lost.\"\r\n                  [isLink]=true\r\n                  link=\"project-list\">\r\n</app-warning>\r\n\r\n<!-- Modal confirmation -->\r\n<app-confirmation title=\"Confirmation Project creation\"\r\n                  text=\"Are you sure all informations about this project are correct ?\"\r\n                  (success)=\"onSubmit()\"\r\n                  [isLinkActive]=false\r\n                  link=\"project-creation\">\r\n</app-confirmation>\r\n"
+module.exports = "<div class=\"container\" *ngIf=\"!ready\">\r\n  <div class=\"row-first\">\r\n    <app-loader></app-loader>\r\n  </div>\r\n</div>\r\n\r\n<div class=\"container\" *ngIf=\"ready\">\r\n\r\n  <!-- SOP List back button -->\r\n  <div class=\"row row-first\">\r\n    <div class=\"col\">\r\n      <button type=\"button\" class=\"btn btn-outline-danger waves-effect\" data-toggle=\"modal\" data-target=\"#warningModal\"><h6 class=\"no-margin-bottom\"><i class=\"fa fa-times mr-3\"></i>Back</h6></button>\r\n    </div>\r\n  </div>\r\n\r\n  <!-- Project Form -->\r\n  <div class=\"row row-first justify-content-center\">\r\n\r\n    <!-- Card -->\r\n    <div class=\"col card card-cascade hoverable\">\r\n\r\n      <!-- Card content -->\r\n      <div class=\"card-body card-body-cascade\">\r\n\r\n        <p class=\"card-title h4 text-center mb-4\">Project Creation</p>\r\n\r\n        <!-- Form -->\r\n        <form>\r\n\r\n          <!-- SOP Model -->\r\n          <div [hidden]=\"stepSelected != 0\">\r\n            <div class=\"row md-form\">\r\n\r\n              <div class=\"offset-2 col-8\">\r\n                <p class=\"text-center mb-4 text-description\"> Please select a SOP model to begin your project </p>\r\n                <select name=\"sop_selected\" class=\"form-control\" multiple>\r\n                  <option value=\"\" disabled selected>Choose your model</option>\r\n                  <option *ngFor=\"let sop of sops\" (click)=\"selectSop(sop)\">{{textHelper.firstLetterUpperCase(sop.sop_title)}}</option>\r\n                </select>\r\n              </div>\r\n            </div>\r\n            <div class=\"row justify-content-center\">\r\n              <div>\r\n                <button [disabled]=\"sop_selected == null\" class=\"btn btn-primary waves-effect\" type=\"button\" (click)=\"loadJobsFromSop(); changeStep(true)\">Next</button>\r\n              </div>\r\n            </div>\r\n          </div>\r\n\r\n          <!-- Department selection -->\r\n          <div class=\"form-group\" [hidden]=\"stepSelected != 1\">\r\n\r\n            <div class=\"row\">\r\n              <div class=\"offset-2 col-8\">\r\n                <select (change)=\"pickOrganisation()\" [(ngModel)]=\"organisation\" name=\"organisation\" class=\"form-control\">\r\n                  <option name=\"organisation\" value=\"\" disabled selected>Choose organisation</option>\r\n                  <option *ngFor=\"let o of organisation_elements\" [ngValue]=\"o\">{{o['organisation'].organisation_name}}</option>\r\n                </select>\r\n              </div>\r\n            </div>\r\n\r\n            <div class=\"row\">\r\n              <div class=\"offset-2 col-8\">\r\n                <select (change)=\"pickBranch()\" [disabled]=\"organisation == null\" [(ngModel)]=\"branch\" name=\"branch\" class=\"form-control\">\r\n                  <option name=\"organisation\" value=\"\" disabled selected>Choose branch</option>\r\n                  <option *ngFor=\"let b of organisation['branchs']\" [ngValue]=\"b\">{{b['branch'].branch_name}}</option>\r\n                </select>\r\n              </div>\r\n            </div>\r\n\r\n            <div class=\"row\">\r\n              <div class=\"offset-2 col-8\">\r\n                <select (change)=\"pickDepartment()\" [disabled]=\"branch['branch'].branch_name == 'No branch'\" [(ngModel)]=\"department\" name=\"department\" class=\"form-control\">\r\n                  <option name=\"organisation\" value=\"\" disabled selected>Choose department</option>\r\n                  <option *ngFor=\"let d of branch['departments']\" [ngValue]=\"d\">{{d['department'].department_name}}</option>\r\n                </select>\r\n              </div>\r\n            </div>\r\n\r\n            <div class=\"row\">\r\n              <div class=\"offset-2 col-8\">\r\n                <select [disabled]=\"department['department'].department_name == 'No department'\" [(ngModel)]=\"sub_department\" name=\"sub_department\" class=\"form-control\">\r\n                  <option name=\"organisation\" value=\"\" disabled selected>Choose organisation</option>\r\n                  <option *ngFor=\"let s of department['sub_departments']\" [ngValue]=\"s\">{{s.sub_department_name}}</option>\r\n                </select>\r\n              </div>\r\n            </div>\r\n\r\n            <div class=\"row row-first justify-content-center\">\r\n              <div>\r\n                <button class=\"btn btn-danger waves-effect\" type=\"button\" (click)=\"changeStep(false)\">Back</button>\r\n              </div>\r\n              <div>\r\n                <button class=\"btn btn-primary waves-effect\" type=\"button\" (click)=\"changeStep(true)\">Next</button>\r\n              </div>\r\n            </div>\r\n          </div>\r\n\r\n          <!-- Job selection -->\r\n          <div [hidden]=\"stepSelected != 2\">\r\n\r\n            <div class=\"row md-form\">\r\n              <p class=\"col-12 text-center mb-4 text-description\"> Please choose one or more jobs </p>\r\n            </div>\r\n\r\n            <div class=\"row\">\r\n              <div class=\"col-12\">\r\n                <div class=\"card-body card-body-cascade\">\r\n\r\n                  <!--Table-->\r\n                  <table class=\"table table-borderless table-hover table-fixed\" id=\"job-table\">\r\n\r\n                    <!--Table head-->\r\n                    <thead class=\"\">\r\n                    <tr class=\"text-white\">\r\n                      <th style=\"width:10%\">Selected</th>\r\n                      <th><a>Job Code</a></th>\r\n                      <th><a>Job Name</a></th>\r\n                      <th>Grouped</th>\r\n                      <th class=\"text-center\"><a>Activities</a></th>\r\n                    </tr>\r\n                    </thead>\r\n                    <!--Table head-->\r\n\r\n                    <!--Table body-->\r\n                    <tbody>\r\n                    <tr *ngFor=\"let job of jobs\">\r\n                      <td class=\"text-center\">\r\n                        <input type=\"checkbox\" class=\"form-check-input\" (click)=\"pickJob(job, false)\" id=\"{{job.job_id}}\">\r\n                      </td>\r\n                      <td>{{job.job_code}}</td>\r\n                      <td>{{job.job_name}}</td>\r\n                      <td class=\"text-center\">\r\n                        <input type=\"checkbox\" class=\"form-check-input grouped\" (click)=\"pickJob(job, true)\" id=\"g_{{job.job_id}}\">\r\n                      </td>\r\n                      <td class=\"text-center\">\r\n                        <a><i class=\"fa fa-eye text-blue\"></i></a>\r\n                      </td>\r\n                    </tr>\r\n                    </tbody>\r\n                    <!--Table body-->\r\n\r\n                  </table>\r\n                  <!--Table-->\r\n\r\n                </div>\r\n              </div>\r\n            </div>\r\n\r\n            <div class=\"row justify-content-center\">\r\n              <div>\r\n                <button class=\"btn btn-danger waves-effect\" type=\"button\" (click)=\"changeStep(false)\">Back</button>\r\n              </div>\r\n              <div>\r\n                <button [disabled]=\"jobs_selected.size == 0\" class=\"btn btn-primary waves-effect\" type=\"button\" (click)=\"changeStep(true); loadUnitsFromJobs(); initializeProject();\">Next</button>\r\n              </div>\r\n            </div>\r\n          </div>\r\n          <!-- Job selection -->\r\n\r\n          <!-- Unit affectation -->\r\n          <div [hidden]=\"stepSelected != 3\">\r\n            <div class=\"row md-form\">\r\n              <div class=\"offset-2 col-8\">\r\n                <p class=\"text-center mb-4 text-description\"> Choose an unit and pick members you want to add into </p>\r\n                <select name=\"unit_id_selected\" class=\"form-control\" multiple>\r\n                  <option value=\"\" disabled selected>Choose an unit</option>\r\n                  <option *ngFor=\"let unit of elements\" (click)=\"pickUnit(unit)\">\r\n                   ({{unit['detail']['members'].length}}){{unit['unit'].unit_name}} - {{unit['detail']['job'].job_name}}\r\n                  </option>\r\n                </select>\r\n              </div>\r\n            </div>\r\n\r\n            <div class=\"row justify-content-center\">\r\n              <div class=\" md-form\" id=\"search-bar\">\r\n                <input id=\"search\" (keyup)=\"search()\" class=\"form-control\" type=\"text\" placeholder=\"Search member\" aria-label=\"Search\">\r\n              </div>\r\n            </div>\r\n\r\n            <div class=\"row md-form\">\r\n              <div class=\"offset-2 col-8\">\r\n                <select (click)=\"isUnitsReady()\" name=\"member_selected\" id=\"select-member\" class=\"form-control\" multiple>\r\n                  <option value=\"\" disabled selected>Add a member to the selected unit</option>\r\n                  <option *ngFor=\"let member of members\" (click)=\"pickMember(member); \">{{member.member_name.toUpperCase()}} {{member.member_first_name}}</option>\r\n                </select>\r\n              </div>\r\n            </div>\r\n            <div class=\"row justify-content-center\">\r\n              <div>\r\n                <button class=\"btn btn-danger waves-effect\" type=\"button\" (click)=\"changeStep(false)\">Back</button>\r\n              </div>\r\n              <div>\r\n                <button [disabled]=\"!unitsReady\" class=\"btn btn-primary waves-effect\" type=\"button\" (click)=\"changeStep(true)\">Next</button>\r\n              </div>\r\n            </div>\r\n          </div>\r\n          <!-- Unit affectation -->\r\n\r\n          <!-- Project name -->\r\n          <div [hidden]=\"stepSelected != 4\">\r\n            <div class=\"row md-form\">\r\n              <p class=\"col-12 text-center mb-4 text-description\"> Please choose a project name </p>\r\n              <div class=\"offset-2 col-8\">\r\n                <input [(ngModel)]=\"new_project.project_title\" name=\"new_project.project_title\" type=\"text\" id=\"newTitle\" class=\"form-control\">\r\n                <label for=\"newTitle\">Project name</label>\r\n              </div>\r\n            </div>\r\n\r\n            <div class=\"row md-form\">\r\n              <p class=\"col-12 text-center mb-4 text-description\"> Project date start </p>\r\n              <div class=\"offset-2 col-8\">\r\n                <input (change)=\"checkEndDate()\" [(ngModel)]=\"new_project_start\" name=\"new_project_start\" type=\"date\" id=\"new_project_start\" [min]=\"minimum_project_start\" class=\"form-control\">\r\n              </div>\r\n            </div>\r\n\r\n            <div class=\"row md-form\">\r\n              <p class=\"col-12 text-center mb-4 text-description\"> Project date end </p>\r\n              <div class=\"offset-2 col-8\">\r\n                <input [(ngModel)]=\"new_project_end\" name=\"new_project_project_end\" type=\"date\" id=\"new_project_end\" [min]=\"minimum_project_end\" class=\"form-control\">\r\n              </div>\r\n            </div>\r\n\r\n            <div class=\"row justify-content-center\">\r\n              <div>\r\n                <button class=\"btn btn-danger waves-effect\" type=\"button\" (click)=\"changeStep(false)\">Back</button>\r\n              </div>\r\n              <div>\r\n                <button [disabled]=\"new_project.project_title == null || new_project.project_title == ''\" class=\"btn btn-success waves-effect\" type=\"button\" data-toggle=\"modal\" data-target=\"#confirmationModal\">Finish</button>\r\n              </div>\r\n            </div>\r\n          </div>\r\n\r\n        </form>\r\n        <!-- Form -->\r\n\r\n      </div>\r\n      <!-- Card content -->\r\n\r\n    </div>\r\n    <!-- Card -->\r\n\r\n  </div>\r\n  <!-- Project Form -->\r\n\r\n\r\n  <!--Title of the unit-->\r\n  <div class=\"row row-first\" [hidden]=\"stepSelected != 3\" >\r\n    <h4>\r\n      <span class=\"badge badge-pill badge-primary\" *ngIf=\"unit_selected != null\">{{unit_selected['unit'].unit_name}} - {{unit_selected['detail']['job'].job_name}}</span>\r\n    </h4>\r\n    <!-- Error alert -->\r\n    <div *ngIf=\"errorMessage\" class=\"col offset-2 row justify-content-end error-text\">\r\n      <i>{{errorMessage}}</i>\r\n    </div>\r\n  </div>\r\n\r\n  <!-- Member Unit Binding Display -->\r\n  <div class=\"row row-last justify-content-center\" [hidden]=\"stepSelected != 3\">\r\n\r\n        <table class=\"col table table-borderless table-hover table-fixed\" id=\"member-table\">\r\n\r\n          <!--Table head-->\r\n          <thead class=\"\">\r\n          <tr class=\"text-white\" *ngIf=\"unit_selected != null\">\r\n            <th style=\"width:40%;\"  (click)=\"sortTable(0)\"><a>Last Name</a></th>\r\n            <th style=\"width:40%;\" (click)=\"sortTable(1)\"><a>First Name</a></th>\r\n            <th style=\"width:10%;\">Remove</th>\r\n          </tr>\r\n\r\n          <tbody *ngIf=\"unit_selected != null\">\r\n\r\n          <tr *ngFor=\"let member of unit_selected['detail']['members']\">\r\n            <td>{{member.member_name.toUpperCase()}}</td>\r\n            <td>{{member.member_first_name}}</td>\r\n            <td>\r\n              <a (click)=\"removeMember(member); isUnitsReady()\"><i class=\"fa fa-close text-red\"></i></a>\r\n            </td>\r\n          </tr>\r\n\r\n          </tbody>\r\n        </table>\r\n\r\n  </div>\r\n  <!-- Activity Display -->\r\n\r\n\r\n\r\n</div>\r\n\r\n<!-- Modal warning -->\r\n<app-warning title=\"Exit\"\r\n                  text=\"Are you sure you want to exit ? All your work will be lost.\"\r\n                  [isLink]=true\r\n                  link=\"project-list\">\r\n</app-warning>\r\n\r\n<!-- Modal confirmation -->\r\n<app-confirmation title=\"Confirmation Project creation\"\r\n                  text=\"Are you sure all informations about this project are correct ?\"\r\n                  (success)=\"onSubmit()\"\r\n                  [isLinkActive]=false\r\n                  link=\"project-creation\">\r\n</app-confirmation>\r\n"
 
 /***/ }),
 
@@ -4153,6 +4444,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _objects_sub_department_sub_department_service__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../../../objects/sub_department/sub-department.service */ "./src/app/objects/sub_department/sub-department.service.ts");
 /* harmony import */ var _objects_branch_branch_service__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../../../objects/branch/branch.service */ "./src/app/objects/branch/branch.service.ts");
 /* harmony import */ var _objects_department_department_service__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../../../objects/department/department.service */ "./src/app/objects/department/department.service.ts");
+/* harmony import */ var _helpers_text_helper_text_helper_component__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../../../helpers/text-helper/text-helper.component */ "./src/app/helpers/text-helper/text-helper.component.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -4212,6 +4504,7 @@ var __generator = (undefined && undefined.__generator) || function (thisArg, bod
 
 
 
+
 var ProjectCreationComponent = /** @class */ (function () {
     function ProjectCreationComponent(_sopService, _jobService, _unitService, _memberService, _activityService, _projectService, router, _organisationService, _branchService, _departmentService, _subDepartmentService) {
         this._sopService = _sopService;
@@ -4227,13 +4520,15 @@ var ProjectCreationComponent = /** @class */ (function () {
         this._subDepartmentService = _subDepartmentService;
         /* ----- Data ----- */
         this.errorMessage = "";
+        this.ready = false;
+        this.unitsReady = false;
         this.formReady = false;
         this.jobs_selected = new Map();
         this.new_project_title = "";
-        this.new_project_id = "";
-        this.organisation_elements = [];
         //Manage the disabled function of organisations selects
-        this.pick_level = 1;
+        this.organisation_elements = [];
+        this.organisation = this.organisation_elements[0];
+        this.textHelper = new _helpers_text_helper_text_helper_component__WEBPACK_IMPORTED_MODULE_15__["TextHelperComponent"]();
     }
     ProjectCreationComponent.prototype.ngOnInit = function () {
         return __awaiter(this, void 0, void 0, function () {
@@ -4241,7 +4536,7 @@ var ProjectCreationComponent = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         this.stepSelected = 0;
-                        this.initializeProject();
+                        this.new_project = new _objects_project_project__WEBPACK_IMPORTED_MODULE_7__["Project"]();
                         return [4 /*yield*/, this.loadSops()];
                     case 1:
                         _a.sent();
@@ -4251,20 +4546,40 @@ var ProjectCreationComponent = /** @class */ (function () {
                         return [4 /*yield*/, this.loadMembers()];
                     case 3:
                         _a.sent();
-                        console.log(this.organisation_elements);
+                        this.ready = true;
                         return [2 /*return*/];
                 }
             });
         });
     };
-    //We create the new project with the right date end
+    //We set the right dates to the new project
     ProjectCreationComponent.prototype.initializeProject = function () {
-        this.new_project = new _objects_project_project__WEBPACK_IMPORTED_MODULE_7__["Project"]();
-        var start = new Date();
-        this.new_project_start = moment__WEBPACK_IMPORTED_MODULE_9__(start).format('YYYY-MM-DD');
-        var end = new Date();
-        end.setMonth(end.getMonth() + 1);
-        this.new_project_end = moment__WEBPACK_IMPORTED_MODULE_9__(end).format('YYYY-MM-DD');
+        return __awaiter(this, void 0, void 0, function () {
+            var start, jobs, jobs_selected, _i, jobs_1, j, p, p2;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        start = new Date();
+                        this.minimum_project_start = moment__WEBPACK_IMPORTED_MODULE_9__(start).format('YYYY-MM-DD');
+                        start = new Date();
+                        this.new_project_start = moment__WEBPACK_IMPORTED_MODULE_9__(start).format('YYYY-MM-DD');
+                        jobs = Array.from(this.jobs_selected.values());
+                        jobs_selected = [];
+                        for (_i = 0, jobs_1 = jobs; _i < jobs_1.length; _i++) {
+                            j = jobs_1[_i];
+                            jobs_selected.push(j['job']);
+                        }
+                        return [4 /*yield*/, this._jobService.computeDateEnd(jobs_selected, this.new_project_start).toPromise()];
+                    case 1:
+                        p = _a.sent();
+                        p2 = new Date(p['data']['end_date']);
+                        //We get the minimum date
+                        this.new_project_end = moment__WEBPACK_IMPORTED_MODULE_9__(p2).format('YYYY-MM-DD');
+                        this.checkEndDate();
+                        return [2 /*return*/];
+                }
+            });
+        });
     };
     //We get all SOP from database
     ProjectCreationComponent.prototype.loadSops = function () {
@@ -4289,94 +4604,10 @@ var ProjectCreationComponent = /** @class */ (function () {
             });
         });
     };
-    //We get all Organisations, branchs, departements and sub departements from database
-    ProjectCreationComponent.prototype.loadOrganisations = function () {
-        return __awaiter(this, void 0, void 0, function () {
-            var o, organisations, _i, organisations_1, organisation, b, branchs, e0, _a, branchs_1, branch, d, departments, e1, _b, departments_1, department, s, sub_departments, e2, error_2;
-            return __generator(this, function (_c) {
-                switch (_c.label) {
-                    case 0:
-                        _c.trys.push([0, 14, , 15]);
-                        this.errorMessage = "";
-                        return [4 /*yield*/, this._organisationService.selectAll().toPromise()];
-                    case 1:
-                        o = _c.sent();
-                        organisations = o['data'];
-                        _i = 0, organisations_1 = organisations;
-                        _c.label = 2;
-                    case 2:
-                        if (!(_i < organisations_1.length)) return [3 /*break*/, 13];
-                        organisation = organisations_1[_i];
-                        return [4 /*yield*/, this._branchService.selectAllFromOrganisation(organisation.organisation_id.toString()).toPromise()];
-                    case 3:
-                        b = _c.sent();
-                        branchs = b['data'];
-                        e0 = {
-                            organisation: organisation,
-                            branchs: []
-                        };
-                        _a = 0, branchs_1 = branchs;
-                        _c.label = 4;
-                    case 4:
-                        if (!(_a < branchs_1.length)) return [3 /*break*/, 11];
-                        branch = branchs_1[_a];
-                        return [4 /*yield*/, this._departmentService.selectAllFromBranch(branch.branch_id.toString()).toPromise()];
-                    case 5:
-                        d = _c.sent();
-                        departments = d['data'];
-                        e1 = {
-                            branch: branch,
-                            departments: []
-                        };
-                        _b = 0, departments_1 = departments;
-                        _c.label = 6;
-                    case 6:
-                        if (!(_b < departments_1.length)) return [3 /*break*/, 9];
-                        department = departments_1[_b];
-                        return [4 /*yield*/, this._subDepartmentService.selectAllFromDepartment(department.department_id.toString()).toPromise()];
-                    case 7:
-                        s = _c.sent();
-                        sub_departments = s['data'];
-                        e2 = {
-                            department: department,
-                            sub_departments: sub_departments
-                        };
-                        e1['departments'].push(e2);
-                        _c.label = 8;
-                    case 8:
-                        _b++;
-                        return [3 /*break*/, 6];
-                    case 9:
-                        e0['branchs'].push(e1);
-                        _c.label = 10;
-                    case 10:
-                        _a++;
-                        return [3 /*break*/, 4];
-                    case 11:
-                        this.organisation_elements.push(e0);
-                        _c.label = 12;
-                    case 12:
-                        _i++;
-                        return [3 /*break*/, 2];
-                    case 13:
-                        this.branchs = [this.organisation_elements[0]['branchs'][0]];
-                        this.departments = [this.branchs[0]['departments'][0]];
-                        this.sub_departments = [this.departments[0]['sub_departments'][0]];
-                        this.new_sub_department = this.departments[0]['sub_departments'][0];
-                        return [3 /*break*/, 15];
-                    case 14:
-                        error_2 = _c.sent();
-                        this.errorMessage = error_2.message;
-                        return [3 /*break*/, 15];
-                    case 15: return [2 /*return*/];
-                }
-            });
-        });
-    };
     //We get every Members that can work on the project
     ProjectCreationComponent.prototype.loadMembers = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var members, error_3;
+            var members, error_2;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -4388,8 +4619,8 @@ var ProjectCreationComponent = /** @class */ (function () {
                         this.members = members['data'];
                         return [3 /*break*/, 3];
                     case 2:
-                        error_3 = _a.sent();
-                        this.errorMessage = error_3.error.message;
+                        error_2 = _a.sent();
+                        this.errorMessage = error_2.error.message;
                         return [3 /*break*/, 3];
                     case 3: return [2 /*return*/];
                 }
@@ -4402,7 +4633,7 @@ var ProjectCreationComponent = /** @class */ (function () {
     //We load all jobs from the sop_selected
     ProjectCreationComponent.prototype.loadJobsFromSop = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var jobs, error_4;
+            var jobs, error_3;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -4414,8 +4645,8 @@ var ProjectCreationComponent = /** @class */ (function () {
                         this.jobs = jobs['data'];
                         return [3 /*break*/, 3];
                     case 2:
-                        error_4 = _a.sent();
-                        this.errorMessage = error_4.message;
+                        error_3 = _a.sent();
+                        this.errorMessage = error_3.message;
                         return [3 /*break*/, 3];
                     case 3: return [2 /*return*/];
                 }
@@ -4443,7 +4674,7 @@ var ProjectCreationComponent = /** @class */ (function () {
     //Loads every unit of jobs selected and store them into elements array
     ProjectCreationComponent.prototype.loadUnitsFromJobs = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var vm_1, e_1, error_5;
+            var vm_1, e_1, error_4;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -4502,8 +4733,8 @@ var ProjectCreationComponent = /** @class */ (function () {
                         _a.sent();
                         return [3 /*break*/, 3];
                     case 2:
-                        error_5 = _a.sent();
-                        this.errorMessage = error_5.message;
+                        error_4 = _a.sent();
+                        this.errorMessage = error_4.message;
                         return [3 /*break*/, 3];
                     case 3: return [2 /*return*/];
                 }
@@ -4541,38 +4772,6 @@ var ProjectCreationComponent = /** @class */ (function () {
         if (!this.unit_selected['detail']['members'].includes(member)) {
             this.unit_selected['detail']['members'].push(member);
         }
-    };
-    ProjectCreationComponent.prototype.pickOrganisation = function (organisation) {
-        this.branchs = organisation['branchs'];
-        this.departments = [this.branchs[0]['departments'][0]];
-        this.sub_departments = [this.departments[0]['sub_departments'][0]];
-        this.new_sub_department = this.departments[0]['sub_departments'][0];
-        this.pick_level = 2;
-    };
-    ProjectCreationComponent.prototype.pickBranch = function (branch) {
-        this.departments = branch['departments'];
-        this.sub_departments = [this.departments[0]['sub_departments'][0]];
-        this.new_sub_department = this.departments[0]['sub_departments'][0];
-        if (branch['branch'].branch_name != 'No branch') {
-            this.pick_level = 3;
-        }
-        else {
-            this.pick_level = 2;
-        }
-    };
-    ProjectCreationComponent.prototype.pickDepartment = function (department) {
-        this.sub_departments = department['sub_departments'];
-        this.new_sub_department = department['sub_departments'][0];
-        if (department['department'].department_name != 'No department') {
-            this.pick_level = 4;
-        }
-        else {
-            this.pick_level = 3;
-        }
-    };
-    ProjectCreationComponent.prototype.pickSubDepartment = function (sub_department) {
-        this.new_sub_department = sub_department;
-        this.pick_level = 5;
     };
     ProjectCreationComponent.prototype.removeMember = function (member) {
         var indice = this.unit_selected['detail']['members'].indexOf(member);
@@ -4644,7 +4843,7 @@ var ProjectCreationComponent = /** @class */ (function () {
     };
     ProjectCreationComponent.prototype.onSubmit = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var project_code, project_work_code, project_id, error_6, vm_2, error_7;
+            var project_code, project_work_code, project_id, error_5, vm_2, error_6;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -4652,10 +4851,9 @@ var ProjectCreationComponent = /** @class */ (function () {
                         project_work_code = "000000";
                         this.new_project.project_work_code = project_work_code;
                         this.new_project.project_code = project_code;
-                        // Temporary
                         try {
                             this.errorMessage = "";
-                            this.new_project.sub_department_id = this.new_sub_department.department_id.toString();
+                            this.new_project.sub_department_id = this.sub_department.department_id.toString();
                         }
                         catch (error) {
                             this.errorMessage = error.message;
@@ -4675,8 +4873,8 @@ var ProjectCreationComponent = /** @class */ (function () {
                         this.new_project.project_id = project_id['data']['project_id'];
                         return [3 /*break*/, 4];
                     case 3:
-                        error_6 = _a.sent();
-                        this.errorMessage = error_6.message;
+                        error_5 = _a.sent();
+                        this.errorMessage = error_5.message;
                         return [3 /*break*/, 4];
                     case 4:
                         _a.trys.push([4, 6, , 7]);
@@ -4698,8 +4896,8 @@ var ProjectCreationComponent = /** @class */ (function () {
                         _a.sent();
                         return [3 /*break*/, 7];
                     case 6:
-                        error_7 = _a.sent();
-                        this.errorMessage = error_7.message;
+                        error_6 = _a.sent();
+                        this.errorMessage = error_6.message;
                         return [3 /*break*/, 7];
                     case 7: 
                     //We have the project id, now we can insert in member_unit_project and member_activity_project
@@ -4720,7 +4918,7 @@ var ProjectCreationComponent = /** @class */ (function () {
     };
     ProjectCreationComponent.prototype.bindMemberUnitProject = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var _i, _a, u, _b, _c, m, error_8;
+            var _i, _a, u, _b, _c, m, error_7;
             return __generator(this, function (_d) {
                 switch (_d.label) {
                     case 0:
@@ -4748,8 +4946,8 @@ var ProjectCreationComponent = /** @class */ (function () {
                         return [3 /*break*/, 1];
                     case 6: return [3 /*break*/, 8];
                     case 7:
-                        error_8 = _d.sent();
-                        this.errorMessage = error_8.message;
+                        error_7 = _d.sent();
+                        this.errorMessage = error_7.message;
                         return [3 /*break*/, 8];
                     case 8: return [2 /*return*/];
                 }
@@ -4759,7 +4957,7 @@ var ProjectCreationComponent = /** @class */ (function () {
     //We insert into the database : member_activity_project
     ProjectCreationComponent.prototype.bindMemberActivityProject = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var _i, _a, element, activities, _b, _c, a, _d, _e, activity, _f, _g, member, m_a_p, error_9;
+            var _i, _a, element, activities, _b, _c, a, _d, _e, activity, _f, _g, member, m_a_p, error_8;
             return __generator(this, function (_h) {
                 switch (_h.label) {
                     case 0:
@@ -4822,15 +5020,15 @@ var ProjectCreationComponent = /** @class */ (function () {
                         return [3 /*break*/, 1];
                     case 10: return [3 /*break*/, 12];
                     case 11:
-                        error_9 = _h.sent();
-                        this.errorMessage = error_9.message;
+                        error_8 = _h.sent();
+                        this.errorMessage = error_8.message;
                         return [3 /*break*/, 12];
                     case 12: return [2 /*return*/];
                 }
             });
         });
     };
-    ProjectCreationComponent.prototype.isFormReady = function () {
+    ProjectCreationComponent.prototype.isUnitsReady = function () {
         var answer = true;
         for (var _i = 0, _a = this.elements; _i < _a.length; _i++) {
             var element = _a[_i];
@@ -4838,7 +5036,198 @@ var ProjectCreationComponent = /** @class */ (function () {
                 answer = false;
             }
         }
-        this.formReady = answer;
+        this.unitsReady = answer;
+    };
+    ProjectCreationComponent.prototype.checkEndDate = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var jobs, jobs_selected, _i, jobs_2, j, p, p2, d1, d2, d;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        jobs = Array.from(this.jobs_selected.values());
+                        jobs_selected = [];
+                        for (_i = 0, jobs_2 = jobs; _i < jobs_2.length; _i++) {
+                            j = jobs_2[_i];
+                            jobs_selected.push(j['job']);
+                        }
+                        return [4 /*yield*/, this._jobService.computeDateEnd(jobs_selected, this.new_project_start).toPromise()];
+                    case 1:
+                        p = _a.sent();
+                        p2 = new Date(p['data']['end_date']);
+                        //We get the minimum date
+                        this.minimum_project_end = moment__WEBPACK_IMPORTED_MODULE_9__(p2).format('YYYY-MM-DD');
+                        d1 = new Date(this.new_project_end);
+                        d2 = new Date(this.minimum_project_end);
+                        if (d1 < d2) {
+                            d = new Date(this.minimum_project_end);
+                            this.new_project_end = moment__WEBPACK_IMPORTED_MODULE_9__(d).format('YYYY-MM-DD');
+                        }
+                        console.log('mini : ', this.minimum_project_end);
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    ProjectCreationComponent.prototype.search = function () {
+        // Declare variables
+        var input, filter, select, option, option1, option2, i;
+        input = document.getElementById("search");
+        filter = input.value.toUpperCase();
+        select = document.getElementById("select-member");
+        option = select.getElementsByTagName("option");
+        // Loop through all table rows, and hide those who don't match the search query
+        for (i = 0; i < option.length; i++) {
+            option1 = option[i];
+            if (option1) {
+                if (option1.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                    option1.style.display = "";
+                }
+                else {
+                    option1.style.display = "none";
+                }
+            }
+        }
+    };
+    /*  ----------------- ORGANISATIONS / BRANCHS / DEPARTMENTS / SUB_DEPARTMENTS ----------------- */
+    //We get all Organisations, branchs, departements and sub departements from database
+    ProjectCreationComponent.prototype.loadOrganisations = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var o, organisations, _i, organisations_1, organisation, b, branchs, e0, _a, branchs_1, branch, d, departments, e1, _b, departments_1, department, s, sub_departments, e2, error_9;
+            return __generator(this, function (_c) {
+                switch (_c.label) {
+                    case 0:
+                        _c.trys.push([0, 14, , 15]);
+                        this.errorMessage = "";
+                        return [4 /*yield*/, this._organisationService.selectAll().toPromise()];
+                    case 1:
+                        o = _c.sent();
+                        organisations = o['data'];
+                        _i = 0, organisations_1 = organisations;
+                        _c.label = 2;
+                    case 2:
+                        if (!(_i < organisations_1.length)) return [3 /*break*/, 13];
+                        organisation = organisations_1[_i];
+                        return [4 /*yield*/, this._branchService.selectAllFromOrganisation(organisation.organisation_id.toString()).toPromise()];
+                    case 3:
+                        b = _c.sent();
+                        branchs = b['data'];
+                        e0 = {
+                            organisation: organisation,
+                            branchs: []
+                        };
+                        _a = 0, branchs_1 = branchs;
+                        _c.label = 4;
+                    case 4:
+                        if (!(_a < branchs_1.length)) return [3 /*break*/, 11];
+                        branch = branchs_1[_a];
+                        return [4 /*yield*/, this._departmentService.selectAllFromBranch(branch.branch_id.toString()).toPromise()];
+                    case 5:
+                        d = _c.sent();
+                        departments = d['data'];
+                        e1 = {
+                            branch: branch,
+                            departments: []
+                        };
+                        _b = 0, departments_1 = departments;
+                        _c.label = 6;
+                    case 6:
+                        if (!(_b < departments_1.length)) return [3 /*break*/, 9];
+                        department = departments_1[_b];
+                        return [4 /*yield*/, this._subDepartmentService.selectAllFromDepartment(department.department_id.toString()).toPromise()];
+                    case 7:
+                        s = _c.sent();
+                        sub_departments = s['data'];
+                        e2 = {
+                            department: department,
+                            sub_departments: sub_departments
+                        };
+                        e1['departments'].push(e2);
+                        _c.label = 8;
+                    case 8:
+                        _b++;
+                        return [3 /*break*/, 6];
+                    case 9:
+                        e0['branchs'].push(e1);
+                        _c.label = 10;
+                    case 10:
+                        _a++;
+                        return [3 /*break*/, 4];
+                    case 11:
+                        this.organisation_elements.push(e0);
+                        _c.label = 12;
+                    case 12:
+                        _i++;
+                        return [3 /*break*/, 2];
+                    case 13:
+                        this.organisation = this.organisation_elements[0];
+                        this.branch = this.organisation['branchs'][0];
+                        this.department = this.branch['departments'][0];
+                        this.sub_department = this.department['sub_departments'][0];
+                        return [3 /*break*/, 15];
+                    case 14:
+                        error_9 = _c.sent();
+                        this.errorMessage = error_9.message;
+                        return [3 /*break*/, 15];
+                    case 15: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    /* element is an id of organisation, branch or department. Level 1 = We search for organisation, level 2 = we search for departments.
+     * Return : the element of organisation_elements wanted */
+    ProjectCreationComponent.prototype.findElement = function (element, level) {
+        console.log('element : ', element, ' - level : ', level);
+        if (level == 1) {
+            //We search for an organisation
+            for (var _i = 0, _a = this.organisation_elements; _i < _a.length; _i++) {
+                var e = _a[_i];
+                if (e['organisation'].organisation_id == element) {
+                    return e;
+                }
+            }
+        }
+        else if (level == 2) {
+            for (var _b = 0, _c = this.organisation['branchs']; _b < _c.length; _b++) {
+                var e = _c[_b];
+                if (e['branch'].branch_id == element) {
+                    return e;
+                }
+            }
+        }
+        else if (level == 3) {
+            for (var _d = 0, _e = this.branch['departments']; _d < _e.length; _d++) {
+                var e = _e[_d];
+                if (e['department'].department_id == element) {
+                    return e;
+                }
+            }
+        }
+        else if (level == 4) {
+            for (var _f = 0, _g = this.department['sub_departments']; _f < _g.length; _f++) {
+                var e = _g[_f];
+                if (e.department_id == element) {
+                    return e;
+                }
+            }
+        }
+    };
+    ProjectCreationComponent.prototype.pickOrganisation = function () {
+        // I have picked my new organisation, I need to set my new array for other levels
+        this.branch = this.organisation['branchs'][0];
+        this.department = this.branch['departments'][0];
+        this.sub_department = this.department['sub_departments'][0];
+        console.log(this.organisation, this.branch, this.department, this.sub_department);
+    };
+    ProjectCreationComponent.prototype.pickBranch = function () {
+        // I have picked my new organisation, I need to set my new array for other levels
+        this.department = this.branch['departments'][0];
+        this.sub_department = this.department['sub_departments'][0];
+        console.log(this.organisation, this.branch, this.department, this.sub_department);
+    };
+    ProjectCreationComponent.prototype.pickDepartment = function () {
+        this.sub_department = this.department['sub_departments'][0];
+        console.log(this.organisation, this.branch, this.department, this.sub_department);
+        //
     };
     ProjectCreationComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -4883,7 +5272,7 @@ module.exports = ".md-form\r\n{\r\n  margin-bottom: 20px;\r\n  margin-top: 0;\r\
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container\">\r\n\r\n  <div class=\"row row-first\">\r\n    <div class=\"col\">\r\n      <button type=\"button\" class=\"btn btn-outline-default waves-effect\" [routerLink]=\"['/project-creation']\"><h6 class=\"no-margin-bottom\"><i class=\"fa fa-plus mr-3\"></i>New Project</h6></button>\r\n    </div>\r\n  </div>\r\n\r\n  <div class=\"row row-first justify-content-end\">\r\n    <div class=\" md-form\" id=\"search-bar\">\r\n      <input id=\"search\" (keyup)=\"search()\" class=\"form-control\" type=\"text\" placeholder=\"Search\" aria-label=\"Search\">\r\n    </div>\r\n  </div>\r\n\r\n  <div class=\"row justify-content-center\">\r\n\r\n  <!--Table-->\r\n    <table class=\"col-12 table table-borderless table-hover table-fixed\" id=\"project-table\">\r\n\r\n      <!--Table head-->\r\n      <thead class=\"\">\r\n      <tr class=\"text-white\">\r\n        <th style=\"width:5%;\"></th>\r\n        <th style=\"width:10%;\"  (click)=\"sortTable(1)\"><a>Code</a></th>\r\n        <th style=\"width:40%;\" (click)=\"sortTable(2)\"><a>Title</a></th>\r\n        <th style=\"width:20%;\" (click)=\"sortTable(3)\"><a>Start Date</a></th>\r\n        <th style=\"width:20%;\" (click)=\"sortTable(4)\"><a>Finished Date</a></th>\r\n        <th style=\"width:5%;\"></th>\r\n      </tr>\r\n      </thead>\r\n      <!--Table head-->\r\n\r\n      <!--Table body-->\r\n      <tbody>\r\n      <tr *ngFor=\"let project of projects\" (click)=\"selectProject(project)\">\r\n        <td scope=\"row\">\r\n          <a data-toggle=\"modal\" data-target=\"#actionModal\"><i class=\"fa fa-cog text-blue\"></i></a>\r\n        </td>\r\n        <td>{{project.project_code}}</td>\r\n        <td>{{project.project_title.substr(0,50)}}</td>\r\n        <td>{{project.project_start | date:\"MM/dd/yyyy\"}}</td>\r\n        <td>{{project.project_end | date:\"MM/dd/yyyy\"}}</td>\r\n        <td>\r\n          <a data-toggle=\"modal\" data-target=\"#warningModal\"><i class=\"fa fa-close text-red\"></i></a>\r\n        </td>\r\n      </tr>\r\n      </tbody>\r\n      <!--Table body-->\r\n\r\n    </table>\r\n    <!--Table-->\r\n\r\n  </div>\r\n</div>\r\n\r\n<app-action title={{project_selected.project_title}}\r\n            text=\"\"\r\n            buttons={{buttonsTitles}}\r\n            links={{buttonsLinks}}\r\n            [isLinkActive]=true\r\n>\r\n</app-action>\r\n\r\n<!-- Modal warning -->\r\n<app-warning title=\"Delete Project {{project_selected.project_id}}\"\r\n             text=\"Are you sure you want to delete the Project : {{project_selected.project_title}} from the project list ? All data linked will be destroyed.\"\r\n             link=\"project-list\"\r\n             (success)=\"deleteProject(project_selected.project_id)\"\r\n             [isLink]=false>\r\n</app-warning>\r\n"
+module.exports = "<div class=\"container\">\r\n\r\n  <div class=\"row row-first\">\r\n    <div class=\"col\">\r\n      <button type=\"button\" class=\"btn btn-outline-default waves-effect\" [routerLink]=\"['/project-creation']\"><h6 class=\"no-margin-bottom\"><i class=\"fa fa-plus mr-3\"></i>New Project</h6></button>\r\n    </div>\r\n  </div>\r\n  <!-- Error alert -->\r\n  <div *ngIf=\"errorMessage\" class=\"row row-first justify-content-end error-text\">\r\n    <i>{{errorMessage}}</i>\r\n  </div>\r\n\r\n  <!-- Project not started -->\r\n  <div class=\"row row-first justify-content-between\">\r\n    <div class=\"col\">\r\n      <a data-toggle=\"collapse\" data-target=\"#projects_1\" aria-expanded=\"false\" aria-controls=\"projects_1\">\r\n        <h5><span class=\"badge badge-primary\">Project started</span></h5>\r\n      </a>\r\n    </div>\r\n    <!-- SEARCH BAR -->\r\n    <div *ngIf=\"projects_1.length != 0\" class=\" md-form\" id=\"search-bar\">\r\n      <input id=\"search\" (keyup)=\"search(1)\" class=\"form-control\" type=\"text\" placeholder=\"Search\" aria-label=\"Search\">\r\n    </div>\r\n  </div>\r\n\r\n  <div class=\"row\" *ngIf=\"projects_1.length == 0\">\r\n    <div class=\"offset-1\">\r\n      No projects\r\n    </div>\r\n  </div>\r\n\r\n  <!-- TABLE -->\r\n  <div *ngIf=\"projects_1.length != 0\" class=\"row justify-content-center collapse show\" id=\"projects_1\">\r\n\r\n  <!--Table-->\r\n    <table class=\"col-12 table hoverable table-borderless table-hover table-fixed\" id=\"project-table\">\r\n\r\n      <!--Table head-->\r\n      <thead class=\"\">\r\n      <tr class=\"text-white\">\r\n        <th style=\"width:5%;\"></th>\r\n        <th style=\"width:10%;\"  (click)=\"sortTable(1, 1)\"><a>Code</a></th>\r\n        <th style=\"width:40%;\" (click)=\"sortTable(2, 1)\"><a>Title</a></th>\r\n        <th style=\"width:20%;\" (click)=\"sortTable(3, 1)\"><a>Start Date</a></th>\r\n        <th style=\"width:20%;\" (click)=\"sortTable(4, 1)\"><a>Finished Date</a></th>\r\n        <th style=\"width:5%;\"></th>\r\n      </tr>\r\n      </thead>\r\n      <!--Table head-->\r\n\r\n      <!--Table body-->\r\n      <tbody>\r\n      <tr *ngFor=\"let project of projects_1\" (click)=\"selectProject(project)\">\r\n        <td scope=\"row\">\r\n          <a data-toggle=\"modal\" data-target=\"#actionModal\"><i class=\"fa fa-cog text-blue\"></i></a>\r\n        </td>\r\n        <td>{{project.project_id}}</td>\r\n        <td>{{textHelper.firstLetterUpperCase(project.project_title.substr(0,50))}}</td>\r\n        <td>{{project.project_start | date:\"MM/dd/yyyy\"}}</td>\r\n        <td>{{project.project_end | date:\"MM/dd/yyyy\"}}</td>\r\n        <td>\r\n          <a data-toggle=\"modal\" data-target=\"#warningModal\"><i class=\"fa fa-close text-red\"></i></a>\r\n        </td>\r\n      </tr>\r\n      </tbody>\r\n      <!--Table body-->\r\n\r\n    </table>\r\n    <!--Table-->\r\n\r\n  </div>\r\n\r\n  <!-- Project started -->\r\n  <div class=\"row row-first justify-content-between\">\r\n\r\n    <div class=\"col\">\r\n      <a data-toggle=\"collapse\" data-target=\"#projects_0\" aria-expanded=\"true\" aria-controls=\"projects_0\">\r\n        <h5><span class=\"badge badge-primary\">Project not started</span></h5>\r\n      </a>\r\n    </div>\r\n\r\n    <!-- SEARCH BAR -->\r\n    <div *ngIf=\"projects_0.length != 0\" class=\" md-form\" id=\"search-bar-2\">\r\n      <input id=\"search-2\" (keyup)=\"search(2)\" class=\"form-control\" type=\"text\" placeholder=\"Search\" aria-label=\"Search\">\r\n    </div>\r\n  </div>\r\n\r\n  <div class=\"row\" *ngIf=\"projects_0.length == 0\">\r\n    <div class=\"offset-1\">\r\n      No projects\r\n    </div>\r\n  </div>\r\n\r\n  <!-- TABLE -->\r\n  <div *ngIf=\"projects_0.length != 0\" class=\"row justify-content-center collapse show\" id=\"projects_0\">\r\n\r\n    <!--Table-->\r\n    <table class=\"col-12 table hoverable table-borderless table-hover table-fixed\" id=\"project-table-2\">\r\n\r\n      <!--Table head-->\r\n      <thead class=\"\">\r\n      <tr class=\"text-white\">\r\n        <th style=\"width:5%;\"></th>\r\n        <th style=\"width:10%;\"  (click)=\"sortTable(1, 2)\"><a>Code</a></th>\r\n        <th style=\"width:40%;\" (click)=\"sortTable(2, 2)\"><a>Title</a></th>\r\n        <th style=\"width:20%;\" (click)=\"sortTable(3, 2)\"><a>Start Date</a></th>\r\n        <th style=\"width:20%;\" (click)=\"sortTable(4, 2)\"><a>Finished Date</a></th>\r\n        <th style=\"width:5%;\"></th>\r\n      </tr>\r\n      </thead>\r\n      <!--Table head-->\r\n\r\n      <!--Table body-->\r\n      <tbody>\r\n      <tr *ngFor=\"let project of projects_0\" (click)=\"selectProject(project)\">\r\n        <td scope=\"row\">\r\n          <a data-toggle=\"modal\" data-target=\"#actionModal\"><i class=\"fa fa-cog text-blue\"></i></a>\r\n        </td>\r\n        <td>{{project.project_id}}</td>\r\n        <td>{{textHelper.firstLetterUpperCase(project.project_title.substr(0,50))}}</td>\r\n        <td>{{project.project_start | date:\"MM/dd/yyyy\"}}</td>\r\n        <td>{{project.project_end | date:\"MM/dd/yyyy\"}}</td>\r\n        <td>\r\n          <a data-toggle=\"modal\" data-target=\"#warningModal\"><i class=\"fa fa-close text-red\"></i></a>\r\n        </td>\r\n      </tr>\r\n      </tbody>\r\n      <!--Table body-->\r\n\r\n    </table>\r\n    <!--Table-->\r\n\r\n  </div>\r\n\r\n  <!-- Project finished -->\r\n  <div class=\"row row-first justify-content-between\">\r\n\r\n    <div class=\"col\">\r\n      <a data-toggle=\"collapse\" data-target=\"#projects_2\" aria-expanded=\"false\" aria-controls=\"projects_2\">\r\n        <h5><span class=\"badge badge-primary\">Project finished </span></h5>\r\n      </a>\r\n    </div>\r\n\r\n    <!-- SEARCH BAR -->\r\n    <div *ngIf=\"projects_2.length != 0\" class=\"col md-form\" id=\"search-bar-3\">\r\n      <input id=\"search-3\" (keyup)=\"search(2)\" class=\"form-control\" type=\"text\" placeholder=\"Search\" aria-label=\"Search\">\r\n    </div>\r\n  </div>\r\n\r\n  <div class=\"row\" *ngIf=\"projects_2.length == 0\">\r\n    <div class=\"offset-1\">\r\n      No projects\r\n    </div>\r\n  </div>\r\n\r\n  <!-- TABLE -->\r\n  <div *ngIf=\"projects_2.length != 0\" class=\"row justify-content-center collapse show\" id=\"projects_2\">\r\n\r\n    <!--Table-->\r\n    <table class=\"col-12 table hoverable table-borderless table-hover table-fixed\" id=\"project-table-3\">\r\n\r\n      <!--Table head-->\r\n      <thead class=\"\">\r\n      <tr class=\"text-white\">\r\n        <th style=\"width:5%;\"></th>\r\n        <th style=\"width:10%;\"  (click)=\"sortTable(1, 3)\"><a>Code</a></th>\r\n        <th style=\"width:40%;\" (click)=\"sortTable(2, 3)\"><a>Title</a></th>\r\n        <th style=\"width:20%;\" (click)=\"sortTable(3, 3)\"><a>Start Date</a></th>\r\n        <th style=\"width:20%;\" (click)=\"sortTable(4, 3)\"><a>Finished Date</a></th>\r\n        <th style=\"width:5%;\"></th>\r\n      </tr>\r\n      </thead>\r\n      <!--Table head-->\r\n\r\n      <!--Table body-->\r\n      <tbody>\r\n      <tr *ngFor=\"let project of projects_2\" (click)=\"selectProject(project)\">\r\n        <td scope=\"row\">\r\n          <a data-toggle=\"modal\" data-target=\"#actionModal\"><i class=\"fa fa-cog text-blue\"></i></a>\r\n        </td>\r\n        <td>{{project.project_id}}</td>\r\n        <td>{{textHelper.firstLetterUpperCase(project.project_title.substr(0,50))}}</td>\r\n        <td>{{project.project_start | date:\"MM/dd/yyyy\"}}</td>\r\n        <td>{{project.project_end | date:\"MM/dd/yyyy\"}}</td>\r\n        <td>\r\n          <a data-toggle=\"modal\" data-target=\"#warningModal\"><i class=\"fa fa-close text-red\"></i></a>\r\n        </td>\r\n      </tr>\r\n      </tbody>\r\n      <!--Table body-->\r\n\r\n    </table>\r\n    <!--Table-->\r\n\r\n  </div>\r\n\r\n</div>\r\n\r\n<app-action title={{project_selected.project_title}}\r\n            text=\"\"\r\n            buttons={{buttonsTitles}}\r\n            links={{buttonsLinks}}\r\n            [isLinkActive]=true\r\n>\r\n</app-action>\r\n\r\n<!-- Modal warning -->\r\n<app-warning title=\"Delete Project {{project_selected.project_id}}\"\r\n             text=\"Are you sure you want to delete the Project : {{project_selected.project_title}} from the project list ? All data linked will be destroyed.\"\r\n             link=\"project-list\"\r\n             (success)=\"deleteProject(project_selected.project_id)\"\r\n             [isLink]=false>\r\n</app-warning>\r\n"
 
 /***/ }),
 
@@ -4900,6 +5289,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _objects_project_project__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../objects/project/project */ "./src/app/objects/project/project.ts");
 /* harmony import */ var _objects_project_project_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../objects/project/project.service */ "./src/app/objects/project/project.service.ts");
+/* harmony import */ var _helpers_text_helper_text_helper_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../helpers/text-helper/text-helper.component */ "./src/app/helpers/text-helper/text-helper.component.ts");
+/* harmony import */ var _helpers_date_helper_date_helper_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../helpers/date-helper/date-helper.component */ "./src/app/helpers/date-helper/date-helper.component.ts");
+/* harmony import */ var _objects_sop_sop_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../objects/sop/sop.service */ "./src/app/objects/sop/sop.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -4909,35 +5301,125 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 var __metadata = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __generator = (undefined && undefined.__generator) || function (thisArg, body) {
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    function verb(n) { return function (v) { return step([n, v]); }; }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) try {
+            if (f = 1, y && (t = y[op[0] & 2 ? "return" : op[0] ? "throw" : "next"]) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [0, t.value];
+            switch (op[0]) {
+                case 0: case 1: t = op; break;
+                case 4: _.label++; return { value: op[1], done: false };
+                case 5: _.label++; y = op[1]; op = [0]; continue;
+                case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                default:
+                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                    if (t[2]) _.ops.pop();
+                    _.trys.pop(); continue;
+            }
+            op = body.call(thisArg, _);
+        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
+
+
+
 
 
 
 var ProjectListComponent = /** @class */ (function () {
-    function ProjectListComponent(_projectService) {
+    function ProjectListComponent(_projectService, _sopService) {
         this._projectService = _projectService;
+        this._sopService = _sopService;
         /* ----- Data ----- */
         this.errorMessage = "";
+        this.textHelper = new _helpers_text_helper_text_helper_component__WEBPACK_IMPORTED_MODULE_3__["TextHelperComponent"]();
+        this.dateHelper = new _helpers_date_helper_date_helper_component__WEBPACK_IMPORTED_MODULE_4__["DateHelperComponent"]();
         this.project_selected = new _objects_project_project__WEBPACK_IMPORTED_MODULE_1__["Project"]();
-        this.buttonsTitles = ['Set up project informations', 'Master of work', 'Set up Gantt', 'Volume Progress'];
-        this.buttonsLinks = ['', '', 'gantt-creation', 'volume-progress'];
+        this.buttonsTitles = ['Project information', 'Master of work', 'Gantt', 'Volume Progress'];
+        this.buttonsLinks = ['project', 'master-of-work', 'gantt-creation', 'volume-progress'];
     }
     ProjectListComponent.prototype.ngOnInit = function () {
-        this.loadProjects();
-    };
-    ProjectListComponent.prototype.loadProjects = function () {
-        var _this = this;
-        this.projects = [];
-        this._projectService.selectAll()
-            .subscribe(function (res) {
-            _this.errorMessage = "";
-            _this.projects = res['data'];
-        }, function (error) {
-            _this.errorMessage = error.error.message;
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        this._sopService.removeSopIdLocal();
+                        return [4 /*yield*/, this.loadProjects()];
+                    case 1:
+                        _a.sent();
+                        console.log(this.projects);
+                        return [2 /*return*/];
+                }
+            });
         });
     };
-    ProjectListComponent.prototype.sortTable = function (n) {
+    ProjectListComponent.prototype.loadProjects = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var p, error_1;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        this.errorMessage = "";
+                        this.projects_0 = [];
+                        this.projects_1 = [];
+                        this.projects_2 = [];
+                        return [4 /*yield*/, this._projectService.selectAllSort().toPromise()];
+                    case 1:
+                        p = _a.sent();
+                        this.projects = p['data'];
+                        this.sortProjects();
+                        return [3 /*break*/, 3];
+                    case 2:
+                        error_1 = _a.sent();
+                        this.errorMessage = error_1.message;
+                        return [3 /*break*/, 3];
+                    case 3: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    ProjectListComponent.prototype.sortProjects = function () {
+        for (var _i = 0, _a = this.projects; _i < _a.length; _i++) {
+            var p = _a[_i];
+            if (p['state'] == 0) {
+                this.projects_0.push(p);
+            }
+            else if (p['state'] == 1) {
+                this.projects_1.push(p);
+            }
+            else {
+                this.projects_2.push(p);
+            }
+        }
+    };
+    ProjectListComponent.prototype.sortTable = function (n, t) {
         var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
-        table = document.getElementById("project-table");
+        if (t == 1) {
+            table = document.getElementById("project-table");
+        }
+        else if (t == 2) {
+            table = document.getElementById("project-table-2");
+        }
+        else {
+            table = document.getElementById("project-table-3");
+        }
         switching = true;
         // Set the sorting direction to ascending:
         dir = "asc";
@@ -4991,12 +5473,22 @@ var ProjectListComponent = /** @class */ (function () {
             }
         }
     };
-    ProjectListComponent.prototype.search = function () {
+    ProjectListComponent.prototype.search = function (t) {
         // Declare variables
         var input, filter, table, tr, td, td2, i;
-        input = document.getElementById("search");
         filter = input.value.toUpperCase();
-        table = document.getElementById("project-table");
+        if (t == 1) {
+            input = document.getElementById("search");
+            table = document.getElementById("project-table");
+        }
+        else if (t == 2) {
+            input = document.getElementById("search-2");
+            table = document.getElementById("project-table-2");
+        }
+        else {
+            input = document.getElementById("search-3");
+            table = document.getElementById("project-table-3");
+        }
         tr = table.getElementsByTagName("tr");
         // Loop through all table rows, and hide those who don't match the search query
         for (i = 0; i < tr.length; i++) {
@@ -5031,7 +5523,8 @@ var ProjectListComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./project-list.component.html */ "./src/app/component/project-list/project-list.component.html"),
             styles: [__webpack_require__(/*! ./project-list.component.css */ "./src/app/component/project-list/project-list.component.css")]
         }),
-        __metadata("design:paramtypes", [_objects_project_project_service__WEBPACK_IMPORTED_MODULE_2__["ProjectService"]])
+        __metadata("design:paramtypes", [_objects_project_project_service__WEBPACK_IMPORTED_MODULE_2__["ProjectService"],
+            _objects_sop_sop_service__WEBPACK_IMPORTED_MODULE_5__["SopService"]])
     ], ProjectListComponent);
     return ProjectListComponent;
 }());
@@ -5047,7 +5540,7 @@ var ProjectListComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ""
+module.exports = ".anil_nepal{\r\n  padding:20px 0px;\r\n  width:100%;\r\n  display:block;\r\n}\r\n.switch {\r\n  position: relative;\r\n  display: inline-block;\r\n  vertical-align: top;\r\n  width: 100px;\r\n  height: 30px;\r\n  padding: 3px;\r\n  margin: 0 10px 10px 0;\r\n  background: linear-gradient(to bottom, #eeeeee, #FFFFFF 25px);\r\n  background-image: -webkit-linear-gradient(top, #eeeeee, #FFFFFF 25px);\r\n  border-radius: 18px;\r\n  box-shadow: inset 0 -1px white, inset 0 1px 1px rgba(0, 0, 0, 0.05);\r\n  cursor: pointer;\r\n  box-sizing: content-box;\r\n}\r\nlabel {\r\n  font-weight: inherit;\r\n}\r\ninput[type=checkbox], input[type=radio] {\r\n  margin: 4px 0 0;\r\n\r\n  line-height: normal;\r\n  box-sizing: border-box;\r\n  padding: 0;\r\n}\r\n.switch-input {\r\n  position: absolute;\r\n  top: 0;\r\n  left: 0;\r\n  opacity: 0;\r\n  box-sizing: content-box;\r\n}\r\n.switch-left-right .switch-input:checked ~ .switch-label {\r\n  background: inherit;\r\n}\r\n.switch-input:checked ~ .switch-label {\r\n  background: #E1B42B;\r\n  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.15), inset 0 0 3px rgba(0, 0, 0, 0.2);\r\n}\r\n.switch-left-right .switch-label {\r\n  overflow: hidden;\r\n}\r\n.switch-label, .switch-handle {\r\n  transition: All 0.3s ease;\r\n  -webkit-transition: All 0.3s ease;\r\n  -moz-transition: All 0.3s ease;\r\n  -o-transition: All 0.3s ease;\r\n}\r\n.switch-label {\r\n  position: relative;\r\n  display: block;\r\n  height: inherit;\r\n  font-size: 10px;\r\n  text-transform: uppercase;\r\n  background: #eceeef;\r\n  border-radius: inherit;\r\n  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.12), inset 0 0 2px rgba(0, 0, 0, 0.15);\r\n  box-sizing: content-box;\r\n}\r\n.switch-left-right .switch-input:checked ~ .switch-label:before {\r\n  opacity: 1;\r\n  left: 100px;\r\n}\r\n.switch-input:checked ~ .switch-label:before {\r\n  opacity: 0;\r\n}\r\n.switch-left-right .switch-label:before {\r\n  background: #eceeef;\r\n  text-align: left;\r\n  padding-left: 80px!important;\r\n}\r\n.switch-left-right .switch-label:before, .switch-left-right .switch-label:after {\r\n  width: 20px;\r\n  height: 20px;\r\n  top: 4px;\r\n  left: 0;\r\n  right: 0;\r\n  bottom: 0;\r\n  padding: 11px 0 0 0;\r\n  text-indent: -12px;\r\n  border-radius: 20px;\r\n  box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.2), inset 0 0 3px rgba(0, 0, 0, 0.1);\r\n}\r\n.switch-label:before {\r\n  content: attr(data-off);\r\n  right: 11px;\r\n  color: #aaaaaa;\r\n  text-shadow: 0 1px rgba(255, 255, 255, 0.5);\r\n}\r\nspan.switch-label:after {\r\n  content: attr(data-on);\r\n  left: 11px;\r\n  color: #FFFFFF;\r\n  text-shadow: 0 1px rgba(0, 0, 0, 0.2);\r\n  position: absolute;\r\n\r\n}\r\n.switch-label:before, .switch-label:after {\r\n  position: absolute;\r\n  top: 50%;\r\n  margin-top: -5px;\r\n  line-height: 1;\r\n  transition: inherit;\r\n  box-sizing: content-box;\r\n}\r\n.switch-left-right .switch-input:checked ~ .switch-label:after {\r\n  left: 0!important;\r\n  opacity: 1;\r\n  padding-left: 20px;\r\n}\r\n.switch-input:checked ~ .switch-label:after {\r\n  opacity: 1;\r\n}\r\n.switch-left-right .switch-label:after {\r\n  text-align: left;\r\n  text-indent: 9px;\r\n  background: #00c851!important;\r\n  left: -100px!important;\r\n  opacity: 1;\r\n  width: 100%!important;\r\n\r\n}\r\n.switch-left-right .switch-label:before, .switch-left-right .switch-label:after {\r\n  width: 20px;\r\n  height: 20px;\r\n  top: 4px;\r\n  left: 0;\r\n  right: 0;\r\n  bottom: 0;\r\n  padding: 11px 0 0 0;\r\n  text-indent: -12px;\r\n  border-radius: 20px;\r\n  box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.2), inset 0 0 3px rgba(0, 0, 0, 0.1);\r\n}\r\n.switch-input:checked ~ .switch-handle {\r\n  left: 74px;\r\n  box-shadow: -1px 1px 5px rgba(0, 0, 0, 0.2);\r\n}\r\n.switch-label, .switch-handle {\r\n  transition: All 0.3s ease;\r\n  -webkit-transition: All 0.3s ease;\r\n  -moz-transition: All 0.3s ease;\r\n  -o-transition: All 0.3s ease;\r\n}\r\n.switch-handle {\r\n  position: absolute;\r\n  top: 4px;\r\n  left: 4px;\r\n  width: 28px;\r\n  height: 28px;\r\n  background: linear-gradient(to bottom, #FFFFFF 40%, #f0f0f0);\r\n  background-image: -webkit-linear-gradient(top, #FFFFFF 40%, #f0f0f0);\r\n  border-radius: 100%;\r\n  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);\r\n}\r\n.switch-handle:before {\r\n  content: \"\";\r\n  position: absolute;\r\n  top: 50%;\r\n  left: 50%;\r\n  margin: -6px 0 0 -6px;\r\n  width: 12px;\r\n  height: 12px;\r\n  background: linear-gradient(to bottom, #eeeeee, #FFFFFF);\r\n  background-image: -webkit-linear-gradient(top, #eeeeee, #FFFFFF);\r\n  border-radius: 6px;\r\n  box-shadow: inset 0 1px rgba(0, 0, 0, 0.02);\r\n}\r\n"
 
 /***/ }),
 
@@ -5058,7 +5551,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div *ngIf=\"!displayEnd\">\r\n  <div class=\"container\" *ngIf=\"!updating\">\r\n    <div class=\"row row-first\" >\r\n      <div class=\"text-center mt-4\">\r\n        <a class=\"btn btn-default\" href=\"sop-list\" >Back</a>\r\n        <a class=\"btn btn-primary\" (click)=\"updateProject()\" >Modifier</a>\r\n      </div>\r\n      <div class=\"col-12 card card-cascade hoverable\" style=\"margin-top: 20px;\">\r\n        <!--Table-->\r\n        <div class=\"card-body card-body-cascade\">\r\n          {{project_title}}\r\n        </div>\r\n      </div>\r\n    </div>\r\n    <div class=\"row\" style=\"margin-top: 25px;\">\r\n      <div class=\"col-sm-12 col-lg-3\">\r\n        <p class=\"font-weight-bold\">Project Code</p>\r\n      </div>\r\n      <div class=\"col-sm-12 col-lg-9 \">\r\n        <p class=\"float-lg-left float-sm-right\">{{project_code}}</p>\r\n      </div>\r\n    </div>\r\n    <div class=\"row\" style=\"margin-top: 10px;\">\r\n      <div class=\"col-sm-12 col-lg-3\">\r\n        <p class=\"font-weight-bold\">Project work code</p>\r\n      </div>\r\n      <div class=\"col-sm-12 col-lg-9 \">\r\n        <p class=\"float-lg-left float-sm-right\">{{ project_work_code}}</p>\r\n      </div>\r\n    </div>\r\n    <div class=\"row\" style=\"margin-top: 10px;\">\r\n      <div class=\"col-sm-12 col-lg-3\">\r\n        <p class=\"font-weight-bold\">Start date</p>\r\n      </div>\r\n      <div class=\"col-sm-12 col-lg-9 \">\r\n        <p class=\"float-lg-left float-sm-right\">{{ project_start | date:'medium' }}</p>\r\n      </div>\r\n    </div>\r\n    <div class=\"row\" style=\"margin-top: 10px;\">\r\n      <div class=\"col-sm-12 col-lg-3\">\r\n        <p class=\"font-weight-bold\">project end date</p>\r\n      </div>\r\n      <div class=\"col-sm-12 col-lg-9 \">\r\n        <p class=\"float-lg-left float-sm-right\">{{ project_end | date:'medium' }}</p>\r\n      </div>\r\n    </div>\r\n    <div class=\"row\" style=\"margin-top: 10px;\">\r\n      <div class=\"col-sm-12 col-lg-3\">\r\n        <p class=\"font-weight-bold\">Organization / branch / department / sub-department</p>\r\n      </div>\r\n      <div class=\"col-sm-12 col-lg-9 \">\r\n        <p class=\"float-lg-left float-sm-right\">{{organisation_name}} / {{branch_name}} / {{department_name}} / {{sub_department_name}}</p>\r\n      </div>\r\n    </div>\r\n\r\n\r\n\r\n  </div>\r\n\r\n\r\n  <div class=\"container\" *ngIf=\"updating\">\r\n    <form>\r\n    <div class=\"row row-first\" >\r\n      <div class=\"text-center mt-4\">\r\n        <a class=\"btn btn-danger\" (click)=\"updateProject()\">Cancel update</a>\r\n        <a class=\"btn btn-primary\" (click)=\"sentProjectUpdate()\">Save</a>\r\n      </div>\r\n      <div class=\"col-12 card card-cascade hoverable\" style=\"margin-top: 20px;\">\r\n        <!--Table-->\r\n        <div class=\"card-body card-body-cascade\">\r\n          {{project_title}}\r\n        </div>\r\n      </div>\r\n    </div>\r\n    <div class=\"row\" style=\"margin-top: 25px;\">\r\n      <div class=\"col-sm-12 col-lg-3\">\r\n        <p class=\"font-weight-bold\">Project title</p>\r\n      </div>\r\n      <div class=\"col-sm-12 col-lg-9 \">\r\n        <input [(ngModel)]=\"new_project_title\" name=\"new_project_title\" type=\"text\" id=\"new_project_title\" class=\"form-control\" value=\"{{project_title}}\">\r\n      </div>\r\n    </div>\r\n    <div class=\"row\" style=\"margin-top: 25px;\">\r\n      <div class=\"col-sm-12 col-lg-3\">\r\n        <p class=\"font-weight-bold\">Project Code</p>\r\n      </div>\r\n      <div class=\"col-sm-12 col-lg-9 \">\r\n        <input [(ngModel)]=\"new_project_code\" name=\"new_project_code\" type=\"text\" id=\"new_project_code\" class=\"form-control\" value=\"{{project_code}}\">\r\n\r\n      </div>\r\n    </div>\r\n    <div class=\"row\" style=\"margin-top: 10px;\">\r\n      <div class=\"col-sm-12 col-lg-3\">\r\n        <p class=\"font-weight-bold\">Project work code</p>\r\n      </div>\r\n      <div class=\"col-sm-12 col-lg-9 \">\r\n        <input [(ngModel)]=\"new_project_work_code\" name=\"new_project_work_code\" type=\"text\" id=\"new_project_work_code\" class=\"form-control\" value=\"{{project_work_code}}\">\r\n\r\n      </div>\r\n    </div>\r\n    <div class=\"row\" style=\"margin-top: 10px;\">\r\n      <div class=\"col-sm-12 col-lg-3\">\r\n        <p class=\"font-weight-bold\">Start date</p>\r\n      </div>\r\n      <div class=\"col-sm-12 col-lg-9 \">\r\n        <input [(ngModel)]=\"new_project_start\" name=\"new_project_start\" type=\"date\" id=\"new_project_start\" class=\"form-control\" value=\"{{project_start}}\">\r\n      </div>\r\n    </div>\r\n    <div class=\"row\" style=\"margin-top: 10px;\">\r\n      <div class=\"col-sm-12 col-lg-3\">\r\n        <p class=\"font-weight-bold\">project end date</p>\r\n      </div>\r\n      <div class=\"col-sm-12 col-lg-9 \">\r\n        <input [(ngModel)]=\"new_project_end\" name=\"new_project_end\" type=\"date\" id=\"new_project_end\" class=\"form-control\" value=\"{{project_end}}\">\r\n      </div>\r\n    </div>\r\n    <div class=\"row\" style=\"margin-top: 10px;\">\r\n      <div class=\"col-sm-12 col-lg-3\">\r\n        <p class=\"font-weight-bold\">Organization / branch / department / sub-department</p>\r\n      </div>\r\n      <div class=\"col-sm-12 col-lg-9 \">\r\n        <p class=\"float-lg-left float-sm-right\">{{organisation_name}} / {{branch_name}} / {{department_name}} / {{sub_department_name}}</p>\r\n      </div>\r\n    </div>\r\n\r\n\r\n      </form>\r\n  </div>\r\n</div>\r\n\r\n<div *ngIf=\"displayEnd\" class=\"container\">\r\n  <div class=\"row row-first justify-content-center\">\r\n\r\n    <!-- Card -->\r\n    <div class=\"col-10 col-sm-8 col-md-6 col-xl-4 card card-cascade hoverable\">\r\n\r\n      <!-- Card content -->\r\n      <div class=\"card-body card-body-cascade\">\r\n\r\n        <p class=\"h4 text-center mb-4\" >{{title}}</p>\r\n\r\n\r\n        <p class=\"text-center mb-4\">\r\n          {{text}}\r\n        </p>\r\n\r\n        <div class=\"text-center mt-4\">\r\n          <a class=\"btn btn-default\" (click)=\"goBack()\" >go Back</a>\r\n        </div>\r\n\r\n      </div>\r\n    </div>\r\n\r\n\r\n\r\n  </div>\r\n</div>\r\n"
+module.exports = "<div class=\"container\" *ngIf=\"!ready\">\r\n  <div class=\"row-first\">\r\n    <app-loader></app-loader>\r\n  </div>\r\n</div>\r\n\r\n<div class=\"container\" *ngIf=\"ready\">\r\n\r\n  <div class=\"row row-first\">\r\n    <div class=\"col\">\r\n      <button type=\"button\" class=\"btn btn-outline-danger waves-effect\" [routerLink]=\"['/project-list']\"><h6 class=\"no-margin-bottom\"><i class=\"fa fa-times mr-3\"></i>Back</h6></button>\r\n      <button [disabled]=\"!isEditable || !isProjectValid\" class=\"btn btn-success waves-effect\" type=\"button\" data-toggle=\"modal\" data-target=\"#confirmationModal\">Save</button>\r\n      <app-pdf-sop ></app-pdf-sop>\r\n    </div>\r\n  </div>\r\n\r\n  <div class=\"row row-first\">\r\n    <div class=\"col anil_nepal\">\r\n      <label class=\"switch switch-left-right\">\r\n        <input class=\"switch-input\" type=\"checkbox\" (click)=\"makeEditable()\">\r\n        <span class=\"switch-label\" data-on=\"Editable\" data-off=\"OFF\"></span> <span class=\"switch-handle\"></span> </label>\r\n    </div>\r\n  </div>\r\n\r\n  <div class=\"row\">\r\n      <div class=\"col-3 font-weight-bold\">\r\n        <p>Project title</p>\r\n      </div>\r\n      <div class=\"col-8\">\r\n        <input (keyup)=\"checkProject()\" [disabled]=\"!isEditable\" [(ngModel)]=\"project.project_title\" type=\"text\" class=\"form-control\">\r\n      </div>\r\n  </div>\r\n\r\n  <div class=\"row\">\r\n    <div class=\"col-3 font-weight-bold\">\r\n      <p>Project Code</p>\r\n    </div>\r\n    <div class=\"col-8\">\r\n      <input [disabled]=\"true\" [(ngModel)]=\"project.project_id\" type=\"text\" class=\"form-control\">\r\n    </div>\r\n  </div>\r\n\r\n  <div class=\"row\">\r\n    <div class=\"col-3 font-weight-bold\">\r\n      <p>Project work code</p>\r\n    </div>\r\n    <div class=\"col-8\">\r\n      <input (keyup)=\"checkProject()\" [disabled]=\"!isEditable\" [(ngModel)]=\"project.project_work_code\" type=\"text\" class=\"form-control\">\r\n    </div>\r\n  </div>\r\n\r\n  <div class=\"row\">\r\n    <div class=\"col-3 font-weight-bold\">\r\n      <p>Start date</p>\r\n    </div>\r\n    <div class=\"col-8\">\r\n      <input [disabled]=\"!isEditable\" (change)=\"checkEndDate()\" [(ngModel)]=\"project.project_start\" type=\"date\" class=\"form-control\">\r\n    </div>\r\n  </div>\r\n\r\n  <div class=\"row\">\r\n    <div class=\"col-3 font-weight-bold\">\r\n      <p>End date</p>\r\n    </div>\r\n    <div class=\"col-8\">\r\n      <input [disabled]=\"!isEditable\"  [(ngModel)]=\"new_project_end\" [min]=\"minimum_project_end\" type=\"date\" class=\"form-control\">\r\n    </div>\r\n  </div>\r\n\r\n  <br>\r\n\r\n  <div class=\"row\">\r\n    <div class=\"col-3 font-weight-bold\">\r\n      <p>Organisation</p>\r\n    </div>\r\n    <div class=\"col-8\">\r\n      <select (change)=\"pickOrganisation()\" [disabled]=\"!isEditable\" [(ngModel)]=\"organisation\" class=\"form-control\">\r\n        <option name=\"organisation\" value=\"\" disabled selected>Choose organisation</option>\r\n        <option *ngFor=\"let o of organisation_elements\" [ngValue]=\"o\">{{o['organisation'].organisation_name}}</option>\r\n      </select>\r\n    </div>\r\n  </div>\r\n\r\n  <div class=\"row\">\r\n    <div class=\"col-3 font-weight-bold\">\r\n      <p>Branch</p>\r\n    </div>\r\n    <div class=\"col-8\">\r\n      <select (change)=\"pickBranch()\" [disabled]=\"!isEditable\" [(ngModel)]=\"branch\" class=\"form-control\">\r\n        <option name=\"organisation\" value=\"\" disabled selected>Choose branch</option>\r\n        <option *ngFor=\"let b of organisation['branchs']\" [ngValue]=\"b\">{{b['branch'].branch_name}}</option>\r\n      </select>\r\n    </div>\r\n  </div>\r\n\r\n  <div class=\"row\">\r\n    <div class=\"col-3 font-weight-bold\">\r\n      <p>Department</p>\r\n    </div>\r\n    <div class=\"col-8\">\r\n      <select (change)=\"pickDepartment()\" [disabled]=\"!isEditable || branch['branch'].branch_name == 'No branch'\" [(ngModel)]=\"department\" class=\"form-control\">\r\n        <option name=\"organisation\" value=\"\" disabled selected>Choose department</option>\r\n        <option *ngFor=\"let d of branch['departments']\" [ngValue]=\"d\">{{d['department'].department_name}}</option>\r\n      </select>\r\n    </div>\r\n  </div>\r\n\r\n  <div class=\"row\">\r\n    <div class=\"col-3 font-weight-bold\">\r\n      <p>Branch</p>\r\n    </div>\r\n    <div class=\"col-8\">\r\n      <select [disabled]=\"!isEditable || department['department'].department_name == 'No department'\" [(ngModel)]=\"sub_department\" class=\"form-control\">\r\n        <option name=\"organisation\" value=\"\" disabled selected>Choose organisation</option>\r\n        <option *ngFor=\"let s of department['sub_departments']\" [ngValue]=\"s\">{{s.sub_department_name}}</option>\r\n      </select>\r\n    </div>\r\n  </div>\r\n\r\n</div>\r\n\r\n<!-- Modal confirmation -->\r\n<app-confirmation title=\"Update Project\"\r\n                  text=\"Are you sure you want to modify this project ? If the project has already started, this mights create some errors\"\r\n                  (success)=\"onSubmit()\"\r\n                  [isLinkActive]=false\r\n                  link=\"project-list\">\r\n</app-confirmation>\r\n"
 
 /***/ }),
 
@@ -5075,7 +5568,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _objects_project_project_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../objects/project/project.service */ "./src/app/objects/project/project.service.ts");
 /* harmony import */ var _objects_organisation_organisation_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../objects/organisation/organisation.service */ "./src/app/objects/organisation/organisation.service.ts");
-/* harmony import */ var _objects_project_project__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../objects/project/project */ "./src/app/objects/project/project.ts");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var _objects_branch_branch_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../objects/branch/branch.service */ "./src/app/objects/branch/branch.service.ts");
+/* harmony import */ var _objects_sub_department_sub_department_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../objects/sub_department/sub-department.service */ "./src/app/objects/sub_department/sub-department.service.ts");
+/* harmony import */ var _objects_department_department_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../objects/department/department.service */ "./src/app/objects/department/department.service.ts");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var _objects_job_job_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../../objects/job/job.service */ "./src/app/objects/job/job.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -5124,126 +5623,319 @@ var __generator = (undefined && undefined.__generator) || function (thisArg, bod
 
 
 
+
+
+
+
+
 var ProjectComponent = /** @class */ (function () {
-    function ProjectComponent(_projectService, _organisationService) {
+    function ProjectComponent(_projectService, _organisationService, router, _branchService, _departmentService, _subDepartmentService, _jobService) {
         this._projectService = _projectService;
         this._organisationService = _organisationService;
-        this.updating = false;
-        this.organisation_name = "unknown";
-        this.branch_name = "unknown";
-        this.department_name = "unknown";
-        this.sub_department_name = "unknown";
+        this.router = router;
+        this._branchService = _branchService;
+        this._departmentService = _departmentService;
+        this._subDepartmentService = _subDepartmentService;
+        this._jobService = _jobService;
+        /* ----- Data ----- */
         this.errorMessage = "";
-        this.displayEnd = false;
+        this.isEditable = false;
+        this.isProjectValid = true;
+        this.ready = false;
+        //Manage the disabled function of organisations selects
+        this.pick_level = 1;
+        this.organisation_elements = [];
     }
     ProjectComponent.prototype.ngOnInit = function () {
-        var _this = this;
-        this.project_id = localStorage.getItem("Project_id");
-        //localStorage.removeItem("Sop_id");
-        this.getProject(this.project_id);
-        setTimeout(function () {
-            console.log(_this.project_id);
-        }, 400);
-    };
-    ProjectComponent.prototype.getProject = function (idProject) {
         return __awaiter(this, void 0, void 0, function () {
-            var _this = this;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, this._projectService.getProject(idProject)
-                            .subscribe(function (res) {
-                            console.log(res['data']);
-                            //this.res=res['data'];
-                            _this.project_title = res['data']['project_title'];
-                            _this.project_code = res['data']['project_code'];
-                            _this.project_work_code = res['data']['project_work_code'];
-                            _this.project_start = res['data']['project_start'];
-                            _this.project_end = res['data']['project_end'];
-                            _this.sub_department_id = res['data']['sub_department_id'];
-                            _this.getOrganisation(res['data']['sub_department_id']);
-                        }, function (error) {
-                            console.log("ERREUR : ", error);
-                        })];
-                    case 1:
-                        _a.sent();
-                        return [2 /*return*/];
-                }
-            });
-        });
-    };
-    ProjectComponent.prototype.getOrganisation = function (idSubDepartment) {
-        return __awaiter(this, void 0, void 0, function () {
-            var _this = this;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, this._organisationService.selectSchema(idSubDepartment)
-                            .subscribe(function (res) {
-                            console.log(res['data']);
-                            _this.sub_department_name = res['data'][0]['sub_department_name'];
-                            _this.department_name = res['data'][0]['department_name'];
-                            _this.branch_name = res['data'][0]['branch_name'];
-                            _this.organisation_name = res['data'][0]['organisation_name'];
-                        }, function (error) {
-                            console.log("ERREUR : ", error);
-                        })];
-                    case 1:
-                        _a.sent();
-                        return [2 /*return*/];
-                }
-            });
-        });
-    };
-    ProjectComponent.prototype.updateProject = function () {
-        this.updating = !this.updating;
-        this.new_project_title = this.project_title;
-        this.new_project_code = this.project_code;
-        this.new_project_work_code = this.project_work_code;
-        this.new_project_start = this.project_start;
-        this.new_project_end = this.project_end;
-    };
-    ProjectComponent.prototype.sentProjectUpdate = function () {
-        return __awaiter(this, void 0, void 0, function () {
-            var project, project_id, error_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        project = new _objects_project_project__WEBPACK_IMPORTED_MODULE_3__["Project"];
-                        console.log(this.new_project_title);
-                        project.project_title = this.new_project_title;
-                        project.project_code = this.new_project_code;
-                        project.project_work_code = this.new_project_work_code;
-                        project.project_id = this.project_id;
-                        project.sub_department_id = this.sub_department_id;
-                        project.project_start = new Date(this.new_project_start);
-                        project.project_end = new Date(this.new_project_end);
-                        _a.label = 1;
+                        this.project_id = localStorage.getItem("Project_id");
+                        return [4 /*yield*/, this.loadProject()];
                     case 1:
-                        _a.trys.push([1, 3, , 4]);
-                        return [4 /*yield*/, this._projectService.updateProject(project).toPromise()];
+                        _a.sent();
+                        return [4 /*yield*/, this.loadOrganisations()];
                     case 2:
-                        project_id = _a.sent();
-                        this.title = "Succes";
-                        this.text = "The project has been updated";
-                        this.displayEnd = true;
-                        return [3 /*break*/, 4];
+                        _a.sent();
+                        return [4 /*yield*/, this.loadOrganisationFromProject()];
                     case 3:
-                        error_1 = _a.sent();
-                        console.log(error_1.message);
-                        this.title = "ERROR";
-                        this.text = error_1.message;
-                        this.displayEnd = true;
-                        return [3 /*break*/, 4];
-                    case 4: return [2 /*return*/];
+                        _a.sent();
+                        return [4 /*yield*/, this.loadJobs()];
+                    case 4:
+                        _a.sent();
+                        return [4 /*yield*/, this.checkEndDate()];
+                    case 5:
+                        _a.sent();
+                        this.ready = true;
+                        return [2 /*return*/];
                 }
             });
         });
     };
-    ProjectComponent.prototype.goBack = function () {
-        this.title = "";
-        this.text = "";
-        this.getProject(this.project_id);
-        this.updateProject();
-        this.displayEnd = false;
+    ProjectComponent.prototype.loadProject = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var s, error_1;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        return [4 /*yield*/, this._projectService.getProject(this.project_id).toPromise()];
+                    case 1:
+                        s = _a.sent();
+                        this.project = s['data'];
+                        this.new_project_end = this.project.project_end;
+                        return [3 /*break*/, 3];
+                    case 2:
+                        error_1 = _a.sent();
+                        this.errorMessage = error_1.message;
+                        return [3 /*break*/, 3];
+                    case 3: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    ProjectComponent.prototype.loadOrganisationFromProject = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var res, elements, error_2;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        return [4 /*yield*/, this._organisationService.selectSchema(this.project.sub_department_id).toPromise()];
+                    case 1:
+                        res = _a.sent();
+                        elements = res['data'][0];
+                        this.organisation = this.findElement(elements['organisation_id'], 1);
+                        this.branch = this.findElement(elements['branch_id'], 2);
+                        this.department = this.findElement(elements['department_id'], 3);
+                        this.sub_department = this.findElement(elements['sub_department_id'], 4);
+                        return [3 /*break*/, 3];
+                    case 2:
+                        error_2 = _a.sent();
+                        this.errorMessage = error_2.message;
+                        return [3 /*break*/, 3];
+                    case 3: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    ProjectComponent.prototype.loadJobs = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var j, error_3;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        return [4 /*yield*/, this._jobService.selectAllFromProject(this.project_id).toPromise()];
+                    case 1:
+                        j = _a.sent();
+                        this.jobs = j['data'];
+                        return [3 /*break*/, 3];
+                    case 2:
+                        error_3 = _a.sent();
+                        this.errorMessage = error_3.message;
+                        return [3 /*break*/, 3];
+                    case 3: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    ProjectComponent.prototype.makeEditable = function () {
+        this.isEditable = !this.isEditable;
+    };
+    ProjectComponent.prototype.onSubmit = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var error_4;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        this.project.sub_department_id = this.sub_department.sub_department_id.toString();
+                        return [4 /*yield*/, this._projectService.updateProject(this.project).toPromise()];
+                    case 1:
+                        _a.sent();
+                        this.router.navigate(['/project-list']);
+                        return [3 /*break*/, 3];
+                    case 2:
+                        error_4 = _a.sent();
+                        this.errorMessage = error_4.message;
+                        return [3 /*break*/, 3];
+                    case 3: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    ProjectComponent.prototype.checkProject = function () {
+        this.errorMessage = "";
+        var check = true;
+        if (this.project.project_title == "") {
+            this.errorMessage = "Project name is required.";
+            check = false;
+        }
+        else if (this.project.project_work_code == "") {
+            this.errorMessage = "Project work code is required.";
+            check = false;
+        }
+        this.isProjectValid = check;
+    };
+    ProjectComponent.prototype.checkEndDate = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var p, p2, d1, d2, d;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this._jobService.computeDateEnd(this.jobs, this.project.project_start).toPromise()];
+                    case 1:
+                        p = _a.sent();
+                        p2 = new Date(p['data']['end_date']);
+                        //We get the minimum date
+                        this.minimum_project_end = moment__WEBPACK_IMPORTED_MODULE_7__(p2).format('YYYY-MM-DD');
+                        d1 = new Date(this.new_project_end);
+                        d2 = new Date(this.minimum_project_end);
+                        if (d1 < d2) {
+                            d = new Date(this.minimum_project_end);
+                            this.new_project_end = moment__WEBPACK_IMPORTED_MODULE_7__(d).format('YYYY-MM-DD');
+                        }
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    /*  ----------------- ORGANISATIONS / BRANCHS / DEPARTMENTS / SUB_DEPARTMENTS ----------------- */
+    //We get all Organisations, branchs, departements and sub departements from database
+    ProjectComponent.prototype.loadOrganisations = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var o, organisations, _i, organisations_1, organisation, b, branchs, e0, _a, branchs_1, branch, d, departments, e1, _b, departments_1, department, s, sub_departments, e2, error_5;
+            return __generator(this, function (_c) {
+                switch (_c.label) {
+                    case 0:
+                        _c.trys.push([0, 14, , 15]);
+                        this.errorMessage = "";
+                        return [4 /*yield*/, this._organisationService.selectAll().toPromise()];
+                    case 1:
+                        o = _c.sent();
+                        organisations = o['data'];
+                        _i = 0, organisations_1 = organisations;
+                        _c.label = 2;
+                    case 2:
+                        if (!(_i < organisations_1.length)) return [3 /*break*/, 13];
+                        organisation = organisations_1[_i];
+                        return [4 /*yield*/, this._branchService.selectAllFromOrganisation(organisation.organisation_id.toString()).toPromise()];
+                    case 3:
+                        b = _c.sent();
+                        branchs = b['data'];
+                        e0 = {
+                            organisation: organisation,
+                            branchs: []
+                        };
+                        _a = 0, branchs_1 = branchs;
+                        _c.label = 4;
+                    case 4:
+                        if (!(_a < branchs_1.length)) return [3 /*break*/, 11];
+                        branch = branchs_1[_a];
+                        return [4 /*yield*/, this._departmentService.selectAllFromBranch(branch.branch_id.toString()).toPromise()];
+                    case 5:
+                        d = _c.sent();
+                        departments = d['data'];
+                        e1 = {
+                            branch: branch,
+                            departments: []
+                        };
+                        _b = 0, departments_1 = departments;
+                        _c.label = 6;
+                    case 6:
+                        if (!(_b < departments_1.length)) return [3 /*break*/, 9];
+                        department = departments_1[_b];
+                        return [4 /*yield*/, this._subDepartmentService.selectAllFromDepartment(department.department_id.toString()).toPromise()];
+                    case 7:
+                        s = _c.sent();
+                        sub_departments = s['data'];
+                        e2 = {
+                            department: department,
+                            sub_departments: sub_departments
+                        };
+                        e1['departments'].push(e2);
+                        _c.label = 8;
+                    case 8:
+                        _b++;
+                        return [3 /*break*/, 6];
+                    case 9:
+                        e0['branchs'].push(e1);
+                        _c.label = 10;
+                    case 10:
+                        _a++;
+                        return [3 /*break*/, 4];
+                    case 11:
+                        this.organisation_elements.push(e0);
+                        _c.label = 12;
+                    case 12:
+                        _i++;
+                        return [3 /*break*/, 2];
+                    case 13: return [3 /*break*/, 15];
+                    case 14:
+                        error_5 = _c.sent();
+                        this.errorMessage = error_5.message;
+                        return [3 /*break*/, 15];
+                    case 15: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    /* element is an id of organisation, branch or department. Level 1 = We search for organisation, level 2 = we search for departments.
+     * Return : the element of organisation_elements wanted */
+    ProjectComponent.prototype.findElement = function (element, level) {
+        console.log('element : ', element, ' - level : ', level);
+        if (level == 1) {
+            //We search for an organisation
+            for (var _i = 0, _a = this.organisation_elements; _i < _a.length; _i++) {
+                var e = _a[_i];
+                if (e['organisation'].organisation_id == element) {
+                    return e;
+                }
+            }
+        }
+        else if (level == 2) {
+            for (var _b = 0, _c = this.organisation['branchs']; _b < _c.length; _b++) {
+                var e = _c[_b];
+                if (e['branch'].branch_id == element) {
+                    return e;
+                }
+            }
+        }
+        else if (level == 3) {
+            for (var _d = 0, _e = this.branch['departments']; _d < _e.length; _d++) {
+                var e = _e[_d];
+                if (e['department'].department_id == element) {
+                    return e;
+                }
+            }
+        }
+        else if (level == 4) {
+            for (var _f = 0, _g = this.department['sub_departments']; _f < _g.length; _f++) {
+                var e = _g[_f];
+                if (e.department_id == element) {
+                    return e;
+                }
+            }
+        }
+    };
+    ProjectComponent.prototype.pickOrganisation = function () {
+        // I have picked my new organisation, I need to set my new array for other levels
+        this.branch = this.organisation['branchs'][0];
+        this.department = this.branch['departments'][0];
+        this.sub_department = this.department['sub_departments'][0];
+        console.log(this.organisation, this.branch, this.department, this.sub_department);
+    };
+    ProjectComponent.prototype.pickBranch = function () {
+        // I have picked my new organisation, I need to set my new array for other levels
+        this.department = this.branch['departments'][0];
+        this.sub_department = this.department['sub_departments'][0];
+        console.log(this.organisation, this.branch, this.department, this.sub_department);
+    };
+    ProjectComponent.prototype.pickDepartment = function () {
+        this.sub_department = this.department['sub_departments'][0];
+        console.log(this.organisation, this.branch, this.department, this.sub_department);
+        //
     };
     ProjectComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -5252,7 +5944,12 @@ var ProjectComponent = /** @class */ (function () {
             styles: [__webpack_require__(/*! ./project.component.css */ "./src/app/component/project-list/project/project.component.css")]
         }),
         __metadata("design:paramtypes", [_objects_project_project_service__WEBPACK_IMPORTED_MODULE_1__["ProjectService"],
-            _objects_organisation_organisation_service__WEBPACK_IMPORTED_MODULE_2__["OrganisationService"]])
+            _objects_organisation_organisation_service__WEBPACK_IMPORTED_MODULE_2__["OrganisationService"],
+            _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"],
+            _objects_branch_branch_service__WEBPACK_IMPORTED_MODULE_4__["BranchService"],
+            _objects_department_department_service__WEBPACK_IMPORTED_MODULE_6__["DepartmentService"],
+            _objects_sub_department_sub_department_service__WEBPACK_IMPORTED_MODULE_5__["SubDepartmentService"],
+            _objects_job_job_service__WEBPACK_IMPORTED_MODULE_8__["JobService"]])
     ], ProjectComponent);
     return ProjectComponent;
 }());
@@ -5268,7 +5965,7 @@ var ProjectComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container\" *ngIf=\"!ready\">\r\n  <div class=\"row-first\">\r\n    <app-loader></app-loader>\r\n  </div>\r\n</div>\r\n\r\n<div class=\"container\" *ngIf=\"ready\">\r\n\r\n  <div class=\"row row-first\">\r\n    <div class=\"col\">\r\n      <button type=\"button\" class=\"btn btn-outline-danger waves-effect\" routerLink=\"/project-list\"><h6 class=\"no-margin-bottom\"><i class=\"fa fa-times mr-3\"></i>Back</h6></button>\r\n    </div>\r\n  </div>\r\n\r\n  <div class=\"row row-first input-group justify-content-between\">\r\n    <div class=\"md-form col-2\" id=\"search-bar\">\r\n      <input id=\"search\" (keyup)=\"search()\" class=\"form-control\" type=\"text\" placeholder=\"Search\" aria-label=\"Search\">\r\n    </div>\r\n    <div class=\"md-form col text-center\">\r\n      <h5><span class=\"badge badge-default\">Finished</span>\r\n      <span class=\"badge badge-primary\">Target</span>\r\n      <span class=\"badge badge-danger\">Pourcentage</span></h5>\r\n    </div>\r\n    <div class=\"month-select col-2\">\r\n      <ul class=\"pagination pg-blue justify-content-center\" *ngIf=\"month_selected != null\" >\r\n        <li class=\"page-item text-middle\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"previous\" ><i class=\"page-link no-hover fa fa-arrow-left\" (click)=\"changeMonth(false)\"></i></li>\r\n\r\n        <!--Numbers-->\r\n        <li><h2><span class=\"badge badge-default\">{{month_selected['month_label']}}</span></h2></li>\r\n\r\n        <li class=\"page-item\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"next\" ><i id=\"nextArrow\" class=\"page-link no-hover fa fa-arrow-right\" (click)=\"changeMonth(true)\"></i></li>\r\n\r\n      </ul>\r\n    </div>\r\n  </div>\r\n\r\n  <div class=\"row justify-content-center\">\r\n\r\n    <table class=\"col-12 hoverable table table-borderless table-hover table-fixed\" id=\"volume-table\">\r\n\r\n      <!--Table head-->\r\n      <thead class=\"\">\r\n      <tr class=\"text-white\">\r\n        <th style=\"width: 5%\" (click)=\"sortTable(0)\"><a>No</a></th>\r\n        <th class=\"text-small\" (click)=\"sortTable(1)\"><a>Staff Names</a></th>\r\n        <th class=\"text-small\" (click)=\"sortTable(2)\"><a>Total Target</a></th>\r\n        <th *ngFor=\"let week of weeks\">{{week[0]}}</th>\r\n      </tr>\r\n      </thead>\r\n      <!--Table head-->\r\n\r\n      <!--Table body-->\r\n      <tbody>\r\n        <!-- elements[0]: activity_id && elements[1]: activity && elements[2]: m_a_p && elements[3]: members linked -->\r\n        <tr *ngFor=\"let element of elements\" id=\"{{element['member']['member_id']}}\">\r\n          <td (click)=\"selectMember(element)\"><a>{{element['member']['member_id']}}</a></td>\r\n          <td class=\"text-small\" (click)=\"selectMember(element)\"><a>{{element['member']['member_name'].toUpperCase()}} {{element['member']['member_first_name']}}</a></td>\r\n          <td>\r\n            <h6>\r\n              <span class=\"badge badge-default\">{{element['total_finished']}}</span>\r\n              <span class=\"badge badge-primary\">{{element['total_target']}}</span>\r\n              <span class=\"badge badge-danger\">{{calculPourcentage(element['total_finished'], element['total_target'])}}%</span>\r\n            </h6>\r\n          </td>\r\n\r\n          <th *ngFor=\"let week of weeks\">\r\n            <h6>\r\n              <span *ngIf=\"targets.get(element['member']['member_id']).get(week[1]) != null\" class=\"badge badge-default\">{{targets.get(element['member']['member_id']).get(week[1])['finished_quantity']}}</span>\r\n              <span *ngIf=\"targets.get(element['member']['member_id']).get(week[1]) != null\" class=\"badge badge-primary\">{{targets.get(element['member']['member_id']).get(week[1])['target_quantity']}}</span>\r\n              <span *ngIf=\"targets.get(element['member']['member_id']).get(week[1]) != null\" class=\"badge badge-danger\">{{calculPourcentage(targets.get(element['member']['member_id']).get(week[1])['finished_quantity'], targets.get(element['member']['member_id']).get(week[1])['target_quantity'])}}%</span>\r\n            </h6>\r\n          </th>\r\n        </tr>\r\n      </tbody>\r\n      <!--Table body-->\r\n\r\n    </table>\r\n    <!--Table-->\r\n\r\n    <table class=\"col-10 hoverable table table-borderless table-hover table-fixed\" id=\"activity-table\" *ngIf=\"element_selected != null\">\r\n\r\n      <!--Table head-->\r\n      <thead class=\"thead-secondary\">\r\n      <tr class=\"text-white\">\r\n        <th class=\"text-small\" style=\"width: 7%\" (click)=\"sortTable1(0)\"><a>Job</a></th>\r\n        <th class=\"text-small\" (click)=\"sortTable1(1)\"><a>Activity</a></th>\r\n        <th class=\"text-small\" (click)=\"sortTable1(2)\"><a>Finished Quantity</a></th>\r\n        <th class=\"text-small\" (click)=\"sortTable1(3)\"><a>Target Quantity</a></th>\r\n        <th class=\"text-small\" style=\"width: 20%\" (click)=\"sortTable1(4)\"><a>Finished Date</a></th>\r\n        <th class=\"text-small\" (click)=\"sortTable1(5)\"><a>Target Date</a></th>\r\n        <th class=\"text-small\" (click)=\"sortTable1(6)\"><a>State</a></th>\r\n      </tr>\r\n      </thead>\r\n      <!--Table head-->\r\n\r\n      <!--Table body-->\r\n      <tbody >\r\n      <tr *ngFor=\"let activity of element_selected['m_a_ps']\">\r\n        <td class=\"text-small\">{{activity['job'].job_name}}</td>\r\n        <td class=\"text-small\">{{activity['activity'].activity_title}}</td>\r\n        <td>\r\n          <input [(ngModel)]=\"activity['m_a_p'].finished_quantity\" type=\"number\" class=\"form-control\" max=\"{{activity['m_a_p'].target_quantity}}\" min=\"0\">\r\n        </td>\r\n        <td>{{activity['m_a_p'].target_quantity}}</td>\r\n        <td>\r\n          <input *ngIf=\"activity['m_a_p'].target_quantity == activity['m_a_p'].finished_quantity\" [disabled]=\"activity['m_a_p'].evaluation == 'finished on date' || activity['m_a_p'].evaluation == 'finished late'\" [(ngModel)]=\"activity['m_a_p'].finished_date\" type=\"date\" class=\"form-control\">\r\n        </td>\r\n        <td class=\"text-small\">{{activity['m_a_p'].target_date | date: 'dd/MM/yyyy'}}</td>\r\n        <td class=\"text-small\">{{activity['m_a_p'].evaluation}}</td>\r\n      </tr>\r\n      </tbody>\r\n      <!--Table body-->\r\n\r\n    </table>\r\n    <!--Table-->\r\n\r\n    <div class=\"col-2 text-center\" *ngIf=\"element_selected != null\">\r\n      <button class=\"btn btn-success waves-effect\" type=\"button\" data-toggle=\"modal\" data-target=\"#confirmationModal\">Save</button>\r\n      <br>\r\n      <!-- Error alert -->\r\n      <i class=\"error-text\" *ngIf=\"errorMessage && errorMessage != ''\">{{errorMessage}}</i>\r\n    </div>\r\n\r\n  </div>\r\n\r\n</div>\r\n\r\n<!-- Modal confirmation -->\r\n<app-confirmation title=\"Save finished quantities and duration\"\r\n                  text=\"Are you sure all informations provided are correct ?\"\r\n                  (success)=\"onSubmit(element_selected)\"\r\n                  [isLinkActive]=false\r\n                  link=\"project-list\">\r\n</app-confirmation>\r\n\r\n<script>\r\n  // Material Select Initialization\r\n  $(document).ready(function() {\r\n    $('.mdb-select').material_select();\r\n  });\r\n</script>\r\n\r\n"
+module.exports = "<div class=\"container\" *ngIf=\"!ready\">\r\n  <div class=\"row-first\">\r\n    <app-loader></app-loader>\r\n  </div>\r\n</div>\r\n\r\n<div class=\"container\" *ngIf=\"ready\">\r\n\r\n  <div class=\"row row-first\">\r\n    <div class=\"col\">\r\n      <button type=\"button\" class=\"btn btn-outline-danger waves-effect\" routerLink=\"/project-list\"><h6 class=\"no-margin-bottom\"><i class=\"fa fa-times mr-3\"></i>Back</h6></button>\r\n      <app-pdf-performance-target></app-pdf-performance-target>\r\n      <app-pdf-performance-report></app-pdf-performance-report>\r\n      <app-pdf-progress-evaluation></app-pdf-progress-evaluation>\r\n    </div>\r\n  </div>\r\n\r\n  <div class=\"row row-first input-group justify-content-between\">\r\n\r\n    <div class=\"md-form col-2\" id=\"search-bar\">\r\n      <input id=\"search\" (keyup)=\"search()\" class=\"form-control\" type=\"text\" placeholder=\"Search\" aria-label=\"Search\">\r\n    </div>\r\n\r\n    <!-- LEGEND -->\r\n    <div class=\"md-form col text-center\">\r\n      <h5><span class=\"badge badge-default\">Finished</span>\r\n      <span class=\"badge badge-primary\">Target</span>\r\n      <span class=\"badge badge-danger\">Pourcentage</span></h5>\r\n    </div>\r\n\r\n    <div *ngIf=\"isSwitchable\" class=\"col center-block anil_nepal\">\r\n      <label class=\"switch switch-left-right\">\r\n        <input class=\"switch-input\" type=\"checkbox\"(click)=\"switchView()\" [checked]=\"!isDay\">\r\n        <span class=\"switch-label\" data-on=\"Month\" data-off=\"Day\"></span> <span class=\"switch-handle\"></span> </label>\r\n    </div>\r\n\r\n    <div class=\"month-select col-2\">\r\n      <ul class=\"pagination pg-blue justify-content-center\">\r\n        <li class=\"page-item text-middle\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"previous\" ><i class=\"page-link no-hover fa fa-arrow-left\" (click)=\"previous()\"></i></li>\r\n\r\n        <!--DATE SELECTOR-->\r\n        <li><h2><span class=\"badge badge-default\">{{date_displayed}}</span></h2></li>\r\n\r\n        <li class=\"page-item\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"next\" ><i id=\"nextArrow\" class=\"page-link no-hover fa fa-arrow-right\" (click)=\"next()\"></i></li>\r\n\r\n      </ul>\r\n    </div>\r\n  </div>\r\n\r\n  <div class=\"row justify-content-center\">\r\n\r\n    <table *ngIf=\"volumes_displayed.size != 0\" class=\"col-12 hoverable table table-borderless table-hover table-fixed\" id=\"volume-table\">\r\n\r\n      <!--Table head-->\r\n      <thead class=\"\">\r\n      <tr class=\"text-white\">\r\n        <th style=\"width: 5%\" (click)=\"sortTable(0)\"><a>No</a></th>\r\n        <th class=\"text-small\" (click)=\"sortTable(1)\"><a>Staff Names</a></th>\r\n        <th class=\"text-small\" (click)=\"sortTable(2)\"><a>Total Target</a></th>\r\n        <th *ngFor=\"let date of dates_displayed\">{{date}}</th>\r\n      </tr>\r\n      </thead>\r\n      <!--Table head-->\r\n\r\n      <!--Table body-->\r\n      <tbody>\r\n        <!-- /*\r\n              * [{date: Date,\r\n              *   elements: [{target_quantity: number,\r\n              *               finished_quantity: number,\r\n              *               finished_rate: number,\r\n              *               member: Member\r\n              *              }]\r\n              *  }]\r\n              * */\r\n        -->\r\n        <tr *ngFor=\"let member of convertMap(volumes_displayed)\" id=\"{{member['member'].member_id}}\"> <!-- ONE ROW -->\r\n          <td ><a (click)=\"selectMember(member['member'].member_id)\">{{member['member'].member_id}}</a></td>\r\n          <td class=\"text-small\"><a (click)=\"selectMember(member['member'].member_id)\">{{member['member'].member_name.toUpperCase()}} {{member['member'].member_first_name}}</a></td>\r\n          <td>\r\n            <h6>\r\n              <span class=\"badge badge-default\">{{roundOne(member['total_finished'], 1)}}</span>\r\n              <span class=\"badge badge-primary\">{{roundOne(member['total_target'],1)}}</span>\r\n              <span class=\"badge badge-danger\">{{roundOne(member['total_rates'], 1)}}%</span>\r\n            </h6>\r\n          </td>\r\n\r\n            <td *ngFor=\"let volume of member['volumes']\"> <!-- SAME MEMBERS -->\r\n              <h6 *ngIf=\"volume['target_quantity'] != 0\">\r\n                <span class=\"badge badge-default\">{{roundOne(volume['finished_quantity'],1)}}</span>\r\n                <span class=\"badge badge-primary\">{{roundOne(volume['target_quantity'],1)}}</span>\r\n                <span class=\"badge badge-danger\">{{roundOne(volume['finished_rate'],1)}}%</span>\r\n              </h6>\r\n            </td>\r\n\r\n        </tr>\r\n      </tbody>\r\n      <!--Table body-->\r\n\r\n    </table>\r\n    <!--Table-->\r\n\r\n    <table class=\"col-10 hoverable table table-borderless table-hover table-fixed\" id=\"activity-table\" *ngIf=\"element_selected != null\">\r\n\r\n      <!--Table head-->\r\n      <thead class=\"thead-secondary\">\r\n      <tr class=\"text-white\">\r\n        <th class=\"text-small\" style=\"width: 7%\" (click)=\"sortTable1(0)\"><a>Job</a></th>\r\n        <th class=\"text-small\" (click)=\"sortTable1(1)\"><a>Activity</a></th>\r\n        <th class=\"text-small\" (click)=\"sortTable1(2)\"><a>Finished Quantity</a></th>\r\n        <th class=\"text-small\" (click)=\"sortTable1(3)\"><a>Target Quantity</a></th>\r\n        <th class=\"text-small\" style=\"width: 20%\" (click)=\"sortTable1(4)\"><a>Finished Date</a></th>\r\n        <th class=\"text-small\" (click)=\"sortTable1(5)\"><a>Target Date</a></th>\r\n        <th class=\"text-small\" (click)=\"sortTable1(6)\"><a>State</a></th>\r\n      </tr>\r\n      </thead>\r\n      <!--Table head-->\r\n\r\n      <!--Table body-->\r\n      <tbody >\r\n      <tr *ngFor=\"let activity of element_selected['m_a_ps']\">\r\n        <td class=\"text-small\">{{activity['job'].job_name}}</td>\r\n        <td class=\"text-small\">{{activity['activity'].activity_title}}</td>\r\n        <td>\r\n          <input [hidden]=\"activity['m_a_p'].target_quantity==0\" [(ngModel)]=\"activity['m_a_p'].finished_quantity\" type=\"number\" class=\"form-control\" max=\"{{activity['m_a_p'].target_quantity}}\" min=\"0\">\r\n        </td>\r\n        <td >{{activity['m_a_p'].target_quantity}}</td>\r\n        <td>\r\n          <input *ngIf=\"activity['m_a_p'].target_quantity == activity['m_a_p'].finished_quantity\" [(ngModel)]=\"activity['m_a_p'].finished_date\" type=\"date\" class=\"form-control\">\r\n        </td>\r\n        <td class=\"text-small\">{{activity['m_a_p'].target_date | date: 'dd/MM/yyyy'}}</td>\r\n        <td class=\"text-small\">{{activity['m_a_p'].evaluation}}</td>\r\n      </tr>\r\n      </tbody>\r\n      <!--Table body-->\r\n\r\n    </table>\r\n    <!--Table-->\r\n\r\n    <div class=\"col-2 text-center\" *ngIf=\"element_selected != null\">\r\n      <button class=\"btn btn-success waves-effect\" type=\"button\" data-toggle=\"modal\" data-target=\"#confirmationModal\">Save</button>\r\n      <br>\r\n      <!-- Error alert -->\r\n      <i class=\"error-text\" *ngIf=\"errorMessage && errorMessage != ''\">{{errorMessage}}</i>\r\n    </div>\r\n\r\n  </div>\r\n\r\n</div>\r\n\r\n<!-- Modal confirmation -->\r\n<app-confirmation title=\"Save finished quantities and duration\"\r\n                  text=\"Are you sure all informations provided are correct ?\"\r\n                  (success)=\"onSubmit(element_selected)\"\r\n                  [isLinkActive]=false\r\n                  link=\"project-list\">\r\n</app-confirmation>\r\n\r\n<script>\r\n  // Material Select Initialization\r\n  $(document).ready(function() {\r\n    $('.mdb-select').material_select();\r\n  });\r\n</script>\r\n\r\n"
 
 /***/ }),
 
@@ -5279,7 +5976,7 @@ module.exports = "<div class=\"container\" *ngIf=\"!ready\">\r\n  <div class=\"r
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".text-small {\n  font-size: 0.7em !important;\n  font-weight: 500 !important; }\n\n.text-medium {\n  font-size: 0.7em !important;\n  font-weight: 500 !important; }\n\n.month-select {\n  padding-bottom: 20px;\n  padding-top: 20px;\n  margin-left: 5%; }\n\n.input-group-addon.success {\n  color: white;\n  background-color: #ffa701;\n  border-color: #ffa701; }\n"
+module.exports = ".text-small {\n  font-size: 0.7em !important;\n  font-weight: 500 !important; }\n\n.text-medium {\n  font-size: 0.7em !important;\n  font-weight: 500 !important; }\n\n.month-select {\n  padding-bottom: 20px;\n  padding-top: 20px;\n  margin-left: 5%; }\n\n.input-group-addon.success {\n  color: white;\n  background-color: #ffa701;\n  border-color: #ffa701; }\n\n.badge-primary {\n  background-color: #008593 !important; }\n\n.anil_nepal {\n  padding: 20px 0px;\n  width: 100%;\n  display: block; }\n\n.switch {\n  position: relative;\n  display: inline-block;\n  vertical-align: top;\n  width: 100px;\n  height: 30px;\n  padding: 3px;\n  margin: 0 10px 10px 0;\n  background: linear-gradient(to bottom, #eeeeee, #FFFFFF 25px);\n  background-image: -webkit-linear-gradient(top, #eeeeee, #FFFFFF 25px);\n  border-radius: 18px;\n  box-shadow: inset 0 -1px white, inset 0 1px 1px rgba(0, 0, 0, 0.05);\n  cursor: pointer;\n  box-sizing: content-box; }\n\nlabel {\n  font-weight: inherit; }\n\ninput[type=checkbox], input[type=radio] {\n  margin: 4px 0 0;\n  line-height: normal;\n  box-sizing: border-box;\n  padding: 0; }\n\n.switch-input {\n  position: absolute;\n  top: 0;\n  left: 0;\n  opacity: 0;\n  box-sizing: content-box; }\n\n.switch-left-right .switch-input:checked ~ .switch-label {\n  background: inherit; }\n\n.switch-input:checked ~ .switch-label {\n  background: #E1B42B;\n  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.15), inset 0 0 3px rgba(0, 0, 0, 0.2); }\n\n.switch-left-right .switch-label {\n  overflow: hidden; }\n\n.switch-label, .switch-handle {\n  transition: All 0.3s ease;\n  -webkit-transition: All 0.3s ease;\n  -moz-transition: All 0.3s ease;\n  -o-transition: All 0.3s ease; }\n\n.switch-label {\n  position: relative;\n  display: block;\n  height: inherit;\n  font-size: 10px;\n  text-transform: uppercase;\n  background: #eceeef;\n  border-radius: inherit;\n  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.12), inset 0 0 2px rgba(0, 0, 0, 0.15);\n  box-sizing: content-box; }\n\n.switch-left-right .switch-input:checked ~ .switch-label:before {\n  opacity: 1;\n  left: 100px; }\n\n.switch-input:checked ~ .switch-label:before {\n  opacity: 0; }\n\n.switch-left-right .switch-label:before {\n  background: #eceeef;\n  text-align: left;\n  padding-left: 80px !important; }\n\n.switch-left-right .switch-label:before, .switch-left-right .switch-label:after {\n  width: 20px;\n  height: 20px;\n  top: 4px;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  padding: 11px 0 0 0;\n  text-indent: -12px;\n  border-radius: 20px;\n  box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.2), inset 0 0 3px rgba(0, 0, 0, 0.1); }\n\n.switch-label:before {\n  content: attr(data-off);\n  right: 11px;\n  color: #FFFFFF;\n  text-shadow: 0 1px rgba(255, 255, 255, 0.5); }\n\nspan.switch-label:after {\n  content: attr(data-on);\n  left: 11px;\n  color: #FFFFFF;\n  text-shadow: 0 1px rgba(0, 0, 0, 0.2);\n  position: absolute; }\n\n.switch-label:before, .switch-label:after {\n  position: absolute;\n  top: 50%;\n  margin-top: -5px;\n  line-height: 1;\n  transition: inherit;\n  box-sizing: content-box; }\n\n.switch-left-right .switch-input:checked ~ .switch-label:after {\n  left: 0 !important;\n  opacity: 1;\n  padding-left: 20px; }\n\n.switch-input:checked ~ .switch-label:after {\n  opacity: 1; }\n\n.switch-left-right .switch-label:after {\n  text-align: left;\n  text-indent: 9px;\n  background: #00c851 !important;\n  left: -100px !important;\n  opacity: 1;\n  width: 100% !important; }\n\n.switch-left-right .switch-label:before, .switch-left-right .switch-label:after {\n  width: 20px;\n  height: 20px;\n  top: 4px;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  padding: 11px 0 0 0;\n  text-indent: -12px;\n  border-radius: 20px;\n  box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.2), inset 0 0 3px rgba(0, 0, 0, 0.1); }\n\n.switch-input:checked ~ .switch-handle {\n  left: 74px;\n  box-shadow: -1px 1px 5px rgba(0, 0, 0, 0.2); }\n\n.switch-label, .switch-handle {\n  transition: All 0.3s ease;\n  -webkit-transition: All 0.3s ease;\n  -moz-transition: All 0.3s ease;\n  -o-transition: All 0.3s ease; }\n\n.switch-handle {\n  position: absolute;\n  top: 4px;\n  left: 4px;\n  width: 28px;\n  height: 28px;\n  background: linear-gradient(to bottom, #FFFFFF 40%, #f0f0f0);\n  background-image: -webkit-linear-gradient(top, #FFFFFF 40%, #f0f0f0);\n  border-radius: 100%;\n  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2); }\n\n.switch-handle:before {\n  content: \"\";\n  position: absolute;\n  top: 50%;\n  left: 50%;\n  margin: -6px 0 0 -6px;\n  width: 12px;\n  height: 12px;\n  background: linear-gradient(to bottom, #eeeeee, #FFFFFF);\n  background-image: -webkit-linear-gradient(top, #eeeeee, #FFFFFF);\n  border-radius: 6px;\n  box-shadow: inset 0 1px rgba(0, 0, 0, 0.02); }\n\n.switch-left-right[_ngcontent-c3] .switch-label[_ngcontent-c3]:before, .switch-left-right[_ngcontent-c3] .switch-label[_ngcontent-c3]:after {\n  background-color: #FFA701; }\n"
 
 /***/ }),
 
@@ -5361,15 +6058,42 @@ var VolumeProgressComponent = /** @class */ (function () {
         this._jobService = _jobService;
         /* ----- Data ----- */
         this.errorMessage = "";
+        this.ready = false;
         this.m_a_p = [];
         this.workers = [];
         this.activities = [];
-        this.elements = [];
         this.sorted_workers = [];
-        this.targets = new Map();
-        this.ready = false;
-        this.weeks = [];
-        this.months = [];
+        this.test = true;
+        /*
+        * [{date: Date,
+        *   elements: [{target_quantity: number,
+        *               finished_quantity: number,
+        *               finished_rate: number,
+        *               member: Member
+        *              }]
+        *  }]
+        * */
+        this.volume_per_days = [];
+        this.volume_per_weeks = [];
+        this.is_type_weeks = false;
+        /* [{member: Member,
+        *    m_a_ps: MemberActivityProject[],
+        *    total_target: number,
+        *    total_finished: number
+        *  }}
+        *  */
+        this.elements = [];
+        // Volumes that are displayed on the main table
+        this.volumes_displayed = new Map();
+        this.dates_displayed = [];
+        this.volumes_displayed_iterator = 0;
+        this.date_displayed = "";
+        /* ----- Days or Month management ----- */
+        // Enable or not to switch between days & months or not
+        this.isSwitchable = true;
+        //Tells the view if we display days or months
+        this.isDay = true;
+        this.members_activities = new Map();
     }
     VolumeProgressComponent.prototype.ngOnInit = function () {
         return __awaiter(this, void 0, void 0, function () {
@@ -5381,26 +6105,98 @@ var VolumeProgressComponent = /** @class */ (function () {
                         return [4 /*yield*/, this.sortElements()];
                     case 2:
                         _a.sent();
-                        console.log(this.elements);
-                        /*this.typeOfCalendar();*/
-                        return [4 /*yield*/, this.calculTargetsPerWeek()];
+                        return [4 /*yield*/, this.loadVolumePerDay()];
                     case 3:
-                        /*this.typeOfCalendar();*/
                         _a.sent();
-                        return [4 /*yield*/, this.calculMonths()];
-                    case 4:
-                        _a.sent();
+                        this.isSwitchableProject();
                         this.ready = true;
-                        console.log(this.targets);
                         return [2 /*return*/];
                 }
             });
         });
     };
+    VolumeProgressComponent.prototype.onSubmit = function (element) {
+        return __awaiter(this, void 0, void 0, function () {
+            var _i, _a, map, m, _b, _c, map, m, error_1;
+            return __generator(this, function (_d) {
+                switch (_d.label) {
+                    case 0:
+                        this.old_cell = element['member']['member_id'];
+                        _d.label = 1;
+                    case 1:
+                        _d.trys.push([1, 9, , 10]);
+                        for (_i = 0, _a = element['m_a_ps']; _i < _a.length; _i++) {
+                            map = _a[_i];
+                            m = map['m_a_p'];
+                            if (m.finished_quantity > m.target_quantity) {
+                                throw new Error('One or more finished quantities are greater than their target quantity');
+                            }
+                        }
+                        _b = 0, _c = element['m_a_ps'];
+                        _d.label = 2;
+                    case 2:
+                        if (!(_b < _c.length)) return [3 /*break*/, 5];
+                        map = _c[_b];
+                        m = map['m_a_p'];
+                        return [4 /*yield*/, this._memberActivityProjectService.update(m).toPromise()];
+                    case 3:
+                        _d.sent();
+                        _d.label = 4;
+                    case 4:
+                        _b++;
+                        return [3 /*break*/, 2];
+                    case 5:
+                        this.errorMessage = "";
+                        this.ready = false;
+                        return [4 /*yield*/, this.loadData()];
+                    case 6:
+                        _d.sent();
+                        return [4 /*yield*/, this.sortElements()];
+                    case 7:
+                        _d.sent();
+                        return [4 /*yield*/, this.loadVolumePerDay()];
+                    case 8:
+                        _d.sent();
+                        this.element_selected = null;
+                        this.ready = true;
+                        return [3 /*break*/, 10];
+                    case 9:
+                        error_1 = _d.sent();
+                        this.errorMessage = error_1;
+                        return [3 /*break*/, 10];
+                    case 10: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    /* ----------- METHODS ----------- */
+    VolumeProgressComponent.prototype.reloadView = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        if (!this.isDay) return [3 /*break*/, 2];
+                        return [4 /*yield*/, this.loadVolumePerDay()];
+                    case 1:
+                        _a.sent();
+                        return [3 /*break*/, 4];
+                    case 2: return [4 /*yield*/, this.loadVolumePerWeek()];
+                    case 3:
+                        _a.sent();
+                        _a.label = 4;
+                    case 4: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    VolumeProgressComponent.prototype.switchView = function () {
+        this.isDay = !this.isDay;
+        this.reloadView();
+    };
     /* Load the project & all m_a_p data with the activity & member linked */
     VolumeProgressComponent.prototype.loadData = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var project_id, project, error_1, m_a_p, error_2, _i, _a, m, worker, activity, job, e, error_3;
+            var project_id, project, error_2, m_a_p, error_3, _i, _a, m, worker, activity, job, e, error_4;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
@@ -5415,8 +6211,8 @@ var VolumeProgressComponent = /** @class */ (function () {
                         this.project = project['data'];
                         return [3 /*break*/, 4];
                     case 3:
-                        error_1 = _b.sent();
-                        this.errorMessage = error_1.error.message;
+                        error_2 = _b.sent();
+                        this.errorMessage = error_2.error.message;
                         return [3 /*break*/, 4];
                     case 4:
                         //We select all MemberActivityProject linked to the project
@@ -5430,8 +6226,8 @@ var VolumeProgressComponent = /** @class */ (function () {
                         this.m_a_p = m_a_p['data'];
                         return [3 /*break*/, 8];
                     case 7:
-                        error_2 = _b.sent();
-                        this.errorMessage = error_2.error.message;
+                        error_3 = _b.sent();
+                        this.errorMessage = error_3.error.message;
                         return [3 /*break*/, 8];
                     case 8:
                         //We select all Members & Activities linked to theses m_a_p
@@ -5467,8 +6263,8 @@ var VolumeProgressComponent = /** @class */ (function () {
                         return [3 /*break*/, 10];
                     case 15: return [3 /*break*/, 17];
                     case 16:
-                        error_3 = _b.sent();
-                        this.errorMessage = error_3.error.message;
+                        error_4 = _b.sent();
+                        this.errorMessage = error_4.error.message;
                         return [3 /*break*/, 17];
                     case 17: return [2 /*return*/];
                 }
@@ -5478,7 +6274,7 @@ var VolumeProgressComponent = /** @class */ (function () {
     /* For one member, we group all his m_a_p inside the elements array.It's like a distinct member request */
     VolumeProgressComponent.prototype.sortElements = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var add, _i, _a, w, _b, _c, s, _d, _e, s, sorted_map, total_target, total_finished, _f, _g, m, a, j, e, error_4, element;
+            var add, _i, _a, w, _b, _c, s, _d, _e, s, sorted_map, total_target, total_finished, _f, _g, m, a, j, e, error_5, element;
             return __generator(this, function (_h) {
                 switch (_h.label) {
                     case 0:
@@ -5531,8 +6327,8 @@ var VolumeProgressComponent = /** @class */ (function () {
                         total_finished += m.finished_quantity;
                         return [3 /*break*/, 7];
                     case 6:
-                        error_4 = _h.sent();
-                        this.errorMessage = error_4.error.message;
+                        error_5 = _h.sent();
+                        this.errorMessage = error_5.error.message;
                         return [3 /*break*/, 7];
                     case 7:
                         _f++;
@@ -5554,6 +6350,231 @@ var VolumeProgressComponent = /** @class */ (function () {
             });
         });
     };
+    /* Ask to the server side to compute every target quantity, quantity finished, rates and store it in an array per days */
+    VolumeProgressComponent.prototype.loadVolumePerDay = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var v, error_6;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 3, , 4]);
+                        return [4 /*yield*/, this._projectService.volume_per_days(this.project.project_id).toPromise()];
+                    case 1:
+                        v = _a.sent();
+                        this.volume_per_days = v['data'];
+                        this.volumes_displayed_iterator = 0;
+                        return [4 /*yield*/, this.selectVolumes(0)];
+                    case 2:
+                        _a.sent();
+                        return [3 /*break*/, 4];
+                    case 3:
+                        error_6 = _a.sent();
+                        this.errorMessage = error_6.message;
+                        return [3 /*break*/, 4];
+                    case 4: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    VolumeProgressComponent.prototype.isSwitchableProject = function () {
+        var start = moment__WEBPACK_IMPORTED_MODULE_5__(this.project.project_start);
+        var end = moment__WEBPACK_IMPORTED_MODULE_5__(this.project.project_end);
+        var i = end.diff(start, 'days');
+        if (i < 7) {
+            this.isSwitchable = false;
+        }
+    };
+    VolumeProgressComponent.prototype.loadVolumePerWeek = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var v, error_7;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 3, , 4]);
+                        return [4 /*yield*/, this._projectService.volume_per_weeks(this.project.project_id).toPromise()];
+                    case 1:
+                        v = _a.sent();
+                        this.volume_per_weeks = v['data'];
+                        this.volumes_displayed_iterator = 0;
+                        return [4 /*yield*/, this.selectVolumes(0)];
+                    case 2:
+                        _a.sent();
+                        return [3 /*break*/, 4];
+                    case 3:
+                        error_7 = _a.sent();
+                        this.errorMessage = error_7.message;
+                        return [3 /*break*/, 4];
+                    case 4: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    VolumeProgressComponent.prototype.selectVolumes = function (i) {
+        if (this.isDay) {
+            this.selectVolumesDays(i);
+        }
+        else {
+            this.selectVolumesWeeks(i);
+            console.log(this.volume_per_weeks);
+        }
+    };
+    /* Take 7 elements from Monday to Sunday, and store it in the array that is shown on the view */
+    VolumeProgressComponent.prototype.selectVolumesDays = function (i) {
+        // We convert the volume_per_days array to fit with the ngFor view
+        this.ready = false;
+        this.volumes_displayed = new Map();
+        this.dates_displayed = [];
+        console.log('i : ', i);
+        console.log(' : ', i);
+        this.date_displayed = moment__WEBPACK_IMPORTED_MODULE_5__(this.volume_per_days.slice(i, i + 7)[0]['date']).format('MMM YYYY');
+        for (var _i = 0, _a = this.volume_per_days.slice(i, i + 7); _i < _a.length; _i++) {
+            var volume = _a[_i];
+            this.dates_displayed.push(this.dateView([volume['date']]));
+            for (var _b = 0, _c = volume['elements']; _b < _c.length; _b++) {
+                var member = _c[_b];
+                //We initialize the map if needed
+                if (this.volumes_displayed.get(member['member'].member_id) == null) {
+                    var quantities = this.foundQuantities(member['member'].member_id);
+                    var o = {
+                        member: member['member'],
+                        volumes: [],
+                        total_finished: quantities[0],
+                        total_target: quantities[1],
+                        total_rates: quantities[2]
+                    };
+                    this.volumes_displayed.set(member['member'].member_id, o);
+                }
+                //We store quantity
+                var e = {
+                    target_quantity: member['target_quantity'],
+                    finished_quantity: member['finished_quantity'],
+                    finished_rate: member['finished_rate']
+                };
+                this.volumes_displayed.get(member['member'].member_id)['volumes'].push(e);
+            }
+        }
+        this.ready = true;
+    };
+    /* Take all elements of a month, and store it in the array that is shown on the view */
+    VolumeProgressComponent.prototype.selectVolumesWeeks = function (i) {
+        // We convert the volume_per_weeks array to fit with the ngFor view
+        this.ready = false;
+        this.volumes_displayed = new Map();
+        this.dates_displayed = [];
+        this.date_displayed = this.volume_per_weeks[i]['shortcut'];
+        for (var _i = 0, _a = this.volume_per_weeks[i]['weeks']; _i < _a.length; _i++) {
+            var volume = _a[_i];
+            this.dates_displayed.push(this.dateView([volume['startDate'], volume['endDate']]));
+            for (var _b = 0, _c = volume['elements']; _b < _c.length; _b++) {
+                var member = _c[_b];
+                //We initialize the map if needed
+                if (this.volumes_displayed.get(member['member'].member_id) == null) {
+                    var quantities = this.foundQuantities(member['member'].member_id);
+                    var o = {
+                        member: member['member'],
+                        volumes: [],
+                        total_finished: quantities[0],
+                        total_target: quantities[1],
+                        total_rates: quantities[2]
+                    };
+                    this.volumes_displayed.set(member['member'].member_id, o);
+                }
+                //We store quantity
+                var e = {
+                    target_quantity: member['target_quantity'],
+                    finished_quantity: member['finished_quantity'],
+                    finished_rate: member['finished_rate']
+                };
+                this.volumes_displayed.get(member['member'].member_id)['volumes'].push(e);
+            }
+        }
+        this.ready = true;
+    };
+    VolumeProgressComponent.prototype.dateView = function (dates) {
+        if (this.isDay) {
+            return moment__WEBPACK_IMPORTED_MODULE_5__(dates[0]).format('MM/DD');
+        }
+        else {
+            return moment__WEBPACK_IMPORTED_MODULE_5__(dates[0]).format('MM/DD') + ' - ' + moment__WEBPACK_IMPORTED_MODULE_5__(dates[1]).format('MM/DD');
+        }
+    };
+    /* Found the total quantities inside the elements array */
+    VolumeProgressComponent.prototype.foundQuantities = function (member_id) {
+        for (var _i = 0, _a = this.elements; _i < _a.length; _i++) {
+            var e = _a[_i];
+            if (e['member'].member_id == member_id) {
+                var total_rates = Math.round(100 * e['total_finished'] / e['total_target']);
+                return [e['total_finished'], e['total_target'], total_rates];
+            }
+        }
+    };
+    //Convert map to array to use it in the view
+    VolumeProgressComponent.prototype.convertMap = function (map) {
+        return Array.from(map.values());
+    };
+    //Round a number for the display view
+    VolumeProgressComponent.prototype.roundOne = function (n, long) {
+        var answer;
+        if (n > 0) {
+            answer = Math.round(n * long) / long;
+        }
+        else {
+            answer = 0;
+        }
+        return answer;
+    };
+    //Load the seven next days
+    VolumeProgressComponent.prototype.next = function () {
+        if (!this.isDay) {
+            if (this.volumes_displayed_iterator < this.volume_per_weeks.length - 1) {
+                this.volumes_displayed_iterator += 1;
+                var i = this.volumes_displayed_iterator;
+                this.selectVolumes(i);
+            }
+        }
+        else {
+            //We do next only if we don't have the last portion of the array
+            if (this.volumes_displayed_iterator <= this.volume_per_days.length - 7) {
+                this.volumes_displayed_iterator += 7;
+                var i = this.volumes_displayed_iterator;
+                this.selectVolumes(i);
+            }
+        }
+    };
+    //Load the seven previous days
+    VolumeProgressComponent.prototype.previous = function () {
+        if (!this.isDay) {
+            if (this.volumes_displayed_iterator > 0) {
+                this.volumes_displayed_iterator -= 1;
+                var i = this.volumes_displayed_iterator;
+                this.selectVolumes(i);
+            }
+        }
+        else {
+            //We do next only if we don't have the last portion of the array
+            if (this.volumes_displayed_iterator != 0) {
+                this.volumes_displayed_iterator -= 7;
+                var i = this.volumes_displayed_iterator;
+                this.selectVolumes(i);
+            }
+        }
+    };
+    /* Show all activities of the member selected */
+    VolumeProgressComponent.prototype.selectMember = function (member_id) {
+        if (this.element_selected != null) {
+            var oldCell = document.getElementById(this.element_selected['member']['member_id']);
+            oldCell.className = "";
+        }
+        /* We search for the right element of the array */
+        for (var _i = 0, _a = this.elements; _i < _a.length; _i++) {
+            var e = _a[_i];
+            if (e['member'].member_id == member_id) {
+                this.element_selected = e;
+            }
+        }
+        var newCell = document.getElementById(member_id);
+        newCell.className += "selected";
+    };
     /* Calcul if the member activity project is late, on date or something else */
     VolumeProgressComponent.prototype.calculState = function (m_a_p) {
         return __awaiter(this, void 0, void 0, function () {
@@ -5567,7 +6588,7 @@ var VolumeProgressComponent = /** @class */ (function () {
                         isChanged = false;
                         //The activity is finished
                         if (m_a_p.target_quantity == m_a_p.finished_quantity) {
-                            if (m_a_p.evaluation == 'on date') {
+                            if (m_a_p.evaluation == 'on date' || m_a_p.evaluation == 'finished on date') {
                                 if (target.getTime() < finished_date.getTime()) {
                                     m_a_p.evaluation = 'finished late';
                                 }
@@ -5607,250 +6628,6 @@ var VolumeProgressComponent = /** @class */ (function () {
                         _a.sent();
                         _a.label = 2;
                     case 2: return [2 /*return*/];
-                }
-            });
-        });
-    };
-    /* Give the number of days between 2 dates */
-    VolumeProgressComponent.prototype.intervalDate = function (d1, d2) {
-        var start = new Date(d1);
-        var end = new Date(d2);
-        var interval = Math.floor((Date.UTC(end.getFullYear(), end.getMonth(), end.getDate()) - Date.UTC(start.getFullYear(), start.getMonth(), start.getDate())) / (1000 * 60 * 60 * 24));
-        return interval;
-    };
-    /* Store every target of each m_a_ps in the good week of the period */
-    VolumeProgressComponent.prototype.calculTargetsPerWeek = function () {
-        //Map where MEMBER is the key, value : new MAP { Week date : quantity }
-        this.targets = new Map();
-        //We check every members
-        for (var _i = 0, _a = this.elements; _i < _a.length; _i++) {
-            var element = _a[_i];
-            this.targets.set(element['member'].member_id, new Map());
-            /* ----- We check every m_a_ps of the member ----- */
-            for (var _b = 0, _c = element['m_a_ps']; _b < _c.length; _b++) {
-                var map = _c[_b];
-                var start = new Date(map['m_a_p'].date_begin);
-                var end = new Date(map['m_a_p'].target_date);
-                //Interval in days & quantity per day
-                var interval = moment__WEBPACK_IMPORTED_MODULE_5__(end).diff(start) / (1000 * 60 * 60 * 24) + 1;
-                var one_quantity = Math.floor(map['m_a_p'].target_quantity / interval);
-                var one_quantity_finished = Math.floor(map['m_a_p'].finished_quantity / interval);
-                var quantity_given = 0;
-                var quantity_finished_given = 0;
-                var quantity = one_quantity;
-                var quantity_finished = one_quantity_finished;
-                var full_quantity = parseFloat((one_quantity * interval).toFixed(1));
-                var full_quantity_finished = parseFloat((one_quantity_finished * interval).toFixed(1));
-                if (one_quantity == 0) {
-                    one_quantity = parseFloat((map['m_a_p'].target_quantity / interval).toFixed(1));
-                    full_quantity = parseFloat((one_quantity * interval).toFixed(1));
-                }
-                if (one_quantity_finished == 0) {
-                    one_quantity_finished = parseFloat((map['m_a_p'].finished_quantity / interval).toFixed(1));
-                    full_quantity_finished = parseFloat((one_quantity_finished * interval).toFixed(1));
-                }
-                var w = void 0;
-                //The day that will be the key of the amount of quantity calculated
-                if (moment__WEBPACK_IMPORTED_MODULE_5__(start).format('dddd') == 'Monday') {
-                    w = new Date(start.getFullYear(), start.getMonth(), start.getDate()); //We do this process to have minutes, hours & seconds at default value
-                }
-                else {
-                    var fake_date = new Date(start);
-                    var first_day = moment__WEBPACK_IMPORTED_MODULE_5__(fake_date).format('dddd');
-                    while (first_day != 'Monday' && fake_date != start) {
-                        fake_date.setDate(fake_date.getDate() - 1);
-                        first_day = moment__WEBPACK_IMPORTED_MODULE_5__(fake_date).format('dddd');
-                    }
-                    //FIRST KEY
-                    w = new Date(fake_date.getFullYear(), fake_date.getMonth(), fake_date.getDate());
-                }
-                /* ----- We check every days ----- */
-                /* ----- We check every days ----- */
-                for (var i = new Date(start); i <= end; i.setDate(i.getDate() + 1)) {
-                    var day = moment__WEBPACK_IMPORTED_MODULE_5__(i).format('dddd');
-                    //If it's Monday, we store the previous quantity in a week, and continue in a new week
-                    if (day == 'Monday' && i.toString() != start.toString()) {
-                        //If it's the last day, we need to add the rest of the quantity
-                        if (i.toString() == end.toString()) {
-                            quantity = full_quantity - quantity_given;
-                            quantity_finished = full_quantity_finished - quantity_finished_given;
-                            quantity = parseFloat(quantity.toFixed(1));
-                            quantity_finished = parseFloat(quantity_finished.toFixed(1));
-                        }
-                        var previous_quantity = 0;
-                        var previous_quantity_finished = 0;
-                        if (this.targets.get(element['member'].member_id).get(w.toString()) != null) {
-                            //Yes, we need to increase with the existing quantity
-                            previous_quantity = this.targets.get(element['member'].member_id).get(w.toString())['target_quantity'];
-                            previous_quantity_finished = this.targets.get(element['member'].member_id).get(w.toString())['finished_quantity'];
-                        }
-                        var e = {
-                            finished_quantity: previous_quantity_finished + quantity_finished,
-                            target_quantity: previous_quantity + quantity
-                        };
-                        this.targets.get(element['member'].member_id).set(w.toString(), e);
-                        quantity_given += quantity;
-                        quantity_finished_given += quantity_finished;
-                        //We get the new Monday date for next quantities
-                        w = new Date(i.getFullYear(), i.getMonth(), i.getDate());
-                        quantity = 0;
-                        quantity_finished = 0;
-                    }
-                    else {
-                        quantity += one_quantity;
-                        quantity_finished += one_quantity_finished;
-                        quantity = parseFloat(quantity.toFixed(1));
-                        quantity_finished = parseFloat(quantity_finished.toFixed(1));
-                    }
-                }
-                /* ----- /We check every days ----- */
-                //If it's Monday, we have already add the quantity, so we add only if it's not monday
-                var last_day = moment__WEBPACK_IMPORTED_MODULE_5__(end).format('dddd');
-                if (last_day != 'Monday') {
-                    //Is the week already exist ?
-                    quantity = full_quantity - quantity_given;
-                    quantity_finished = full_quantity_finished - quantity_finished_given;
-                    quantity = parseFloat(quantity.toFixed(1));
-                    quantity_finished = parseFloat(quantity_finished.toFixed(1));
-                    var previous_quantity = 0;
-                    var previous_quantity_finished = 0;
-                    if (this.targets.get(element['member'].member_id).get(w.toString()) != null) {
-                        //Yes, we need to increase with the existing quantity
-                        previous_quantity = this.targets.get(element['member'].member_id).get(w.toString())['target_quantity'];
-                        previous_quantity_finished = this.targets.get(element['member'].member_id).get(w.toString())['finished_quantity'];
-                    }
-                    var e = {
-                        target_quantity: previous_quantity + quantity,
-                        finished_quantity: previous_quantity_finished + quantity_finished
-                    };
-                    this.targets.get(element['member'].member_id).set(w.toString(), e);
-                }
-            }
-            /* ----- /We check every m_a_ps of the member ----- */
-        }
-    };
-    /* Give all weeks for a given month (used for the targets display data) */
-    VolumeProgressComponent.prototype.calculWeeksPerMonth = function (year, month) {
-        this.weeks = [];
-        var start = new Date(year, month);
-        var end = new Date(year, month + 1, 0);
-        var first_day = moment__WEBPACK_IMPORTED_MODULE_5__(start).format('dddd');
-        while (first_day != 'Monday') {
-            start.setDate(start.getDate() - 1);
-            first_day = moment__WEBPACK_IMPORTED_MODULE_5__(start).format('dddd');
-        }
-        var i = new Date(start);
-        var date_label = "";
-        var j = 0;
-        while (i <= end && j < 56) {
-            var key = new Date(i);
-            date_label = moment__WEBPACK_IMPORTED_MODULE_5__(i).format('M/D') + ' - ';
-            i.setDate(i.getDate() + 6);
-            date_label += moment__WEBPACK_IMPORTED_MODULE_5__(i).format('M/D');
-            this.weeks.push([date_label, key.toString()]);
-            i.setDate(i.getDate() + 1);
-            j++;
-        }
-    };
-    VolumeProgressComponent.prototype.calculPourcentage = function (value, total) {
-        return Math.ceil(value * 100 / total);
-    };
-    VolumeProgressComponent.prototype.calculMonths = function () {
-        var start = new Date(this.project.project_start);
-        var end = new Date(this.project.project_end);
-        start.setDate(1);
-        end.setMonth(end.getMonth() + 1);
-        end.setDate(0);
-        var i = new Date(start);
-        while (i < end) {
-            var m = {
-                month: new Date(i),
-                month_label: moment__WEBPACK_IMPORTED_MODULE_5__(i).format('MMMM Y')
-            };
-            this.months.push(m);
-            i.setMonth(i.getMonth() + 1);
-        }
-        this.month_selected = this.months[0];
-        this.calculWeeksPerMonth(start.getFullYear(), start.getMonth());
-    };
-    VolumeProgressComponent.prototype.changeMonth = function (next) {
-        var indice = this.months.indexOf(this.month_selected);
-        var changed = false;
-        if (next && indice < this.months.length - 1) {
-            this.month_selected = this.months[indice + 1];
-            changed = true;
-        }
-        else if (!next && indice > 0) {
-            this.month_selected = this.months[indice - 1];
-            changed = true;
-        }
-        if (changed) {
-            var date = new Date(this.month_selected['month']);
-            this.calculWeeksPerMonth(date.getFullYear(), date.getMonth());
-        }
-    };
-    VolumeProgressComponent.prototype.selectMember = function (element) {
-        if (this.element_selected != null) {
-            var oldCell = document.getElementById(this.element_selected['member']['member_id']);
-            oldCell.className = "";
-        }
-        this.element_selected = element;
-        var newCell = document.getElementById(element['member']['member_id']);
-        newCell.className += "selected";
-    };
-    VolumeProgressComponent.prototype.onSubmit = function (element) {
-        return __awaiter(this, void 0, void 0, function () {
-            var _i, _a, map, m, _b, _c, map, m, error_5;
-            return __generator(this, function (_d) {
-                switch (_d.label) {
-                    case 0:
-                        this.old_cell = element['member']['member_id'];
-                        _d.label = 1;
-                    case 1:
-                        _d.trys.push([1, 10, , 11]);
-                        for (_i = 0, _a = element['m_a_ps']; _i < _a.length; _i++) {
-                            map = _a[_i];
-                            m = map['m_a_p'];
-                            if (m.finished_quantity > m.target_quantity) {
-                                throw new Error('One or more finished quantities are greater than their target quantity');
-                            }
-                        }
-                        _b = 0, _c = element['m_a_ps'];
-                        _d.label = 2;
-                    case 2:
-                        if (!(_b < _c.length)) return [3 /*break*/, 5];
-                        map = _c[_b];
-                        m = map['m_a_p'];
-                        return [4 /*yield*/, this._memberActivityProjectService.update(m).toPromise()];
-                    case 3:
-                        _d.sent();
-                        _d.label = 4;
-                    case 4:
-                        _b++;
-                        return [3 /*break*/, 2];
-                    case 5:
-                        this.errorMessage = "";
-                        this.ready = false;
-                        return [4 /*yield*/, this.loadData()];
-                    case 6:
-                        _d.sent();
-                        return [4 /*yield*/, this.sortElements()];
-                    case 7:
-                        _d.sent();
-                        return [4 /*yield*/, this.calculTargetsPerWeek()];
-                    case 8:
-                        _d.sent();
-                        return [4 /*yield*/, this.calculMonths()];
-                    case 9:
-                        _d.sent();
-                        this.element_selected = null;
-                        this.ready = true;
-                        return [3 /*break*/, 11];
-                    case 10:
-                        error_5 = _d.sent();
-                        this.errorMessage = error_5;
-                        return [3 /*break*/, 11];
-                    case 11: return [2 /*return*/];
                 }
             });
         });
@@ -6277,27 +7054,27 @@ var SopCreationComponent = /** @class */ (function () {
                         sop_rules = "";
                         for (_i = 0, _a = this.rules; _i < _a.length; _i++) {
                             r = _a[_i];
-                            sop_rules += r;
+                            sop_rules += r + ', ';
                         }
                         sop_warning = "";
                         for (_b = 0, _c = this.warnings; _b < _c.length; _b++) {
                             w = _c[_b];
-                            sop_rules += w;
+                            sop_warning += w + ', ';
                         }
                         sop_staff_qualification = "";
                         for (_d = 0, _e = this.staffQualifications; _d < _e.length; _d++) {
                             s = _e[_d];
-                            sop_staff_qualification += s;
+                            sop_staff_qualification += s + ', ';
                         }
                         sop_tools = "";
                         for (_f = 0, _g = this.supportingTools; _f < _g.length; _f++) {
                             t = _g[_f];
-                            sop_tools += t;
+                            sop_tools += t + ', ';
                         }
                         sop_type_reports = "";
                         for (_h = 0, _j = this.typesFormsReports; _h < _j.length; _h++) {
                             t = _j[_h];
-                            sop_type_reports += t;
+                            sop_type_reports += t + ', ';
                         }
                         return [4 /*yield*/, this._sopService.createSop(this.newTitle, date_creation, date_revision, date_published, sop_approvment, sop_rules, sop_warning, sop_staff_qualification, sop_tools, sop_type_reports, this.newObjective).subscribe(function (res) {
                                 _this.errorMessage = "";
@@ -6402,7 +7179,7 @@ module.exports = ".md-form\r\n{\r\n  margin-bottom: 20px;\r\n  margin-top: 0;\r\
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container\">\r\n\r\n  <div class=\"row row-first\">\r\n    <div class=\"col\">\r\n      <button type=\"button\" class=\"btn btn-outline-default waves-effect\" [routerLink]=\"['/sop-creation']\"><h6 class=\"no-margin-bottom\"><i class=\"fa fa-plus mr-3\"></i>New SOP</h6></button>\r\n    </div>\r\n  </div>\r\n\r\n  <div class=\"row row-first justify-content-end\">\r\n    <div class=\" md-form\" id=\"search-bar\">\r\n      <input id=\"search\" (keyup)=\"search()\" class=\"form-control\" type=\"text\" placeholder=\"Search\" aria-label=\"Search\">\r\n    </div>\r\n  </div>\r\n\r\n  <div class=\"row justify-content-center\">\r\n\r\n      <!--Table-->\r\n        <table class=\"col-12 table table-borderless table-hover table-fixed\" id=\"sop-table\">\r\n\r\n          <!--Table head-->\r\n          <thead class=\"\">\r\n            <tr class=\"text-white\">\r\n              <th style=\"width:5%;\"></th>\r\n              <th style=\"width:10%;\"  (click)=\"sortTable(1)\"><a>Number</a></th>\r\n              <th style=\"width:40%;\" (click)=\"sortTable(2)\"><a>Name</a></th>\r\n              <th style=\"width:20%;\" (click)=\"sortTable(3)\"><a>Creation Date</a></th>\r\n              <th style=\"width:20%;\" (click)=\"sortTable(4)\"><a>Approved By</a></th>\r\n              <th style=\"width:5%;\"></th>\r\n            </tr>\r\n          </thead>\r\n          <!--Table head-->\r\n\r\n          <!--Table body-->\r\n          <tbody>\r\n            <tr *ngFor=\"let sop of sopList\">\r\n              <td scope=\"row\">\r\n                <a data-toggle=\"modal\" data-target=\"#actionModal\"><i class=\"fa fa-cog text-blue\" (click)=\"selectSop(sop)\"></i></a>\r\n              </td>\r\n              <td>{{sop.sop_id}}</td>\r\n              <td>{{sop.sop_title.substr(0,50)}}</td>\r\n              <td>{{sop.sop_creation | date:\"MM/dd/yyyy\"}}</td>\r\n              <td>{{sop.sop_approvment}}</td>\r\n              <td>\r\n                <a data-toggle=\"modal\" data-target=\"#warningModal\" (click)=\"selectSop(sop)\"><i class=\"fa fa-close text-red\"></i></a>\r\n              </td>\r\n            </tr>\r\n          </tbody>\r\n          <!--Table body-->\r\n\r\n        </table>\r\n        <!--Table-->\r\n\r\n  </div>\r\n</div>\r\n\r\n<app-action title={{sopSelected.sop_title}}\r\n            text=\"\"\r\n            buttons={{buttonsTitles}}\r\n            links={{buttonsLinks}}\r\n            [isLinkActive]=true\r\n>\r\n</app-action>\r\n\r\n<!-- Modal warning -->\r\n<app-warning title=\"Delete SOP {{sopSelected.sop_id}}\"\r\n             text=\"Are you sure you want to delete the SOP : {{sopSelected.sop_title}} from the SOP list ? All activities linked will be destroyed.\"\r\n             link=\"sop-list\"\r\n             (success)=\"deleteSop(sopSelected.sop_id)\"\r\n             [isLink]=false>\r\n</app-warning>\r\n"
+module.exports = "<div class=\"container\">\r\n\r\n  <div class=\"row row-first\">\r\n    <div class=\"col\">\r\n      <button type=\"button\" class=\"btn btn-outline-default waves-effect\" [routerLink]=\"['/sop-creation']\"><h6 class=\"no-margin-bottom\"><i class=\"fa fa-plus mr-3\"></i>New SOP</h6></button>\r\n    </div>\r\n  </div>\r\n\r\n  <div class=\"row row-first justify-content-end\">\r\n    <div class=\" md-form\" id=\"search-bar\">\r\n      <input id=\"search\" (keyup)=\"search()\" class=\"form-control\" type=\"text\" placeholder=\"Search\" aria-label=\"Search\">\r\n    </div>\r\n  </div>\r\n\r\n  <div class=\"row justify-content-center\">\r\n\r\n      <!--Table-->\r\n        <table class=\"col-12 table hoverable table-borderless table-hover table-fixed\" id=\"sop-table\">\r\n\r\n          <!--Table head-->\r\n          <thead class=\"\">\r\n            <tr class=\"text-white\">\r\n              <th style=\"width:5%;\"></th>\r\n              <th style=\"width:10%;\"  (click)=\"sortTable(1)\"><a>Number</a></th>\r\n              <th style=\"width:40%;\" (click)=\"sortTable(2)\"><a>Name</a></th>\r\n              <th style=\"width:20%;\" (click)=\"sortTable(3)\"><a>Creation Date</a></th>\r\n              <th style=\"width:20%;\" (click)=\"sortTable(4)\"><a>Approved By</a></th>\r\n              <th style=\"width:5%;\"></th>\r\n            </tr>\r\n          </thead>\r\n          <!--Table head-->\r\n\r\n          <!--Table body-->\r\n          <tbody>\r\n            <tr *ngFor=\"let sop of sopList\">\r\n              <td scope=\"row\">\r\n                <a data-toggle=\"modal\" data-target=\"#actionModal\"><i class=\"fa fa-cog text-blue\" (click)=\"selectSop(sop)\"></i></a>\r\n              </td>\r\n              <td>{{sop.sop_id}}</td>\r\n              <td>{{textHelper.firstLetterUpperCase(sop.sop_title.substr(0,50))}}</td>\r\n              <td>{{sop.sop_creation | date:\"MM/dd/yyyy\"}}</td>\r\n              <td>{{sop.sop_approvment}}</td>\r\n              <td>\r\n                <a data-toggle=\"modal\" data-target=\"#warningModal\" (click)=\"selectSop(sop)\"><i class=\"fa fa-close text-red\"></i></a>\r\n              </td>\r\n            </tr>\r\n          </tbody>\r\n          <!--Table body-->\r\n\r\n        </table>\r\n        <!--Table-->\r\n\r\n  </div>\r\n</div>\r\n\r\n<app-action title={{sopSelected.sop_title}}\r\n            text=\"\"\r\n            buttons={{buttonsTitles}}\r\n            links={{buttonsLinks}}\r\n            [isLinkActive]=true\r\n>\r\n</app-action>\r\n\r\n<!-- Modal warning -->\r\n<app-warning title=\"Delete SOP {{sopSelected.sop_id}}\"\r\n             text=\"Are you sure you want to delete the SOP : {{sopSelected.sop_title}} from the SOP list ? All activities linked will be destroyed.\"\r\n             link=\"sop-list\"\r\n             (success)=\"deleteSop(sopSelected.sop_id)\"\r\n             [isLink]=false>\r\n</app-warning>\r\n"
 
 /***/ }),
 
@@ -6419,6 +7196,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _objects_sop_sop_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../objects/sop/sop.service */ "./src/app/objects/sop/sop.service.ts");
 /* harmony import */ var _objects_sop_sop__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../objects/sop/sop */ "./src/app/objects/sop/sop.ts");
+/* harmony import */ var _helpers_text_helper_text_helper_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../helpers/text-helper/text-helper.component */ "./src/app/helpers/text-helper/text-helper.component.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -6431,11 +7209,13 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
+
 var SopListComponent = /** @class */ (function () {
     function SopListComponent(_sopService) {
         this._sopService = _sopService;
         /* ----- Data ----- */
         this.errorMessage = "";
+        this.textHelper = new _helpers_text_helper_text_helper_component__WEBPACK_IMPORTED_MODULE_3__["TextHelperComponent"]();
         this.sopSelected = new _objects_sop_sop__WEBPACK_IMPORTED_MODULE_2__["Sop"]();
         this.buttonsTitles = ['SOP informations', 'Set up activites'];
         this.buttonsLinks = ['sop', 'activity-creation'];
@@ -6567,7 +7347,7 @@ var SopListComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ""
+module.exports = ".anil_nepal{\r\n  padding:20px 0px;\r\n  width:100%;\r\n  display:block;\r\n}\r\n.switch {\r\n  position: relative;\r\n  display: inline-block;\r\n  vertical-align: top;\r\n  width: 100px;\r\n  height: 30px;\r\n  padding: 3px;\r\n  margin: 0 10px 10px 0;\r\n  background: linear-gradient(to bottom, #eeeeee, #FFFFFF 25px);\r\n  background-image: -webkit-linear-gradient(top, #eeeeee, #FFFFFF 25px);\r\n  border-radius: 18px;\r\n  box-shadow: inset 0 -1px white, inset 0 1px 1px rgba(0, 0, 0, 0.05);\r\n  cursor: pointer;\r\n  box-sizing: content-box;\r\n}\r\nlabel {\r\n  font-weight: inherit;\r\n}\r\ninput[type=checkbox], input[type=radio] {\r\n  margin: 4px 0 0;\r\n\r\n  line-height: normal;\r\n  box-sizing: border-box;\r\n  padding: 0;\r\n}\r\n.switch-input {\r\n  position: absolute;\r\n  top: 0;\r\n  left: 0;\r\n  opacity: 0;\r\n  box-sizing: content-box;\r\n}\r\n.switch-left-right .switch-input:checked ~ .switch-label {\r\n  background: inherit;\r\n}\r\n.switch-input:checked ~ .switch-label {\r\n  background: #E1B42B;\r\n  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.15), inset 0 0 3px rgba(0, 0, 0, 0.2);\r\n}\r\n.switch-left-right .switch-label {\r\n  overflow: hidden;\r\n}\r\n.switch-label, .switch-handle {\r\n  transition: All 0.3s ease;\r\n  -webkit-transition: All 0.3s ease;\r\n  -moz-transition: All 0.3s ease;\r\n  -o-transition: All 0.3s ease;\r\n}\r\n.switch-label {\r\n  position: relative;\r\n  display: block;\r\n  height: inherit;\r\n  font-size: 10px;\r\n  text-transform: uppercase;\r\n  background: #eceeef;\r\n  border-radius: inherit;\r\n  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.12), inset 0 0 2px rgba(0, 0, 0, 0.15);\r\n  box-sizing: content-box;\r\n}\r\n.switch-left-right .switch-input:checked ~ .switch-label:before {\r\n  opacity: 1;\r\n  left: 100px;\r\n}\r\n.switch-input:checked ~ .switch-label:before {\r\n  opacity: 0;\r\n}\r\n.switch-left-right .switch-label:before {\r\n  background: #eceeef;\r\n  text-align: left;\r\n  padding-left: 80px!important;\r\n}\r\n.switch-left-right .switch-label:before, .switch-left-right .switch-label:after {\r\n  width: 20px;\r\n  height: 20px;\r\n  top: 4px;\r\n  left: 0;\r\n  right: 0;\r\n  bottom: 0;\r\n  padding: 11px 0 0 0;\r\n  text-indent: -12px;\r\n  border-radius: 20px;\r\n  box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.2), inset 0 0 3px rgba(0, 0, 0, 0.1);\r\n}\r\n.switch-label:before {\r\n  content: attr(data-off);\r\n  right: 11px;\r\n  color: #aaaaaa;\r\n  text-shadow: 0 1px rgba(255, 255, 255, 0.5);\r\n}\r\nspan.switch-label:after {\r\n  content: attr(data-on);\r\n  left: 11px;\r\n  color: #FFFFFF;\r\n  text-shadow: 0 1px rgba(0, 0, 0, 0.2);\r\n  position: absolute;\r\n\r\n}\r\n.switch-label:before, .switch-label:after {\r\n  position: absolute;\r\n  top: 50%;\r\n  margin-top: -5px;\r\n  line-height: 1;\r\n  transition: inherit;\r\n  box-sizing: content-box;\r\n}\r\n.switch-left-right .switch-input:checked ~ .switch-label:after {\r\n  left: 0!important;\r\n  opacity: 1;\r\n  padding-left: 20px;\r\n}\r\n.switch-input:checked ~ .switch-label:after {\r\n  opacity: 1;\r\n}\r\n.switch-left-right .switch-label:after {\r\n  text-align: left;\r\n  text-indent: 9px;\r\n  background: #00c851!important;\r\n  left: -100px!important;\r\n  opacity: 1;\r\n  width: 100%!important;\r\n\r\n}\r\n.switch-left-right .switch-label:before, .switch-left-right .switch-label:after {\r\n  width: 20px;\r\n  height: 20px;\r\n  top: 4px;\r\n  left: 0;\r\n  right: 0;\r\n  bottom: 0;\r\n  padding: 11px 0 0 0;\r\n  text-indent: -12px;\r\n  border-radius: 20px;\r\n  box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.2), inset 0 0 3px rgba(0, 0, 0, 0.1);\r\n}\r\n.switch-input:checked ~ .switch-handle {\r\n  left: 74px;\r\n  box-shadow: -1px 1px 5px rgba(0, 0, 0, 0.2);\r\n}\r\n.switch-label, .switch-handle {\r\n  transition: All 0.3s ease;\r\n  -webkit-transition: All 0.3s ease;\r\n  -moz-transition: All 0.3s ease;\r\n  -o-transition: All 0.3s ease;\r\n}\r\n.switch-handle {\r\n  position: absolute;\r\n  top: 4px;\r\n  left: 4px;\r\n  width: 28px;\r\n  height: 28px;\r\n  background: linear-gradient(to bottom, #FFFFFF 40%, #f0f0f0);\r\n  background-image: -webkit-linear-gradient(top, #FFFFFF 40%, #f0f0f0);\r\n  border-radius: 100%;\r\n  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);\r\n}\r\n.switch-handle:before {\r\n  content: \"\";\r\n  position: absolute;\r\n  top: 50%;\r\n  left: 50%;\r\n  margin: -6px 0 0 -6px;\r\n  width: 12px;\r\n  height: 12px;\r\n  background: linear-gradient(to bottom, #eeeeee, #FFFFFF);\r\n  background-image: -webkit-linear-gradient(top, #eeeeee, #FFFFFF);\r\n  border-radius: 6px;\r\n  box-shadow: inset 0 1px rgba(0, 0, 0, 0.02);\r\n}\r\n"
 
 /***/ }),
 
@@ -6578,7 +7358,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container\" *ngIf=\"!ready\">\r\n  <div class=\"row-first\">\r\n    <app-loader></app-loader>\r\n  </div>\r\n</div>\r\n\r\n<div class=\"container\" *ngIf=\"ready\">\r\n\r\n  <!-- SOP List back button -->\r\n  <div class=\"row-first\">\r\n      <button type=\"button\" class=\"btn btn-outline-danger waves-effect\" routerLink=\"/sop-list\"><h6 class=\"no-margin-bottom\"><i class=\"fa fa-times mr-3\"></i>Back</h6></button>\r\n  </div>\r\n\r\n  <div class=\"row-first\">\r\n\r\n    <!-- Error alert -->\r\n    <div *ngIf=\"errorMessage\" class=\"row justify-content-end error-text\">\r\n      <i>{{errorMessage}}</i>\r\n    </div>\r\n\r\n    <div class=\"card card-cascade hoverable\">\r\n        <div class=\"row card-body card-body-cascade\">\r\n          <a class=\"col-12 text-center\">\r\n            <ng-controller data-toggle=\"collapse\" data-target=\"#sop\" aria-expanded=\"false\" aria-controls=\"sop\">STANDARD OPERATIONAL PROCEDURE - {{sop.sop_title.toUpperCase()}}</ng-controller>\r\n          </a>\r\n\r\n          <ng-controller class=\"col-12 collapse\" id=\"sop\">\r\n            <div class=\"row row-first\">\r\n              <div class=\"col-sm-12 col-lg-3\">\r\n                <p class=\"font-weight-bold\">SOP number</p>\r\n              </div>\r\n              <div class=\"col-sm-12 col-lg-9 \">\r\n                <p class=\"float-lg-left float-sm-right\">{{sop.sop_id}}</p>\r\n              </div>\r\n            </div>\r\n\r\n            <div class=\"row\">\r\n              <div class=\"col-sm-12 col-lg-3\">\r\n                <p class=\"font-weight-bold\">Creation date</p>\r\n              </div>\r\n              <div class=\"col-sm-12 col-lg-9 \">\r\n                <p class=\"float-lg-left float-sm-right\">{{ sop.sop_creation | date:'medium' }}</p>\r\n              </div>\r\n            </div>\r\n\r\n            <div class=\"row\">\r\n              <div class=\"col-sm-12 col-lg-3\">\r\n                <p class=\"font-weight-bold\">Revision date</p>\r\n              </div>\r\n              <div class=\"col-sm-12 col-lg-9 \">\r\n                <p class=\"float-lg-left float-sm-right\">{{ sop.sop_revision | date:'medium' }}</p>\r\n              </div>\r\n            </div>\r\n\r\n            <div class=\"row\">\r\n              <div class=\"col-sm-12 col-lg-3\">\r\n                <p class=\"font-weight-bold\">Published date</p>\r\n              </div>\r\n              <div class=\"col-sm-12 col-lg-9 \">\r\n                <p class=\"float-lg-left float-sm-right\">{{ sop.sop_published | date:'medium' }}</p>\r\n              </div>\r\n            </div>\r\n\r\n            <div class=\"row\">\r\n              <div class=\"col-sm-12 col-lg-3\">\r\n                <p class=\"font-weight-bold\">Approved by</p>\r\n              </div>\r\n              <div class=\"col-sm-12 col-lg-9 \">\r\n                <p class=\"float-lg-left float-sm-right\">{{ sop.sop_approvment }}</p>\r\n              </div>\r\n            </div>\r\n\r\n            <div class=\"row\">\r\n              <div class=\"col-sm-12 col-lg-3\">\r\n                <p class=\"font-weight-bold\">Base Rule / Regulation</p>\r\n              </div>\r\n              <div class=\"col-sm-12 col-lg-9 \">\r\n                <p class=\"float-lg-left float-sm-right\">{{ sop.sop_rules }}</p>\r\n              </div>\r\n            </div>\r\n\r\n            <div class=\"row\">\r\n              <div class=\"col-sm-12 col-lg-3\">\r\n                <p class=\"font-weight-bold\">Staff qualifications</p>\r\n              </div>\r\n              <div class=\"col-sm-12 col-lg-9 \">\r\n                <p class=\"float-lg-left float-sm-right\">{{ sop.sop_staff_qualification }}</p>\r\n              </div>\r\n            </div>\r\n\r\n            <div class=\"row\">\r\n              <div class=\"col-sm-12 col-lg-3\">\r\n                <p class=\"font-weight-bold\">Supporting tools</p>\r\n              </div>\r\n              <div class=\"col-sm-12 col-lg-9 \">\r\n                <p class=\"float-lg-left float-sm-right\">{{ sop.sop_tools }}</p>\r\n              </div>\r\n            </div>\r\n\r\n            <div class=\"row\">\r\n              <div class=\"col-sm-12 col-lg-3\">\r\n                <p class=\"font-weight-bold\">Warning</p>\r\n              </div>\r\n              <div class=\"col-sm-12 col-lg-9 \">\r\n                <p class=\"float-lg-left float-sm-right\">{{ sop.sop_warning }}</p>\r\n              </div>\r\n            </div>\r\n\r\n            <div class=\"row\">\r\n              <div class=\"col-sm-12 col-lg-3\">\r\n                <p class=\"font-weight-bold\">Types of forms and reports</p>\r\n              </div>\r\n              <div class=\"col-sm-12 col-lg-9 \">\r\n                <p class=\"float-lg-left float-sm-right\">{{ sop.sop_type_reports }}</p>\r\n              </div>\r\n            </div>\r\n\r\n            <div class=\"row\">\r\n              <div class=\"col-sm-12 col-lg-3\">\r\n                <p class=\"font-weight-bold\">Objective by</p>\r\n              </div>\r\n              <div class=\"col-sm-12 col-lg-9 \">\r\n                <p class=\"float-lg-left float-sm-right\">{{ sop.sop_objectives }}</p>\r\n              </div>\r\n            </div>\r\n          </ng-controller>\r\n        </div>\r\n    </div>\r\n\r\n  </div>\r\n\r\n\r\n\r\n  <div class=\"row-first\">\r\n\r\n    <div class=\"card card-cascade hoverable\" data-toggle=\"collapse\" data-target=\"#units\" aria-expanded=\"false\" aria-controls=\"units\">\r\n      <a>\r\n        <div class=\"row card-body card-body-cascade text-center\">\r\n          <ng-controller class=\"col-12\">UNITS</ng-controller>\r\n\r\n          <ng-controller class=\"collapse\" id=\"units\">\r\n            <div *ngFor=\"let unit of units\" class=\"col-12\">\r\n              {{unit.unit_name}}\r\n            </div>\r\n          </ng-controller>\r\n        </div>\r\n      </a>\r\n    </div>\r\n\r\n  </div>\r\n\r\n  <div class=\"row-first\">\r\n\r\n    <div class=\"card card-cascade hoverable\">\r\n        <div class=\"row card-body card-body-cascade\">\r\n          <a class=\"col-12 row\" data-toggle=\"collapse\" data-target=\"#activities\" aria-expanded=\"false\" aria-controls=\"activities\">\r\n            <ng-controller class=\"col-12 text-center\">ACTIVITIES</ng-controller>\r\n          </a>\r\n          <div class=\"collapse col-12 row\" id=\"activities\" *ngFor=\"let activity of convertMap(activities)\">\r\n            <hr class=\"col-12\">\r\n\r\n            <div class=\"col-1\">({{activity['sub_activities'].length}})</div>\r\n            <div class=\"col-9\">{{activity['activity'].activity_title}}</div>\r\n            <div class=\"col-2 text-center\">\r\n              <a *ngIf=\"activity['sub_activities'].length != 0\">\r\n                <i class=\"fa fa-eye text-blue\" data-toggle=\"collapse\" [attr.data-target]=\"'#'+activity['activity'].activity_id\" aria-expanded=\"false\" aria-controls=\"{{activity['activity'].activity_id}}\"></i>\r\n              </a>\r\n            </div>\r\n            <!-- Collapsible element -->\r\n            <div class=\"col-12 row collapse\" id=\"{{activity['activity'].activity_id}}\">\r\n              <div class=\"offset-2 col-10\" *ngFor=\"let sub_activity of activity['sub_activities']\">\r\n                {{sub_activity.activity_title}}\r\n              </div>\r\n            </div>\r\n            <!-- / Collapsible element -->\r\n          </div>\r\n        </div>\r\n    </div>\r\n\r\n  </div>\r\n\r\n\r\n\r\n</div>\r\n"
+module.exports = "<div class=\"container\" *ngIf=\"!ready\">\r\n  <div class=\"row-first\">\r\n    <app-loader></app-loader>\r\n  </div>\r\n</div>\r\n\r\n<div class=\"container\" *ngIf=\"ready\">\r\n\r\n  <!-- SOP List back button -->\r\n  <div class=\"row-first\">\r\n      <button type=\"button\" class=\"btn btn-outline-danger waves-effect\" routerLink=\"/sop-list\"><h6 class=\"no-margin-bottom\"><i class=\"fa fa-times mr-3\"></i>Back</h6></button>\r\n    <app-pdf-sop ></app-pdf-sop>\r\n  </div>\r\n\r\n  <!-- SOP Informations -->\r\n  <div class=\"row-first\">\r\n\r\n    <!-- Error alert -->\r\n    <div *ngIf=\"errorMessage && formNumber == 1\" class=\"row justify-content-end error-text\">\r\n      <i>{{errorMessage}}</i>\r\n    </div>\r\n\r\n    <div class=\"card card-cascade hoverable\">\r\n        <div class=\"row card-body card-body-cascade\">\r\n          <a class=\"col-12 text-center \" data-toggle=\"collapse\" data-target=\"#sop\" aria-expanded=\"false\" aria-controls=\"sop\">\r\n            <ng-controller>STANDARD OPERATIONAL PROCEDURE - {{sop.sop_title.toUpperCase()}}</ng-controller>\r\n          </a>\r\n\r\n          <ng-controller class=\"col-12 collapse\" id=\"sop\">\r\n            <div class=\"row text-center\">\r\n              <div class=\"col-12 center-block anil_nepal\">\r\n                <label class=\"switch switch-left-right\">\r\n                  <input class=\"switch-input\" type=\"checkbox\" [checked]=\"isEditable\" (click)=\"makeEditable(1)\">\r\n                  <span class=\"switch-label\" data-on=\"Editable\" data-off=\"OFF\"></span> <span class=\"switch-handle\"></span> </label>\r\n              </div>\r\n            </div>\r\n\r\n            <div class=\"row\">\r\n              <div class=\"col-3 font-weight-bold\">\r\n                <p>SOP number</p>\r\n              </div>\r\n              <div class=\"col-8\">\r\n                <input [disabled]=\"true\" [(ngModel)]=\"sop.sop_id\" type=\"text\" class=\"form-control\">\r\n              </div>\r\n            </div>\r\n\r\n            <div class=\"row\">\r\n              <div class=\"col-3 font-weight-bold\">\r\n                <p>SOP title</p>\r\n              </div>\r\n              <div class=\"col-8\">\r\n                <input [disabled]=\"!isEditable\" (keyup)=\"checkSop()\" [(ngModel)]=\"sop.sop_title\" type=\"text\" class=\"form-control\">\r\n              </div>\r\n            </div>\r\n\r\n            <div class=\"row\">\r\n              <div class=\"col-3 font-weight-bold\">\r\n                <p>Creation date</p>\r\n              </div>\r\n              <div class=\"col-8\">\r\n                <input [disabled]=\"true\" [(ngModel)]=\"sop.sop_creation\" type=\"date\" class=\"form-control\">\r\n              </div>\r\n            </div>\r\n\r\n            <div class=\"row\">\r\n              <div class=\"col-3 font-weight-bold\">\r\n                <p>Revision date</p>\r\n              </div>\r\n              <div class=\"col-8\">\r\n                <input [disabled]=\"true\" [(ngModel)]=\"sop.sop_revision\" type=\"date\" class=\"form-control\">\r\n              </div>\r\n            </div>\r\n\r\n            <div class=\"row\">\r\n              <div class=\"col-3 font-weight-bold\">\r\n                <p>Published date</p>\r\n              </div>\r\n              <div class=\"col-8\">\r\n                <input [disabled]=\"!isEditable\" [(ngModel)]=\"sop.sop_published\" type=\"date\" class=\"form-control\">\r\n              </div>\r\n            </div>\r\n\r\n            <div class=\"row\">\r\n              <div class=\"col-3 font-weight-bold\">\r\n                <p>Approved by</p>\r\n              </div>\r\n              <div class=\"col-8\">\r\n                <input [disabled]=\"true\" [(ngModel)]=\"sop.sop_approvment\" type=\"text\" class=\"form-control\">\r\n              </div>\r\n            </div>\r\n\r\n            <div class=\"row\">\r\n              <div class=\"col-3 font-weight-bold\">\r\n                <p>Base Rule / Regulation</p>\r\n              </div>\r\n              <div class=\"col-8\">\r\n                <input [disabled]=\"!isEditable\" [(ngModel)]=\"sop.sop_rules\" type=\"text\" class=\"form-control\">\r\n              </div>\r\n            </div>\r\n\r\n            <div class=\"row\">\r\n              <div class=\"col-3 font-weight-bold\">\r\n                <p>Staff qualifications</p>\r\n              </div>\r\n              <div class=\"col-8\">\r\n                <input [disabled]=\"!isEditable\" [(ngModel)]=\"sop.sop_staff_qualification\" type=\"text\" class=\"form-control\">\r\n              </div>\r\n            </div>\r\n\r\n            <div class=\"row\">\r\n              <div class=\"col-3 font-weight-bold\">\r\n                <p>Supporting tools</p>\r\n              </div>\r\n              <div class=\"col-8\">\r\n                <input [disabled]=\"!isEditable\" [(ngModel)]=\"sop.sop_tools\" type=\"text\" class=\"form-control\">\r\n              </div>\r\n            </div>\r\n\r\n            <div class=\"row\">\r\n              <div class=\"col-3 font-weight-bold\">\r\n                <p>Warning</p>\r\n              </div>\r\n              <div class=\"col-8\">\r\n                <input [disabled]=\"!isEditable\" [(ngModel)]=\"sop.sop_warning\" type=\"text\" class=\"form-control\">\r\n              </div>\r\n            </div>\r\n\r\n            <div class=\"row\">\r\n              <div class=\"col-3 font-weight-bold\">\r\n                <p>Types of forms and reports</p>\r\n              </div>\r\n              <div class=\"col-8\">\r\n                <input [disabled]=\"!isEditable\" [(ngModel)]=\"sop.sop_type_reports\" type=\"text\" class=\"form-control\">\r\n              </div>\r\n            </div>\r\n\r\n            <div class=\"row\">\r\n              <div class=\"col-3 font-weight-bold\">\r\n                <p>Objective</p>\r\n              </div>\r\n              <div class=\"col-8\">\r\n                <input [disabled]=\"!isEditable\" (keyup)=\"checkSop()\" [(ngModel)]=\"sop.sop_objectives\" type=\"text\" class=\"form-control\">\r\n              </div>\r\n            </div>\r\n\r\n            <div class=\"row row-first text-center\">\r\n              <div class=\"col\">\r\n                <button [disabled]=\"!isEditable || !isSopValid\" class=\"btn btn-success waves-effect\" type=\"button\" data-toggle=\"modal\" data-target=\"#confirmationModal\">Save</button>\r\n              </div>\r\n            </div>\r\n          </ng-controller>\r\n        </div>\r\n    </div>\r\n\r\n  </div>\r\n\r\n  <!-- UNITS -->\r\n  <div class=\"row-first\">\r\n\r\n    <!-- Error alert -->\r\n    <div *ngIf=\"errorMessage && formNumber == 2\" class=\"row justify-content-end error-text\">\r\n      <i>{{errorMessage}}</i>\r\n    </div>\r\n\r\n    <div class=\"card card-cascade hoverable\">\r\n      <a>\r\n        <div class=\"row card-body card-body-cascade text-center\">\r\n          <a class=\"col-12 text-center \" data-toggle=\"collapse\" data-target=\"#units\" aria-expanded=\"false\" aria-controls=\"units\">\r\n            <ng-controller class=\"col-12\">UNITS</ng-controller>\r\n          </a>\r\n\r\n          <ng-controller class=\"col-12 collapse\" id=\"units\">\r\n            <div class=\"row text-center\">\r\n              <div class=\"col-12 center-block anil_nepal\">\r\n                <label class=\"switch switch-left-right\">\r\n                  <input class=\"switch-input\" type=\"checkbox\" [checked]=\"isEditableUnits\" (click)=\"makeEditable(2)\">\r\n                  <span class=\"switch-label\" data-on=\"Editable\" data-off=\"OFF\"></span> <span class=\"switch-handle\"></span> </label>\r\n              </div>\r\n            </div>\r\n\r\n            <div *ngFor=\"let unit of units\" class=\"row text-center\">\r\n                <div class=\"offset-2 col-8\">\r\n                  <input [disabled]=\"!isEditableUnits\" (keyup)=\"checkUnits(unit)\" [(ngModel)]=\"unit.unit_name\" type=\"text\" class=\"form-control\">\r\n                </div>\r\n            </div>\r\n\r\n            <div class=\"row row-first text-center\">\r\n              <div class=\"col\">\r\n                <button [disabled]=\"!isEditableUnits || !isUnitsValide\" class=\"btn btn-success waves-effect\" type=\"button\" data-toggle=\"modal\" data-target=\"#confirmationModal\">Save</button>\r\n              </div>\r\n            </div>\r\n          </ng-controller>\r\n        </div>\r\n      </a>\r\n    </div>\r\n\r\n  </div>\r\n\r\n  <!-- ACTIVITIES -->\r\n  <div class=\"row-first\">\r\n\r\n    <!-- Error alert -->\r\n    <div *ngIf=\"errorMessage && formNumber == 3\" class=\"row justify-content-end error-text\">\r\n      <i>{{errorMessage}}</i>\r\n    </div>\r\n\r\n    <div class=\"card card-cascade hoverable\">\r\n        <div class=\"row card-body card-body-cascade justify-content-center\">\r\n          <a class=\"col-12 row\" data-toggle=\"collapse\" data-target=\"#activities\" aria-expanded=\"false\" aria-controls=\"activities\">\r\n            <ng-controller class=\"col-12 text-center\">ACTIVITIES</ng-controller>\r\n          </a>\r\n\r\n          <ng-controller class=\"collapse col-12 row text-center justify-content-center\" id=\"activities\">\r\n\r\n            <div class=\"col-12 row text-center\">\r\n              <div class=\"col-12 center-block anil_nepal\">\r\n                <label class=\"switch switch-left-right\">\r\n                  <input class=\"switch-input\" type=\"checkbox\" [checked]=\"isEditableActivities\" (click)=\"makeEditable(3)\">\r\n                  <span class=\"switch-label\" data-on=\"Editable\" data-off=\"OFF\"></span> <span class=\"switch-handle\"></span> </label>\r\n              </div>\r\n            </div>\r\n\r\n            <div *ngFor=\"let activity of convertMap(activities)\" class=\"col-12 row justify-content-center\">\r\n\r\n              <hr class=\"col-12\">\r\n\r\n              <div class=\"col-1\">\r\n                <a *ngIf=\"isEditableActivities\" (click)=\"pickActivity(activity, 1)\" data-toggle=\"modal\" data-target=\"#activityModal\"><i class=\"fa fa-cog text-blue\"></i></a>\r\n              </div>\r\n              <div class=\"col-1\">({{activity['sub_activities'].length}})</div>\r\n              <div class=\"col-8 text-left\">{{activity['activity'].activity_title}}</div>\r\n              <div class=\"col-2 text-center\">\r\n                <a *ngIf=\"activity['sub_activities'].length != 0\">\r\n                  <i class=\"fa fa-eye text-blue\" data-toggle=\"collapse\" [attr.data-target]=\"'#'+activity['activity'].activity_id\" aria-expanded=\"false\" aria-controls=\"{{activity['activity'].activity_id}}\"></i>\r\n                </a>\r\n              </div>\r\n\r\n              <!-- Collapsible element -->\r\n              <ng-controller class=\"col-12 collapse\" id=\"{{activity['activity'].activity_id}}\">\r\n                <div class=\"row\" *ngFor=\"let sub_activity of activity['sub_activities']\">\r\n                  <div class=\"offset-1 col-1\">\r\n                    <a *ngIf=\"isEditableActivities\" (click)=\"pickActivity(sub_activity, 2)\" data-toggle=\"modal\" data-target=\"#activityModal\"><i class=\"fa fa-cog text-link\"></i></a>\r\n                  </div>\r\n                  <div class=\"col-10 text-left\">\r\n                    {{sub_activity.activity_title}}\r\n                  </div>\r\n                </div>\r\n              </ng-controller>\r\n              <!-- / Collapsible element -->\r\n\r\n            </div>\r\n\r\n            <hr class=\"col-12\">\r\n\r\n            <div class=\"row row-first text-center\">\r\n              <div class=\"col\">\r\n                <button [disabled]=\"!isEditableActivities\" class=\"btn btn-success waves-effect\" type=\"button\" data-toggle=\"modal\" data-target=\"#confirmationModal\">Save</button>\r\n              </div>\r\n            </div>\r\n          </ng-controller>\r\n        </div>\r\n    </div>\r\n\r\n  </div>\r\n\r\n</div>\r\n\r\n<!-- Modal confirmation -->\r\n<app-confirmation title=\"Update SOP informations\"\r\n                  text=\"Are you sure you want to modify these informations ? If the SOP is used, this mights create some errors\"\r\n                  (success)=\"onSubmit(null)\"\r\n                  [isLinkActive]=false\r\n                  link=\"sop-list\">\r\n</app-confirmation>\r\n\r\n<app-activity-update *ngIf=\"activity_selected != null\"\r\n                     title={{title_modal_activity}}\r\n                     [units]=units\r\n                     (success)=\"onSubmit($event)\"\r\n                     [managment_levels]=management_levels\r\n                     [activityUpdate]=activity_selected\r\n                     [isLinkActive]=false>\r\n</app-activity-update>\r\n"
 
 /***/ }),
 
@@ -6596,6 +7376,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _objects_sop_sop_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../objects/sop/sop.service */ "./src/app/objects/sop/sop.service.ts");
 /* harmony import */ var _objects_unit_unit_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../objects/unit/unit.service */ "./src/app/objects/unit/unit.service.ts");
 /* harmony import */ var _objects_activity_activity_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../objects/activity/activity.service */ "./src/app/objects/activity/activity.service.ts");
+/* harmony import */ var _objects_managment_level_managment_level_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../objects/managment_level/managment-level.service */ "./src/app/objects/managment_level/managment-level.service.ts");
+/* harmony import */ var _objects_execute_execute_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../objects/execute/execute.service */ "./src/app/objects/execute/execute.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -6644,16 +7426,28 @@ var __generator = (undefined && undefined.__generator) || function (thisArg, bod
 
 
 
+
+
 var SopComponent = /** @class */ (function () {
-    function SopComponent(_sopService, _unitService, _activityService) {
+    function SopComponent(_sopService, _unitService, _activityService, _managmentLevel, _executeService) {
         this._sopService = _sopService;
         this._unitService = _unitService;
         this._activityService = _activityService;
+        this._managmentLevel = _managmentLevel;
+        this._executeService = _executeService;
         this.ready = false;
         this.sop_id = "";
         this.project_id = "";
+        this.isEditable = false;
+        this.isEditableUnits = false;
+        this.isEditableActivities = false;
+        this.isUnitsValide = true;
+        this.isSopValid = true;
         this.units = [];
+        this.management_levels = [];
         this.activities = new Map;
+        this.title_modal_activity = 'Update activity';
+        this.refresh = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"]();
     }
     SopComponent.prototype.ngOnInit = function () {
         return __awaiter(this, void 0, void 0, function () {
@@ -6661,6 +7455,7 @@ var SopComponent = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         this.sop_id = this._sopService.getSopIdLocal();
+                        localStorage.removeItem("Project_id");
                         return [4 /*yield*/, this.loadSop()];
                     case 1:
                         _a.sent();
@@ -6670,7 +7465,117 @@ var SopComponent = /** @class */ (function () {
                         return [4 /*yield*/, this.loadActivities()];
                     case 3:
                         _a.sent();
+                        return [4 /*yield*/, this.loadManagement()];
+                    case 4:
+                        _a.sent();
                         console.log(this.activities);
+                        this.ready = true;
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    SopComponent.prototype.onSubmit = function (event) {
+        return __awaiter(this, void 0, void 0, function () {
+            var error_1, _i, _a, u, error_2, _b, _c, s, error_3;
+            return __generator(this, function (_d) {
+                switch (_d.label) {
+                    case 0:
+                        console.log('submit !');
+                        this.ready = false;
+                        this.errorMessage = "";
+                        if (!(this.formNumber == 1)) return [3 /*break*/, 6];
+                        _d.label = 1;
+                    case 1:
+                        _d.trys.push([1, 4, , 5]);
+                        this.sop.sop_revision = new Date().toString();
+                        return [4 /*yield*/, this._sopService.updateSop(this.sop).toPromise()];
+                    case 2:
+                        _d.sent();
+                        return [4 /*yield*/, this.loadSop()];
+                    case 3:
+                        _d.sent();
+                        return [3 /*break*/, 5];
+                    case 4:
+                        error_1 = _d.sent();
+                        this.errorMessage = error_1.message;
+                        return [3 /*break*/, 5];
+                    case 5: return [3 /*break*/, 27];
+                    case 6:
+                        if (!(this.formNumber == 2)) return [3 /*break*/, 16];
+                        _d.label = 7;
+                    case 7:
+                        _d.trys.push([7, 14, , 15]);
+                        _i = 0, _a = this.units;
+                        _d.label = 8;
+                    case 8:
+                        if (!(_i < _a.length)) return [3 /*break*/, 11];
+                        u = _a[_i];
+                        return [4 /*yield*/, this._unitService.updateUnit(u).toPromise()];
+                    case 9:
+                        _d.sent();
+                        _d.label = 10;
+                    case 10:
+                        _i++;
+                        return [3 /*break*/, 8];
+                    case 11: return [4 /*yield*/, this.loadUnit()];
+                    case 12:
+                        _d.sent();
+                        return [4 /*yield*/, this.loadActivities()];
+                    case 13:
+                        _d.sent();
+                        this.activity_selected = null;
+                        return [3 /*break*/, 15];
+                    case 14:
+                        error_2 = _d.sent();
+                        this.errorMessage = error_2.message;
+                        return [3 /*break*/, 15];
+                    case 15: return [3 /*break*/, 27];
+                    case 16:
+                        if (!(this.formNumber == 3)) return [3 /*break*/, 27];
+                        if (!event) return [3 /*break*/, 27];
+                        _d.label = 17;
+                    case 17:
+                        _d.trys.push([17, 26, , 27]);
+                        return [4 /*yield*/, this._activityService.update(this.activity_selected).toPromise()];
+                    case 18:
+                        _d.sent();
+                        console.log(this.selectUnit().unit_id);
+                        return [4 /*yield*/, this._executeService.update(this.selectUnit().unit_id, this.activity_selected.activity_id).toPromise()];
+                    case 19:
+                        _d.sent();
+                        console.log(this.sub_activities_linked);
+                        if (!(this.sub_activities_linked != null)) return [3 /*break*/, 24];
+                        _b = 0, _c = this.sub_activities_linked;
+                        _d.label = 20;
+                    case 20:
+                        if (!(_b < _c.length)) return [3 /*break*/, 24];
+                        s = _c[_b];
+                        s.activity_type_duration = this.activity_selected.activity_type_duration;
+                        return [4 /*yield*/, this._activityService.update(s).toPromise()];
+                    case 21:
+                        _d.sent();
+                        return [4 /*yield*/, this._executeService.update(this.selectUnit().unit_id, s.activity_id).toPromise()];
+                    case 22:
+                        _d.sent();
+                        _d.label = 23;
+                    case 23:
+                        _b++;
+                        return [3 /*break*/, 20];
+                    case 24: return [4 /*yield*/, this.loadActivities()];
+                    case 25:
+                        _d.sent();
+                        this.activity_selected = null;
+                        this.isEditableActivities = false;
+                        return [3 /*break*/, 27];
+                    case 26:
+                        error_3 = _d.sent();
+                        this.errorMessage = error_3.message;
+                        return [3 /*break*/, 27];
+                    case 27:
+                        this.refresh.emit(true);
+                        this.isEditable = false;
+                        this.isEditableUnits = false;
                         this.ready = true;
                         return [2 /*return*/];
                 }
@@ -6679,7 +7584,7 @@ var SopComponent = /** @class */ (function () {
     };
     SopComponent.prototype.loadSop = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var s, error_1;
+            var s, error_4;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -6690,8 +7595,8 @@ var SopComponent = /** @class */ (function () {
                         this.sop = s['data'];
                         return [3 /*break*/, 3];
                     case 2:
-                        error_1 = _a.sent();
-                        this.errorMessage = error_1.message;
+                        error_4 = _a.sent();
+                        this.errorMessage = error_4.message;
                         return [3 /*break*/, 3];
                     case 3: return [2 /*return*/];
                 }
@@ -6700,7 +7605,7 @@ var SopComponent = /** @class */ (function () {
     };
     SopComponent.prototype.loadUnit = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var u, error_2;
+            var u, error_5;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -6711,8 +7616,29 @@ var SopComponent = /** @class */ (function () {
                         this.units = u['data'];
                         return [3 /*break*/, 3];
                     case 2:
-                        error_2 = _a.sent();
-                        this.errorMessage = error_2.message;
+                        error_5 = _a.sent();
+                        this.errorMessage = error_5.message;
+                        return [3 /*break*/, 3];
+                    case 3: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    SopComponent.prototype.loadManagement = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var m, error_6;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        return [4 /*yield*/, this._managmentLevel.selectAll().toPromise()];
+                    case 1:
+                        m = _a.sent();
+                        this.management_levels = m['data'];
+                        return [3 /*break*/, 3];
+                    case 2:
+                        error_6 = _a.sent();
+                        this.errorMessage = error_6.message;
                         return [3 /*break*/, 3];
                     case 3: return [2 /*return*/];
                 }
@@ -6721,7 +7647,7 @@ var SopComponent = /** @class */ (function () {
     };
     SopComponent.prototype.loadActivities = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var activities, a, error_3, _i, activities_1, activity, e, _a, activities_2, activity;
+            var activities, a, error_7, _i, activities_1, activity, e, _a, activities_2, activity;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
@@ -6735,8 +7661,8 @@ var SopComponent = /** @class */ (function () {
                         activities = a['data'];
                         return [3 /*break*/, 4];
                     case 3:
-                        error_3 = _b.sent();
-                        this.errorMessage = error_3.message;
+                        error_7 = _b.sent();
+                        this.errorMessage = error_7.message;
                         return [3 /*break*/, 4];
                     case 4:
                         for (_i = 0, activities_1 = activities; _i < activities_1.length; _i++) {
@@ -6760,10 +7686,85 @@ var SopComponent = /** @class */ (function () {
             });
         });
     };
+    SopComponent.prototype.pickActivity = function (activity, level) {
+        if (level == 1) {
+            this.activity_selected = activity['activity'];
+            this.title_modal_activity = 'Update activity ' + activity['activity'].activity_title;
+            this.sub_activities_linked = activity['sub_activities'];
+        }
+        else {
+            this.activity_selected = activity;
+            this.sub_activities_linked = null;
+            this.title_modal_activity = 'Update activity ' + activity.activity_title;
+        }
+    };
+    SopComponent.prototype.selectUnit = function () {
+        for (var _i = 0, _a = this.units; _i < _a.length; _i++) {
+            var u = _a[_i];
+            if (u.unit_name == this.activity_selected['activity_unit'][0]) {
+                return u;
+            }
+        }
+    };
     //Convert map to array to use it in the view
     SopComponent.prototype.convertMap = function (map) {
         return Array.from(map.values());
     };
+    SopComponent.prototype.makeEditable = function (table) {
+        this.errorMessage = "";
+        if (table == 1) {
+            this.isEditable = !this.isEditable;
+            this.isEditableUnits = false;
+            this.isEditableActivities = false;
+            this.checkSop();
+        }
+        else if (table == 2) {
+            this.isEditableUnits = !this.isEditableUnits;
+            this.isEditableActivities = false;
+            this.isEditable = false;
+        }
+        else if (table == 3) {
+            this.isEditableActivities = !this.isEditableActivities;
+            this.isEditable = false;
+            this.isEditableUnits = false;
+        }
+        this.formNumber = table;
+    };
+    //Unit verification label
+    SopComponent.prototype.checkUnits = function (unit) {
+        this.errorMessage = "";
+        var check = true;
+        for (var _i = 0, _a = this.units; _i < _a.length; _i++) {
+            var u = _a[_i];
+            if (u.unit_name.toUpperCase() == unit.unit_name.toUpperCase() && this.units.indexOf(u) != this.units.indexOf(unit)) {
+                check = false;
+                this.errorMessage = "Two or more units have the same name.";
+            }
+            if (u.unit_name == "") {
+                check = false;
+                this.errorMessage = "Unit name is required.";
+            }
+        }
+        this.isUnitsValide = check;
+    };
+    //Sop verification
+    SopComponent.prototype.checkSop = function () {
+        this.errorMessage = "";
+        var check = true;
+        if (this.sop.sop_title == "") {
+            this.errorMessage = "SOP name is required.";
+            check = false;
+        }
+        else if (this.sop.sop_objectives == "") {
+            this.errorMessage = "SOP objective is required.";
+            check = false;
+        }
+        this.isSopValid = check;
+    };
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Output"])(),
+        __metadata("design:type", Object)
+    ], SopComponent.prototype, "refresh", void 0);
     SopComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'app-sop',
@@ -6772,7 +7773,9 @@ var SopComponent = /** @class */ (function () {
         }),
         __metadata("design:paramtypes", [_objects_sop_sop_service__WEBPACK_IMPORTED_MODULE_1__["SopService"],
             _objects_unit_unit_service__WEBPACK_IMPORTED_MODULE_2__["UnitService"],
-            _objects_activity_activity_service__WEBPACK_IMPORTED_MODULE_3__["ActivityService"]])
+            _objects_activity_activity_service__WEBPACK_IMPORTED_MODULE_3__["ActivityService"],
+            _objects_managment_level_managment_level_service__WEBPACK_IMPORTED_MODULE_4__["ManagmentLevelService"],
+            _objects_execute_execute_service__WEBPACK_IMPORTED_MODULE_5__["ExecuteService"]])
     ], SopComponent);
     return SopComponent;
 }());
@@ -6977,7 +7980,7 @@ var WorkScheduleComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<p>\r\n  pdf-gantt works!\r\n</p>\r\n"
+module.exports = "<button *ngIf=\"display_pdf_gantt\" type=\"button\" class=\"btn btn-default\" (click)=\"download()\">Download Gantt PDF</button>\r\n"
 
 /***/ }),
 
@@ -7008,6 +8011,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _objects_project_project_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../objects/project/project.service */ "./src/app/objects/project/project.service.ts");
 /* harmony import */ var _objects_member_activity_project_member_activity_project_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../objects/member_activity_project/member-activity-project.service */ "./src/app/objects/member_activity_project/member-activity-project.service.ts");
 /* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
+/* harmony import */ var _objects_pdf_pdf_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../objects/pdf/pdf.service */ "./src/app/objects/pdf/pdf.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -7057,96 +8061,111 @@ var __generator = (undefined && undefined.__generator) || function (thisArg, bod
 
 
 
+
 var PdfGanttComponent = /** @class */ (function () {
-    function PdfGanttComponent(_projectService, _memberActivityProjectService) {
+    function PdfGanttComponent(_projectService, _memberActivityProjectService, _pdfService) {
         this._projectService = _projectService;
         this._memberActivityProjectService = _memberActivityProjectService;
-        this.idProject = "1";
+        this._pdfService = _pdfService;
+        this.idProject = "3";
+        this.jobs = [];
+        this.display_pdf_gantt = false;
     }
     PdfGanttComponent.prototype.ngOnInit = function () {
-        this.getProject(this.idProject);
-        // this.download();
-    };
-    PdfGanttComponent.prototype.download = function () {
-        var columns = [{ title: "0", dataKey: "0" },
-            { title: "1", dataKey: "1" },
-            { title: "2", dataKey: "2" },
-            { title: "3", dataKey: "3" }
-        ];
-        var rows = [
-            ["Work Code", "0301000" + this.project.project_code, "Project Code", this.project.project_work_code],
-            ["Name of Project", this.project.project_title, "", ""],
-        ];
-        var doc = new jsPDF('l', 'pt');
-        doc.autoTableSetDefaults({
-            margin: { top: 30 },
-            addPageContent: function (data) {
-                doc.setFontSize(14);
-                doc.text('GANTT CHART', 380, 50);
-            }
-        });
-        doc.autoTable(columns, rows, {
-            theme: 'plain',
-            styles: {
-                lineColor: 0,
-                lineWidth: 0
-            },
-            showHeader: 'never',
-            startY: 60,
-            drawRow: function (row, data) {
-                // Colspan
-                doc.setFontStyle('bold');
-                doc.setFontSize(10);
-            },
-            drawCell: function (cell, data) {
-                // Rowspan
-            }
-        });
-        var columns2 = [{ title: "No", dataKey: "0" },
-            { title: "Activity", dataKey: "1" },
-            { title: "Target Date", dataKey: "2" },
-            { title: "Finished Date", dataKey: "3" },
-            { title: "Evaluation", dataKey: "4" },
-            { title: "Staff Name", dataKey: "5" },
-            { title: "Sign", dataKey: "6" },
-            { title: "Note", dataKey: "7" }
-        ];
-        var rows2 = [];
-        for (var i = 0; i < this.activities.length; i++) {
-            rows2.push([this.activities[i]["activity_id"], this.activities[i]["activity_title"], new _angular_common__WEBPACK_IMPORTED_MODULE_4__["DatePipe"]('en-US').transform(this.activities[i]["target_date"], 'dd-MM-yyyy'), new _angular_common__WEBPACK_IMPORTED_MODULE_4__["DatePipe"]('en-US').transform(this.activities[i]["finished_date"], 'dd-MM-yyyy'), this.activities[i]["evaluation"], "Staff 1", this.activities[i]["sign"], this.activities[i]["note"]]);
+        this.idProject = localStorage.getItem("Project_id");
+        if (this.idProject === null) {
+            console.log("ERRROR : No project linked to charge informations !");
         }
-        console.log(rows2);
-        /*
-      var rows2 = [
-        ["1", "Step I Process", "", "", "", "Staff 1", "", ""],
-        ["2", "Step II Process", "", "", "", "Staff 1, Staff 2", "", ""],
-        ["3", "Step III Process", "", "", "", "Staff 1", "", ""],
-        ["4", "Step IV Process", "", "", "", "Staff 1", "", ""],
-        ["5", "Step V Process", "", "", "", "Staff 1", "", ""],
-        ["6", "Step VI Process", "", "", "", "Staff 1", "", ""],
-        ["7", "Step VII Process", "", "", "", "Staff 1", "", ""],
-        ["8", "Step VIII Process", "", "", "", "Staff 1", "", ""],
-        ["9", "Step IX Process", "", "", "", "Staff 1", "", ""],
-        ["1", "Step X Process", "", "", "", "Staff 1", "", ""],
-      ];*/
-        doc.autoTable(columns2, rows2, {
-            theme: 'plain',
-            styles: {
-                lineColor: 0,
-                lineWidth: 1
-            },
-            showHeader: 'everyPage',
-            startY: 120,
-            drawRow: function (row, data) {
-                // Colspan
-                doc.setFontStyle('bold');
-                doc.setFontSize(10);
-            },
-            drawCell: function (cell, data) {
-                // Rowspan
+        else {
+            this.getProject(this.idProject);
+        }
+    };
+    PdfGanttComponent.prototype.filupPDF = function () {
+        this.htmlPDF = "<html>\n<head>\n<style>\ntable{\n  border-collapse: collapse;\n}\n td {\n    border: 0.5mm solid black;\n    margin: 0;\n    padding: 2mm;\n    font-size: 4.5mm;\n    \n}\ntr{\n  margin: 0;\n  padding: 0;\n}\n.text-bold{\n    font-weight: bold;\n}\n.saut-page\n{\n    page-break-after: always;\n}\n.no-borders\n{\n    border: none;\n}\n.center-align\n{\n    text-align: center;\n}\n</style>\n</head>\n<body>\n";
+        for (var j = 0; j < this.jobs.length; j++) {
+            var theJob = this.jobs[j];
+            console.log("JobId : " + theJob['job_id']);
+            var tempActivites = [];
+            //We sore all the activities that are linked to that job
+            for (var _i = 0, _a = this.activities; _i < _a.length; _i++) {
+                var activitie = _a[_i];
+                if (activitie['job_id'] == theJob['job_id']) {
+                    tempActivites.push(activitie);
+                }
             }
+            var tempJobActivity = void 0;
+            var tempSubActivities = [];
+            for (var _b = 0, tempActivites_1 = tempActivites; _b < tempActivites_1.length; _b++) {
+                var activitate = tempActivites_1[_b];
+                if (activitate['activity_id_is_father'] == null) {
+                    tempJobActivity = activitate;
+                }
+                else {
+                    tempSubActivities.push(activitate);
+                }
+            }
+            console.log(tempActivites);
+            if (j > 0) {
+                this.htmlPDF += "<div class=\"saut-page\"></div> ";
+            }
+            this.htmlPDF += "\n    <h5 style=\"margin-left: 45%; font-size: 140%;font-weight: bold;margin-top: 25mm;\">GANTT CHART</h5>\n    \n    <table style=\"margin-left: 10%; width: 80%;\">\n        <tr class=\"no-borders\">\n            <td class=\"no-borders\" style=\"width: 20%\">Work Code</td>\n            <td class=\"no-borders\" style=\"width: 15%\">" + theJob['job_id'] + "</td>\n            <td class=\"no-borders\" style=\"width: 15%\">Project Code</td>\n            <td class=\"no-borders\" style=\"width: 15%\">" + this.project.project_id + "</td>\n            <td class=\"no-borders\" style=\"width: 35%\"></td>\n        </tr>\n        <tr class=\"no-borders\">\n            <td class=\"no-borders\">Name of Project Work</td>\n            <td colspan=\"4\" class=\"no-borders\">" + tempJobActivity['activity_title'] + "</td>\n    \n        </tr>\n        \n    </table>\n    \n    <table style=\"margin-left: 5%; width: 90%; margin-top: 10mm;\">\n      <tr>\n        <td style=\"width: 5%\" class=\"center-align text-bold\">No</td>\n        <td style=\"width: 15%\" class=\"center-align text-bold\">Activity</td>\n        <td style=\"width: 10%\" class=\"center-align text-bold\">Target Date</td>\n        <td style=\"width: 10%\" class=\"center-align text-bold\">Finished Date</td>\n        <td style=\"width: 15%\" class=\"center-align text-bold\">Evaluation</td>\n        <td style=\"width: 15%\" class=\"center-align text-bold\">Staff Name</td>\n        <td style=\"width: 10%\" class=\"center-align text-bold\">Sign</td>\n        <td style=\"width: 20%\" class=\"center-align text-bold\">Note</td>\n         \n      </tr>\n      ";
+            for (var _c = 0, tempSubActivities_1 = tempSubActivities; _c < tempSubActivities_1.length; _c++) {
+                var activity = tempSubActivities_1[_c];
+                this.htmlPDF += " \n      <tr>\n        <td class=\"center-align\">" + activity['activity_id'] + "</td>\n        <td>" + activity['activity_title'] + "</td>\n        <td class=\"center-align\">" + new _angular_common__WEBPACK_IMPORTED_MODULE_4__["DatePipe"]('en-US').transform(activity['target_date'], 'dd-MM-yyyy') + "</td>\n        <td class=\"center-align\">" + new _angular_common__WEBPACK_IMPORTED_MODULE_4__["DatePipe"]('en-US').transform(activity['finished_date'], 'dd-MM-yyyy') + "</td>\n        <td class=\"center-align\">" + activity['evaluation'] + "</td>\n        <td>Staff Names</td>\n        <td>" + activity['sign'] + "</td>\n        <td>" + activity['note'] + "</td>\n         \n      </tr>";
+            }
+            this.htmlPDF += "\n    </table>";
+        }
+        this.htmlPDF += "\n</body>\n</html>";
+        this.display_pdf_gantt = true;
+    };
+    PdfGanttComponent.prototype.download = function (nom) {
+        return __awaiter(this, void 0, void 0, function () {
+            var _this = this;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this._pdfService.generatePdf(this.htmlPDF)
+                            .subscribe(function (res) {
+                            console.log(res);
+                            if (!window.navigator.msSaveOrOpenBlob) {
+                                // BLOB NAVIGATOR
+                                var url = window.URL.createObjectURL(new Blob([res]));
+                                var link = document.createElement('a');
+                                link.href = url;
+                                link.setAttribute('download', "Gantt-charts-" + _this.project.project_title + ".pdf");
+                                document.body.appendChild(link);
+                                link.click();
+                            }
+                            else {
+                                // BLOB FOR EXPLORER 11
+                                var url = window.navigator.msSaveOrOpenBlob(new Blob([res]), "" + res['data'] + name + ".pdf");
+                            }
+                        }, function (error) {
+                            console.log("ERREUR : ", error);
+                        })];
+                    case 1:
+                        _a.sent();
+                        return [2 /*return*/];
+                }
+            });
         });
-        doc.save("Gantt-charts.pdf");
+    };
+    PdfGanttComponent.prototype.fillUpJobTable = function () {
+        for (var _i = 0, _a = this.activities; _i < _a.length; _i++) {
+            var activitie = _a[_i];
+            var bool = false;
+            for (var i = 0; i < this.jobs.length; i++) {
+                if (this.jobs[i]['job_id'] == activitie['job_id']) {
+                    bool = true;
+                }
+            }
+            if (bool == false) {
+                this.jobs.push({
+                    job_id: activitie['job_id'],
+                });
+            }
+        }
+        console.log(this.jobs);
+        this.filupPDF();
     };
     PdfGanttComponent.prototype.selectAllFromProject = function (idProject) {
         return __awaiter(this, void 0, void 0, function () {
@@ -7155,15 +8174,11 @@ var PdfGanttComponent = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         console.log("ici : " + idProject);
-                        return [4 /*yield*/, this._memberActivityProjectService.selectAllFromProject(idProject)
+                        return [4 /*yield*/, this._memberActivityProjectService.selectAllFromProjectFull(idProject)
                                 .subscribe(function (res) {
                                 console.log(res['data']);
-                                //this.res=res['data'];
                                 _this.activities = res['data'];
-                                console.log("res :");
-                                console.log(_this.project);
-                                console.log(_this.activities);
-                                _this.download();
+                                _this.fillUpJobTable();
                             }, function (error) {
                                 console.log("ERREUR : ", error);
                             })];
@@ -7183,8 +8198,6 @@ var PdfGanttComponent = /** @class */ (function () {
                         console.log("ici projet id : " + idProject);
                         return [4 /*yield*/, this._projectService.getProject(idProject)
                                 .subscribe(function (res) {
-                                console.log(res['data']);
-                                //this.res=res['data'];
                                 _this.project = res['data'];
                                 _this.selectAllFromProject(idProject);
                             }, function (error) {
@@ -7204,7 +8217,8 @@ var PdfGanttComponent = /** @class */ (function () {
             styles: [__webpack_require__(/*! ./pdf-gantt.component.scss */ "./src/app/documents/pdf-gantt/pdf-gantt.component.scss")]
         }),
         __metadata("design:paramtypes", [_objects_project_project_service__WEBPACK_IMPORTED_MODULE_2__["ProjectService"],
-            _objects_member_activity_project_member_activity_project_service__WEBPACK_IMPORTED_MODULE_3__["MemberActivityProjectService"]])
+            _objects_member_activity_project_member_activity_project_service__WEBPACK_IMPORTED_MODULE_3__["MemberActivityProjectService"],
+            _objects_pdf_pdf_service__WEBPACK_IMPORTED_MODULE_5__["PdfService"]])
     ], PdfGanttComponent);
     return PdfGanttComponent;
 }());
@@ -7220,7 +8234,7 @@ var PdfGanttComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<p>\r\n  pdf-performance-report works!\r\n</p>\r\n"
+module.exports = "<button *ngIf=\"display_pdf_report\" type=\"button\" class=\"btn btn-default\" (click)=\"download('Staff-Performance-Report.pdf')\">Download Performance Report PDF</button>\r\n<button *ngIf=\"!display_pdf_report\" type=\"button\" class=\"btn btn-default\" disabled (click)=\"download('Staff-Performance-Report.pdf')\">Download Performance Report PDF</button>\r\n"
 
 /***/ }),
 
@@ -7248,6 +8262,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var jspdf_autotable__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! jspdf-autotable */ "./node_modules/jspdf-autotable/dist/jspdf.plugin.autotable.js");
 /* harmony import */ var jspdf_autotable__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(jspdf_autotable__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _objects_project_project_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../objects/project/project.service */ "./src/app/objects/project/project.service.ts");
+/* harmony import */ var _objects_member_activity_project_member_activity_project_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../objects/member_activity_project/member-activity-project.service */ "./src/app/objects/member_activity_project/member-activity-project.service.ts");
+/* harmony import */ var _objects_pdf_pdf_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../objects/pdf/pdf.service */ "./src/app/objects/pdf/pdf.service.ts");
+/* harmony import */ var _objects_member_member_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../objects/member/member.service */ "./src/app/objects/member/member.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -7257,95 +8275,221 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 var __metadata = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __generator = (undefined && undefined.__generator) || function (thisArg, body) {
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    function verb(n) { return function (v) { return step([n, v]); }; }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) try {
+            if (f = 1, y && (t = y[op[0] & 2 ? "return" : op[0] ? "throw" : "next"]) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [0, t.value];
+            switch (op[0]) {
+                case 0: case 1: t = op; break;
+                case 4: _.label++; return { value: op[1], done: false };
+                case 5: _.label++; y = op[1]; op = [0]; continue;
+                case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                default:
+                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                    if (t[2]) _.ops.pop();
+                    _.trys.pop(); continue;
+            }
+            op = body.call(thisArg, _);
+        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
+
+
+
+
 
 
 var PdfPerformanceReportComponent = /** @class */ (function () {
-    function PdfPerformanceReportComponent() {
+    function PdfPerformanceReportComponent(_projectService, _memberActivityProjectService, _pdfService, _memberService) {
+        this._projectService = _projectService;
+        this._memberActivityProjectService = _memberActivityProjectService;
+        this._pdfService = _pdfService;
+        this._memberService = _memberService;
+        this.errorMessage = "";
+        this.idProject = "3";
+        this.jobs = [];
+        this.name = "";
+        this.staffActivities = [];
+        this.display_pdf_report = false;
     }
     PdfPerformanceReportComponent.prototype.ngOnInit = function () {
-        this.download();
+        this.idProject = localStorage.getItem("Project_id");
+        this.getProject(this.idProject);
     };
-    PdfPerformanceReportComponent.prototype.download = function () {
-        var columns = [{ title: "0", dataKey: "0" },
-            { title: "1", dataKey: "1" },
-            { title: "2", dataKey: "2" },
-            { title: "3", dataKey: "3" }
-        ];
-        var rows = [
-            ["Staff Name", "Test name", "", ""]
-        ];
-        var doc = new jsPDF('l', 'pt');
-        doc.autoTableSetDefaults({
-            margin: { top: 30 },
-            addPageContent: function (data) {
-                doc.setFontSize(14);
-                doc.text('STAFF PERFORMANCE REPORT', 320, 50);
+    PdfPerformanceReportComponent.prototype.filupPDF = function () {
+        this.htmlPDF = "<html>\n<head>\n<style>\ntable{\n  border-collapse: collapse;\n}\n td {\n    border: 0.5mm solid black;\n    margin: 0;\n    padding: 2mm;\n    font-size: 4.5mm;\n    \n}\ntr{\n  margin: 0;\n  padding: 0;\n}\n.text-bold{\n    font-weight: bold;\n}\n.saut-page\n{\n    page-break-after: always;\n}\n.no-borders\n{\n    border: none;\n}\n.center-align\n{\n    text-align: center;\n}\n</style>\n</head>\n<body>\n";
+        for (var j = 0; j < this.staffActivities.length; j++) {
+            if (j > 0) {
+                this.htmlPDF += "<div class=\"saut-page\"></div> ";
             }
-        });
-        doc.autoTable(columns, rows, {
-            theme: 'plain',
-            styles: {
-                lineColor: 0,
-                lineWidth: 0
-            },
-            showHeader: 'never',
-            startY: 60,
-            drawRow: function (row, data) {
-                // Colspan
-                doc.setFontStyle('bold');
-                doc.setFontSize(10);
-            },
-            drawCell: function (cell, data) {
-                // Rowspan
+            this.htmlPDF += "\n    <h5 style=\"margin-left: 37%; font-size: 140%;font-weight: bold;margin-top: 25mm;\">STAFF PERFORMANCE REPORT</h5>\n    \n    <table style=\"margin-left: 10%; width: 80%;\">\n        <tr class=\"no-borders\">\n            <td class=\"no-borders\" style=\"width: 20%\">Staff Name : " + this.staffActivities[j]['member_name'] + "</td>\n        </tr>\n    </table>\n    \n    <table style=\"margin-left: 5%; width: 90%; margin-top: 10mm;\">\n      <tr>\n        <td class=\"center-align text-bold\" rowspan=\"2\">No</td>\n        <td class=\"center-align text-bold\" rowspan=\"2\">WORK PROJECT</td>\n        <td class=\"center-align text-bold\" colspan=\"4\">TARGET</td>\n        <td class=\"center-align text-bold\" colspan=\"2\">REALISATION</td>\n        <td class=\"center-align text-bold\" rowspan=\"2\">PERFORMANCE<br>VALUE</td>\n      </tr>\n      <tr>\n        <td colspan=\"2\">OUTPUT QUANTITY</td>\n        <td colspan=\"2\">DURATION</td>\n        <td class=\"center-align text-bold\" colspan=\"2\">OUTPUT QUANTITY</td>\n      </tr>\n      <tr>\n        <td class=\"center-align\" style=\"width: 5%\">(1)</td>\n        <td class=\"center-align\" style=\"width: 40%\">(2)</td>\n        <td class=\"center-align\" style=\"width: 5%\">(3)</td>\n        <td class=\"center-align\" style=\"width: 10%\">(4)</td>\n        <td class=\"center-align\" style=\"width: 5%\">(5)</td>\n        <td class=\"center-align\" style=\"width: 10%\">(6)</td>\n        <td class=\"center-align\" style=\"width: 5%\">(7)</td>\n        <td class=\"center-align\" style=\"width: 10%\">(8)</td>\n        <td class=\"center-align\" style=\"width: 10%\">(11)</td>\n      </tr>\n      ";
+            for (var _i = 0, _a = this.staffActivities[j]['staff_activities']; _i < _a.length; _i++) {
+                var activity = _a[_i];
+                var performance_1 = activity['finished_quantity'] / activity['target_quantity'] * 100;
+                this.htmlPDF += "\n      <tr>\n        <td class=\"center-align\">" + activity['activity_id'] + "</td>\n        <td>" + activity['activity_title'] + "</td>\n        <td class=\"center-align\">" + activity['target_quantity'] + "</td>\n        <td class=\"center-align\">" + activity['activity_type_output'] + "</td>\n        <td class=\"center-align\">" + activity['activity_duration'] + "</td>\n        <td class=\"center-align\">" + activity['activity_type_duration'] + "</td>\n         <td class=\"center-align\">" + activity['finished_quantity'] + "</td>\n        <td class=\"center-align\">" + activity['activity_type_output'] + "</td>\n        <td class=\"center-align\">" + performance_1 + "</td>\n\n\n      </tr>";
             }
+            this.htmlPDF += "\n    </table>";
+        }
+        this.htmlPDF += "\n</body>\n</html>";
+        this.display_pdf_report = true;
+    };
+    PdfPerformanceReportComponent.prototype.download = function (nom) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this._pdfService.generatePdf(this.htmlPDF)
+                            .subscribe(function (res) {
+                            console.log(res);
+                            if (!window.navigator.msSaveOrOpenBlob) {
+                                // BLOB NAVIGATOR
+                                var url = window.URL.createObjectURL(new Blob([res]));
+                                var link = document.createElement('a');
+                                link.href = url;
+                                link.setAttribute('download', nom);
+                                document.body.appendChild(link);
+                                link.click();
+                            }
+                            else {
+                                // BLOB FOR EXPLORER 11
+                                var url = window.navigator.msSaveOrOpenBlob(new Blob([res]), "" + res['data'] + name + ".pdf");
+                            }
+                        }, function (error) {
+                            console.log("ERREUR : ", error);
+                        })];
+                    case 1:
+                        _a.sent();
+                        return [2 /*return*/];
+                }
+            });
         });
-        var columns2 = [{ title: "No", dataKey: "0" },
-            { title: "WORK PROJECT", dataKey: "1" },
-            { title: "", dataKey: "2" },
-            { title: "TARGET", dataKey: "3" },
-            { title: "", dataKey: "4" },
-            { title: "", dataKey: "5" },
-            { title: "REALISATION", dataKey: "6" },
-            { title: "", dataKey: "7" },
-            { title: "PERFORMANCE \n VALUE", dataKey: "8" }
-        ];
-        var rows2 = [
-            ["", "", "", "OUTPUT QUANTITY", "DURATION", "", "OUTPUT QUANTITY", "", ""],
-            ["(1)", "(2)", "(3)", "(4)", "(5)", "(6)", "(7)", "(8)", "(11)"],
-            ["1", "in fernetum momentum descriptim di activitatum", "1", "Laporan", "2", "Jam", "1", "Paket Kegiatan", ""],
-            ["2", "in fernetum momentum descriptim di activitatum", "1", "Laporan", "2", "Jam", "1", "Paket Kegiatan", ""],
-            ["3", "in fernetum momentum descriptim di activitatum", "1", "Laporan", "2", "Jam", "1", "Paket Kegiatan", ""],
-            ["4", "in fernetum momentum descriptim di activitatum", "1", "Laporan", "2", "Jam", "1", "Paket Kegiatan", ""],
-            ["5", "in fernetum momentum descriptim di activitatum", "1", "Laporan", "2", "Jam", "1", "Paket Kegiatan", ""],
-            ["6", "in fernetum momentum descriptim di activitatum", "1", "Laporan", "2", "Jam", "1", "Paket Kegiatan", ""],
-            ["", "TOTAL PERFORMANCE VALUE", "", "", "", "", "", "", ""]
-        ];
-        doc.autoTable(columns2, rows2, {
-            theme: 'plain',
-            styles: {
-                overflow: 'linebreak',
-                lineColor: 0,
-                lineWidth: 0.3,
-                halign: 'left',
-                cellPadding: 2
-            },
-            headerStyles: {
-                fontSize: 8,
-                halign: 'center',
-            },
-            showHeader: 'everyPage',
-            startY: 100,
-            drawRow: function (row, data) {
-                // Colspan
-                doc.setFontStyle('bold');
-                doc.setFontSize(8);
-            },
-            drawCell: function (cell, data) {
-                // Rowspan
-                doc.setFontSize(8);
-            }
+    };
+    PdfPerformanceReportComponent.prototype.fillUpJobTable = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var _i, _a, activitie, actualStaff, bool, i, tmp_activites, _b, _c, activitie2;
+            return __generator(this, function (_d) {
+                switch (_d.label) {
+                    case 0:
+                        _i = 0, _a = this.activities;
+                        _d.label = 1;
+                    case 1:
+                        if (!(_i < _a.length)) return [3 /*break*/, 4];
+                        activitie = _a[_i];
+                        actualStaff = activitie['member_id'];
+                        bool = false;
+                        for (i = 0; i < this.staffActivities.length; i++) {
+                            if (this.staffActivities[i]['member_id'] == actualStaff) {
+                                bool = true;
+                            }
+                        }
+                        if (!(bool == false)) return [3 /*break*/, 3];
+                        this.name == "";
+                        return [4 /*yield*/, this.getMember(actualStaff)];
+                    case 2:
+                        _d.sent();
+                        tmp_activites = [];
+                        for (_b = 0, _c = this.activities; _b < _c.length; _b++) {
+                            activitie2 = _c[_b];
+                            if (activitie2['member_id'] == actualStaff) {
+                                tmp_activites.push(activitie2);
+                            }
+                        }
+                        this.staffActivities.push({
+                            staff_activities: tmp_activites,
+                            member_id: actualStaff,
+                            member_name: this.name
+                        });
+                        _d.label = 3;
+                    case 3:
+                        _i++;
+                        return [3 /*break*/, 1];
+                    case 4:
+                        console.log(this.staffActivities);
+                        this.filupPDF();
+                        return [2 /*return*/];
+                }
+            });
         });
-        doc.save("performance-report.pdf");
+    };
+    PdfPerformanceReportComponent.prototype.selectAllFromProject = function (idProject) {
+        return __awaiter(this, void 0, void 0, function () {
+            var _this = this;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        console.log("ici : " + idProject);
+                        return [4 /*yield*/, this._memberActivityProjectService.selectAllFromProjectFull(idProject)
+                                .subscribe(function (res) {
+                                console.log(res['data']);
+                                _this.activities = res['data'];
+                                _this.fillUpJobTable();
+                            }, function (error) {
+                                console.log("ERREUR : ", error);
+                            })];
+                    case 1:
+                        _a.sent();
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    PdfPerformanceReportComponent.prototype.getProject = function (idProject) {
+        return __awaiter(this, void 0, void 0, function () {
+            var _this = this;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        console.log("ici projet id : " + idProject);
+                        return [4 /*yield*/, this._projectService.getProject(idProject)
+                                .subscribe(function (res) {
+                                _this.project = res['data'];
+                                _this.selectAllFromProject(idProject);
+                            }, function (error) {
+                                console.log("ERREUR : ", error);
+                            })];
+                    case 1:
+                        _a.sent();
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    PdfPerformanceReportComponent.prototype.getMember = function (idMember) {
+        return __awaiter(this, void 0, void 0, function () {
+            var n, error_1;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        return [4 /*yield*/, this._memberService.select(idMember).toPromise()];
+                    case 1:
+                        n = _a.sent();
+                        this.name = n['data']['member_first_name'] + " " + n['data']['member_name'];
+                        return [3 /*break*/, 3];
+                    case 2:
+                        error_1 = _a.sent();
+                        this.errorMessage = error_1.message;
+                        return [3 /*break*/, 3];
+                    case 3: return [2 /*return*/];
+                }
+            });
+        });
     };
     PdfPerformanceReportComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -7353,7 +8497,10 @@ var PdfPerformanceReportComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./pdf-performance-report.component.html */ "./src/app/documents/pdf-performance-report/pdf-performance-report.component.html"),
             styles: [__webpack_require__(/*! ./pdf-performance-report.component.scss */ "./src/app/documents/pdf-performance-report/pdf-performance-report.component.scss")]
         }),
-        __metadata("design:paramtypes", [])
+        __metadata("design:paramtypes", [_objects_project_project_service__WEBPACK_IMPORTED_MODULE_2__["ProjectService"],
+            _objects_member_activity_project_member_activity_project_service__WEBPACK_IMPORTED_MODULE_3__["MemberActivityProjectService"],
+            _objects_pdf_pdf_service__WEBPACK_IMPORTED_MODULE_4__["PdfService"],
+            _objects_member_member_service__WEBPACK_IMPORTED_MODULE_5__["MemberService"]])
     ], PdfPerformanceReportComponent);
     return PdfPerformanceReportComponent;
 }());
@@ -7369,7 +8516,7 @@ var PdfPerformanceReportComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<p>\r\n  pdf-performance-target works!\r\n</p>\r\n"
+module.exports = "<button *ngIf=\"display_pdf_target\" type=\"button\" class=\"btn btn-default\" (click)=\"download('Staff-Performance-Target.pdf')\">Download Performance Target PDF</button>\r\n<button *ngIf=\"!display_pdf_target\" type=\"button\" class=\"btn btn-default\" disabled (click)=\"download('Staff-Performance-Target.pdf')\">Download Performance Target PDF</button>\r\n"
 
 /***/ }),
 
@@ -7397,6 +8544,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var jspdf_autotable__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! jspdf-autotable */ "./node_modules/jspdf-autotable/dist/jspdf.plugin.autotable.js");
 /* harmony import */ var jspdf_autotable__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(jspdf_autotable__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _objects_project_project_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../objects/project/project.service */ "./src/app/objects/project/project.service.ts");
+/* harmony import */ var _objects_member_activity_project_member_activity_project_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../objects/member_activity_project/member-activity-project.service */ "./src/app/objects/member_activity_project/member-activity-project.service.ts");
+/* harmony import */ var _objects_pdf_pdf_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../objects/pdf/pdf.service */ "./src/app/objects/pdf/pdf.service.ts");
+/* harmony import */ var _objects_member_member_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../objects/member/member.service */ "./src/app/objects/member/member.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -7406,92 +8557,221 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 var __metadata = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __generator = (undefined && undefined.__generator) || function (thisArg, body) {
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    function verb(n) { return function (v) { return step([n, v]); }; }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) try {
+            if (f = 1, y && (t = y[op[0] & 2 ? "return" : op[0] ? "throw" : "next"]) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [0, t.value];
+            switch (op[0]) {
+                case 0: case 1: t = op; break;
+                case 4: _.label++; return { value: op[1], done: false };
+                case 5: _.label++; y = op[1]; op = [0]; continue;
+                case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                default:
+                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                    if (t[2]) _.ops.pop();
+                    _.trys.pop(); continue;
+            }
+            op = body.call(thisArg, _);
+        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
+
+
+
+
 
 
 var PdfPerformanceTargetComponent = /** @class */ (function () {
-    function PdfPerformanceTargetComponent() {
+    function PdfPerformanceTargetComponent(_projectService, _memberActivityProjectService, _pdfService, _memberService) {
+        this._projectService = _projectService;
+        this._memberActivityProjectService = _memberActivityProjectService;
+        this._pdfService = _pdfService;
+        this._memberService = _memberService;
+        this.errorMessage = "";
+        this.idProject = "";
+        this.jobs = [];
+        this.name = "";
+        this.staffActivities = [];
+        this.display_pdf_target = false;
     }
     PdfPerformanceTargetComponent.prototype.ngOnInit = function () {
-        this.download();
+        this.idProject = localStorage.getItem("Project_id");
+        this.getProject(this.idProject);
     };
-    PdfPerformanceTargetComponent.prototype.download = function () {
-        var columns = [{ title: "0", dataKey: "0" },
-            { title: "1", dataKey: "1" },
-            { title: "2", dataKey: "2" },
-            { title: "3", dataKey: "3" }
-        ];
-        var rows = [
-            ["Staff Name", "Test name", "", ""]
-        ];
-        var doc = new jsPDF('l', 'pt');
-        doc.autoTableSetDefaults({
-            margin: { top: 30 },
-            addPageContent: function (data) {
-                doc.setFontSize(14);
-                doc.text('STAFF PERFORMANCE TARGET', 320, 50);
+    PdfPerformanceTargetComponent.prototype.filupPDF = function () {
+        this.htmlPDF = "<html>\n<head>\n<style>\ntable{\n  border-collapse: collapse;\n}\n td {\n    border: 0.5mm solid black;\n    margin: 0;\n    padding: 2mm;\n    font-size: 4.5mm;\n    \n}\ntr{\n  margin: 0;\n  padding: 0;\n}\n.text-bold{\n    font-weight: bold;\n}\n.saut-page\n{\n    page-break-after: always;\n}\n.no-borders\n{\n    border: none;\n}\n.center-align\n{\n    text-align: center;\n}\n</style>\n</head>\n<body>\n";
+        for (var j = 0; j < this.staffActivities.length; j++) {
+            var name_1 = "";
+            if (j > 0) {
+                this.htmlPDF += "<div class=\"saut-page\"></div> ";
             }
-        });
-        doc.autoTable(columns, rows, {
-            theme: 'plain',
-            styles: {
-                lineColor: 0,
-                lineWidth: 0
-            },
-            showHeader: 'never',
-            startY: 60,
-            drawRow: function (row, data) {
-                // Colspan
-                doc.setFontStyle('bold');
-                doc.setFontSize(10);
-            },
-            drawCell: function (cell, data) {
-                // Rowspan
+            this.htmlPDF += "\n    <h5 style=\"margin-left: 37%; font-size: 140%;font-weight: bold;margin-top: 25mm;\">STAFF PERFORMANCE TARGET</h5>\n    \n    <table style=\"margin-left: 10%; width: 80%;\">\n        <tr class=\"no-borders\">\n            <td class=\"no-borders\" style=\"width: 20%\">Staff Name : " + this.staffActivities[j]['member_name'] + "</td>\n        </tr>\n    </table>\n    \n    <table style=\"margin-left: 5%; width: 90%; margin-top: 10mm;\">\n      <tr>\n        <td class=\"center-align text-bold\" rowspan=\"2\">No</td>\n        <td class=\"center-align text-bold\" rowspan=\"2\">Work Project</td>\n        <td class=\"center-align text-bold\" colspan=\"4\">Target</td>\n        <td class=\"center-align text-bold\" rowspan=\"2\">Note</td>\n      </tr>\n      <tr>\n        <td colspan=\"2\">Output Quantity</td>\n        <td colspan=\"2\">Duration</td>\n      </tr>\n      <tr>\n        <td class=\"center-align\" style=\"width: 5%\">(1)</td>\n        <td class=\"center-align\" style=\"width: 50%\">(2)</td>\n        <td class=\"center-align\" style=\"width: 5%\">(3)</td>\n        <td class=\"center-align\" style=\"width: 10%\">(4)</td>\n        <td class=\"center-align\" style=\"width: 5%\">(5)</td>\n        <td class=\"center-align\" style=\"width: 10%\">(6)</td>\n        <td class=\"center-align\" style=\"width: 15%\">(7)</td>\n      </tr>\n      ";
+            for (var _i = 0, _a = this.staffActivities[j]['staff_activities']; _i < _a.length; _i++) {
+                var activity = _a[_i];
+                this.htmlPDF += "\n      <tr>\n        <td class=\"center-align\">" + activity['activity_id'] + "</td>\n        <td>" + activity['activity_title'] + "</td>\n        <td class=\"center-align\">" + activity['target_quantity'] + "</td>\n        <td class=\"center-align\">" + activity['activity_type_output'] + "</td>\n        <td class=\"center-align\">" + activity['activity_duration'] + "</td>\n        <td class=\"center-align\">" + activity['activity_type_duration'] + "</td>\n        <td class=\"center-align\">" + activity['note'] + "</td>\n\n\n      </tr>";
             }
+            this.htmlPDF += "\n    </table>";
+        }
+        this.htmlPDF += "\n</body>\n</html>";
+        this.display_pdf_target = true;
+    };
+    PdfPerformanceTargetComponent.prototype.download = function (nom) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this._pdfService.generatePdf(this.htmlPDF)
+                            .subscribe(function (res) {
+                            console.log(res);
+                            if (!window.navigator.msSaveOrOpenBlob) {
+                                // BLOB NAVIGATOR
+                                var url = window.URL.createObjectURL(new Blob([res]));
+                                var link = document.createElement('a');
+                                link.href = url;
+                                link.setAttribute('download', nom);
+                                document.body.appendChild(link);
+                                link.click();
+                            }
+                            else {
+                                // BLOB FOR EXPLORER 11
+                                var url = window.navigator.msSaveOrOpenBlob(new Blob([res]), "" + res['data'] + name + ".pdf");
+                            }
+                        }, function (error) {
+                            console.log("ERREUR : ", error);
+                        })];
+                    case 1:
+                        _a.sent();
+                        return [2 /*return*/];
+                }
+            });
         });
-        var columns2 = [{ title: "No", dataKey: "0" },
-            { title: "WORK PROJECT", dataKey: "1" },
-            { title: "", dataKey: "2" },
-            { title: "Target", dataKey: "3" },
-            { title: "", dataKey: "4" },
-            { title: "", dataKey: "5" },
-            { title: "Note", dataKey: "6" }
-        ];
-        var rows2 = [
-            ["", "", "", "OUTPUT QUANTITY", "DURATION", "", ""],
-            ["(1)", "(2)", "(3)", "(4)", "(5)", "(6)", "(7)"],
-            ["1", "in fernetum momentum descriptim di activitatum", "1", "Laporan", "2", "Jam", ""],
-            ["2", "in fernetum momentum descriptim di activitatum", "1", "Laporan", "2", "Jam", ""],
-            ["3", "in fernetum momentum descriptim di activitatum", "1", "Laporan", "2", "Jam", ""],
-            ["4", "in fernetum momentum descriptim di activitatum", "1", "Laporan", "2", "Jam", ""],
-            ["5", "in fernetum momentum descriptim di activitatum", "1", "Laporan", "2", "Jam", ""],
-            ["6", "in fernetum momentum descriptim di activitatum", "1", "Laporan", "2", "Jam", ""]
-        ];
-        doc.autoTable(columns2, rows2, {
-            theme: 'plain',
-            styles: {
-                overflow: 'linebreak',
-                lineColor: 0,
-                lineWidth: 0.3,
-                halign: 'left',
-                cellPadding: 2
-            },
-            headerStyles: {
-                fontSize: 8,
-                halign: 'center',
-            },
-            showHeader: 'everyPage',
-            startY: 100,
-            drawRow: function (row, data) {
-                // Colspan
-                doc.setFontStyle('bold');
-                doc.setFontSize(8);
-            },
-            drawCell: function (cell, data) {
-                // Rowspan
-                doc.setFontSize(8);
-            }
+    };
+    PdfPerformanceTargetComponent.prototype.fillUpJobTable = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var _i, _a, activitie, actualStaff, bool, i, tmp_activites, _b, _c, activitie2;
+            return __generator(this, function (_d) {
+                switch (_d.label) {
+                    case 0:
+                        _i = 0, _a = this.activities;
+                        _d.label = 1;
+                    case 1:
+                        if (!(_i < _a.length)) return [3 /*break*/, 4];
+                        activitie = _a[_i];
+                        actualStaff = activitie['member_id'];
+                        bool = false;
+                        for (i = 0; i < this.staffActivities.length; i++) {
+                            if (this.staffActivities[i]['member_id'] == actualStaff) {
+                                bool = true;
+                            }
+                        }
+                        if (!(bool == false)) return [3 /*break*/, 3];
+                        this.name == "";
+                        return [4 /*yield*/, this.getMember(actualStaff)];
+                    case 2:
+                        _d.sent();
+                        tmp_activites = [];
+                        for (_b = 0, _c = this.activities; _b < _c.length; _b++) {
+                            activitie2 = _c[_b];
+                            if (activitie2['member_id'] == actualStaff) {
+                                tmp_activites.push(activitie2);
+                            }
+                        }
+                        this.staffActivities.push({
+                            staff_activities: tmp_activites,
+                            member_id: actualStaff,
+                            member_name: this.name
+                        });
+                        _d.label = 3;
+                    case 3:
+                        _i++;
+                        return [3 /*break*/, 1];
+                    case 4:
+                        console.log(this.staffActivities);
+                        this.filupPDF();
+                        return [2 /*return*/];
+                }
+            });
         });
-        doc.save("performance-target-evaluation.pdf");
+    };
+    PdfPerformanceTargetComponent.prototype.selectAllFromProject = function (idProject) {
+        return __awaiter(this, void 0, void 0, function () {
+            var _this = this;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        console.log("ici : " + idProject);
+                        return [4 /*yield*/, this._memberActivityProjectService.selectAllFromProjectFull(idProject)
+                                .subscribe(function (res) {
+                                console.log(res['data']);
+                                _this.activities = res['data'];
+                                _this.fillUpJobTable();
+                            }, function (error) {
+                                console.log("ERREUR : ", error);
+                            })];
+                    case 1:
+                        _a.sent();
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    PdfPerformanceTargetComponent.prototype.getProject = function (idProject) {
+        return __awaiter(this, void 0, void 0, function () {
+            var _this = this;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        console.log("ici projet id : " + idProject);
+                        return [4 /*yield*/, this._projectService.getProject(idProject)
+                                .subscribe(function (res) {
+                                _this.project = res['data'];
+                                _this.selectAllFromProject(idProject);
+                            }, function (error) {
+                                console.log("ERREUR : ", error);
+                            })];
+                    case 1:
+                        _a.sent();
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    PdfPerformanceTargetComponent.prototype.getMember = function (idMember) {
+        return __awaiter(this, void 0, void 0, function () {
+            var n, error_1;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        return [4 /*yield*/, this._memberService.select(idMember).toPromise()];
+                    case 1:
+                        n = _a.sent();
+                        this.name = n['data']['member_first_name'] + " " + n['data']['member_name'];
+                        return [3 /*break*/, 3];
+                    case 2:
+                        error_1 = _a.sent();
+                        this.errorMessage = error_1.message;
+                        return [3 /*break*/, 3];
+                    case 3: return [2 /*return*/];
+                }
+            });
+        });
     };
     PdfPerformanceTargetComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -7499,7 +8779,10 @@ var PdfPerformanceTargetComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./pdf-performance-target.component.html */ "./src/app/documents/pdf-performance-target/pdf-performance-target.component.html"),
             styles: [__webpack_require__(/*! ./pdf-performance-target.component.scss */ "./src/app/documents/pdf-performance-target/pdf-performance-target.component.scss")]
         }),
-        __metadata("design:paramtypes", [])
+        __metadata("design:paramtypes", [_objects_project_project_service__WEBPACK_IMPORTED_MODULE_2__["ProjectService"],
+            _objects_member_activity_project_member_activity_project_service__WEBPACK_IMPORTED_MODULE_3__["MemberActivityProjectService"],
+            _objects_pdf_pdf_service__WEBPACK_IMPORTED_MODULE_4__["PdfService"],
+            _objects_member_member_service__WEBPACK_IMPORTED_MODULE_5__["MemberService"]])
     ], PdfPerformanceTargetComponent);
     return PdfPerformanceTargetComponent;
 }());
@@ -7515,7 +8798,7 @@ var PdfPerformanceTargetComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<p>\r\n  pdf-progress-evaluation works!\r\n</p>\r\n"
+module.exports = "<button *ngIf=\"display_pdf_progress\" type=\"button\" class=\"btn btn-default\" (click)=\"filupPDF()\">Download Progress PDF (Days)</button>\r\n<button *ngIf=\"!display_pdf_progress\" type=\"button\" class=\"btn btn-default\" disabled (click)=\"filupPDF()\">Download Progress PDF (Days)</button>\r\n<!--<button *ngIf=\"display_pdf_progress\" type=\"button\" class=\"btn btn-default\" (click)=\"filupPDFWeek()\">Download Progress PDF (Weeks)</button>\r\n<button *ngIf=\"!display_pdf_progress\" type=\"button\" class=\"btn btn-default\" disabled (click)=\"filupPDFWeek()\">Download Progress PDF (Weeks)</button>-->\r\n"
 
 /***/ }),
 
@@ -7541,8 +8824,14 @@ module.exports = ""
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PdfProgressEvaluationComponent", function() { return PdfProgressEvaluationComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var jspdf_autotable__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! jspdf-autotable */ "./node_modules/jspdf-autotable/dist/jspdf.plugin.autotable.js");
-/* harmony import */ var jspdf_autotable__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(jspdf_autotable__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _objects_member_activity_project_member_activity_project_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../objects/member_activity_project/member-activity-project.service */ "./src/app/objects/member_activity_project/member-activity-project.service.ts");
+/* harmony import */ var _objects_member_member_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../objects/member/member.service */ "./src/app/objects/member/member.service.ts");
+/* harmony import */ var _objects_activity_activity_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../objects/activity/activity.service */ "./src/app/objects/activity/activity.service.ts");
+/* harmony import */ var _objects_project_project_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../objects/project/project.service */ "./src/app/objects/project/project.service.ts");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _objects_job_job_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../objects/job/job.service */ "./src/app/objects/job/job.service.ts");
+/* harmony import */ var _objects_pdf_pdf_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../objects/pdf/pdf.service */ "./src/app/objects/pdf/pdf.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -7552,398 +8841,764 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 var __metadata = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __generator = (undefined && undefined.__generator) || function (thisArg, body) {
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    function verb(n) { return function (v) { return step([n, v]); }; }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) try {
+            if (f = 1, y && (t = y[op[0] & 2 ? "return" : op[0] ? "throw" : "next"]) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [0, t.value];
+            switch (op[0]) {
+                case 0: case 1: t = op; break;
+                case 4: _.label++; return { value: op[1], done: false };
+                case 5: _.label++; y = op[1]; op = [0]; continue;
+                case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                default:
+                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                    if (t[2]) _.ops.pop();
+                    _.trys.pop(); continue;
+            }
+            op = body.call(thisArg, _);
+        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
+
+
+
+
+
+
 
 
 var PdfProgressEvaluationComponent = /** @class */ (function () {
-    function PdfProgressEvaluationComponent() {
-        this.is_week = false;
-        this.is_month = true;
-        this.is_trimester = false;
-        this.is_year = false;
+    function PdfProgressEvaluationComponent(_projectService, _memberActivityProjectService, _pdfService, _memberService, _activityService, _jobService) {
+        this._projectService = _projectService;
+        this._memberActivityProjectService = _memberActivityProjectService;
+        this._pdfService = _pdfService;
+        this._memberService = _memberService;
+        this._activityService = _activityService;
+        this._jobService = _jobService;
+        this.idProject = "3";
+        this.jobs = [];
+        this.display_pdf_gantt = false;
+        this.errorMessage = "";
+        this.ready = false;
+        this.m_a_p = [];
+        this.workers = [];
+        this.activities = [];
+        this.sorted_workers = [];
+        /*
+        * [{date: Date,
+        *   elements: [{target_quantity: number,
+        *               finished_quantity: number,
+        *               finished_rate: number,
+        *               member: Member
+        *              }]
+        *  }]
+        * */
+        this.volume_per_days = [];
+        this.volume_per_weeks = [];
+        this.is_type_weeks = false;
+        /* [{member: Member,
+        *    m_a_ps: MemberActivityProject[],
+        *    total_target: number,
+        *    total_finished: number
+        *  }}
+        *  */
+        this.elements = [];
+        // Volumes that are displayed on the main table
+        this.volumes_displayed = new Map();
+        this.dates_displayed = [];
+        this.volumes_displayed_iterator = 0;
+        this.members_activities = new Map();
+        this.display_pdf_progress = false;
     }
     PdfProgressEvaluationComponent.prototype.ngOnInit = function () {
-        this.download();
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.loadData()];
+                    case 1:
+                        _a.sent();
+                        return [4 /*yield*/, this.sortElements()];
+                    case 2:
+                        _a.sent();
+                        this.ready = true;
+                        console.log(this.elements);
+                        return [4 /*yield*/, this.getProject(localStorage.getItem("Project_id"))];
+                    case 3:
+                        _a.sent();
+                        this.display_pdf_progress = true;
+                        return [2 /*return*/];
+                }
+            });
+        });
     };
-    PdfProgressEvaluationComponent.prototype.download = function () {
-        if (this.is_week) {
-            //=========================== START WEEK MODEL =================================
-            var columns = [{ title: "0", dataKey: "0" },
-                { title: "1", dataKey: "1" },
-                { title: "2", dataKey: "2" },
-                { title: "3", dataKey: "3" }
-            ];
-            var rows = [
-                ["Work Code", "00000000", "Project Code", "24200"],
-                ["Name of Project", "lumbuk tagagatum in ferne memonerisatum", "", ""],
-                ["Start Date", "1-Jan-18", "", ""],
-                ["Finished Date", "31-Jan-18", "", ""],
-            ];
-            var doc = new jsPDF('l', 'pt');
-            doc.autoTableSetDefaults({
-                margin: { top: 30 },
-                addPageContent: function (data) {
-                    doc.setFontSize(14);
-                    doc.text('VOLUME PROGRESS EVALUATION', 320, 50);
+    PdfProgressEvaluationComponent.prototype.filupPDF = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var tmp_job_done, i, boolTest, j, _i, _a, member, _b, _c, volume, error_1;
+            return __generator(this, function (_d) {
+                switch (_d.label) {
+                    case 0:
+                        this.htmlPDF = "<html>\n<head>\n<style>\ntable{\n  border-collapse: collapse;\n}\n td {\n    border: 0.5mm solid black;\n    margin: 0;\n    padding: 2mm;\n    font-size: 3mm;\n    \n}\ntr{\n  margin: 0;\n  padding: 0;\n}\n.text-bold{\n    font-weight: bold;\n}\n.saut-page\n{\n    page-break-after: always;\n}\n.no-borders\n{\n    border: none;\n}\n.center-align\n{\n    text-align: center;\n}\n</style>\n</head>\n<body>\n";
+                        console.log(this.activities);
+                        tmp_job_done = [];
+                        i = 0;
+                        _d.label = 1;
+                    case 1:
+                        if (!(i < this.activities.length)) return [3 /*break*/, 6];
+                        boolTest = false;
+                        for (j = 0; j < tmp_job_done.length; j++) {
+                            if (tmp_job_done[j] == this.activities[i]['job']['job_id']) {
+                                boolTest = true;
+                            }
+                        }
+                        if (!(boolTest == false)) return [3 /*break*/, 5];
+                        _d.label = 2;
+                    case 2:
+                        _d.trys.push([2, 4, , 5]);
+                        console.log("ici");
+                        return [4 /*yield*/, this.loadVolumePerDay(this.activities[i]['job']['job_id'])];
+                    case 3:
+                        _d.sent();
+                        console.log(this.volumes_displayed);
+                        if (i > 0) {
+                            this.htmlPDF += "<div class=\"saut-page\"></div> ";
+                        }
+                        this.htmlPDF += "\n            <h5 style=\"margin-left: 37%; font-size: 140%;font-weight: bold;margin-top: 25mm;\">VOLUME PROGRESS EVALUATION </h5>\n            \n            <table style=\"margin-left: 5%; width: 90%;\">\n                <tr class=\"no-borders\">\n                    <td class=\"no-borders\" style=\"width: 20%\">Work Code</td>\n                    <td class=\"no-borders\" style=\"width: 15%\">" + this.activities[i]['job']['job_id'] + "</td>\n                    <td class=\"no-borders\" style=\"width: 15%\">Project Code</td>\n                    <td class=\"no-borders\" style=\"width: 15%\">" + this.project_pdf.project_id + "</td>\n                    <td class=\"no-borders\" style=\"width: 35%\"></td>\n                </tr>\n                <tr class=\"no-borders\">\n                    <td class=\"no-borders\">Name of Project Work</td>\n                    <td colspan=\"4\" class=\"no-borders\">Name of the job</td>\n            \n                </tr>\n                \n            </table>\n            \n            <table style=\"margin-left: 5%; width: 90%; margin-top: 10mm;\">\n              <tr>\n                <td style=\"width: 3%\" class=\"center-align text-bold\" rowspan=\"3\">No</td>\n                <td style=\"width: 10%\" class=\"center-align text-bold\" rowspan=\"3\">Staff Names</td>\n                <td style=\"width: 7%\" class=\"center-align text-bold\" rowspan=\"3\">Total <br> Target</td>\n                <td style=\"width: 10%\" class=\"center-align text-bold\" rowspan=\"3\">Total Target <br> vs Details</td>\n                <td style=\"width: 45%\" class=\"center-align text-bold\" colspan=\"27\">w1</td>\n                <td style=\"width: 8%\" class=\"center-align text-bold\" rowspan=\"3\">Total Finished</td>\n                <td style=\"width: 7%\" class=\"center-align text-bold\" rowspan=\"3\">%</td>\n                <td style=\"width: 10%\" class=\"center-align text-bold\" rowspan=\"3\">Note</td>\n                 \n              </tr>\n              <tr>\n                <td colspan=\"3\" class=\"center-align\">D1</td>\n                <td colspan=\"3\" class=\"center-align\">D2</td>\n                <td colspan=\"3\" class=\"center-align\">D3</td>\n                <td colspan=\"3\" class=\"center-align\">D4</td>\n                <td colspan=\"3\" class=\"center-align\">D5</td>\n                <td colspan=\"3\" class=\"center-align\">D6</td>\n                <td colspan=\"3\" class=\"center-align\">D7</td>\n              </tr>\n              <tr>\n                <td class=\"center-align\">Target</td>\n                <td class=\"center-align\">Finished</td>\n                <td class=\"center-align\">%</td>\n                <td class=\"center-align\">Target</td>\n                <td class=\"center-align\">Finished</td>\n                <td class=\"center-align\">%</td>\n                <td class=\"center-align\">Target</td>\n                <td class=\"center-align\">Finished</td>\n                <td class=\"center-align\">%</td>\n                <td class=\"center-align\">Target</td>\n                <td class=\"center-align\">Finished</td>\n                <td class=\"center-align\">%</td>\n                <td class=\"center-align\">Target</td>\n                <td class=\"center-align\">Finished</td>\n                <td class=\"center-align\">%</td>\n                <td class=\"center-align\">Target</td>\n                <td class=\"center-align\">Finished</td>\n                <td class=\"center-align\">%</td>\n                <td class=\"center-align\">Target</td>\n                <td class=\"center-align\">Finished</td>\n                <td class=\"center-align\">%</td>\n              </tr>\n              ";
+                        for (_i = 0, _a = this.convertMap(this.volumes_displayed); _i < _a.length; _i++) {
+                            member = _a[_i];
+                            this.htmlPDF += "\n                <tr>\n              <td >" + member['member'].member_id + "</td>\n              <td class=\"text-small\">" + member['member'].member_name + " " + member['member'].member_first_name + "</td>\n               <td>" + member['total_finished'] + " " + member['total_target'] + " " + member['total_rates'] + " </td>\n               <td></td>\n               ";
+                            for (_b = 0, _c = member['volumes']; _b < _c.length; _b++) {
+                                volume = _c[_b];
+                                this.htmlPDF += "\n                <td>" + volume['target_quantity'] + "</td>\n                <td>" + volume['finished_quantity'] + "</td>\n                <td>" + volume['finished_rate'] + "</td>\n                ";
+                            }
+                            this.htmlPDF += "</tr>";
+                        }
+                        this.htmlPDF += "\n            </table>";
+                        console.log("là");
+                        return [3 /*break*/, 5];
+                    case 4:
+                        error_1 = _d.sent();
+                        this.errorMessage = error_1.message;
+                        return [3 /*break*/, 5];
+                    case 5:
+                        i++;
+                        return [3 /*break*/, 1];
+                    case 6:
+                        this.htmlPDF += "</body></html>";
+                        this.download("");
+                        return [2 /*return*/];
                 }
             });
-            doc.autoTable(columns, rows, {
-                theme: 'plain',
-                styles: {
-                    lineColor: 0,
-                    lineWidth: 0
-                },
-                showHeader: 'never',
-                startY: 60,
-                drawRow: function (row, data) {
-                    // Colspan
-                    doc.setFontStyle('bold');
-                    doc.setFontSize(10);
-                },
-                drawCell: function (cell, data) {
-                    // Rowspan
+        });
+    };
+    PdfProgressEvaluationComponent.prototype.filupPDFWeek = function () {
+        this.htmlPDF = "<html>\n<head>\n<style>\ntable{\n  border-collapse: collapse;\n}\n td {\n    border: 0.5mm solid black;\n    margin: 0;\n    padding: 2mm;\n    font-size: 3mm;\n    \n}\ntr{\n  margin: 0;\n  padding: 0;\n}\n.text-bold{\n    font-weight: bold;\n}\n.saut-page\n{\n    page-break-after: always;\n}\n.no-borders\n{\n    border: none;\n}\n.center-align\n{\n    text-align: center;\n}\n</style>\n</head>\n<body>\n";
+        this.htmlPDF += "\n    <h5 style=\"margin-left: 37%; font-size: 140%;font-weight: bold;margin-top: 25mm;\">VOLUME PROGRESS EVALUATION </h5>\n    \n    <table style=\"margin-left: 5%; width: 90%;\">\n        <tr class=\"no-borders\">\n            <td class=\"no-borders\" style=\"width: 20%\">Work Code</td>\n            <td class=\"no-borders\" style=\"width: 15%\">0000000</td>\n            <td class=\"no-borders\" style=\"width: 15%\">Project Code</td>\n            <td class=\"no-borders\" style=\"width: 15%\">" + this.project_pdf.project_id + "</td>\n            <td class=\"no-borders\" style=\"width: 35%\"></td>\n        </tr>\n        <tr class=\"no-borders\">\n            <td class=\"no-borders\">Name of Project Work</td>\n            <td colspan=\"4\" class=\"no-borders\">Name of the job</td>\n    \n        </tr>\n        \n    </table>\n    \n    <table style=\"margin-left: 5%; width: 90%; margin-top: 10mm;\">\n      <tr>\n        <td style=\"width: 3%\" class=\"center-align text-bold\" rowspan=\"3\">No</td>\n        <td style=\"width: 10%\" class=\"center-align text-bold\" rowspan=\"3\">Staff Names</td>\n        <td style=\"width: 7%\" class=\"center-align text-bold\" rowspan=\"3\">Total <br> Target</td>\n        <td style=\"width: 10%\" class=\"center-align text-bold\" rowspan=\"3\">Total Target <br> vs Details</td>\n        <td style=\"width: 45%\" class=\"center-align text-bold\" colspan=\"12\">M1</td>\n        <td style=\"width: 8%\" class=\"center-align text-bold\" rowspan=\"3\">Total Finished</td>\n        <td style=\"width: 7%\" class=\"center-align text-bold\" rowspan=\"3\">%</td>\n        <td style=\"width: 10%\" class=\"center-align text-bold\" rowspan=\"3\">Note</td>\n         \n      </tr>\n      <tr>\n        <td colspan=\"3\" class=\"center-align\">M1</td>\n        <td colspan=\"3\" class=\"center-align\">M2</td>\n        <td colspan=\"3\" class=\"center-align\">M3</td>\n        <td colspan=\"3\" class=\"center-align\">M4</td>\n      </tr>\n      <tr>\n        <td class=\"center-align\">Target</td>\n        <td class=\"center-align\">Finished</td>\n        <td class=\"center-align\">%</td>\n        <td class=\"center-align\">Target</td>\n        <td class=\"center-align\">Finished</td>\n        <td class=\"center-align\">%</td>\n        <td class=\"center-align\">Target</td>\n        <td class=\"center-align\">Finished</td>\n        <td class=\"center-align\">%</td>\n        <td class=\"center-align\">Target</td>\n        <td class=\"center-align\">Finished</td>\n        <td class=\"center-align\">%</td>\n      </tr>\n      ";
+        this.htmlPDF += "\n    </table>";
+        this.htmlPDF += "</body></html>";
+        this.download("");
+    };
+    PdfProgressEvaluationComponent.prototype.getProject = function (idProject) {
+        return __awaiter(this, void 0, void 0, function () {
+            var _this = this;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        console.log("ici projet id : " + idProject);
+                        return [4 /*yield*/, this._projectService.getProject(idProject)
+                                .subscribe(function (res) {
+                                _this.project_pdf = res['data'];
+                            }, function (error) {
+                                console.log("ERREUR : ", error);
+                            })];
+                    case 1:
+                        _a.sent();
+                        return [2 /*return*/];
                 }
             });
-            var columns2 = [{ title: "No", dataKey: "0" },
-                { title: "Staff Name", dataKey: "1" },
-                { title: "Total Target", dataKey: "2" },
-                { title: "Total Target \n vs Details", dataKey: "3" },
-                { title: "", dataKey: "4" },
-                { title: "", dataKey: "5" },
-                { title: "", dataKey: "6" },
-                { title: "", dataKey: "7" },
-                { title: "", dataKey: "8" },
-                { title: "", dataKey: "9" },
-                { title: "", dataKey: "10" },
-                { title: "W1", dataKey: "11" },
-                { title: "", dataKey: "12" },
-                { title: "", dataKey: "13" },
-                { title: "", dataKey: "14" },
-                { title: "", dataKey: "15" },
-                { title: "", dataKey: "16" },
-                { title: "", dataKey: "17" },
-                { title: "", dataKey: "18" },
-                { title: "Total Finished", dataKey: "19" },
-                { title: "%", dataKey: "20" },
-                { title: "Note", dataKey: "21" }
-            ];
-            var rows2 = [
-                ["", "", "", "", "", "D1", "", "", "D2", "", "", "D3", "", "", "D4", "", "", "D5", "", "", "", ""],
-                ["", "", "", "", "Target", "Finished", "%", "Target", "Finished", "%", "Target", "Finished", "%", "Target", "Finished", "%", "Target", "Finished", "%", "", "", ""],
-                ["01", "Staff I", "", "Same", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "0", "", "text"],
-                ["01", "Staff I", "", "Same", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "0", "", "text"],
-                ["01", "Staff I", "", "Same", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "0", "", "text"],
-                ["01", "Staff I", "", "Same", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "0", "", "text"],
-                ["TOTAL", "", "0", "Same", "0", "0", "", "0", "0", "", "0", "0", "", "0", "0", "", "0", "0", "", "0", "", ""],
-            ];
-            doc.autoTable(columns2, rows2, {
-                theme: 'plain',
-                styles: {
-                    overflow: 'linebreak',
-                    lineColor: 0,
-                    lineWidth: 0.3,
-                    halign: 'center',
-                    cellPadding: 2
-                },
-                headerStyles: {
-                    fontSize: 7
-                },
-                showHeader: 'everyPage',
-                startY: 160,
-                drawRow: function (row, data) {
-                    // Colspan
-                    doc.setFontStyle('bold');
-                    doc.setFontSize(6);
-                },
-                drawCell: function (cell, data) {
-                    // Rowspan
-                    doc.setFontSize(6);
+        });
+    };
+    PdfProgressEvaluationComponent.prototype.download = function (nom) {
+        return __awaiter(this, void 0, void 0, function () {
+            var _this = this;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this._pdfService.generatePdf(this.htmlPDF)
+                            .subscribe(function (res) {
+                            console.log(res);
+                            if (!window.navigator.msSaveOrOpenBlob) {
+                                // BLOB NAVIGATOR
+                                var url = window.URL.createObjectURL(new Blob([res]));
+                                var link = document.createElement('a');
+                                link.href = url;
+                                link.setAttribute('download', "Progress-evaluation-" + _this.project.project_title + ".pdf");
+                                document.body.appendChild(link);
+                                link.click();
+                            }
+                            else {
+                                // BLOB FOR EXPLORER 11
+                                var url = window.navigator.msSaveOrOpenBlob(new Blob([res]), "" + res['data'] + name + ".pdf");
+                            }
+                        }, function (error) {
+                            console.log("ERREUR : ", error);
+                        })];
+                    case 1:
+                        _a.sent();
+                        return [2 /*return*/];
                 }
             });
-            doc.save("progress-evaluation.pdf");
-            //=========================== END WEEK MODEL =================================
+        });
+    };
+    /* ----------- METHODS ----------- */
+    /* Load the project & all m_a_p data with the activity & member linked */
+    PdfProgressEvaluationComponent.prototype.loadData = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var project_id, project, error_2, m_a_p, error_3, _i, _a, m, worker, activity, job, e, error_4;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
+                    case 0:
+                        this.ready = false;
+                        _b.label = 1;
+                    case 1:
+                        _b.trys.push([1, 3, , 4]);
+                        project_id = localStorage.getItem('Project_id');
+                        return [4 /*yield*/, this._projectService.select(project_id).toPromise()];
+                    case 2:
+                        project = _b.sent();
+                        this.project = project['data'];
+                        return [3 /*break*/, 4];
+                    case 3:
+                        error_2 = _b.sent();
+                        this.errorMessage = error_2.error.message;
+                        return [3 /*break*/, 4];
+                    case 4:
+                        //We select all MemberActivityProject linked to the project
+                        this.m_a_p = [];
+                        _b.label = 5;
+                    case 5:
+                        _b.trys.push([5, 7, , 8]);
+                        return [4 /*yield*/, this._memberActivityProjectService.selectAllFromProject(this.project.project_id).toPromise()];
+                    case 6:
+                        m_a_p = _b.sent();
+                        this.m_a_p = m_a_p['data'];
+                        return [3 /*break*/, 8];
+                    case 7:
+                        error_3 = _b.sent();
+                        this.errorMessage = error_3.error.message;
+                        return [3 /*break*/, 8];
+                    case 8:
+                        //We select all Members & Activities linked to theses m_a_p
+                        this.workers = [];
+                        this.activities = [];
+                        this.elements = [];
+                        _b.label = 9;
+                    case 9:
+                        _b.trys.push([9, 16, , 17]);
+                        _i = 0, _a = this.m_a_p;
+                        _b.label = 10;
+                    case 10:
+                        if (!(_i < _a.length)) return [3 /*break*/, 15];
+                        m = _a[_i];
+                        return [4 /*yield*/, this._memberService.select(m.member_id).toPromise()];
+                    case 11:
+                        worker = _b.sent();
+                        return [4 /*yield*/, this._activityService.select(m.activity_id).toPromise()];
+                    case 12:
+                        activity = _b.sent();
+                        return [4 /*yield*/, this._jobService.select(m.job_id).toPromise()];
+                    case 13:
+                        job = _b.sent();
+                        this.workers.push(worker['data']);
+                        e = {
+                            activity: activity['data'],
+                            job: job['data']
+                        };
+                        this.activities.push(e);
+                        _b.label = 14;
+                    case 14:
+                        _i++;
+                        return [3 /*break*/, 10];
+                    case 15: return [3 /*break*/, 17];
+                    case 16:
+                        error_4 = _b.sent();
+                        this.errorMessage = error_4.error.message;
+                        return [3 /*break*/, 17];
+                    case 17: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    /* For one member, we group all his m_a_p inside the elements array.It's like a distinct member request */
+    PdfProgressEvaluationComponent.prototype.sortElements = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var add, _i, _a, w, _b, _c, s, _d, _e, s, sorted_map, total_target, total_finished, _f, _g, m, a, j, e, error_5, element;
+            return __generator(this, function (_h) {
+                switch (_h.label) {
+                    case 0:
+                        this.sorted_workers = [];
+                        //I CHECK EVERY WORKERS
+                        for (_i = 0, _a = this.workers; _i < _a.length; _i++) {
+                            w = _a[_i];
+                            add = true;
+                            for (_b = 0, _c = this.sorted_workers; _b < _c.length; _b++) {
+                                s = _c[_b];
+                                if (s.member_id == w.member_id) {
+                                    add = false;
+                                }
+                            }
+                            if (add) {
+                                this.sorted_workers.push(w);
+                            }
+                        }
+                        _d = 0, _e = this.sorted_workers;
+                        _h.label = 1;
+                    case 1:
+                        if (!(_d < _e.length)) return [3 /*break*/, 10];
+                        s = _e[_d];
+                        sorted_map = [];
+                        total_target = 0;
+                        total_finished = 0;
+                        _f = 0, _g = this.m_a_p;
+                        _h.label = 2;
+                    case 2:
+                        if (!(_f < _g.length)) return [3 /*break*/, 8];
+                        m = _g[_f];
+                        if (!(s.member_id == m.member_id)) return [3 /*break*/, 7];
+                        _h.label = 3;
+                    case 3:
+                        _h.trys.push([3, 6, , 7]);
+                        return [4 /*yield*/, this._activityService.select(m.activity_id).toPromise()];
+                    case 4:
+                        a = _h.sent();
+                        return [4 /*yield*/, this._jobService.select(m.job_id).toPromise()];
+                    case 5:
+                        j = _h.sent();
+                        this.calculState(m);
+                        e = {
+                            m_a_p: m,
+                            activity: a['data'],
+                            job: j['data'],
+                        };
+                        sorted_map.push(e);
+                        total_target += m.target_quantity;
+                        total_finished += m.finished_quantity;
+                        return [3 /*break*/, 7];
+                    case 6:
+                        error_5 = _h.sent();
+                        this.errorMessage = error_5.error.message;
+                        return [3 /*break*/, 7];
+                    case 7:
+                        _f++;
+                        return [3 /*break*/, 2];
+                    case 8:
+                        element = {
+                            member: s,
+                            m_a_ps: sorted_map,
+                            total_target: total_target,
+                            total_finished: total_finished
+                        };
+                        this.elements.push(element);
+                        _h.label = 9;
+                    case 9:
+                        _d++;
+                        return [3 /*break*/, 1];
+                    case 10: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    /* Ask to the server side to compute every target quantity, quantity finished, rates and store it in an array per days */
+    PdfProgressEvaluationComponent.prototype.loadVolumePerDay = function (job_id) {
+        return __awaiter(this, void 0, void 0, function () {
+            var v, error_6;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 3, , 4]);
+                        return [4 /*yield*/, this._projectService.volume_per_days_pdf(this.project.project_id, job_id).toPromise()];
+                    case 1:
+                        v = _a.sent();
+                        this.volume_per_days = v['data'];
+                        this.volumes_displayed_iterator = 0;
+                        return [4 /*yield*/, this.selectVolumes(0)];
+                    case 2:
+                        _a.sent();
+                        return [3 /*break*/, 4];
+                    case 3:
+                        error_6 = _a.sent();
+                        this.errorMessage = error_6.message;
+                        return [3 /*break*/, 4];
+                    case 4: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    PdfProgressEvaluationComponent.prototype.loadVolumePerWeek = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var v, error_7;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 3, , 4]);
+                        return [4 /*yield*/, this._projectService.volume_per_weeks(this.project.project_id).toPromise()];
+                    case 1:
+                        v = _a.sent();
+                        this.volume_per_weeks = v['data'];
+                        this.volumes_displayed_iterator = 0;
+                        return [4 /*yield*/, this.selectVolumes(0)];
+                    case 2:
+                        _a.sent();
+                        return [3 /*break*/, 4];
+                    case 3:
+                        error_7 = _a.sent();
+                        this.errorMessage = error_7.message;
+                        return [3 /*break*/, 4];
+                    case 4: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    PdfProgressEvaluationComponent.prototype.selectVolumes = function (i) {
+        if (this.is_type_weeks) {
+            this.selectVolumesWeeks(i);
         }
-        else if (this.is_month) {
-            //=========================== START MONTH MODEL =================================
-            //=========================== START WEEK MODEL =================================
-            var columns = [{ title: "0", dataKey: "0" },
-                { title: "1", dataKey: "1" },
-                { title: "2", dataKey: "2" },
-                { title: "3", dataKey: "3" }
-            ];
-            var rows = [
-                ["Work Code", "00000000", "Project Code", "24200"],
-                ["Name of Project", "lumbuk tagagatum in ferne memonerisatum", "", ""],
-                ["Start Date", "1-Jan-18", "", ""],
-                ["Finished Date", "31-Jan-18", "", ""],
-            ];
-            var doc = new jsPDF('l', 'pt');
-            doc.autoTableSetDefaults({
-                margin: { top: 30 },
-                addPageContent: function (data) {
-                    doc.setFontSize(14);
-                    doc.text('VOLUME PROGRESS EVALUATION', 320, 50);
-                }
-            });
-            doc.autoTable(columns, rows, {
-                theme: 'plain',
-                styles: {
-                    lineColor: 0,
-                    lineWidth: 0
-                },
-                showHeader: 'never',
-                startY: 60,
-                drawRow: function (row, data) {
-                    // Colspan
-                    doc.setFontStyle('bold');
-                    doc.setFontSize(10);
-                },
-                drawCell: function (cell, data) {
-                    // Rowspan
-                }
-            });
-            var columns2 = [{ title: "No", dataKey: "0" },
-                { title: "Staff Name", dataKey: "1" },
-                { title: "Total Target", dataKey: "2" },
-                { title: "Total Target \n vs Details", dataKey: "3" },
-                { title: "", dataKey: "4" },
-                { title: "", dataKey: "5" },
-                { title: "", dataKey: "6" },
-                { title: "", dataKey: "7" },
-                { title: "", dataKey: "8" },
-                { title: "", dataKey: "9" },
-                { title: "M1", dataKey: "10" },
-                { title: "", dataKey: "11" },
-                { title: "", dataKey: "12" },
-                { title: "", dataKey: "13" },
-                { title: "", dataKey: "14" },
-                { title: "", dataKey: "15" },
-                { title: "Total Finished", dataKey: "19" },
-                { title: "%", dataKey: "20" },
-                { title: "Note", dataKey: "21" }
-            ];
-            var rows2 = [
-                ["", "", "", "", "", "W1", "", "", "W2", "", "", "W3", "", "", "W4", "", "", "", ""],
-                ["", "", "", "", "Target", "Finished", "%", "Target", "Finished", "%", "Target", "Finished", "%", "Target", "Finished", "%", "", "", ""],
-                ["01", "Staff I", "", "Same", "", "", "", "", "", "", "", "", "", "", "", "", "0", "", "text"],
-                ["01", "Staff I", "", "Same", "", "", "", "", "", "", "", "", "", "", "", "", "0", "", "text"],
-                ["01", "Staff I", "", "Same", "", "", "", "", "", "", "", "", "", "", "", "", "0", "", "text"],
-                ["01", "Staff I", "", "Same", "", "", "", "", "", "", "", "", "", "", "", "", "0", "", "text"],
-                ["TOTAL", "", "0", "Same", "0", "0", "", "0", "0", "", "0", "0", "", "0", "0", "", "0", "", ""],
-            ];
-            doc.autoTable(columns2, rows2, {
-                theme: 'plain',
-                styles: {
-                    overflow: 'linebreak',
-                    lineColor: 0,
-                    lineWidth: 0.3,
-                    halign: 'center',
-                    cellPadding: 2
-                },
-                headerStyles: {
-                    fontSize: 7
-                },
-                showHeader: 'everyPage',
-                startY: 160,
-                drawRow: function (row, data) {
-                    // Colspan
-                    doc.setFontStyle('bold');
-                    doc.setFontSize(6);
-                },
-                drawCell: function (cell, data) {
-                    // Rowspan
-                    doc.setFontSize(6);
-                }
-            });
-            doc.save("progress-evaluation.pdf");
-            //=========================== END MONTH MODEL =================================
+        else {
+            this.selectVolumesDays(i);
         }
-        else if (this.is_trimester) {
-            //=========================== START TRIMESTER MODEL =================================
-            var columns = [{ title: "0", dataKey: "0" },
-                { title: "1", dataKey: "1" },
-                { title: "2", dataKey: "2" },
-                { title: "3", dataKey: "3" }
-            ];
-            var rows = [
-                ["Work Code", "00000000", "Project Code", "24200"],
-                ["Name of Project", "lumbuk tagagatum in ferne memonerisatum", "", ""],
-                ["Start Date", "1-Jan-18", "", ""],
-                ["Finished Date", "31-Jan-18", "", ""],
-            ];
-            var doc = new jsPDF('l', 'pt');
-            doc.autoTableSetDefaults({
-                margin: { top: 30 },
-                addPageContent: function (data) {
-                    doc.setFontSize(14);
-                    doc.text('VOLUME PROGRESS EVALUATION', 320, 50);
+    };
+    /* Take 7 elements from Monday to Sunday, and store it in the array that is shown on the view */
+    PdfProgressEvaluationComponent.prototype.selectVolumesDays = function (i) {
+        // We convert the volume_per_days array to fit with the ngFor view
+        this.ready = false;
+        this.volumes_displayed = new Map();
+        this.dates_displayed = [];
+        for (var _i = 0, _a = this.volume_per_days.slice(i, i + 7); _i < _a.length; _i++) {
+            var volume = _a[_i];
+            this.dates_displayed.push(volume['date']);
+            for (var _b = 0, _c = volume['elements']; _b < _c.length; _b++) {
+                var member = _c[_b];
+                //We initialize the map if needed
+                if (this.volumes_displayed.get(member['member'].member_id) == null) {
+                    var quantities = this.foundQuantities(member['member'].member_id);
+                    var o = {
+                        member: member['member'],
+                        volumes: [],
+                        total_finished: quantities[0],
+                        total_target: quantities[1],
+                        total_rates: quantities[2]
+                    };
+                    this.volumes_displayed.set(member['member'].member_id, o);
                 }
-            });
-            doc.autoTable(columns, rows, {
-                theme: 'plain',
-                styles: {
-                    lineColor: 0,
-                    lineWidth: 0
-                },
-                showHeader: 'never',
-                startY: 60,
-                drawRow: function (row, data) {
-                    // Colspan
-                    doc.setFontStyle('bold');
-                    doc.setFontSize(10);
-                },
-                drawCell: function (cell, data) {
-                    // Rowspan
-                }
-            });
-            var columns2 = [{ title: "No", dataKey: "0" },
-                { title: "Staff Name", dataKey: "1" },
-                { title: "Total Target", dataKey: "2" },
-                { title: "Total Target \n vs Details", dataKey: "3" },
-                { title: "", dataKey: "4" },
-                { title: "", dataKey: "5" },
-                { title: "", dataKey: "6" },
-                { title: "", dataKey: "7" },
-                { title: "", dataKey: "8" },
-                { title: "", dataKey: "9" },
-                { title: "T1", dataKey: "10" },
-                { title: "", dataKey: "11" },
-                { title: "", dataKey: "12" },
-                { title: "", dataKey: "13" },
-                { title: "", dataKey: "14" },
-                { title: "", dataKey: "15" },
-                { title: "Total Finished", dataKey: "19" },
-                { title: "%", dataKey: "20" },
-                { title: "Note", dataKey: "21" }
-            ];
-            var rows2 = [
-                ["", "", "", "", "", "M1", "", "", "M2", "", "", "M3", "", "", "M4", "", "", "", ""],
-                ["", "", "", "", "Target", "Finished", "%", "Target", "Finished", "%", "Target", "Finished", "%", "Target", "Finished", "%", "", "", ""],
-                ["01", "Staff I", "", "Same", "", "", "", "", "", "", "", "", "", "", "", "", "0", "", "text"],
-                ["01", "Staff I", "", "Same", "", "", "", "", "", "", "", "", "", "", "", "", "0", "", "text"],
-                ["01", "Staff I", "", "Same", "", "", "", "", "", "", "", "", "", "", "", "", "0", "", "text"],
-                ["01", "Staff I", "", "Same", "", "", "", "", "", "", "", "", "", "", "", "", "0", "", "text"],
-                ["TOTAL", "", "0", "Same", "0", "0", "", "0", "0", "", "0", "0", "", "0", "0", "", "0", "", ""],
-            ];
-            doc.autoTable(columns2, rows2, {
-                theme: 'plain',
-                styles: {
-                    overflow: 'linebreak',
-                    lineColor: 0,
-                    lineWidth: 0.3,
-                    halign: 'center',
-                    cellPadding: 2
-                },
-                headerStyles: {
-                    fontSize: 7
-                },
-                showHeader: 'everyPage',
-                startY: 160,
-                drawRow: function (row, data) {
-                    // Colspan
-                    doc.setFontStyle('bold');
-                    doc.setFontSize(6);
-                },
-                drawCell: function (cell, data) {
-                    // Rowspan
-                    doc.setFontSize(6);
-                }
-            });
-            doc.save("progress-evaluation.pdf");
-            //=========================== END TRIMESTER MODEL =================================
+                //We store quantity
+                var e = {
+                    target_quantity: member['target_quantity'],
+                    finished_quantity: member['finished_quantity'],
+                    finished_rate: member['finished_rate']
+                };
+                this.volumes_displayed.get(member['member'].member_id)['volumes'].push(e);
+            }
         }
-        else if (this.is_year) {
-            //=========================== START YEAR MODEL =================================
-            var columns = [{ title: "0", dataKey: "0" },
-                { title: "1", dataKey: "1" },
-                { title: "2", dataKey: "2" },
-                { title: "3", dataKey: "3" }
-            ];
-            var rows = [
-                ["Work Code", "00000000", "Project Code", "24200"],
-                ["Name of Project", "lumbuk tagagatum in ferne memonerisatum", "", ""],
-                ["Start Date", "1-Jan-18", "", ""],
-                ["Finished Date", "31-Jan-18", "", ""],
-            ];
-            var doc = new jsPDF('l', 'pt');
-            doc.autoTableSetDefaults({
-                margin: { top: 30 },
-                addPageContent: function (data) {
-                    doc.setFontSize(14);
-                    doc.text('VOLUME PROGRESS EVALUATION', 320, 50);
+        this.ready = true;
+    };
+    /* Take all elements of a month, and store it in the array that is shown on the view */
+    PdfProgressEvaluationComponent.prototype.selectVolumesWeeks = function (i) {
+        // We convert the volume_per_weeks array to fit with the ngFor view
+        this.ready = false;
+        this.volumes_displayed = new Map();
+        this.dates_displayed = [];
+        for (var _i = 0, _a = this.volume_per_weeks[i]['weeks']; _i < _a.length; _i++) {
+            var volume = _a[_i];
+            this.dates_displayed.push(volume['date']);
+            for (var _b = 0, _c = volume['elements']; _b < _c.length; _b++) {
+                var member = _c[_b];
+                //We initialize the map if needed
+                if (this.volumes_displayed.get(member['member'].member_id) == null) {
+                    var o = {
+                        member: member['member'],
+                        volumes: []
+                    };
+                    this.volumes_displayed.set(member['member'].member_id, o);
+                }
+                //We store quantity
+                var e = {
+                    target_quantity: member['target_quantity'],
+                    finished_quantity: member['finished_quantity'],
+                    finished_rate: member['finished_rate']
+                };
+                this.volumes_displayed.get(member['member'].member_id)['volumes'].push(e);
+            }
+        }
+        this.ready = true;
+    };
+    /* Found the total quantities inside the elements array */
+    PdfProgressEvaluationComponent.prototype.foundQuantities = function (member_id) {
+        for (var _i = 0, _a = this.elements; _i < _a.length; _i++) {
+            var e = _a[_i];
+            if (e['member'].member_id == member_id) {
+                var total_rates = Math.round(100 * e['total_finished'] / e['total_target']);
+                return [e['total_finished'], e['total_target'], total_rates];
+            }
+        }
+    };
+    //Convert map to array to use it in the view
+    PdfProgressEvaluationComponent.prototype.convertMap = function (map) {
+        return Array.from(map.values());
+    };
+    //Load the seven next days
+    PdfProgressEvaluationComponent.prototype.next = function () {
+        if (this.is_type_weeks) {
+            if (this.volumes_displayed_iterator < this.volume_per_days.length - 1) {
+                this.volumes_displayed_iterator += 1;
+                var i = this.volumes_displayed_iterator;
+                this.selectVolumes(i);
+            }
+        }
+        else {
+            //We do next only if we don't have the last portion of the array
+            if (this.volumes_displayed_iterator <= this.volume_per_days.length - 7) {
+                this.volumes_displayed_iterator += 7;
+                var i = this.volumes_displayed_iterator;
+                this.selectVolumes(i);
+            }
+        }
+    };
+    //Load the seven previous days
+    PdfProgressEvaluationComponent.prototype.previous = function () {
+        if (this.is_type_weeks) {
+            if (this.volumes_displayed_iterator > 0) {
+                this.volumes_displayed_iterator -= 1;
+                var i = this.volumes_displayed_iterator;
+                this.selectVolumes(i);
+            }
+        }
+        else {
+            //We do next only if we don't have the last portion of the array
+            if (this.volumes_displayed_iterator != 0) {
+                this.volumes_displayed_iterator -= 7;
+                var i = this.volumes_displayed_iterator;
+                this.selectVolumes(i);
+            }
+        }
+    };
+    /* Show all activities of the member selected */
+    PdfProgressEvaluationComponent.prototype.selectMember = function (member_id) {
+        if (this.element_selected != null) {
+            var oldCell = document.getElementById(this.element_selected['member']['member_id']);
+            oldCell.className = "";
+        }
+        /* We search for the right element of the array */
+        for (var _i = 0, _a = this.elements; _i < _a.length; _i++) {
+            var e = _a[_i];
+            if (e['member'].member_id == member_id) {
+                this.element_selected = e;
+            }
+        }
+        var newCell = document.getElementById(member_id);
+        newCell.className += "selected";
+    };
+    /* Calcul if the member activity project is late, on date or something else */
+    PdfProgressEvaluationComponent.prototype.calculState = function (m_a_p) {
+        return __awaiter(this, void 0, void 0, function () {
+            var target, finished_date, now, isChanged;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        target = new Date(m_a_p.target_date);
+                        finished_date = new Date(m_a_p.finished_date);
+                        now = new Date();
+                        isChanged = false;
+                        //The activity is finished
+                        if (m_a_p.target_quantity == m_a_p.finished_quantity) {
+                            if (m_a_p.evaluation == 'on date' || m_a_p.evaluation == 'finished on date') {
+                                if (target.getTime() < finished_date.getTime()) {
+                                    m_a_p.evaluation = 'finished late';
+                                }
+                                else {
+                                    m_a_p.evaluation = 'finished on date';
+                                }
+                                isChanged = true;
+                            }
+                            else if (m_a_p.evaluation == 'late') {
+                                m_a_p.evaluation = 'finished late';
+                                isChanged = true;
+                            }
+                        }
+                        else if (m_a_p.evaluation == 'finished late' || m_a_p.evaluation == 'finished on date') {
+                            m_a_p.finished_date = new Date();
+                            m_a_p.finished_date = moment__WEBPACK_IMPORTED_MODULE_5__(m_a_p.finished_date).format('Y-MM-D');
+                            if (target.getTime() < now.getTime()) {
+                                m_a_p.evaluation = 'late';
+                            }
+                            else {
+                                m_a_p.evaluation = 'on date';
+                            }
+                            isChanged = true;
+                        }
+                        else if (target.getTime() < now.getTime()) {
+                            m_a_p.evaluation = 'late';
+                            isChanged = true;
+                        }
+                        else {
+                            m_a_p.finished_date = new Date();
+                            m_a_p.finished_date = moment__WEBPACK_IMPORTED_MODULE_5__(m_a_p.finished_date).format('Y-MM-D');
+                            isChanged = true;
+                        }
+                        if (!isChanged) return [3 /*break*/, 2];
+                        return [4 /*yield*/, this._memberActivityProjectService.update(m_a_p).toPromise()];
+                    case 1:
+                        _a.sent();
+                        _a.label = 2;
+                    case 2: return [2 /*return*/];
                 }
             });
-            doc.autoTable(columns, rows, {
-                theme: 'plain',
-                styles: {
-                    lineColor: 0,
-                    lineWidth: 0
-                },
-                showHeader: 'never',
-                startY: 60,
-                drawRow: function (row, data) {
-                    // Colspan
-                    doc.setFontStyle('bold');
-                    doc.setFontSize(10);
-                },
-                drawCell: function (cell, data) {
-                    // Rowspan
+        });
+    };
+    PdfProgressEvaluationComponent.prototype.sortTable = function (n) {
+        var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+        table = document.getElementById("volume-table");
+        switching = true;
+        // Set the sorting direction to ascending:
+        dir = "asc";
+        /* Make a loop that will continue until
+        no switching has been done: */
+        while (switching) {
+            // Start by saying: no switching is done:
+            switching = false;
+            rows = table.getElementsByTagName("TR");
+            /* Loop through all table rows (except the
+            first, which contains table headers): */
+            for (i = 1; i < (rows.length - 1); i++) {
+                // Start by saying there should be no switching:
+                shouldSwitch = false;
+                /* Get the two elements you want to compare,
+                one from current row and one from the next: */
+                x = rows[i].getElementsByTagName("TD")[n];
+                y = rows[i + 1].getElementsByTagName("TD")[n];
+                /* Check if the two rows should switch place,
+                based on the direction, asc or desc: */
+                if (dir == "asc") {
+                    if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                        // If so, mark as a switch and break the loop:
+                        shouldSwitch = true;
+                        break;
+                    }
                 }
-            });
-            var columns2 = [{ title: "No", dataKey: "0" },
-                { title: "Staff Name", dataKey: "1" },
-                { title: "Total Target", dataKey: "2" },
-                { title: "Total Target \n vs Details", dataKey: "3" },
-                { title: "", dataKey: "4" },
-                { title: "", dataKey: "5" },
-                { title: "", dataKey: "6" },
-                { title: "", dataKey: "7" },
-                { title: "", dataKey: "8" },
-                { title: "", dataKey: "9" },
-                { title: "Y1", dataKey: "10" },
-                { title: "", dataKey: "11" },
-                { title: "", dataKey: "12" },
-                { title: "", dataKey: "13" },
-                { title: "", dataKey: "14" },
-                { title: "", dataKey: "15" },
-                { title: "Total Finished", dataKey: "19" },
-                { title: "%", dataKey: "20" },
-                { title: "Note", dataKey: "21" }
-            ];
-            var rows2 = [
-                ["", "", "", "", "", "T1", "", "", "T2", "", "", "T3", "", "", "T4", "", "", "", ""],
-                ["", "", "", "", "Target", "Finished", "%", "Target", "Finished", "%", "Target", "Finished", "%", "Target", "Finished", "%", "", "", ""],
-                ["01", "Staff I", "", "Same", "", "", "", "", "", "", "", "", "", "", "", "", "0", "", "text"],
-                ["01", "Staff I", "", "Same", "", "", "", "", "", "", "", "", "", "", "", "", "0", "", "text"],
-                ["01", "Staff I", "", "Same", "", "", "", "", "", "", "", "", "", "", "", "", "0", "", "text"],
-                ["01", "Staff I", "", "Same", "", "", "", "", "", "", "", "", "", "", "", "", "0", "", "text"],
-                ["TOTAL", "", "0", "Same", "0", "0", "", "0", "0", "", "0", "0", "", "0", "0", "", "0", "", ""],
-            ];
-            doc.autoTable(columns2, rows2, {
-                theme: 'plain',
-                styles: {
-                    overflow: 'linebreak',
-                    lineColor: 0,
-                    lineWidth: 0.3,
-                    halign: 'center',
-                    cellPadding: 2
-                },
-                headerStyles: {
-                    fontSize: 7
-                },
-                showHeader: 'everyPage',
-                startY: 160,
-                drawRow: function (row, data) {
-                    // Colspan
-                    doc.setFontStyle('bold');
-                    doc.setFontSize(6);
-                },
-                drawCell: function (cell, data) {
-                    // Rowspan
-                    doc.setFontSize(6);
+                else if (dir == "desc") {
+                    if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                        // If so, mark as a switch and break the loop:
+                        shouldSwitch = true;
+                        break;
+                    }
                 }
-            });
-            doc.save("progress-evaluation.pdf");
-            //=========================== END YEAR MODEL =================================
+            }
+            if (shouldSwitch) {
+                /* If a switch has been marked, make the switch
+                and mark that a switch has been done: */
+                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                switching = true;
+                // Each time a switch is done, increase this count by 1:
+                switchcount++;
+            }
+            else {
+                /* If no switching has been done AND the direction is "asc",
+                set the direction to "desc" and run the while loop again. */
+                if (switchcount == 0 && dir == "asc") {
+                    dir = "desc";
+                    switching = true;
+                }
+            }
+        }
+    };
+    PdfProgressEvaluationComponent.prototype.sortTable1 = function (n) {
+        var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+        table = document.getElementById("activity-table");
+        switching = true;
+        // Set the sorting direction to ascending:
+        dir = "asc";
+        /* Make a loop that will continue until
+        no switching has been done: */
+        while (switching) {
+            // Start by saying: no switching is done:
+            switching = false;
+            rows = table.getElementsByTagName("TR");
+            /* Loop through all table rows (except the
+            first, which contains table headers): */
+            for (i = 1; i < (rows.length - 1); i++) {
+                // Start by saying there should be no switching:
+                shouldSwitch = false;
+                /* Get the two elements you want to compare,
+                one from current row and one from the next: */
+                x = rows[i].getElementsByTagName("TD")[n];
+                y = rows[i + 1].getElementsByTagName("TD")[n];
+                /* Check if the two rows should switch place,
+                based on the direction, asc or desc: */
+                if (dir == "asc") {
+                    if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                        // If so, mark as a switch and break the loop:
+                        shouldSwitch = true;
+                        break;
+                    }
+                }
+                else if (dir == "desc") {
+                    if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                        // If so, mark as a switch and break the loop:
+                        shouldSwitch = true;
+                        break;
+                    }
+                }
+            }
+            if (shouldSwitch) {
+                /* If a switch has been marked, make the switch
+                and mark that a switch has been done: */
+                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                switching = true;
+                // Each time a switch is done, increase this count by 1:
+                switchcount++;
+            }
+            else {
+                /* If no switching has been done AND the direction is "asc",
+                set the direction to "desc" and run the while loop again. */
+                if (switchcount == 0 && dir == "asc") {
+                    dir = "desc";
+                    switching = true;
+                }
+            }
+        }
+    };
+    PdfProgressEvaluationComponent.prototype.search = function () {
+        // Declare variables
+        var input, filter, table, tr, td, i;
+        input = document.getElementById("search");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("volume-table");
+        tr = table.getElementsByTagName("tr");
+        // Loop through all table rows, and hide those who don't match the search query
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[1];
+            if (td) {
+                if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                }
+                else {
+                    tr[i].style.display = "none";
+                }
+            }
         }
     };
     PdfProgressEvaluationComponent = __decorate([
@@ -7952,7 +9607,12 @@ var PdfProgressEvaluationComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./pdf-progress-evaluation.component.html */ "./src/app/documents/pdf-progress-evaluation/pdf-progress-evaluation.component.html"),
             styles: [__webpack_require__(/*! ./pdf-progress-evaluation.component.scss */ "./src/app/documents/pdf-progress-evaluation/pdf-progress-evaluation.component.scss")]
         }),
-        __metadata("design:paramtypes", [])
+        __metadata("design:paramtypes", [_objects_project_project_service__WEBPACK_IMPORTED_MODULE_4__["ProjectService"],
+            _objects_member_activity_project_member_activity_project_service__WEBPACK_IMPORTED_MODULE_1__["MemberActivityProjectService"],
+            _objects_pdf_pdf_service__WEBPACK_IMPORTED_MODULE_7__["PdfService"],
+            _objects_member_member_service__WEBPACK_IMPORTED_MODULE_2__["MemberService"],
+            _objects_activity_activity_service__WEBPACK_IMPORTED_MODULE_3__["ActivityService"],
+            _objects_job_job_service__WEBPACK_IMPORTED_MODULE_6__["JobService"]])
     ], PdfProgressEvaluationComponent);
     return PdfProgressEvaluationComponent;
 }());
@@ -7968,7 +9628,7 @@ var PdfProgressEvaluationComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ""
+module.exports = "<button *ngIf=\"display_pdf_sop\" type=\"button\" class=\"btn btn-default\" (click)=\"download()\">Download Sop PDF</button>\r\n<button *ngIf=\"!display_pdf_sop && sop_pdf_button\" type=\"button\" class=\"btn btn-default\" disabled (click)=\"download()\">Download Sop PDF</button>\r\n<button *ngIf=\"display_pdf_project\" type=\"button\" class=\"btn btn-default\" (click)=\"download()\">Download Project PDF</button>\r\n<button *ngIf=\"!display_pdf_project && project_pdf_button\" class=\"btn btn-default\" disabled (click)=\"download()\">Download Project PDF</button>\r\n\r\n"
 
 /***/ }),
 
@@ -8003,6 +9663,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _objects_sop_sop_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../objects/sop/sop.service */ "./src/app/objects/sop/sop.service.ts");
 /* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
 /* harmony import */ var _objects_project_project_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../objects/project/project.service */ "./src/app/objects/project/project.service.ts");
+/* harmony import */ var _objects_pdf_pdf_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../objects/pdf/pdf.service */ "./src/app/objects/pdf/pdf.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8056,16 +9717,16 @@ var __generator = (undefined && undefined.__generator) || function (thisArg, bod
 
 
 
+
 var PdfSopComponent = /** @class */ (function () {
-    function PdfSopComponent(_organisationService, _branchService, _departmentService, _subDepartmentService, _sopService, _projectService) {
+    function PdfSopComponent(_organisationService, _branchService, _departmentService, _subDepartmentService, _sopService, _projectService, _pdfService) {
         this._organisationService = _organisationService;
         this._branchService = _branchService;
         this._departmentService = _departmentService;
         this._subDepartmentService = _subDepartmentService;
         this._sopService = _sopService;
         this._projectService = _projectService;
-        this.sop_id = "";
-        this.project_id = "1";
+        this._pdfService = _pdfService;
         this.organisation_name = "";
         this.branch_name = "";
         this.department_name = "";
@@ -8083,181 +9744,168 @@ var PdfSopComponent = /** @class */ (function () {
         this.sop_objectives = "NA";
         this.units = [""];
         this.activities = [];
+        this.display_pdf_project = false;
+        this.display_pdf_sop = false;
+        this.sop_pdf_button = false;
+        this.project_pdf_button = false;
+        this.title = " ";
     }
     PdfSopComponent.prototype.ngOnInit = function () {
-        var _this = this;
-        if (this.sop_id === "" && this.project_id === "") {
-            console.log("ERREUR : Aucune donnée envoyé au componnent de création du PDF.");
-        }
-        else if (this.sop_id !== "") {
-            this.getSOP(this.sop_id);
-            setTimeout(function () {
-                console.log(_this.sop_title);
-                //console.log("date de creation : "+ );
-                console.log("fin");
-                //this.download(this.sop_title);
-            }, 1000);
-            //let value = this.sop_creation.transform(value, 'dd/MM/yyyy');
-        }
-        else if (this.project_id !== "") {
-            this.getProject(this.project_id);
-            setTimeout(function () {
-                console.log(_this.sop_title);
-                //console.log("date de creation : "+ );
-                console.log("fin");
-                _this.download(_this.sop_title);
-            }, 2000);
-        }
+        return __awaiter(this, void 0, void 0, function () {
+            var _this = this;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        this.project_id = localStorage.getItem("Project_id");
+                        this.sop_id = localStorage.getItem("Sop_id");
+                        if (!(this.sop_id === null && this.project_id === null)) return [3 /*break*/, 1];
+                        console.log("ERROR : No data send to the PDF.");
+                        return [3 /*break*/, 5];
+                    case 1:
+                        if (!(this.sop_id !== null)) return [3 /*break*/, 3];
+                        this.sop_pdf_button = true;
+                        return [4 /*yield*/, this.getSOP(this.sop_id)];
+                    case 2:
+                        _a.sent();
+                        setTimeout(function () {
+                            _this.filupPDF();
+                            _this.display_pdf_sop = true;
+                        }, 1000);
+                        return [3 /*break*/, 5];
+                    case 3:
+                        if (!(this.project_id !== null)) return [3 /*break*/, 5];
+                        this.project_pdf_button = true;
+                        return [4 /*yield*/, this.getProject(this.project_id)];
+                    case 4:
+                        _a.sent();
+                        setTimeout(function () {
+                            _this.filupPDF();
+                            _this.display_pdf_project = true;
+                        }, 2000);
+                        _a.label = 5;
+                    case 5: return [2 /*return*/];
+                }
+            });
+        });
     };
-    PdfSopComponent.prototype.download = function (sop_title) {
-        var columns = [{ title: "0", dataKey: "0" },
-            { title: "1", dataKey: "1" },
-            { title: "2", dataKey: "2" },
-            { title: "3", dataKey: "3" }
-        ];
-        var rows = [
-            ["", this.organisation_name, "Creation Date", new _angular_common__WEBPACK_IMPORTED_MODULE_7__["DatePipe"]('en-US').transform(this.sop_creation, 'dd-MM-yyyy')],
-            ["", this.branch_name, "Revision Date", new _angular_common__WEBPACK_IMPORTED_MODULE_7__["DatePipe"]('en-US').transform(this.sop_revision, 'dd-MM-yyyy')],
-            ["", this.department_name, "Published Date", new _angular_common__WEBPACK_IMPORTED_MODULE_7__["DatePipe"]('en-US').transform(this.sop_published, 'dd-MM-yyyy')],
-            ["", this.sub_department_name, "Approved By", this.sop_approvment],
-            ["", "", "", ""]
-        ];
-        var doc = new jsPDF('l', 'pt');
-        doc.autoTable(columns, rows, {
-            theme: 'plain',
-            styles: {
-                lineColor: 0,
-                lineWidth: 1
-            },
-            showHeader: 'never',
-            startY: 60,
-            drawRow: function (row, data) {
-                // Colspan
-                doc.setFontStyle('bold');
-                doc.setFontSize(10);
-                if (row.index === 4) {
-                    doc.setTextColor(0, 0, 0);
-                    doc.rect(data.settings.margin.left, row.y, data.table.width, 40, 'S');
-                    doc.autoTableText(sop_title, data.settings.margin.left + data.table.width / 2, row.y + row.height, {
-                        halign: 'center',
-                        valign: 'middle'
-                    });
-                    data.cursor.y += 60;
-                }
-            },
-            drawCell: function (cell, data) {
-                // Rowspan
-                if (data.row.index === 4) {
-                    if (data.column.dataKey === '0') {
-                        if (data.row.index % 5 === 0) {
-                            doc.rect(cell.x, cell.y, data.table.width, cell.height * 5, 'S');
-                            doc.autoTableText("Logo", cell.x + cell.width / 2, cell.y + cell.height * 5 / 2, {
-                                halign: 'center',
-                                valign: 'middle'
-                            });
-                        }
-                        return false;
+    PdfSopComponent.prototype.filupPDF = function () {
+        if (this.sop_pdf_button == true) {
+            this.title = this.sop_title;
+        }
+        else {
+            this.title = this.project.project_title;
+        }
+        this.htmlPDF = "<html>\n<head>\n<style>\ntable{\n  border-collapse: collapse;\n}\n td {\n    border: 0.5mm solid black;\n    margin: 0;\n    padding: 2mm;\n    font-size: 4.5mm;\n    \n}\ntr{\n  margin: 0;\n  padding: 0;\n}\n.text-bold{\n    font-weight: bold;\n}\n.saut-page\n{\n    page-break-after: always;\n}\n</style>\n</head>\n<body>\n  <table style=\"width: 90%; margin-left: 5%;margin-top: 15mm;\"> \n    <tr>\n      <td style=\"width: 20%\" rowspan=\"5\"> <img src=\"images/logo-stikom.png\" style=\"width: 20mm;margin-left: 20mm;\"></td>\n      <td style=\"width: 40%\"><strong>" + this.organisation_name + "</strong></td>\n      <td style=\"width: 20%\"><strong>SOP Number</strong></td>\n      <td style=\"width: 20%\">" + this.sop_id + "</td>\n    </tr>\n    <tr>\n      <td><strong>" + this.branch_name + "</strong></td>\n      <td><strong>Creation Date</strong></td>\n      <td>" + new _angular_common__WEBPACK_IMPORTED_MODULE_7__["DatePipe"]('en-US').transform(this.sop_creation, 'dd-MM-yyyy') + "</td>\n    </tr>\n    <tr>\n      <td><strong>" + this.department_name + "</strong></td>\n      <td><strong>Revision Date</strong></td>\n      <td>" + new _angular_common__WEBPACK_IMPORTED_MODULE_7__["DatePipe"]('en-US').transform(this.sop_revision, 'dd-MM-yyyy') + "</td>\n    </tr>\n    <tr>\n      <td><strong>" + this.sub_department_name + "</strong></td>\n      <td><strong>Published Date</strong></td>\n      <td>" + new _angular_common__WEBPACK_IMPORTED_MODULE_7__["DatePipe"]('en-US').transform(this.sop_published, 'dd-MM-yyyy') + "</td>\n    </tr>\n    <tr>\n      <td></td>\n      <td><strong>Approved by</strong></td>\n      <td>" + this.sop_approvment + "</td>\n    </tr>\n    <tr>\n      <td colspan=\"4\" style=\"text-align: center;font-size: 6mm; padding: 2mm;line-height: 8mm\"><strong>STANDARD OPERATIONAL PROCEDURE <br> " + this.title + "</strong></td>\n    </tr>\n  </table>\n  \n  <table  style=\"width: 90%; margin-left: 5%;margin-top: 8mm;\">\n    <tr>\n      <td style=\"width: 45%\"><strong>Base Rule/Regulation</strong></td>\n      <td style=\"width: 10%\" rowspan=\"6\"></td>\n      <td style=\"width: 45%\"><strong>Staff Qualification</strong></td>\n    </tr>\n    <tr>\n      <td>" + this.sop_rules + "</td>\n      <td>" + this.sop_staff_qualification + "</td>\n    </tr>\n    <tr>\n      <td><strong>Related Working Units</strong></td>\n      <td><strong>Supporting Tools</strong></td>\n    </tr>\n     <tr>\n      <td>to add</td>\n      <td>" + this.sop_tools + "</td>\n    </tr>\n    <tr>\n      <td><strong>Warning</strong></td>\n      <td><strong>Types of Forms and Reports</strong></td>\n    </tr>\n    <tr>\n      <td>" + this.sop_warning + "</td>\n      <td>" + this.sop_type_reports + "</td>\n    </tr>\n    <tr>\n    <td colspan=\"3\" style=\"padding-top: 10mm; line-height: 8mm; padding-left: 30mm;\"><strong>Objectives : </strong><br> " + this.sop_objectives + "<br> </td>\n  </tr>\n  \n  </table>\n\n  <div class=\"saut-page\">\n  \n  </div>\n  \n  <table style=\"width: 90%; margin-left: 5%;margin-top: 15mm;\"> \n    <tr>\n       <td style=\"width: 4%\" rowspan=\"2\"><strong>No</strong></td>\n       <td style=\"width: 18%\" rowspan=\"2\"><strong>Activity</strong></td>";
+        for (var i = 0; i < this.units.length; i++) {
+            if (i < 4) {
+                this.htmlPDF += " <td style=\"width: 12%\" rowspan=\"2\"><strong>" + this.units[i] + "</strong></td>";
+            }
+        }
+        this.htmlPDF += "\n       \n       <td style=\"width: 30%\" colspan=\"3\"><strong>Quality Standard</strong></td>\n       \n    </tr>\n    <tr>\n        <td style=\"width: 10%; font-size: 3.5mm\"><strong>Supporting<br>Materials/Inputs</strong></td>\n        <td style=\"width: 10%; font-size: 3.5mm\"><strong>Duration</strong></td>\n        <td style=\"width: 10%; font-size: 3.5mm\"><strong>Output</strong></td>\n    </tr>";
+        for (var i = 0; i < this.activities.length; i++) {
+            this.htmlPDF += " <tr>";
+            for (var j = 0; j < this.activities[i].length; j++) {
+                if (j < 9) {
+                    this.htmlPDF += " <td>" + this.activities[i][j] + "</td>";
+                    if (j == 1) {
+                        j = 4;
                     }
-                    return false;
                 }
             }
-        });
-        columns = [{ title: "0", dataKey: "0" },
-            { title: "1", dataKey: "1" },
-            { title: "2", dataKey: "2" }
-        ];
-        rows = [
-            ["Base Rule/Regulation", "", "Staff Qualifications"],
-            [this.sop_rules, "", this.sop_staff_qualification],
-            ["Related Working Units", "", "Supporting tools"],
-            ["No units", "", this.sop_tools],
-            ["Warning", "", "Types of Forms and Reports"],
-            [this.sop_warning, "", this.sop_type_reports],
-            ["", "", "", ""]
-        ];
-        var sopObjectives = this.sop_objectives;
-        doc.autoTable(columns, rows, {
-            theme: 'plain',
-            styles: {
-                lineColor: 0,
-                lineWidth: 1
-            },
-            showHeader: 'never',
-            startY: 210,
-            drawRow: function (row2, data2) {
-                // Colspan
-                doc.setFontStyle('bold');
-                doc.setFontSize(10);
-                if (row2.index === 6) {
-                    doc.setTextColor(0, 0, 0);
-                    doc.rect(data2.settings.margin.left, row2.y, data2.table.width, 40, 'S');
-                    doc.autoTableText(sopObjectives, data2.settings.margin.left + data2.table.width / 2, row2.y + row2.height, {
-                        halign: 'left',
-                        valign: 'middle'
-                    });
-                    data2.cursor.y += 60;
+            for (var j = 2; j < 5; j++) {
+                this.htmlPDF += " <td>" + this.activities[i][j] + "</td>";
+            }
+            this.htmlPDF += " </tr>";
+        }
+        this.htmlPDF += "\n  </table>";
+        if (this.units.length > 4) {
+            this.htmlPDF += "<div class=\"saut-page\">\n\n      </div>\n\n      <table style=\"width: 90%; margin-left: 5%;margin-top: 15mm;\">\n  <tr>\n    <td style=\"width: 4%\" rowspan=\"2\"><strong>No</strong></td>\n  <td style=\"width: 18%\" rowspan=\"2\"><strong>Activity</strong></td>";
+            for (var i = 0; i < this.units.length; i++) {
+                if (i > 3 && i < 8) {
+                    this.htmlPDF += " <td style=\"width: 12%\" rowspan=\"2\"><strong>" + this.units[i] + "</strong></td>";
                 }
-            },
-            drawCell: function (cell2, data2) {
-                // Rowspan
-                if (data2.row.index === 6) {
-                    if (data2.column.dataKey === '1') {
-                        if (data2.row.index % 6 === 0 && data2.row.index !== 6) {
-                            doc.rect(cell2.x, cell2.y, 45, cell2.height * 6, 'S');
-                            doc.autoTableText("", cell2.x + cell2.width / 2, cell2.y + cell2.height * 6 / 2, {
-                                halign: 'left',
-                                valign: 'middle'
-                            });
+            }
+            this.htmlPDF += "\n\n  <td style=\"width: 30%\" colspan=\"3\"><strong>Quality Standard</strong></td>\n\n  </tr>\n  <tr>\n  <td style=\"width: 10%; font-size: 3.5mm\"><strong>Supporting<br>Materials/Inputs</strong></td>\n  <td style=\"width: 10%; font-size: 3.5mm\"><strong>Duration</strong></td>\n  <td style=\"width: 10%; font-size: 3.5mm\"><strong>Output</strong></td>\n  </tr>";
+            for (var i = 0; i < this.activities.length; i++) {
+                this.htmlPDF += " <tr>";
+                for (var j = 0; j < this.activities[i].length; j++) {
+                    if (j < 5 || (j > 8 && j < 13)) {
+                        this.htmlPDF += " <td>" + this.activities[i][j] + "</td>";
+                        if (j == 1) {
+                            j = 4;
                         }
-                        return false;
                     }
-                    return false;
+                }
+                for (var j = 2; j < 5; j++) {
+                    this.htmlPDF += " <td>" + this.activities[i][j] + "</td>";
+                }
+                this.htmlPDF += " </tr>";
+            }
+            this.htmlPDF += "\n  </table>";
+        }
+        if (this.units.length > 7) {
+            this.htmlPDF += "<div class=\"saut-page\">\n\n      </div>\n\n      <table style=\"width: 90%; margin-left: 5%;margin-top: 15mm;\">\n  <tr>\n    <td style=\"width: 4%\" rowspan=\"2\"><strong>No</strong></td>\n  <td style=\"width: 18%\" rowspan=\"2\"><strong>Activity</strong></td>";
+            for (var i = 0; i < this.units.length; i++) {
+                if (i > 7 && i < 12) {
+                    this.htmlPDF += " <td style=\"width: 12%\" rowspan=\"2\"><strong>" + this.units[i] + "</strong></td>";
                 }
             }
-        });
-        doc.addPage();
-        columns = [{ title: "0", dataKey: "0" },
-            { title: "1", dataKey: "1" },
-            { title: "2", dataKey: "2" },
-            { title: "3", dataKey: "3" },
-            { title: "4", dataKey: "4" },
-            { title: "5", dataKey: "5" },
-            { title: "6", dataKey: "6" },
-            { title: "7", dataKey: "7" },
-            { title: "8", dataKey: "8" }
-        ];
-        rows = [
-            ["No", "Activity", this.units[0], this.units[1], this.units[2], "Unit 4", "Supporting \n Materials/input", "Duration",
-                "Output"],
-            [this.activities[0][0], this.activities[0][1], this.activities[0][5], this.activities[0][6], this.activities[0][7],
-                "schema", this.activities[0][2], this.activities[0][3], this.activities[0][4]],
-            [this.activities[1][0], this.activities[1][1], this.activities[1][5], this.activities[1][6], this.activities[1][7],
-                "schema", this.activities[1][2], this.activities[1][3], this.activities[1][4]],
-            [this.activities[2][0], this.activities[2][1], this.activities[2][5], this.activities[2][6], this.activities[2][7],
-                "schema", this.activities[2][2], this.activities[2][3], this.activities[2][4]],
-            [this.activities[3][0], this.activities[3][1], this.activities[3][5], this.activities[3][6], this.activities[3][7],
-                "schema", this.activities[3][2], this.activities[3][3], this.activities[3][4]],
-        ];
-        doc.autoTable(columns, rows, {
-            theme: 'plain',
-            styles: {
-                overflow: 'linebreak',
-                lineColor: 0,
-                lineWidth: 1,
-                columnWidth: [10, 40, 30, 30, 30, 30, 30, 30, 30]
-            },
-            showHeader: 'never',
-            startY: 10,
-            drawRow: function (row2, data2) {
-                // Colspan
-                doc.setFontStyle('bold');
-                doc.setFontSize(10);
-            },
-            drawCell: function (cell2, data2) {
-                // Rowspan
+            this.htmlPDF += "\n\n  <td style=\"width: 30%\" colspan=\"3\"><strong>Quality Standard</strong></td>\n\n  </tr>\n  <tr>\n  <td style=\"width: 10%; font-size: 3.5mm\"><strong>Supporting<br>Materials/Inputs</strong></td>\n  <td style=\"width: 10%; font-size: 3.5mm\"><strong>Duration</strong></td>\n  <td style=\"width: 10%; font-size: 3.5mm\"><strong>Output</strong></td>\n  </tr>";
+            for (var i = 0; i < this.activities.length; i++) {
+                this.htmlPDF += " <tr>";
+                for (var j = 0; j < this.activities[i].length; j++) {
+                    if (j < 5 || (j > 12 && j < 17)) {
+                        this.htmlPDF += " <td>" + this.activities[i][j] + "</td>";
+                        if (j == 1) {
+                            j = 4;
+                        }
+                    }
+                }
+                for (var j = 2; j < 5; j++) {
+                    this.htmlPDF += " <td>" + this.activities[i][j] + "</td>";
+                }
+                this.htmlPDF += " </tr>";
             }
+            this.htmlPDF += "\n  </table>";
+        }
+        this.htmlPDF += "\n  \n</body>\n\n</html>";
+    };
+    PdfSopComponent.prototype.download = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var _this = this;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        if (this.sop_pdf_button == true) {
+                            this.title = "sop-" + this.sop_title;
+                        }
+                        else {
+                            this.title = "project-" + this.project.project_title;
+                        }
+                        return [4 /*yield*/, this._pdfService.generatePdf(this.htmlPDF)
+                                .subscribe(function (res) {
+                                if (!window.navigator.msSaveOrOpenBlob) {
+                                    // BLOB NAVIGATOR
+                                    var url = window.URL.createObjectURL(new Blob([res]));
+                                    var link = document.createElement('a');
+                                    link.href = url;
+                                    link.setAttribute('download', _this.title + ".pdf");
+                                    document.body.appendChild(link);
+                                    link.click();
+                                }
+                                else {
+                                    // BLOB FOR EXPLORER 11
+                                    var url = window.navigator.msSaveOrOpenBlob(new Blob([res]), "" + res['data'] + name + ".pdf");
+                                }
+                            }, function (error) {
+                                console.log("ERREUR : ", error);
+                            })];
+                    case 1:
+                        _a.sent();
+                        return [2 /*return*/];
+                }
+            });
         });
-        doc.save("sop.pdf");
     };
     PdfSopComponent.prototype.getAllSopFromProject = function (idProject) {
         return __awaiter(this, void 0, void 0, function () {
@@ -8266,8 +9914,8 @@ var PdfSopComponent = /** @class */ (function () {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, this._projectService.selectAllFromProject(idProject)
                             .subscribe(function (res) {
-                            console.log(res['data']);
                             // Take all the sop informations and preparing them for display in the var
+                            _this.sop_id = res['data'][0]['sop_id'];
                             _this.sop_creation = new Date(res['data'][0]['sop_creation']);
                             _this.sop_revision = new Date(res['data'][0]['sop_revision']);
                             _this.sop_published = new Date(res['data'][0]['sop_published']);
@@ -8278,7 +9926,7 @@ var PdfSopComponent = /** @class */ (function () {
                             _this.sop_tools = res['data'][0]['sop_tools'];
                             _this.sop_type_reports = res['data'][0]['sop_type_reports'];
                             _this.sop_objectives = res['data'][0]['sop_objectives'];
-                            _this.sop_title = "STANDARD OPERATION PROCEDURE \n " + res['data'][0]['sop_title'];
+                            _this.sop_title = res['data'][0]['sop_title'];
                             //creating a table of the units working for this project
                             var counter = 0;
                             for (var _i = 0, _a = res['data']; _i < _a.length; _i++) {
@@ -8288,7 +9936,6 @@ var PdfSopComponent = /** @class */ (function () {
                                     for (var _d = 0, _e = activitie['activity_unit']; _d < _e.length; _d++) {
                                         var unit = _e[_d];
                                         if (!_this.isInUnitTable(unit)) {
-                                            console.log(unit);
                                             if (counter == 0) {
                                                 _this.units[0] = unit;
                                             }
@@ -8300,77 +9947,186 @@ var PdfSopComponent = /** @class */ (function () {
                                     }
                                 }
                             }
-                            console.log("Tableau final 1 : " + _this.units);
                             //End unit tab filling up
+                            var tmp_activites = [];
                             var counter2 = 0;
-                            console.log("Tableau des jobs :");
-                            console.log(res['data']);
                             for (var _f = 0, _g = res['data']; _f < _g.length; _f++) {
                                 var job = _g[_f];
-                                console.log("Job " + counter2 + " :");
-                                console.log(job);
                                 for (var _h = 0, _j = job['activities']; _h < _j.length; _h++) {
                                     var activitie = _j[_h];
-                                    console.log("Activité :");
-                                    console.log(activitie);
-                                    if (activitie['activity_id_is_father'] == null) {
-                                        console.log("Est père car atribue est : ");
-                                        console.log(activitie['activity_id_is_father']);
-                                        var temp = [];
-                                        temp.push(activitie['activity_id']);
-                                        temp.push(activitie['activity_title'] + " : " + activitie['activity_description']);
-                                        temp.push(activitie['activity_type']);
-                                        temp.push(activitie['activity_duration'] + " " + activitie['activity_type_duration']);
-                                        temp.push(activitie['activity_type_output']);
-                                        for (var _k = 0, _l = _this.units; _k < _l.length; _k++) {
-                                            var i = _l[_k];
-                                            temp.push("");
+                                    var boolean_test = false;
+                                    for (var f = 0; f < tmp_activites.length; f++) {
+                                        if (activitie['activity_id'] == tmp_activites[f]) {
+                                            boolean_test = true;
                                         }
-                                        if (_this.activities[0] == "") {
-                                            _this.activities[0] = temp;
-                                        }
-                                        else {
-                                            _this.activities.push(temp);
-                                        }
-                                        console.log("Is father :");
-                                        console.log(temp);
                                     }
-                                    else {
-                                        var pointeur = 0;
-                                        console.log("Père recherché :");
-                                        console.log(activitie['activity_id_is_father']);
-                                        console.log("dans le tableau d'acitivté suivant :");
-                                        console.log(_this.activities);
-                                        for (var j = 0; j < _this.activities.length; j++) {
-                                            console.log("j :");
-                                            console.log(_this.activities[j]);
-                                            console.log("j[0] :");
-                                            console.log(_this.activities[j][0]);
-                                            if (_this.activities[j][0] === activitie['activity_id_is_father']) {
-                                                console.log("J'y suis père trouvé");
-                                                if (activitie['activity_unit'] !== null) {
-                                                    var points = 0;
-                                                    var res_1 = void 0;
-                                                    for (var k = 0; k < _this.units.length; k++) {
-                                                        console.log("activitie['activity_unit'][0] :");
-                                                        console.log(activitie['activity_unit'][0]);
-                                                        if (_this.units[k] == activitie['activity_unit'][0]) {
-                                                            res_1 = points;
-                                                        }
-                                                        points = points + 1;
-                                                    }
-                                                    if (res_1 !== null) {
-                                                        _this.activities[pointeur][res_1 + 5] = activitie['activity_title'] + " : " + activitie['activity_description'];
-                                                    }
+                                    if (boolean_test == false) {
+                                        tmp_activites.push(activitie['activity_id']);
+                                        if (activitie['activity_id_is_father'] == null) {
+                                            if (activitie['activity_type'] != "sop") {
+                                                var temp = [];
+                                                temp.push(activitie['activity_id']);
+                                                temp.push(activitie['activity_title'] + " : " + activitie['activity_description']);
+                                                temp.push(activitie['activity_type']);
+                                                temp.push(activitie['activity_duration'] + " " + activitie['activity_type_duration']);
+                                                temp.push(activitie['activity_type_output']);
+                                                for (var _k = 0, _l = _this.units; _k < _l.length; _k++) {
+                                                    var i = _l[_k];
+                                                    temp.push("");
+                                                }
+                                                if (_this.activities[0] == "") {
+                                                    _this.activities[0] = temp;
+                                                }
+                                                else {
+                                                    _this.activities.push(temp);
                                                 }
                                             }
-                                            pointeur = pointeur + 1;
                                         }
+                                        else {
+                                            var pointeur = 0;
+                                            for (var j = 0; j < _this.activities.length; j++) {
+                                                if (_this.activities[j][0] === activitie['activity_id_is_father'] && activitie['activity_type'] != "super_activity") {
+                                                    if (activitie['activity_unit'] !== null) {
+                                                        var points = 0;
+                                                        var res_1 = void 0;
+                                                        for (var k = 0; k < _this.units.length; k++) {
+                                                            if (_this.units[k] == activitie['activity_unit'][0]) {
+                                                                res_1 = points;
+                                                            }
+                                                            points = points + 1;
+                                                        }
+                                                        if (res_1 !== null) {
+                                                            if (_this.activities[pointeur][res_1 + 5] == "") {
+                                                                _this.activities[pointeur][res_1 + 5] += "- " + activitie['activity_title'] + " : " + activitie['activity_description'];
+                                                            }
+                                                            else {
+                                                                _this.activities[pointeur][res_1 + 5] += "</br></br>- " + activitie['activity_title'] + " : " + activitie['activity_description'];
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                                pointeur = pointeur + 1;
+                                            }
+                                        } //
                                     }
                                 }
                             }
-                            console.log("Tableau final 2 : ");
-                            console.log(_this.activities);
+                        }, //end subscribe
+                        function (//end subscribe
+                        error) {
+                            console.log("ERREUR : ", error);
+                        })];
+                    case 1:
+                        _a.sent();
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    PdfSopComponent.prototype.getAllSopFromProject2 = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var _this = this;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this._projectService.selectAllFromSOP(this.sop_id)
+                            .subscribe(function (res) {
+                            // Take all the sop informations and preparing them for display in the var
+                            _this.sop_id = res['data']['sop_id'];
+                            _this.sop_creation = new Date(res['data']['sop_creation']);
+                            _this.sop_revision = new Date(res['data']['sop_revision']);
+                            _this.sop_published = new Date(res['data']['sop_published']);
+                            _this.sop_approvment = res['data']['sop_approvment'];
+                            _this.sop_rules = res['data']['sop_rules'];
+                            _this.sop_warning = res['data']['sop_warning'];
+                            _this.sop_staff_qualification = res['data']['sop_staff_qualification'];
+                            _this.sop_tools = res['data']['sop_tools'];
+                            _this.sop_type_reports = res['data']['sop_type_reports'];
+                            _this.sop_objectives = res['data']['sop_objectives'];
+                            _this.sop_title = res['data']['sop_title'];
+                            //creating a table of the units working for this project
+                            var counter = 0;
+                            for (var _i = 0, _a = res['data']['jobs']; _i < _a.length; _i++) {
+                                var job = _a[_i];
+                                for (var _b = 0, _c = job['activities']; _b < _c.length; _b++) {
+                                    var activitie = _c[_b];
+                                    for (var _d = 0, _e = activitie['activity_unit']; _d < _e.length; _d++) {
+                                        var unit = _e[_d];
+                                        if (!_this.isInUnitTable(unit)) {
+                                            if (counter == 0) {
+                                                _this.units[0] = unit;
+                                            }
+                                            else {
+                                                _this.units.push(unit);
+                                            }
+                                        }
+                                        counter = counter + 1;
+                                    }
+                                }
+                            }
+                            //End unit tab filling up
+                            var tmp_activites = [];
+                            var counter2 = 0;
+                            for (var _f = 0, _g = res['data']['jobs']; _f < _g.length; _f++) {
+                                var job = _g[_f];
+                                for (var _h = 0, _j = job['activities']; _h < _j.length; _h++) {
+                                    var activitie = _j[_h];
+                                    var boolean_test = false;
+                                    for (var f = 0; f < tmp_activites.length; f++) {
+                                        if (activitie['activity_id'] == tmp_activites[f]) {
+                                            boolean_test = true;
+                                        }
+                                    }
+                                    if (boolean_test == false) {
+                                        tmp_activites.push(activitie['activity_id']);
+                                        if (activitie['activity_id_is_father'] == null) {
+                                            if (activitie['activity_type'] != "sop") {
+                                                var temp = [];
+                                                temp.push(activitie['activity_id']);
+                                                temp.push(activitie['activity_title'] + " : " + activitie['activity_description']);
+                                                temp.push(activitie['activity_type']);
+                                                temp.push(activitie['activity_duration'] + " " + activitie['activity_type_duration']);
+                                                temp.push(activitie['activity_type_output']);
+                                                for (var _k = 0, _l = _this.units; _k < _l.length; _k++) {
+                                                    var i = _l[_k];
+                                                    temp.push("");
+                                                }
+                                                if (_this.activities[0] == "") {
+                                                    _this.activities[0] = temp;
+                                                }
+                                                else {
+                                                    _this.activities.push(temp);
+                                                }
+                                            }
+                                        }
+                                        else {
+                                            var pointeur = 0;
+                                            for (var j = 0; j < _this.activities.length; j++) {
+                                                if (_this.activities[j][0] === activitie['activity_id_is_father'] && activitie['activity_type'] != "super_activity") {
+                                                    if (activitie['activity_unit'] !== null) {
+                                                        var points = 0;
+                                                        var res_2 = void 0;
+                                                        for (var k = 0; k < _this.units.length; k++) {
+                                                            if (_this.units[k] == activitie['activity_unit'][0]) {
+                                                                res_2 = points;
+                                                            }
+                                                            points = points + 1;
+                                                        }
+                                                        if (res_2 !== null) {
+                                                            if (_this.activities[pointeur][res_2 + 5] == "") {
+                                                                _this.activities[pointeur][res_2 + 5] += "- " + activitie['activity_title'] + " : " + activitie['activity_description'];
+                                                            }
+                                                            else {
+                                                                _this.activities[pointeur][res_2 + 5] += "</br></br>- " + activitie['activity_title'] + " : " + activitie['activity_description'];
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                                pointeur = pointeur + 1;
+                                            }
+                                        } //
+                                    }
+                                }
+                            }
                         }, //end subscribe
                         function (//end subscribe
                         error) {
@@ -8390,7 +10146,6 @@ var PdfSopComponent = /** @class */ (function () {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, this._organisationService.selectSchema(idSubDepartment)
                             .subscribe(function (res) {
-                            console.log(res['data']);
                             _this.sub_department_name = res['data'][0]['sub_department_name'];
                             _this.department_name = res['data'][0]['department_name'];
                             _this.branch_name = res['data'][0]['branch_name'];
@@ -8410,27 +10165,24 @@ var PdfSopComponent = /** @class */ (function () {
             var _this = this;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0:
-                        console.log("ici : " + idSop);
-                        return [4 /*yield*/, this._sopService.getSop(idSop)
-                                .subscribe(function (res) {
-                                console.log(res['data']);
-                                //this.res=res['data'];
-                                _this.sop_creation = new Date(res['data']['sop_creation']);
-                                _this.sop_revision = new Date(res['data']['sop_revision']);
-                                _this.sop_published = new Date(res['data']['sop_published']);
-                                _this.sop_approvment = res['data']['sop_approvment'];
-                                _this.sop_rules = res['data']['sop_rules'];
-                                _this.sop_warning = res['data']['sop_warning'];
-                                _this.sop_staff_qualification = res['data']['sop_staff_qualification'];
-                                _this.sop_tools = res['data']['sop_tools'];
-                                _this.sop_type_reports = res['data']['sop_type_reports'];
-                                _this.sop_objectives = res['data']['sop_objectives'];
-                                _this.sop_title = "STANDARD OPERATION PROCEDURE \n " + res['data']['sop_title'];
-                                console.log(res['data']['sop_title']);
-                            }, function (error) {
-                                console.log("ERREUR : ", error);
-                            })];
+                    case 0: return [4 /*yield*/, this._sopService.getSop(idSop)
+                            .subscribe(function (res) {
+                            //this.res=res['data'];
+                            _this.sop_creation = new Date(res['data']['sop_creation']);
+                            _this.sop_revision = new Date(res['data']['sop_revision']);
+                            _this.sop_published = new Date(res['data']['sop_published']);
+                            _this.sop_approvment = res['data']['sop_approvment'];
+                            _this.sop_rules = res['data']['sop_rules'];
+                            _this.sop_warning = res['data']['sop_warning'];
+                            _this.sop_staff_qualification = res['data']['sop_staff_qualification'];
+                            _this.sop_tools = res['data']['sop_tools'];
+                            _this.sop_type_reports = res['data']['sop_type_reports'];
+                            _this.sop_objectives = res['data']['sop_objectives'];
+                            _this.sop_title = res['data']['sop_title'];
+                            _this.getAllSopFromProject2();
+                        }, function (error) {
+                            console.log("ERREUR : ", error);
+                        })];
                     case 1:
                         _a.sent();
                         return [2 /*return*/];
@@ -8443,17 +10195,14 @@ var PdfSopComponent = /** @class */ (function () {
             var _this = this;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0:
-                        console.log("ici projet id : " + idProject);
-                        return [4 /*yield*/, this._projectService.getProject(idProject)
-                                .subscribe(function (res) {
-                                console.log(res['data']);
-                                //this.res=res['data'];
-                                _this.getOrganisation(res['data']['sub_department_id']);
-                                _this.getAllSopFromProject(idProject);
-                            }, function (error) {
-                                console.log("ERREUR : ", error);
-                            })];
+                    case 0: return [4 /*yield*/, this._projectService.getProject(idProject)
+                            .subscribe(function (res) {
+                            _this.project = res['data'];
+                            _this.getOrganisation(res['data']['sub_department_id']);
+                            _this.getAllSopFromProject(idProject);
+                        }, function (error) {
+                            console.log("ERREUR : ", error);
+                        })];
                     case 1:
                         _a.sent();
                         return [2 /*return*/];
@@ -8482,7 +10231,8 @@ var PdfSopComponent = /** @class */ (function () {
             _objects_department_department_service__WEBPACK_IMPORTED_MODULE_4__["DepartmentService"],
             _objects_sub_department_sub_department_service__WEBPACK_IMPORTED_MODULE_5__["SubDepartmentService"],
             _objects_sop_sop_service__WEBPACK_IMPORTED_MODULE_6__["SopService"],
-            _objects_project_project_service__WEBPACK_IMPORTED_MODULE_8__["ProjectService"]])
+            _objects_project_project_service__WEBPACK_IMPORTED_MODULE_8__["ProjectService"],
+            _objects_pdf_pdf_service__WEBPACK_IMPORTED_MODULE_9__["PdfService"]])
     ], PdfSopComponent);
     return PdfSopComponent;
 }());
@@ -8569,6 +10319,135 @@ var AuthGuard = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./src/app/helpers/date-helper/date-helper.component.html":
+/*!****************************************************************!*\
+  !*** ./src/app/helpers/date-helper/date-helper.component.html ***!
+  \****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<p>\r\n  date-helper works!\r\n</p>\r\n"
+
+/***/ }),
+
+/***/ "./src/app/helpers/date-helper/date-helper.component.scss":
+/*!****************************************************************!*\
+  !*** ./src/app/helpers/date-helper/date-helper.component.scss ***!
+  \****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ""
+
+/***/ }),
+
+/***/ "./src/app/helpers/date-helper/date-helper.component.ts":
+/*!**************************************************************!*\
+  !*** ./src/app/helpers/date-helper/date-helper.component.ts ***!
+  \**************************************************************/
+/*! exports provided: DateHelperComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DateHelperComponent", function() { return DateHelperComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+var DateHelperComponent = /** @class */ (function () {
+    function DateHelperComponent() {
+    }
+    DateHelperComponent.prototype.ngOnInit = function () {
+    };
+    DateHelperComponent = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+            selector: 'app-date-helper',
+            template: __webpack_require__(/*! ./date-helper.component.html */ "./src/app/helpers/date-helper/date-helper.component.html"),
+            styles: [__webpack_require__(/*! ./date-helper.component.scss */ "./src/app/helpers/date-helper/date-helper.component.scss")]
+        }),
+        __metadata("design:paramtypes", [])
+    ], DateHelperComponent);
+    return DateHelperComponent;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/helpers/text-helper/text-helper.component.html":
+/*!****************************************************************!*\
+  !*** ./src/app/helpers/text-helper/text-helper.component.html ***!
+  \****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<p>\r\n  text-helper works!\r\n</p>\r\n"
+
+/***/ }),
+
+/***/ "./src/app/helpers/text-helper/text-helper.component.scss":
+/*!****************************************************************!*\
+  !*** ./src/app/helpers/text-helper/text-helper.component.scss ***!
+  \****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ""
+
+/***/ }),
+
+/***/ "./src/app/helpers/text-helper/text-helper.component.ts":
+/*!**************************************************************!*\
+  !*** ./src/app/helpers/text-helper/text-helper.component.ts ***!
+  \**************************************************************/
+/*! exports provided: TextHelperComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TextHelperComponent", function() { return TextHelperComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+var TextHelperComponent = /** @class */ (function () {
+    function TextHelperComponent() {
+    }
+    TextHelperComponent.prototype.ngOnInit = function () {
+    };
+    TextHelperComponent.prototype.firstLetterUpperCase = function (string) {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+    };
+    TextHelperComponent = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+            selector: 'app-text-helper',
+            template: __webpack_require__(/*! ./text-helper.component.html */ "./src/app/helpers/text-helper/text-helper.component.html"),
+            styles: [__webpack_require__(/*! ./text-helper.component.scss */ "./src/app/helpers/text-helper/text-helper.component.scss")]
+        }),
+        __metadata("design:paramtypes", [])
+    ], TextHelperComponent);
+    return TextHelperComponent;
+}());
+
+
+
+/***/ }),
+
 /***/ "./src/app/objects/activity/activity.service.ts":
 /*!******************************************************!*\
   !*** ./src/app/objects/activity/activity.service.ts ***!
@@ -8634,6 +10513,10 @@ var ActivityService = /** @class */ (function () {
     ActivityService.prototype.selectAllFromUnit = function (unit_id) {
         this.generateHeaders();
         return this.http.get(this.domain + '/api/activity/all_from_unit/' + unit_id, this.httpOptions);
+    };
+    ActivityService.prototype.selectAllFromProject = function (project_id) {
+        this.generateHeaders();
+        return this.http.get(this.domain + '/api/activity/all_from_project/' + project_id, this.httpOptions);
     };
     ActivityService.prototype.update = function (activity) {
         var body = {
@@ -8862,6 +10745,78 @@ var DepartmentService = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./src/app/objects/execute/execute.service.ts":
+/*!****************************************************!*\
+  !*** ./src/app/objects/execute/execute.service.ts ***!
+  \****************************************************/
+/*! exports provided: ExecuteService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ExecuteService", function() { return ExecuteService; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _environments_environment__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../environments/environment */ "./src/environments/environment.ts");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+var ExecuteService = /** @class */ (function () {
+    function ExecuteService(http, router) {
+        this.http = http;
+        this.router = router;
+        this.domain = _environments_environment__WEBPACK_IMPORTED_MODULE_1__["environment"].SERVEUR_URL;
+    }
+    ExecuteService.prototype.update = function (unit_id, activity_id) {
+        var body = {
+            unit_id: unit_id,
+            activity_id: activity_id
+        };
+        this.generateHeaders();
+        return this.http.put(this.domain + '/api/unit/update_execute', body, this.httpOptions);
+    };
+    ExecuteService.prototype.generateHeaders = function () {
+        if (localStorage.getItem("Token") === null) {
+            this.httpOptions = {
+                headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({
+                    'Content-Type': 'application/json'
+                })
+            };
+        }
+        else {
+            this.httpOptions = {
+                headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({
+                    'Content-Type': 'application/json',
+                    'Authorization': localStorage.getItem("Token")
+                })
+            };
+        }
+    };
+    ExecuteService = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])({
+            providedIn: 'root'
+        }),
+        __metadata("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"],
+            _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"]])
+    ], ExecuteService);
+    return ExecuteService;
+}());
+
+
+
+/***/ }),
+
 /***/ "./src/app/objects/job/job.service.ts":
 /*!********************************************!*\
   !*** ./src/app/objects/job/job.service.ts ***!
@@ -8913,6 +10868,10 @@ var JobService = /** @class */ (function () {
         this.generateHeaders();
         return this.http.get(this.domain + '/api/job/all_from_activity/' + activity_id, this.httpOptions);
     };
+    JobService.prototype.selectAllFromProject = function (project_id) {
+        this.generateHeaders();
+        return this.http.get(this.domain + '/api/job/all_from_project/' + project_id, this.httpOptions);
+    };
     JobService.prototype.selectAllFromSop = function (sop_id) {
         this.generateHeaders();
         return this.http.get(this.domain + '/api/job/all_from_sop/' + sop_id, this.httpOptions);
@@ -8925,6 +10884,15 @@ var JobService = /** @class */ (function () {
         };
         console.log('bind_job_activity : ', body);
         return this.http.post(this.domain + '/api/job/bind_job_activity/', body, this.httpOptions);
+    };
+    JobService.prototype.computeDateEnd = function (jobs, date_begin) {
+        var body = {
+            jobs: jobs,
+            date_begin: date_begin
+        };
+        console.log('body : ', body);
+        this.generateHeaders();
+        return this.http.post(this.domain + '/api/job/compute_end_date', body, this.httpOptions);
     };
     JobService.prototype.generateHeaders = function () {
         if (localStorage.getItem("Token") === null) {
@@ -9053,6 +11021,26 @@ var ManagmentLevelService = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./src/app/objects/managment_level/managment_level.ts":
+/*!************************************************************!*\
+  !*** ./src/app/objects/managment_level/managment_level.ts ***!
+  \************************************************************/
+/*! exports provided: ManagmentLevel */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ManagmentLevel", function() { return ManagmentLevel; });
+var ManagmentLevel = /** @class */ (function () {
+    function ManagmentLevel() {
+    }
+    return ManagmentLevel;
+}());
+
+
+
+/***/ }),
+
 /***/ "./src/app/objects/member/member.service.ts":
 /*!**************************************************!*\
   !*** ./src/app/objects/member/member.service.ts ***!
@@ -9133,7 +11121,7 @@ var MemberService = /** @class */ (function () {
         }
     };
     MemberService.prototype.storeUserData = function (token) {
-        localStorage.setItem('Token', token);
+        localStorage.setItem('Token', "Bearer " + token);
     };
     MemberService.prototype.storeUserDataFull = function (user) {
         localStorage.setItem('Id', user['member_id']);
@@ -9206,7 +11194,7 @@ var MemberService = /** @class */ (function () {
     MemberService.prototype.grantMember = function (idUser, idRole) {
         var body = {
             member: idUser,
-            role: idRole,
+            role_id: idRole,
         };
         this.generateHeaders();
         return this.http.post(this.domain + '/api/role/grant_member', body, this.httpOptions);
@@ -9264,6 +11252,10 @@ var MemberActivityProjectService = /** @class */ (function () {
     MemberActivityProjectService.prototype.selectAllFromProject = function (project_id) {
         this.generateHeaders();
         return this.http.get(this.domain + '/api/project/all_member_activity_project/' + project_id, this.httpOptions);
+    };
+    MemberActivityProjectService.prototype.selectAllFromProjectFull = function (project_id) {
+        this.generateHeaders();
+        return this.http.get(this.domain + '/api/project/all_member_activity_project_full/' + project_id, this.httpOptions);
     };
     MemberActivityProjectService.prototype.selectAllFromProjectDistinct = function (project_id) {
         this.generateHeaders();
@@ -9418,6 +11410,79 @@ var OrganisationService = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./src/app/objects/pdf/pdf.service.ts":
+/*!********************************************!*\
+  !*** ./src/app/objects/pdf/pdf.service.ts ***!
+  \********************************************/
+/*! exports provided: PdfService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PdfService", function() { return PdfService; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
+/* harmony import */ var _environments_environment__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../environments/environment */ "./src/environments/environment.ts");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+var PdfService = /** @class */ (function () {
+    function PdfService(http) {
+        this.http = http;
+        this.domain = _environments_environment__WEBPACK_IMPORTED_MODULE_2__["environment"].SERVEUR_URL;
+    }
+    PdfService.prototype.generateHeaders = function () {
+        if (localStorage.getItem("Token") === null) {
+            this.httpOptions = {
+                headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({
+                    'Content-Type': 'application/json'
+                })
+            };
+        }
+        else {
+            this.httpOptions = {
+                headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({
+                    'Content-Type': 'application/json',
+                    'Authorization': localStorage.getItem("Token")
+                })
+            };
+        }
+    };
+    PdfService.prototype.generatePdf = function (htmlPdf) {
+        var body = {
+            html: htmlPdf,
+        };
+        this.httpOptions = {
+            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({
+                'Content-Type': 'application/json',
+                'Authorization': localStorage.getItem("Token")
+            }),
+            responseType: 'blob'
+        };
+        return this.http.post(this.domain + '/api/pdf/create', body, this.httpOptions);
+    };
+    PdfService = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])({
+            providedIn: 'root'
+        }),
+        __metadata("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"]])
+    ], PdfService);
+    return PdfService;
+}());
+
+
+
+/***/ }),
+
 /***/ "./src/app/objects/project/project.service.ts":
 /*!****************************************************!*\
   !*** ./src/app/objects/project/project.service.ts ***!
@@ -9454,6 +11519,10 @@ var ProjectService = /** @class */ (function () {
     ProjectService.prototype.selectAll = function () {
         this.generateHeaders();
         return this.http.get(this.domain + '/api/project/all', this.httpOptions);
+    };
+    ProjectService.prototype.selectAllSort = function () {
+        this.generateHeaders();
+        return this.http.get(this.domain + '/api/project/all_state', this.httpOptions);
     };
     ProjectService.prototype.select = function (project_id) {
         this.generateHeaders();
@@ -9538,6 +11607,10 @@ var ProjectService = /** @class */ (function () {
         this.generateHeaders();
         return this.http.get(this.domain + '/api/activity/all_from_all_job_from_project/' + project_id, this.httpOptions);
     };
+    ProjectService.prototype.selectAllFromSOP = function (sop_id) {
+        this.generateHeaders();
+        return this.http.get(this.domain + '/api/activity/all_from_all_job_from_sop/' + sop_id, this.httpOptions);
+    };
     ProjectService.prototype.updateProject = function (project) {
         var body = {
             project_id: project.project_id,
@@ -9550,6 +11623,18 @@ var ProjectService = /** @class */ (function () {
         };
         this.generateHeaders();
         return this.http.put(this.domain + '/api/project/update', body, this.httpOptions);
+    };
+    ProjectService.prototype.volume_per_days = function (project_id) {
+        this.generateHeaders();
+        return this.http.get(this.domain + '/api/project/volume_progress_days/' + project_id, this.httpOptions);
+    };
+    ProjectService.prototype.volume_per_days_pdf = function (project_id, job_id) {
+        this.generateHeaders();
+        return this.http.get(this.domain + '/api/project/volume_progress_days?project=' + project_id + '&job=' + job_id, this.httpOptions);
+    };
+    ProjectService.prototype.volume_per_weeks = function (project_id) {
+        this.generateHeaders();
+        return this.http.get(this.domain + '/api/project/volume_progress_weeks/' + project_id, this.httpOptions);
     };
     ProjectService = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])({
@@ -9699,6 +11784,24 @@ var SopService = /** @class */ (function () {
         this.generateHeaders();
         return this.http.post(this.domain + '/api/sop/create', body, this.httpOptions);
     };
+    SopService.prototype.updateSop = function (sop) {
+        var body = {
+            sop_id: sop.sop_id,
+            sop_title: sop.sop_title,
+            sop_approvment: sop.sop_approvment,
+            sop_creation: sop.sop_creation,
+            sop_objectives: sop.sop_objectives,
+            sop_published: sop.sop_published,
+            sop_revision: sop.sop_revision,
+            sop_rules: sop.sop_rules,
+            sop_staff_qualification: sop.sop_staff_qualification,
+            sop_tools: sop.sop_tools,
+            sop_type_reports: sop.sop_type_reports,
+            sop_warning: sop.sop_warning
+        };
+        this.generateHeaders();
+        return this.http.put(this.domain + '/api/sop/update', body, this.httpOptions);
+    };
     SopService.prototype.selectAll = function () {
         this.generateHeaders();
         return this.http.get(this.domain + '/api/sop/all', this.httpOptions);
@@ -9738,7 +11841,6 @@ var SopService = /** @class */ (function () {
     };
     SopService.prototype.getSop = function (sop_id) {
         this.generateHeaders();
-        console.log(sop_id);
         return this.http.get(this.domain + '/api/sop/findOne/' + sop_id, this.httpOptions);
     };
     SopService = __decorate([
@@ -9891,6 +11993,14 @@ var UnitService = /** @class */ (function () {
         this.generateHeaders();
         return this.http.post(this.domain + '/api/unit/create', body, this.httpOptions);
     };
+    UnitService.prototype.updateUnit = function (unit) {
+        var body = {
+            unit_id: unit.unit_id,
+            unit_name: unit.unit_name
+        };
+        this.generateHeaders();
+        return this.http.put(this.domain + '/api/unit/update', body, this.httpOptions);
+    };
     UnitService.prototype.bindUnitSop = function (unit_id, sop_id) {
         var body = {
             unit_id: unit_id,
@@ -9914,7 +12024,6 @@ var UnitService = /** @class */ (function () {
     };
     UnitService.prototype.selectAllFromActivity = function (activity_id) {
         this.generateHeaders();
-        console.log('Object : ', activity_id);
         return this.http.get(this.domain + '/api/unit/all_from_activity/' + activity_id, this.httpOptions);
     };
     UnitService.prototype.selectAllFromJob = function (job_id) {
@@ -9946,6 +12055,26 @@ var UnitService = /** @class */ (function () {
             _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"]])
     ], UnitService);
     return UnitService;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/objects/unit/unit.ts":
+/*!**************************************!*\
+  !*** ./src/app/objects/unit/unit.ts ***!
+  \**************************************/
+/*! exports provided: Unit */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Unit", function() { return Unit; });
+var Unit = /** @class */ (function () {
+    function Unit() {
+    }
+    return Unit;
 }());
 
 
@@ -10015,6 +12144,69 @@ var LoaderComponent = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./src/app/shared/footer/footer.component.html":
+/*!*****************************************************!*\
+  !*** ./src/app/shared/footer/footer.component.html ***!
+  \*****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "\r\n<!-- Footer -->\r\n<footer class=\"page-footer font-small pt-4\" style=\"margin-top: 0.1%\">\r\n\r\n  <!-- Footer Text -->\r\n  <div class=\"container text-center text-md-left\">\r\n\r\n    <!-- Grid row -->\r\n    <div class=\"row\">\r\n\r\n      <!-- Grid column -->\r\n      <div class=\"col-md-6 mt-md-0 mt-3 row\">\r\n\r\n        <!-- Content -->\r\n        <h5 class=\"col-12 text-uppercase font-weight-bold\" style=\"font-size: 1.2em\">standard Operational procedure</h5>\r\n        <p class=\"col-12 text-justify\">This web application is part of an internship project realized by three students of Polytech Montpellier FRANCE, for the IT school Stikom Bali INDONESIA.\r\n        The project took place from the 3rd june 2018 to the 2nd august 2018. </p>\r\n\r\n      </div>\r\n      <!-- Grid column -->\r\n\r\n      <hr class=\"clearfix w-100 d-md-none pb-3\">\r\n\r\n      <!-- Grid column -->\r\n      <div class=\"col-md-6 mb-md-0 mb-3\">\r\n\r\n        <!-- Content -->\r\n        <h5 class=\"offset-2 col-10 text-uppercase font-weight-bold\" style=\"font-size: 1.2em\">Team</h5>\r\n        <p class=\"offset-2 col-10 text-justify\">Project Master : Mr AGUSTA Yudi</p>\r\n        <p class=\"offset-2 col-10 text-justify\">Workers : FABRE Enzo, PLUCHE Cyril, TERRIEN James</p>\r\n\r\n      </div>\r\n      <!-- Grid column -->\r\n\r\n    </div>\r\n    <!-- Grid row -->\r\n\r\n  </div>\r\n  <!-- Footer Text -->\r\n\r\n  <!-- Copyright -->\r\n  <div class=\"footer-copyright text-center py-1\">© 2018 Copyright:\r\n    <a href=\"https://stikom-bali.ac.id/act/\"> Stikom, Bali</a>\r\n  </div>\r\n  <!-- Copyright -->\r\n\r\n</footer>\r\n<!-- Footer -->\r\n"
+
+/***/ }),
+
+/***/ "./src/app/shared/footer/footer.component.scss":
+/*!*****************************************************!*\
+  !*** ./src/app/shared/footer/footer.component.scss ***!
+  \*****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ""
+
+/***/ }),
+
+/***/ "./src/app/shared/footer/footer.component.ts":
+/*!***************************************************!*\
+  !*** ./src/app/shared/footer/footer.component.ts ***!
+  \***************************************************/
+/*! exports provided: FooterComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FooterComponent", function() { return FooterComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+var FooterComponent = /** @class */ (function () {
+    function FooterComponent() {
+    }
+    FooterComponent.prototype.ngOnInit = function () {
+    };
+    FooterComponent = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+            selector: 'app-footer',
+            template: __webpack_require__(/*! ./footer.component.html */ "./src/app/shared/footer/footer.component.html"),
+            styles: [__webpack_require__(/*! ./footer.component.scss */ "./src/app/shared/footer/footer.component.scss")]
+        }),
+        __metadata("design:paramtypes", [])
+    ], FooterComponent);
+    return FooterComponent;
+}());
+
+
+
+/***/ }),
+
 /***/ "./src/app/shared/layout/nav-bar/nav-bar.component.css":
 /*!*************************************************************!*\
   !*** ./src/app/shared/layout/nav-bar/nav-bar.component.css ***!
@@ -10033,7 +12225,7 @@ module.exports = "/* LIGHT BLACK #222222 */\r\n\r\n.navbar-brand {\r\n  max-widt
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!--Navbar-->\r\n<nav class=\"navbar sticky-top navbar-expand-lg navbar-dark primary-color hoverable\">\r\n\r\n  <!-- Navbar brand -->\r\n  <img src=\"../../../../assets/images/logo-stikom.png\" class=\"navbar-brand img-fluid\" />\r\n\r\n  <!-- Collapse button -->\r\n  <button class=\"navbar-toggler\" type=\"button\" data-toggle=\"collapse\" data-target=\"#basicExampleNav\" aria-controls=\"basicExampleNav\"\r\n          aria-expanded=\"false\" aria-label=\"Toggle navigation\">\r\n    <span class=\"navbar-toggler-icon\"></span>\r\n  </button>\r\n\r\n  <!-- Collapsible content -->\r\n  <div class=\"collapse navbar-collapse\" id=\"basicExampleNav\">\r\n\r\n    <!-- Links -->\r\n    <ul class=\"navbar-nav ml-auto\">\r\n      <li class=\"nav-item active\">\r\n        <a class=\"nav-link\" [routerLink]=\"['/home']\" >Home\r\n          <span class=\"sr-only\">(current)</span>\r\n        </a>\r\n      </li>\r\n\r\n      <li class=\"nav-item active\">\r\n        <a class=\"nav-link\" *ngIf=\"_memberService.isLoggedIn()\" [routerLink]=\"['/admin-users']\" >Admin Users\r\n        </a>\r\n      </li>\r\n      <li class=\"nav-item active\">\r\n        <a class=\"nav-link\" *ngIf=\"_memberService.isLoggedIn()\" [routerLink]=\"['/admin-organization-management']\" >Admin organizations\r\n        </a>\r\n      </li>\r\n      <li class=\"nav-item active\">\r\n        <a class=\"nav-link\" *ngIf=\"_memberService.isLoggedIn()\" [routerLink]=\"['/personal-achievement']\" >Personal achievement\r\n        </a>\r\n      </li>\r\n\r\n      <li class=\"nav-item\">\r\n        <a class=\"nav-link\" *ngIf=\"_memberService.isLoggedIn()\" [routerLink]=\"['/project-list']\" >Projects</a>\r\n      </li>\r\n\r\n      <li class=\"nav-item\">\r\n        <a class=\"nav-link\" *ngIf=\"_memberService.isLoggedIn()\" [routerLink]=\"['/sop-list']\" >SOP</a>\r\n      </li>\r\n\r\n      <li class=\"nav-item\">\r\n        <a class=\"nav-link\" *ngIf=\"_memberService.isLoggedIn()\" [routerLink]=\"['/account']\" >My Account</a>\r\n      </li>\r\n\r\n      <li class=\"nav-item\">\r\n        <a class=\"nav-link\" *ngIf=\"!_memberService.isLoggedIn()\" [routerLink]=\"['/authentification']\" >Log In</a>\r\n      </li>\r\n\r\n      <li class=\"nav-item\">\r\n        <a class=\"nav-link\" *ngIf=\"_memberService.isLoggedIn()\" (click)=\"onLogoutClick()\" >Log Out</a>\r\n      </li>\r\n\r\n    </ul>\r\n    <!-- Links -->\r\n\r\n    <form class=\"form-inline\">\r\n      <div class=\"md-form my-0\">\r\n        <input class=\"form-control mr-sm-2\" type=\"text\" placeholder=\"Search\" aria-label=\"Search\">\r\n      </div>\r\n    </form>\r\n  </div>\r\n  <!-- Collapsible content -->\r\n\r\n</nav>\r\n<!--/.Navbar-->\r\n"
+module.exports = "<!--Navbar-->\r\n<nav class=\"navbar sticky-top navbar-expand-lg navbar-dark primary-color hoverable\">\r\n\r\n  <!-- Navbar brand -->\r\n  <img src=\"../../../../assets/images/logo-stikom.png\" class=\"navbar-brand img-fluid\" />\r\n\r\n  <!-- Collapse button -->\r\n  <button class=\"navbar-toggler\" type=\"button\" data-toggle=\"collapse\" data-target=\"#basicExampleNav\" aria-controls=\"basicExampleNav\"\r\n          aria-expanded=\"false\" aria-label=\"Toggle navigation\">\r\n    <span class=\"navbar-toggler-icon\"></span>\r\n  </button>\r\n\r\n  <!-- Collapsible content -->\r\n  <div class=\"collapse navbar-collapse\" id=\"basicExampleNav\">\r\n\r\n    <!-- Links -->\r\n    <ul class=\"navbar-nav ml-auto\">\r\n      <li class=\"nav-item active\">\r\n        <a class=\"nav-link\" [routerLink]=\"['/home']\" >Home\r\n          <span class=\"sr-only\">(current)</span>\r\n        </a>\r\n      </li>\r\n\r\n      <li class=\"nav-item active\">\r\n        <a class=\"nav-link\" *ngIf=\"_memberService.isLoggedIn()\" [routerLink]=\"['/admin-users']\" >Admin Users\r\n        </a>\r\n      </li>\r\n      <li class=\"nav-item active\">\r\n        <a class=\"nav-link\" *ngIf=\"_memberService.isLoggedIn()\" [routerLink]=\"['/admin-organization-management']\" >Admin organizations\r\n        </a>\r\n      </li>\r\n      <!--<li class=\"nav-item active\">\r\n        <a class=\"nav-link\" *ngIf=\"_memberService.isLoggedIn()\" [routerLink]=\"['/personal-achievement']\" >Personal achievement\r\n        </a>\r\n      </li>-->\r\n\r\n      <li class=\"nav-item\">\r\n        <a class=\"nav-link\" *ngIf=\"_memberService.isLoggedIn()\" [routerLink]=\"['/project-list']\" >Projects</a>\r\n      </li>\r\n\r\n      <li class=\"nav-item\">\r\n        <a class=\"nav-link\" *ngIf=\"_memberService.isLoggedIn()\" [routerLink]=\"['/sop-list']\" >SOP</a>\r\n      </li>\r\n\r\n      <li class=\"nav-item\">\r\n        <a class=\"nav-link\" *ngIf=\"_memberService.isLoggedIn()\" [routerLink]=\"['/account']\" >My Account</a>\r\n      </li>\r\n\r\n      <li class=\"nav-item\">\r\n        <a class=\"nav-link\" *ngIf=\"!_memberService.isLoggedIn()\" [routerLink]=\"['/authentification']\" >Log In</a>\r\n      </li>\r\n\r\n      <li class=\"nav-item\">\r\n        <a class=\"nav-link\" *ngIf=\"_memberService.isLoggedIn()\" (click)=\"onLogoutClick()\" >Log Out</a>\r\n      </li>\r\n\r\n    </ul>\r\n    <!-- Links -->\r\n\r\n    <form class=\"form-inline\">\r\n      <div class=\"md-form my-0\">\r\n        <input class=\"form-control mr-sm-2\" type=\"text\" placeholder=\"Search\" aria-label=\"Search\">\r\n      </div>\r\n    </form>\r\n  </div>\r\n  <!-- Collapsible content -->\r\n\r\n</nav>\r\n<!--/.Navbar-->\r\n"
 
 /***/ }),
 
@@ -10201,6 +12393,157 @@ var ActionComponent = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./src/app/shared/modals/activity-update/activity-update.component.html":
+/*!******************************************************************************!*\
+  !*** ./src/app/shared/modals/activity-update/activity-update.component.html ***!
+  \******************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<!-- Central Modal Medium Success -->\r\n<div class=\"modal fade\" id=\"activityModal\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"myModalLabel\" aria-hidden=\"true\">\r\n  <div class=\"modal-dialog modal-notify modal-warning\" role=\"document\">\r\n    <!--Content-->\r\n    <div class=\"modal-content\">\r\n      <!--Header-->\r\n      <div class=\"modal-header\">\r\n        <p class=\"heading lead\">{{title}}</p>\r\n\r\n        <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">\r\n          <span aria-hidden=\"true\" class=\"white-text\">&times;</span>\r\n        </button>\r\n      </div>\r\n\r\n      <!--Body-->\r\n      <div class=\"modal-body\">\r\n        <div class=\"text-center\">\r\n          <i id=\"iconDisplayed\" class=\"fa fa-cog fa-4x mb-3 animated rotateIn\"></i>\r\n\r\n          <div class=\"row row-first\">\r\n            <div class=\"col-3 font-weight-bold\">\r\n              <p>Title</p>\r\n            </div>\r\n            <div class=\"col-8\">\r\n              <input [disabled]=\"!isActive\" [(ngModel)]=\"activityUpdate.activity_title\" type=\"text\" class=\"form-control\">\r\n            </div>\r\n          </div>\r\n\r\n          <div class=\"row\">\r\n            <div class=\"col-3 font-weight-bold\">\r\n              <p>Description</p>\r\n            </div>\r\n            <div class=\"col-8\">\r\n              <input [disabled]=\"!isActive\" [(ngModel)]=\"activityUpdate.activity_description\" type=\"text\" class=\"form-control\">\r\n            </div>\r\n          </div>\r\n\r\n          <div class=\"row\">\r\n            <div class=\"col-3 font-weight-bold\">\r\n              <p>Management level</p>\r\n            </div>\r\n            <div class=\"col-8\">\r\n              <select [disabled]=\"!isActive\" [(ngModel)]=\"new_management_level\" class=\"form-control\">\r\n                <option name=\"organisation\" value=\"\" disabled selected>Choose organisation</option>\r\n                <option *ngFor=\"let m of managment_levels\" [ngValue]=\"m\">{{m.managment_level_label}}</option>\r\n              </select>\r\n            </div>\r\n          </div>\r\n\r\n          <div class=\"row\">\r\n            <div class=\"col-3 font-weight-bold\">\r\n              <p>Type duration</p>\r\n            </div>\r\n            <div class=\"col-8\">\r\n              <select [disabled]=\"!isActive\" [(ngModel)]=\"activityUpdate.activity_type_duration\" class=\"form-control\">\r\n                <option name=\"organisation\" value=\"\" disabled selected>Choose organisation</option>\r\n                <option *ngFor=\"let d of type_durations\" [ngValue]=\"d\">{{d}}</option>\r\n              </select>\r\n            </div>\r\n          </div>\r\n\r\n          <div *ngIf=\"isActive\" class=\"row\">\r\n            <div class=\"col-3 font-weight-bold\">\r\n              <p>Unit</p>\r\n            </div>\r\n            <div class=\"col-8\">\r\n              <select [(ngModel)]=\"new_unit\" class=\"form-control\">\r\n                <option name=\"organisation\" value=\"\" disabled selected>Choose organisation</option>\r\n                <option *ngFor=\"let u of units\" [ngValue]=\"u\">{{u.unit_name}}</option>\r\n              </select>\r\n            </div>\r\n          </div>\r\n\r\n          <div class=\"row\">\r\n            <div class=\"col-3 font-weight-bold\">\r\n              <p>Duration</p>\r\n            </div>\r\n            <div class=\"col-8\">\r\n              <input [disabled]=\"!isActive\" [(ngModel)]=\"activityUpdate.activity_duration\" type=\"number\" class=\"form-control\">\r\n            </div>\r\n          </div>\r\n\r\n          <div class=\"row\">\r\n            <div class=\"col-3 font-weight-bold\">\r\n              <p>Type output</p>\r\n            </div>\r\n            <div class=\"col-8\">\r\n              <input [disabled]=\"!isActive\" [(ngModel)]=\"activityUpdate.activity_type_output\" type=\"text\" class=\"form-control\">\r\n            </div>\r\n          </div>\r\n\r\n        </div>\r\n      </div>\r\n\r\n      <!--Footer-->\r\n      <div class=\"modal-footer justify-content-center\">\r\n        <a *ngIf=\"isActive\" type=\"button\" class=\"btn btn-outline-danger waves-effect\" data-dismiss=\"modal\" (click)=\"reset();\">Cancel</a>\r\n        <a *ngIf=\"isActive\" type=\"button\" class=\"btn btn-success waves-effect\" (click)=\"goDestination();\" data-dismiss=\"modal\" >Save</a>\r\n        <a *ngIf=\"!isActive\" type=\"button\" class=\"btn btn-default waves-effect\" data-dismiss=\"modal\" >Dismiss</a>\r\n      </div>\r\n    </div>\r\n    <!--/.Content-->\r\n  </div>\r\n</div>\r\n<!-- Central Modal Medium Success-->\r\n"
+
+/***/ }),
+
+/***/ "./src/app/shared/modals/activity-update/activity-update.component.scss":
+/*!******************************************************************************!*\
+  !*** ./src/app/shared/modals/activity-update/activity-update.component.scss ***!
+  \******************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ".modal-dialog.modal-notify.modal-warning .modal-header {\n  background-color: #085193 !important; }\n\n#iconDisplayed {\n  color: #085193 !important; }\n"
+
+/***/ }),
+
+/***/ "./src/app/shared/modals/activity-update/activity-update.component.ts":
+/*!****************************************************************************!*\
+  !*** ./src/app/shared/modals/activity-update/activity-update.component.ts ***!
+  \****************************************************************************/
+/*! exports provided: ActivityUpdateComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ActivityUpdateComponent", function() { return ActivityUpdateComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var _objects_activity_activity__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../objects/activity/activity */ "./src/app/objects/activity/activity.ts");
+/* harmony import */ var _objects_unit_unit__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../objects/unit/unit */ "./src/app/objects/unit/unit.ts");
+/* harmony import */ var _objects_unit_unit_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../objects/unit/unit.service */ "./src/app/objects/unit/unit.service.ts");
+/* harmony import */ var _objects_managment_level_managment_level__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../objects/managment_level/managment_level */ "./src/app/objects/managment_level/managment_level.ts");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+
+var ActivityUpdateComponent = /** @class */ (function () {
+    function ActivityUpdateComponent(router, _unitService) {
+        this.router = router;
+        this._unitService = _unitService;
+        /* ----- Data ----- */
+        this.title = "";
+        this.isActive = true;
+        this.new_unit = new _objects_unit_unit__WEBPACK_IMPORTED_MODULE_3__["Unit"]();
+        this.new_management_level = new _objects_managment_level_managment_level__WEBPACK_IMPORTED_MODULE_5__["ManagmentLevel"]();
+        this.type_durations = ['minutes', 'hours', 'days', 'months'];
+        this.success = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"]();
+    }
+    ActivityUpdateComponent.prototype.ngOnInit = function () {
+        try {
+            this.new_unit.unit_name = this.activityUpdate['activity_unit'][0];
+        }
+        catch (error) {
+            //nothing
+        }
+        this.selectUnit();
+        this.selectManagement();
+        console.log(this.new_unit);
+    };
+    ActivityUpdateComponent.prototype.goDestination = function (link) {
+        if (this.isLinkActive) {
+            this.router.navigate(['/', link]);
+        }
+        else {
+            this.success.emit(true);
+        }
+    };
+    ActivityUpdateComponent.prototype.reset = function () {
+        this.success.emit(false);
+    };
+    ActivityUpdateComponent.prototype.selectUnit = function () {
+        for (var _i = 0, _a = this.units; _i < _a.length; _i++) {
+            var u = _a[_i];
+            if (u.unit_name == this.new_unit.unit_name) {
+                this.new_unit = u;
+            }
+        }
+    };
+    ActivityUpdateComponent.prototype.selectManagement = function () {
+        for (var _i = 0, _a = this.managment_levels; _i < _a.length; _i++) {
+            var m = _a[_i];
+            if (m.managment_level_id.toString() == this.activityUpdate.managment_level_id) {
+                this.new_management_level = m;
+            }
+        }
+    };
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
+        __metadata("design:type", String)
+    ], ActivityUpdateComponent.prototype, "title", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
+        __metadata("design:type", _objects_activity_activity__WEBPACK_IMPORTED_MODULE_2__["Activity"])
+    ], ActivityUpdateComponent.prototype, "activityUpdate", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
+        __metadata("design:type", Array)
+    ], ActivityUpdateComponent.prototype, "units", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
+        __metadata("design:type", Array)
+    ], ActivityUpdateComponent.prototype, "managment_levels", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
+        __metadata("design:type", String)
+    ], ActivityUpdateComponent.prototype, "link", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
+        __metadata("design:type", Boolean)
+    ], ActivityUpdateComponent.prototype, "isLinkActive", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
+        __metadata("design:type", Boolean)
+    ], ActivityUpdateComponent.prototype, "isActive", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Output"])(),
+        __metadata("design:type", Object)
+    ], ActivityUpdateComponent.prototype, "success", void 0);
+    ActivityUpdateComponent = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+            selector: 'app-activity-update',
+            template: __webpack_require__(/*! ./activity-update.component.html */ "./src/app/shared/modals/activity-update/activity-update.component.html"),
+            styles: [__webpack_require__(/*! ./activity-update.component.scss */ "./src/app/shared/modals/activity-update/activity-update.component.scss")]
+        }),
+        __metadata("design:paramtypes", [_angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"],
+            _objects_unit_unit_service__WEBPACK_IMPORTED_MODULE_4__["UnitService"]])
+    ], ActivityUpdateComponent);
+    return ActivityUpdateComponent;
+}());
+
+
+
+/***/ }),
+
 /***/ "./src/app/shared/modals/confirmation/confirmation.component.html":
 /*!************************************************************************!*\
   !*** ./src/app/shared/modals/confirmation/confirmation.component.html ***!
@@ -10360,7 +12703,6 @@ var WarningComponent = /** @class */ (function () {
             this.router.navigate(['/', this.link]);
         }
         else {
-            console.log("Get out");
             this.success.emit(true);
         }
     };
@@ -10508,7 +12850,7 @@ __webpack_require__.r(__webpack_exports__);
 // The list of file replacements can be found in `angular.json`.
 var environment = {
     production: false,
-    SERVEUR_URL: "http://localhost:1330" //'https://stikom-sop-managment.herokuapp.com'
+    SERVEUR_URL: 'https://stikom-sop-managment.herokuapp.com'
 };
 /*
  * In development mode, to ignore zone related error stack frames such as
