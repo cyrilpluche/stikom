@@ -5,10 +5,11 @@
   <img src="../../../../assets/images/logo-stikom.png" class="navbar-brand img-fluid" />
 
   <!-- Collapse button -->
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav" aria-controls="basicExampleNav"
+  <button class="navbar-toggler text-link" type="button" data-toggle="collapse" data-target="#basicExampleNav" aria-controls="basicExampleNav"
           aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
+    <span class="navbar-toggler-icon text-link"></span>
   </button>
+
 
   <!-- Collapsible content -->
   <div class="collapse navbar-collapse" id="basicExampleNav">
@@ -21,14 +22,17 @@
         </a>
       </li>
 
-      <li class="nav-item active">
-        <a class="nav-link" *ngIf="_memberService.isLoggedIn()" [routerLink]="['/admin-users']" >Admin Users
+      <!-- Dropdown -->
+      <li class="nav-item dropdown" dropdown *ngIf="_memberService.isLoggedIn()">
+        <a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle waves-light font-weight-bold" mdbWavesEffect>
+          ADMIN<span class="caret"></span>
         </a>
+        <div  *dropdownMenu class="dropdown-menu dropdown dropdown-primary" role="menu">
+          <a class="dropdown-item waves-light" mdbWavesEffect [routerLink]="['/admin-users']">Users</a>
+          <a class="dropdown-item waves-light" mdbWavesEffect [routerLink]="['/admin-organization-management']">Organizations</a>
+        </div>
       </li>
-      <li class="nav-item active">
-        <a class="nav-link" *ngIf="_memberService.isLoggedIn()" [routerLink]="['/admin-organization-management']" >Admin organizations
-        </a>
-      </li>
+
       <!--<li class="nav-item active">
         <a class="nav-link" *ngIf="_memberService.isLoggedIn()" [routerLink]="['/personal-achievement']" >Personal achievement
         </a>
@@ -47,11 +51,11 @@
       </li>
 
       <li class="nav-item">
-        <a class="nav-link" *ngIf="!_memberService.isLoggedIn()" [routerLink]="['/authentification']" >Log In</a>
+        <a class="nav-link" *ngIf="!_memberService.isLoggedIn()" [routerLink]="['/authentification']" ><ng-controller class="font-weight-bold text-success">Log In</ng-controller></a>
       </li>
 
       <li class="nav-item">
-        <a class="nav-link" *ngIf="_memberService.isLoggedIn()" (click)="onLogoutClick()" >Log Out</a>
+        <a class="nav-link" *ngIf="_memberService.isLoggedIn()" (click)="onLogoutClick()" ><ng-controller class="font-weight-bold text-red">Log Out</ng-controller></a>
       </li>
 
     </ul>

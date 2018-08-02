@@ -5,23 +5,53 @@
 /* ORANGE #ffa701 */
 /* RED #e5242c */
 /* GREY #818384 */
+/* GREEN #00c851 */
 
-body {
-  /*background-color: #fafafa;*/
+@font-face {
+  font-family: customizedFont;
+  src: url('assets/polices/NotoSans-Regular.ttf');
 }
 
-/*body {
+@font-face {
+  font-family: customizedFont;
+  src: url('assets/polices/NotoSans-Bold.ttf');
+  font-weight: bold;
+}
+
+.font-weight-bold {
+  font-family: customizedFont;
+  font-weight: bold;
+}
+
+/* ---------- BODY ---------- */
+body {
+  /*background-color: #fafafa;*/
   background-image: url('assets/images/home-background.jpg') !important;
-  opacity : 0.5; width: 100%;
-  min-height:100%;
   background-repeat: no-repeat;
   background-size: cover;
-}*/
+  font-family: customizedFont !important;
+}
 
+body .body-content{
+
+  min-height: 600px !important;
+}
+
+/* ---------- /BODY ---------- */
+
+/* ---------- NAVBAR ---------- */
+.navbar-toggler-icon {
+  color: #ffa701 !important;
+}
+/* ---------- /NAVBAR ---------- */
+
+/* ---------- FOOTER ---------- */
 footer {
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12) inset;
   font-weight: 300;
+  margin-top: 5%;
 }
+/* ---------- /FOOTER ---------- */
 
 /* ---------- ROWS ---------- */
 .row-first {
@@ -213,6 +243,10 @@ table .selected{
 
 .text-red {
   color: #e5242c !important;
+}
+
+.text-success {
+  color: #00c851 !important
 }
 
 .text-small {

@@ -131,7 +131,6 @@ export class ProjectListComponent implements OnInit {
   search(t: number) {
     // Declare variables
     var input, filter, table, tr, td, td2, i;
-    filter = input.value.toUpperCase();
     if (t == 1){
       input = document.getElementById("search");
       table = document.getElementById("project-table");
@@ -144,6 +143,7 @@ export class ProjectListComponent implements OnInit {
       input = document.getElementById("search-3");
       table = document.getElementById("project-table-3");
     }
+    filter = input.value.toUpperCase();
     tr = table.getElementsByTagName("tr");
 
     // Loop through all table rows, and hide those who don't match the search query

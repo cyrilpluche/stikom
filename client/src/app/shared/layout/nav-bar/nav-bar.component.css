@@ -12,3 +12,15 @@
 .navbar a{
   color: #222222 !important;
 }
+
+.navbar-toggler-icon {
+  background-color: #085193 !important;
+}
+
+.text-red {
+  color: #e5242c !important;
+}
+
+.text-link {
+ color: #085193 !important;
+}
