@@ -271,15 +271,13 @@ router.put('/reset_password');
 function requireNoneExistingMail (req, res, next) {
     let mail = req.body.mail;
     modelMember.existByMail(mail).then(function (data) {
-        if (data) { // the mail exists the users cannot connect
+        if (data.length !== 0) { // the mail exists the users cannot connect
             throw ERRORTYPE.customError('This email arealdy exists please find another one',
                 'MAIL ALREADY USED', 403);
         } else {
             next()
         }
-    }).catch(function (e) {
-        next(e)
-    })
+    }).catch(next)
 }
 
 /**

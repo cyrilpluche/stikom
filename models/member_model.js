@@ -143,7 +143,7 @@ const member = {
     existByMail (mail) {
         return db.any('SELECT member_id FROM public.member WHERE member_mail = $1', mail)
             .then(function (data) {
-                return data.length !== 0
+                return data
             }).catch(function (err) {
                 throw ERRORTYPE.customError('The server has encountred an internal error\n ' + err.toString())
             })
