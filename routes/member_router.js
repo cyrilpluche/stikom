@@ -60,7 +60,7 @@ router.post('/register',
             let member = {
                 first_name: req.body.first_name,
                 name: req.body.name,
-                mail: req.body.mail,
+                mail: req.body.mail.trim(),
                 hash_pwd: hash,
                 is_admin: 0,
                 member_valid: 0, // means that the member isn't valid yet
@@ -130,7 +130,7 @@ router.post('/login', policy.requiresNoAuthenticateUser,// the user is already l
     policy.checkParameters(['mail', 'password']),
     policy.emailValidator,
     function (req, res, next) {
-        modelMember.match(req.body.mail, req.body.password).then(function (member) {
+        modelMember.match(req.body.mail.trim(), req.body.password).then(function (member) {
             if (!member) {
                 throw ERRORTYPE.WRONG_IDENTIFIER
             } else {

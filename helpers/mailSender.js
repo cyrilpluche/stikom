@@ -35,7 +35,6 @@ ${html}
  * @param callback
  */
 function send (recipient, subject, body, files, callback) {
-    //TODO manage files
     let attchments = [
         {
             filename: 'logo.png',
@@ -55,7 +54,7 @@ function send (recipient, subject, body, files, callback) {
         text: '',
         html: encapsulateHTML(`<div style="margin: auto; text-align: center;"><img src="cid:unique@kreata.ee" width="10%"/><p>${body}</p></div>`),
         attachments: attchments
-    }
+    };
     smtpTransport.sendMail(mail, function(error, response){
         callback(error, response);
         smtpTransport.close();
